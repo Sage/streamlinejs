@@ -22,6 +22,8 @@ traditional, synchronous-looking code into asynchronous, callback-oriented code.
 A word of caution: this is **experimental code**. Unit test suites need to be expanded and
 experimentation with real projects have only just started (with good results so far).
 So you can play with it but don't use it for production code yet.
+
+If you're interested by how the genesis of this idea, you can read [the tale of Harry](http://bjouhier.wordpress.com/2011/01/09/asynchronous-javascript-the-tale-of-harry/).
   
 Writing _streamlined_ code
 ==========================
