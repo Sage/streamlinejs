@@ -926,5 +926,50 @@ $(document).ready(function(){
 			return x;
 		}, "<<T1T2T3F4T5>>");
 	})
+	
+	asyncTest("switch with default", 1, function(){
+		evalTest(function f_(){
+			function g_(i){
+				var result = "a"
+				switch (delay_(i)) {
+					case 1:
+						result = delay_("b");
+						break;
+					case 2:
+						return delay_("c");
+					case 3:
+					case 4:
+						result = delay_("d");
+						break;
+					default:
+						result = delay_("e");
+				}
+				return result;
+			}
+			return g_(0) + g_(1) + g_(2) + g_(3) + g_(4) + g_(5);
+		}, "ebcdde");
+	})
+	
+	asyncTest("switch without default", 1, function(){
+		evalTest(function f_(){
+			function g_(i){
+				var result = "a"
+				switch (delay_(i)) {
+					case 1:
+						result = "b";
+						break;
+					case 2:
+						return "c";
+					case 3:
+					case 4:
+						result = "d";
+						break;
+				}
+				return result;
+			}
+			return g_(0) + g_(1) + g_(2) + g_(3) + g_(4) + g_(5);
+		}, "abcdda");
+	})
+	
 })
 
