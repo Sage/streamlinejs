@@ -204,10 +204,9 @@ So, these APIs may evolve.
 TODOs, known issues, etc.
 -------------------------
 
-* Irregular `switch` statements (with `case` clauses that flow into each other) are not handled by
+* Irregular `switch` statements (with `case` clauses that flow into each other) are not yet handled by
 the transformation engine.
-* Labelled `break` and `continue` are not supported.
-* Async calls are not supported in the last clause (update) of `for` loops
+* Labelled `break` and `continue` are not yet supported.
 * Files are transformed every time node starts. A cache will be added later (implies upgrading to node.js 0.3.X 
 first because the 0.2 `registerExtension` call does not pass the file name to the transformation hook).
 * Debugging may be tricky because the line numbers are off in the transformed source.

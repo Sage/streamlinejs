@@ -9,14 +9,13 @@ $(document).ready(function(){
 	}
 	
 	function genTest(f1, f2){
-		//console.log(f1.toString());
 		var s1 = clean(transform(f1.toString(), {
 			noHelpers: true
 		}));
 		var s2 = clean(f2.toString()) + ";";
 		if (s1 !== s2) {
 			console.log("transformed=" + s1);
-			console.log("expected =" + s2);
+			console.log("expected   =" + s2);
 		}
 		strictEqual(s1, s2);
 	}
@@ -619,7 +618,6 @@ $(document).ready(function(){
 	test("empty body", 1, function(){
 		genTest(function f_(){
 		}, function f(_){
-			var __ = _;
 			return __();
 		})
 	})
@@ -628,7 +626,6 @@ $(document).ready(function(){
 		genTest(function f_(){
 			return 4;
 		}, function f(_){
-			var __ = _;
 			return _(null, 4);
 		})
 	})
@@ -719,10 +716,10 @@ $(document).ready(function(){
 		}, 30);
 	})
 	
-	asyncTest("(almost) fully async for in", 1, function(){
+	asyncTest("fully async for in", 1, function(){
 		evalTest(function f_(){
 			var result = 1;
-			for (var i = delay_(1); i < delay_(5); i = i + 1) {
+			for (var i = delay_(1); i < delay_(5); i = delay_(i) + 1) {
 				result = delay_(result) * delay_(i)
 			}
 			return result;
