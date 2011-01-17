@@ -5,14 +5,17 @@ $(document).ready(function(){
 	module("generation");
 	
 	function clean(s){
-		return s.replace(/[\n\t ]/g, '');
+		if (jQuery.browser.mozilla) 
+			return new Function(s).toString();
+		else 
+			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}');
 	}
 	
 	function genTest(f1, f2){
 		var s1 = clean(transform(f1.toString(), {
 			noHelpers: true
 		}));
-		var s2 = clean(f2.toString()) + ";";
+		var s2 = clean(f2.toString());
 		if (s1 !== s2) {
 			console.log("transformed=" + s1);
 			console.log("expected   =" + s2);
@@ -120,8 +123,8 @@ $(document).ready(function(){
 						f7();
 						return __();
 					}));
-				};
-							})(function(){
+				}
+			})(function(){
 				f8();
 				return __();
 			});
@@ -155,7 +158,7 @@ $(document).ready(function(){
 				}
 				else {
 					f5();
-				};
+				}
 				return __();
 			})(function(){
 				f6();
@@ -199,26 +202,24 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = _;
 			f1();
-			{
-				return (function(__break){
-					return (function __loop(){
-						var __ = __loop;
-						if (cond) {
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						};
-											})();
-				})(function(){
-					f4();
-					return __();
-				});
-			};
-					});
+			return (function(__break){
+				return (function __loop(){
+					var __ = __loop;
+					if (cond) {
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
+				})();
+			})(function(){
+				f4();
+				return __();
+			});
+		});
 	});
 	
 	test("do while", 1, function(){
@@ -234,28 +235,25 @@ $(document).ready(function(){
 			var __ = _;
 			f1();
 			var __1 = true;
-			{
-				return (function(__break){
-					return (function __loop(){
-						var __ = __loop;
-						if ((__1 || cond)) {
-							__1 = false;
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						};
-											})();
-				})(function(){
-					f4();
-					return __();
-				});
-			};
-			
-					});
+			return (function(__break){
+				return (function __loop(){
+					var __ = __loop;
+					if ((__1 || cond)) {
+						__1 = false;
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
+				})();
+			})(function(){
+				f4();
+				return __();
+			});
+		});
 	});
 	
 	test("for", 1, function(){
@@ -270,33 +268,31 @@ $(document).ready(function(){
 			var __ = _;
 			f1();
 			var i = 0;
-			{
-				var __2 = false;
-				return (function(__break){
-					return (function __loop(){
-						var __ = __loop;
-						if (__2) {
-							i++;
-						}
-						else {
-							__2 = true;
-						};
-						if ((i < arr.length)) {
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						};
-											})();
-				})(function(){
-					f4();
-					return __();
-				});
-			};
-					})
+			var __2 = false;
+			return (function(__break){
+				return (function __loop(){
+					var __ = __loop;
+					if (__2) {
+						i++;
+					}
+					else {
+						__2 = true;
+					}
+					if ((i < arr.length)) {
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
+				})();
+			})(function(){
+				f4();
+				return __();
+			});
+		})
 	})
 	
 	test("for in", 1, function(){
@@ -313,29 +309,27 @@ $(document).ready(function(){
 			var __1 = [];
 			for (var __2 in obj) {
 				__1.push(__2);
-			};
+			}
 			var __3 = 0;
-			{
-				return (function(__break){
-					return (function __loop(){
-						var __ = __loop;
-						if ((__3 < __1.length)) {
-							var k = __1[__3++];
-							return f2(k, __cb(_, function(){
-								f3(k);
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						};
-											})();
-				})(function(){
-					f4();
-					return __();
-				});
-			};
-					});
+			return (function(__break){
+				return (function __loop(){
+					var __ = __loop;
+					if ((__3 < __1.length)) {
+						var k = __1[__3++];
+						return f2(k, __cb(_, function(){
+							f3(k);
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
+				})();
+			})(function(){
+				f4();
+				return __();
+			});
+		});
 	})
 	
 	test("switch", 1, function(){
@@ -377,7 +371,7 @@ $(document).ready(function(){
 					default:
 						f6();
 						return __break();
-				};
+				}
 				return __();
 			})(function(){
 				f7();
@@ -407,10 +401,10 @@ $(document).ready(function(){
 							switch (exp2) {
 								case "b":
 									break;
-							};
+							}
 							return __break();
 						}));
-				};
+				}
 				return __();
 			})(function(){
 				return __();
@@ -448,26 +442,24 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = _;
 			f1();
-			{
-				return (function(__break){
-					return (function __loop(){
-						var __ = __loop;
-						return f2(__cb(_, function(__1){
-							if (__1) {
-								f3();
-							}
-							else {
-								return __break();
-							};
-							return __();
-						}));
-					})();
-				})(function(){
-					f4();
-					return __();
-				});
-			};
-					})
+			return (function(__break){
+				return (function __loop(){
+					var __ = __loop;
+					return f2(__cb(_, function(__1){
+						if (__1) {
+							f3();
+						}
+						else {
+							return __break();
+						}
+						return __();
+					}));
+				})();
+			})(function(){
+				f4();
+				return __();
+			});
+		})
 	})
 	
 	test("try catch", 1, function(){
@@ -498,9 +490,9 @@ $(document).ready(function(){
 					} 
 					catch (__err) {
 						return _(__err);
-					};
+					}
 					
-									})(function(ex, __result){
+				})(function(ex, __result){
 					if (ex) {
 						f5();
 						return f6(__cb(_, function(){
@@ -539,7 +531,7 @@ $(document).ready(function(){
 				return (function(_){
 					function __(){
 						return _(null, null, true);
-					};
+					}
 					try {
 						f2();
 						return f3(__cb(_, function(){
@@ -549,8 +541,8 @@ $(document).ready(function(){
 					} 
 					catch (__err) {
 						return _(__err);
-					};
-									})(function(__err, __result, __cont){
+					}
+				})(function(__err, __result, __cont){
 					return (function(__){
 						f5();
 						return f6(__cb(_, function(){
@@ -563,8 +555,8 @@ $(document).ready(function(){
 						}
 						else {
 							return _(__err, __result)
-						};
-											});
+						}
+					});
 				});
 			})(function(){
 				f8();
@@ -592,7 +584,7 @@ $(document).ready(function(){
 						var __val = __1;
 						if ((!__val == true)) {
 							return _(null, __val);
-						};
+						}
 						return f3(__cb(_, function(__2){
 							return _(null, __2);
 							
@@ -605,7 +597,7 @@ $(document).ready(function(){
 							f6();
 							return __();
 						}));
-					};
+					}
 					return __();
 				}));
 			})(function(){
