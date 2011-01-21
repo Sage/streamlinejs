@@ -8,7 +8,7 @@ traditional, synchronous-looking code into asynchronous, callback-oriented code.
 
 * No language extension: the source code is normal Javascript. 
   So you can keep your favorite code editor.
-* Easy to learn: (almost) all you need to know is a simple naming convention.
+* Easy to learn: (almost) all you need to know is a special callback.
 * Node-friendly: you can call asynchronous [node.js](http://nodejs.org) APIs directly. 
   You don't need to add wrappers around existing APIs as long as they follow the
   node.js callback convention. And the _streamlined_ functions that you write will 
@@ -63,7 +63,7 @@ But, as the node APIs are asynchronous, you have to write the following instead:
 You have to restructure your code to deal with the callbacks. On this example, this is not too hard, but the it can become tricky, for example if your code 
 has complex `if/else` branching logic, loops, `try/catch/finally` constructs, etc. The callback pattern is somehow imposing a special flow on your code.
 It is as if every asynchronous call is opening a hole into another flow (the callback flow) and you have to push your statements into this new flow. 
-It feels a little bit like your statements have leaked through the hole created by the callback. 
+It feels a little bit like your statements have leaked through a hole created by the callback. 
 
 This creates two problems:
 
