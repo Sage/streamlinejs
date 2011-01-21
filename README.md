@@ -28,11 +28,12 @@ If you're interested by how the genesis of this idea, you can read [the tale of 
 Writing _streamlined_ code
 ==========================
 
-The problem that `streamline.js` addresses
-------------------------------------------
+The problem addressed by streamline.js
+--------------------------------------
 
 `streamline.js` simplifies the code that you have to write when dealing with asynchronous APIs. 
-Let us assume that you want to write a simple function that returns the length of a file, using the `fs.stat` and `fs.readFile` functions.
+
+For example, let us assume that you want to write a simple function that returns the length of a file, using the `fs.stat` and `fs.readFile` functions.
 
 If these functions were synchronous, you would probably write the following code:
 
@@ -65,8 +66,9 @@ It is as if every asynchronous call is opening a hole into another flow (the cal
 It feels a little bit like your statements have leaked through the hole created by the callback. 
 
 This creates two problems:
+
 * Writing algorithms become harder because the built-in keywords of Javascript (`if`, `while`, `try/catch`) cannot control the flow as naturally as they did before.
-For example, you have to convert your loops into a recursive form, or use a helper library to write them.
+  For example, you have to convert your loops into a recursive form, or use a helper library to write them.
 * The code that you write is harder to read because it is polluted by _callback noise_ that does not have much to do with the problem that you are trying to solve.
 
 The solution
@@ -95,13 +97,13 @@ an asynchronous function:
 
     function fileLength(path, _)
   
-where _ is a callback with the usual node.js callback signature:
+where `_` is a callback with the usual node.js callback signature:
 
     _(err, result)
   
 The transformation engine will convert all the calls to which you pass the _callback plug_ inside the function body
 into traditional node.js-style calls with callbacks. The transformed code will be very similar to the code you would have written by hand
-(in the case of the fileLength function, it will be similar to the callback version that we gave above).
+(in the case of the `fileLength` function, it will be similar to the callback version that we gave above).
   
 Note: if you look at the generated code you won't see the `err` parameter because it is hidden in a 
 small callback wrapper.
