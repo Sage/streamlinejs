@@ -174,11 +174,11 @@ So, they are of little help for _streamlined_ Javascript.
 
 The `lib/flows` module contains some utilities to fill the gap:
 
-* `each_(array, fn, _)` applies `fn` sequentially to the elements of `array`.
-* `map_(array, fn, _)` transforms `array` by applying `fn` to each element in turn.
-* `filter_(array, fn, _)` generates a new array that only contains the elements that satisfy the `fn` predicate.
-* `every_(array, fn, _)` returns true if `fn` is true on every element (if `array` is empty too).
-* `some_(array, fn, _)` returns true if `fn` is true for at least one element.
+* `each(array, fn, _)` applies `fn` sequentially to the elements of `array`.
+* `map(array, fn, _)` transforms `array` by applying `fn` to each element in turn.
+* `filter(array, fn, _)` generates a new array that only contains the elements that satisfy the `fn` predicate.
+* `every(array, fn, _)` returns true if `fn` is true on every element (if `array` is empty too).
+* `some(array, fn, _)` returns true if `fn` is true for at least one element.
 
 In all these functions, the `fn` callback is called as `fn(elt, _)`.  
 
