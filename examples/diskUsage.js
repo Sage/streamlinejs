@@ -12,16 +12,16 @@
 
 var fs = require('fs');
 
-function du_(path) {
+function du(path, _) {
 	var total = 0;
-	var stat = fs.stat_(path);
+	var stat = fs.stat(path, _);
 	if (stat.isFile()) {
-		total += fs.readFile_(path).length;
+		total += fs.readFile(path, _).length;
 	}
 	else if (stat.isDirectory()) {
-		var files = fs.readdir_(path);
+		var files = fs.readdir(path, _);
 		for (var i = 0; i < files.length; i++) {
-			total += du_(path + "/" + files[i]);
+			total += du(path + "/" + files[i], _);
 		}
 		console.log(path + ": " + total);
 	}

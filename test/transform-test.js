@@ -22,10 +22,10 @@ $(document).ready(function(){
 		}
 		strictEqual(s1, s2);
 	}
-	
+
 	test("basic", 1, function(){
-		genTest(function f_(){
-			f1_();
+		genTest(function f(_){
+			f1(_);
 			f2();
 		}, function f(_){
 			var __ = _;
@@ -37,8 +37,8 @@ $(document).ready(function(){
 	});
 	
 	test("var return", 1, function(){
-		genTest(function f_(){
-			var x = f1_();
+		genTest(function f(_){
+			var x = f1(_);
 			f2();
 			return x;
 		}, function f(_){
@@ -52,9 +52,9 @@ $(document).ready(function(){
 	});
 	
 	test("return", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
-			return f2_();
+			return f2(_);
 		}, function f(_){
 			var __ = _;
 			f1();
@@ -65,11 +65,11 @@ $(document).ready(function(){
 	});
 	
 	test("if", 1, function(){
-		genTest(function f_(b){
+		genTest(function f(b, _){
 			f1();
 			if (b) {
 				f2();
-				f3_();
+				f3(_);
 				f4();
 			}
 			f5();
@@ -93,16 +93,16 @@ $(document).ready(function(){
 	});
 	
 	test("if else", 1, function(){
-		genTest(function f_(b){
+		genTest(function f(b, _){
 			f1();
 			if (b) {
 				f2();
-				f3_();
+				f3(_);
 				f4();
 			}
 			else {
 				f5();
-				f6_();
+				f6(_);
 				f7();
 			}
 			f8();
@@ -132,11 +132,11 @@ $(document).ready(function(){
 	});
 	
 	test("if else 2", 1, function(){
-		genTest(function f_(b){
+		genTest(function f(b, _){
 			f1();
 			if (b) {
 				f2();
-				f3_();
+				f3(_);
 				f4();
 				return 1;
 			}
@@ -168,12 +168,12 @@ $(document).ready(function(){
 	});
 	
 	test("each", 1, function(){
-		genTest(function f_(arr){
+		genTest(function f(arr, _){
 			f1();
-			each_(arr, function _(elt){
-				f2_(elt);
+			each(arr, function(elt, _){
+				f2(elt, _);
 				f3();
-			})
+			}, _)
 			f4();
 		}, function f(arr, _){
 			var __ = _;
@@ -192,10 +192,10 @@ $(document).ready(function(){
 	});
 	
 	test("while", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			while (cond) {
-				f2_();
+				f2(_);
 				f3();
 			}
 			f4();
@@ -223,10 +223,10 @@ $(document).ready(function(){
 	});
 	
 	test("do while", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			do {
-				f2_();
+				f2(_);
 				f3();
 			}
 			while (cond);
@@ -257,10 +257,10 @@ $(document).ready(function(){
 	});
 	
 	test("for", 1, function(){
-		genTest(function f_(arr){
+		genTest(function f(arr, _){
 			f1();
 			for (var i = 0; i < arr.length; i++) {
-				f2_();
+				f2(_);
 				f3();
 			}
 			f4();
@@ -296,10 +296,10 @@ $(document).ready(function(){
 	})
 	
 	test("for in", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			for (var k in obj) {
-				f2_(k);
+				f2(k, _);
 				f3(k);
 			}
 			f4();
@@ -333,17 +333,17 @@ $(document).ready(function(){
 	})
 	
 	test("switch", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			switch (exp) {
 				case 'a':
-					f2_();
+					f2(_);
 					f3();
 					break;
 				case 'b':
 				case 'c':
 					f4();
-					f5_();
+					f5(_);
 					break;
 				default:
 					f6();
@@ -381,10 +381,10 @@ $(document).ready(function(){
 	})
 	
 	test("nested switch", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			switch (exp) {
 				case 'a':
-					f2_();
+					f2(_);
 					switch (exp2) {
 						case "b":
 							break;
@@ -413,9 +413,9 @@ $(document).ready(function(){
 	})
 	
 	test("nested calls", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
-			f2_(f3_(f4_()), f5_(f6()));
+			f2(f3(f4(_), _), f5(f6(), _), _);
 			f7();
 		}, function f(_){
 			var __ = _;
@@ -434,9 +434,9 @@ $(document).ready(function(){
 	})
 	
 	test("async while condition", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
-			while (f2_()) 
+			while (f2(_)) 
 				f3();
 			f4();
 		}, function f(_){
@@ -463,16 +463,16 @@ $(document).ready(function(){
 	})
 	
 	test("try catch", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			try {
 				f2();
-				f3_();
+				f3(_);
 				f4();
 			} 
 			catch (ex) {
 				f5();
-				f6_();
+				f6(_);
 				f7();
 			}
 			f8();
@@ -511,16 +511,16 @@ $(document).ready(function(){
 	})
 	
 	test("try finally", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
 			try {
 				f2();
-				f3_();
+				f3(_);
 				f4();
 			}
 			finally {
 				f5();
-				f6_();
+				f6(_);
 				f7();
 			}
 			f8();
@@ -566,11 +566,11 @@ $(document).ready(function(){
 	})
 	
 	test("lazy and", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			f1();
-			if (f2_() && f3_()) {
+			if (f2(_) && f3(_)) {
 				f4();
-				f5_();
+				f5(_);
 				f6()
 			}
 			f7();
@@ -608,14 +608,14 @@ $(document).ready(function(){
 	})
 	
 	test("empty body", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 		}, function f(_){
 			return __();
 		})
 	})
 	
 	test("only return in body", 1, function(){
-		genTest(function f_(){
+		genTest(function f(_){
 			return 4;
 		}, function f(_){
 			return _(null, 4);
@@ -650,32 +650,32 @@ $(document).ready(function(){
 	}
 	
 	asyncTest("eval return", 1, function(){
-		evalTest(function f_(){
-			return delay_(5);
+		evalTest(function f(_){
+			return delay(5, _);
 		}, 5);
 	})
 	
 	asyncTest("eval if true", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			if (true) 
-				return delay_(3);
+				return delay(3, _);
 			return 4;
 		}, 3);
 	})
 	
 	asyncTest("eval if false", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			if (false) 
-				return delay_(3);
+				return delay(3, _);
 			return 4;
 		}, 4);
 	})
 	
 	asyncTest("eval while", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var i = 1, result = 1;
 			while (i < 5) {
-				result = delay_(i * result);
+				result = delay(i * result, _);
 				i++;
 			}
 			return result;
@@ -683,17 +683,17 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("eval for", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var result = 1;
 			for (var i = 1; i < 5; i++) {
-				result = delay_(i) * delay_(result);
+				result = delay(i, _) * delay(result, _);
 			}
 			return result;
 		}, 24);
 	})
 	
 	asyncTest("eval for in", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var foo = {
 				a: 1,
 				b: 2,
@@ -702,53 +702,53 @@ $(document).ready(function(){
 			}
 			var result = 1;
 			for (var k in foo) {
-				result = delay_(foo[delay_(k)]) * delay_(result);
+				result = delay(foo[delay(k, _)], _) * delay(result, _);
 			}
 			return result;
 		}, 30);
 	})
 	
 	asyncTest("fully async for in", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var result = 1;
-			for (var i = delay_(1); i < delay_(5); i = delay_(i) + 1) {
-				result = delay_(result) * delay_(i)
+			for (var i = delay(1, _); i < delay(5, _); i = delay(i, _) + 1) {
+				result = delay(result, _) * delay(i, _)
 			}
 			return result;
 		}, 24);
 	})
 	
 	asyncTest("break in loop", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var result = 1;
 			for (var i = 1; i < 10; i++) {
 				if (i == 5) 
 					break;
-				result = delay_(result) * delay_(i)
+				result = delay(result, _) * delay(i, _)
 			}
 			return result;
 		}, 24);
 	})
 	
 	asyncTest("continue", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var result = 1;
 			for (var i = 1; i < 10; i++) {
 				if (i >= 5) 
 					continue;
-				result = delay_(result) * delay_(i)
+				result = delay(result, _) * delay(i, _)
 			}
 			return result;
 		}, 24);
 	})
 	
 	asyncTest("break in while", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var i = 1, result = 1;
 			while (i < 10) {
 				if (i == 5) 
 					break;
-				result = delay_(result) * delay_(i);
+				result = delay(result, _) * delay(i, _);
 				i++;
 			}
 			return result;
@@ -756,77 +756,77 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("continue in while", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var i = 1, result = 1;
 			while (i < 10) {
 				i++;
 				if (i >= 5) 
 					continue;
-				result = delay_(result) * delay_(i);
+				result = delay(result, _) * delay(i, _);
 			}
 			return result;
 		}, 24);
 	})
 	
 	asyncTest("eval lazy", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var result = 1;
-			return delay_(delay_(result + 8) < 5) && true ? 2 : 4
+			return delay(delay(result + 8, _) < 5, _) && true ? 2 : 4
 		}, 4);
 	})
 	
 	asyncTest("try catch 1", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			try {
-				return delay_("ok");
+				return delay("ok", _);
 			} 
 			catch (ex) {
-				return delay_("err");
+				return delay("err", _);
 			}
 		}, "ok");
 	})
 	
 	asyncTest("try catch 2", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			try {
-				throw delay_("thrown");
+				throw delay("thrown", _);
 			} 
 			catch (ex) {
-				return delay_("caught ") + ex;
+				return delay("caught ", _) + ex;
 			}
 		}, "caught thrown");
 	})
 	
 	asyncTest("try catch 3", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			try {
-				throw delay_("thrown");
+				throw delay("thrown", _);
 			} 
 			catch (ex) {
-				return delay_("caught ") + ex;
+				return delay("caught ", _) + ex;
 			}
 		}, "caught thrown");
 	})
 	
 	asyncTest("try catch 5", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			try {
-				delayFail_("delay fail");
+				delayFail("delay fail", _);
 			} 
 			catch (ex) {
-				return delay_("caught ") + ex;
+				return delay("caught ", _) + ex;
 			}
 		}, "caught delay fail");
 	})
 	
 	asyncTest("try finally 1", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay_("try")
+				x += delay("try", _)
 			}
 			finally {
-				x += delay_(" finally");
+				x += delay(" finally", _);
 			}
 			x += " end"
 			return x;
@@ -834,14 +834,14 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("try finally 2", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay_("try")
+				x += delay("try", _)
 				return x;
 			}
 			finally {
-				x += delay_(" finally");
+				x += delay(" finally", _);
 			}
 			x += " end"
 			return x;
@@ -849,14 +849,14 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("try finally 3", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay_("try")
+				x += delay("try", _)
 				throw "bad try";
 			}
 			finally {
-				x += delay_(" finally");
+				x += delay(" finally", _);
 			}
 			x += " end"
 			return x;
@@ -864,25 +864,25 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("and ok", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var x = "<<";
-			if (delay_(true) && delay_(true)) 
+			if (delay(true, _) && delay(true, _)) 
 				x += "T1";
 			else 
 				x += "F1"
-			if (delay_(true) && delay_(false)) 
+			if (delay(true, _) && delay(false, _)) 
 				x += "T2";
 			else 
 				x += "F2"
-			if (delay_(false) && delay_(true)) 
+			if (delay(false, _) && delay(true, _)) 
 				x += "T3";
 			else 
 				x += "F3"
-			if (delay_(false) && delay_(false)) 
+			if (delay(false, _) && delay(false, _)) 
 				x += "T4";
 			else 
 				x += "F4"
-			if (delay_(false) && delayFail_("bad")) 
+			if (delay(false, _) && delayFail("bad", _)) 
 				x += "T5";
 			else 
 				x += "F5"
@@ -892,25 +892,25 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("or ok", 1, function(){
-		evalTest(function f_(){
+		evalTest(function f(_){
 			var x = "<<";
-			if (delay_(true) || delay_(true)) 
+			if (delay(true, _) || delay(true, _)) 
 				x += "T1";
 			else 
 				x += "F1"
-			if (delay_(true) || delay_(false)) 
+			if (delay(true, _) || delay(false, _)) 
 				x += "T2";
 			else 
 				x += "F2"
-			if (delay_(false) || delay_(true)) 
+			if (delay(false, _) || delay(true, _)) 
 				x += "T3";
 			else 
 				x += "F3"
-			if (delay_(false) || delay_(false)) 
+			if (delay(false, _) || delay(false, _)) 
 				x += "T4";
 			else 
 				x += "F4"
-			if (delay_(true) || delayFail_("bad")) 
+			if (delay(true, _) || delayFail("bad", _)) 
 				x += "T5";
 			else 
 				x += "F5"
@@ -920,33 +920,33 @@ $(document).ready(function(){
 	})
 	
 	asyncTest("switch with default", 1, function(){
-		evalTest(function f_(){
-			function g_(i){
+		evalTest(function f(_){
+			function g(i, _){
 				var result = "a"
-				switch (delay_(i)) {
+				switch (delay(i, _)) {
 					case 1:
-						result = delay_("b");
+						result = delay("b", _);
 						break;
 					case 2:
-						return delay_("c");
+						return delay("c", _);
 					case 3:
 					case 4:
-						result = delay_("d");
+						result = delay("d", _);
 						break;
 					default:
-						result = delay_("e");
+						result = delay("e", _);
 				}
 				return result;
 			}
-			return g_(0) + g_(1) + g_(2) + g_(3) + g_(4) + g_(5);
+			return g(0, _) + g(1, _) + g(2, _) + g(3, _) + g(4, _) + g(5, _);
 		}, "ebcdde");
 	})
 	
 	asyncTest("switch without default", 1, function(){
-		evalTest(function f_(){
-			function g_(i){
+		evalTest(function f(_){
+			function g(i, _){
 				var result = "a"
-				switch (delay_(i)) {
+				switch (delay(i, _)) {
 					case 1:
 						result = "b";
 						break;
@@ -959,7 +959,7 @@ $(document).ready(function(){
 				}
 				return result;
 			}
-			return g_(0) + g_(1) + g_(2) + g_(3) + g_(4) + g_(5);
+			return g(0, _) + g(1, _) + g(2, _) + g(3, _) + g(4, _) + g(5, _);
 		}, "abcdda");
 	})
 	

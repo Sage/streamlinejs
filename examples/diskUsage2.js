@@ -26,22 +26,22 @@ var flows = require('../lib/flows');
 
 var fileFunnel = flows.funnel(20);
 
-function du_(path){
+function du(path, _){
 	var total = 0;
-	var stat = fs.stat_(path);
+	var stat = fs.stat(path, _);
 	if (stat.isFile()) {
-		fileFunnel.channel_(function _(){
-			total += fs.readFile_(path).length;
-		});
+		fileFunnel.channel(function(_){
+			total += fs.readFile(path, _).length;
+		}, _);
 	}
 	else 
 		if (stat.isDirectory()) {
-			var files = fs.readdir_(path);
+			var files = fs.readdir(path, _);
 			flows.spray(files.map(function(file){
-				return function _(){
-					total += du_(path + "/" + file);
+				return function(_){
+					total += du(path + "/" + file, _);
 				}
-			})).collectAll_();
+			})).collectAll(_);
 			console.log(path + ": " + total);
 		}
 		else {
