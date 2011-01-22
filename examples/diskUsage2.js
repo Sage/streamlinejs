@@ -26,20 +26,20 @@ var flows = require('../lib/flows');
 
 var fileFunnel = flows.funnel(20);
 
-function du(path, _){
+function du(_, path){
 	var total = 0;
 	var stat = fs.stat(path, _);
 	if (stat.isFile()) {
-		fileFunnel.channel(function(_){
+		fileFunnel.channel(_, function(_){
 			total += fs.readFile(path, _).length;
-		}, _);
+		});
 	}
 	else 
 		if (stat.isDirectory()) {
 			var files = fs.readdir(path, _);
 			flows.spray(files.map(function(file){
 				return function(_){
-					total += du(path + "/" + file, _);
+					total += du(_, path + "/" + file);
 				}
 			})).collectAll(_);
 			console.log(path + ": " + total);
@@ -53,8 +53,9 @@ function du(path, _){
 var p = process.argv.length > 3 ? process.argv[3] : ".";
 
 var t0 = Date.now();
-du(p, function(err, result){
-	if (err) 
+function report(err, result) {
+	if (err)
 		console.log(err.toString() + "\n" + err.stack);
 	console.log("completed in " + (Date.now() - t0) + " ms");
-})
+}
+du(report, p);

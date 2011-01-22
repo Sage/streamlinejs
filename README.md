@@ -82,7 +82,7 @@ The _callback plug_ has a very concise syntax: the _underscore_ character.
 
 With this simple _plug_, you can write the fileLength function as:
 
-    function fileLength(path, _) {
+    function fileLength(_, path) {
         if (fs.stat(path, _).isFile())
     	    return fs.readFile(path, _).length;
         else
@@ -95,11 +95,17 @@ This syntax still works but it is deprecated and will not be supported forever. 
 The transformation engine will treat this function definition as the definition of 
 an asynchronous function:
 
-    function fileLength(path, _)
+    function fileLength(_, path)
   
 where `_` is a callback with the usual node.js callback signature:
 
     _(err, result)
+    
+Note: `streamline.js` uses a slightly different convention than node for its APIs: the callback is passed
+as first parameter rather than as last one. This was chosen because it is more readable (you immediately see if the 
+underscore is there or not). Also, it works better with functions that have optional parameters.
+But this is just a convention for new APIs, the transformation engine does not impose this and you can pass the 
+_callback plug_ as last parameter when you call node APIs that expect it this way.
   
 The transformation engine will convert all the calls to which you pass the _callback plug_ inside the function body
 into traditional node.js-style calls with callbacks. The transformed code will be very similar to the code you would have written by hand
@@ -115,10 +121,10 @@ For example, you can write code like:
 
     try {
       if (fs.readFile(path1, _).length < fs.readFile(path2, _).length + 100) {
-        doSomething(path1, path2, _);
+        doSomething(_, path1, path2);
     }
     catch (ex) {
-      handleError(ex, _);
+      handleError(_, ex);
     }
 
 You can use all the flow control statements of the Javascript language to control asynchronous code, 
@@ -126,15 +132,15 @@ and you can reason about your asynchronous code the same way you reason about yo
 
 The fileLength function that we defined above can be called in two ways:
 
-* as `fileLength(p, _)` from another _streamlined_ function. When you use this form, the result is "returned" directly as if you were calling a synchronous function.
-* as `fileLength(p, cb)` from a regular Javascript function (or at top level in a script). When you use this form the result is passed to your callback.
+* as `fileLength(_, p)` from another _streamlined_ function. When you use this form, the result is "returned" directly as if you were calling a synchronous function.
+* as `fileLength(cb, p)` from a regular Javascript function (or at top level in a script). When you use this form the result is passed to your callback.
 
 You can call a _streamlined_ function from the body of another _streamlined_ function. 
 So, the following code is valid:
 
     function processFiles(_) {
         // ...
-        var len = fileLength(p, _);
+        var len = fileLength(_, p);
         // ...
     }
 
@@ -143,7 +149,7 @@ The transformation engine will reject the following code:
 
     function processFiles() {
         // ...
-        var len = fileLength(p, _); // ERROR
+        var len = fileLength(_, p); // ERROR
         // ...
     }
 
@@ -174,15 +180,14 @@ So, they are of little help for _streamlined_ Javascript.
 
 The `lib/flows` module contains some utilities to fill the gap:
 
-* `each(array, fn, _)` applies `fn` sequentially to the elements of `array`.
-* `map(array, fn, _)` transforms `array` by applying `fn` to each element in turn.
-* `filter(array, fn, _)` generates a new array that only contains the elements that satisfy the `fn` predicate.
-* `every(array, fn, _)` returns true if `fn` is true on every element (if `array` is empty too).
-* `some(array, fn, _)` returns true if `fn` is true for at least one element.
+* `each(_, array, fn)` applies `fn` sequentially to the elements of `array`.
+* `map(_, array, fn)` transforms `array` by applying `fn` to each element in turn.
+* `filter(_, array, fn)` generates a new array that only contains the elements that satisfy the `fn` predicate.
+* `every(_, array, fn)` returns true if `fn` is true on every element (if `array` is empty too).
+* `some(_, array, fn)` returns true if `fn` is true for at least one element.
 
-In all these functions, the `fn` callback is called as `fn(elt, _)`.  
-
-Note: Unlike ES5, the callback does not have any optional arguments (`i`, `thisObj`).
+In `each` and `map`, the `fn` callback is called as `fn(_, elt, i)`.  
+In `filter`, `every` and `some`, the `fn` callback is called as `fn(_, elt)`.
 
 Flows
 -----
@@ -230,7 +235,7 @@ The `funnel` function is typically used with the following pattern:
     var myFunnel = funnel(10); // create a funnel that only allows 10 concurrent streamlines.
   
     // elsewhere
-    myFunnel.channel(function(_) { /* code with at most 10 concurrent executions */ }, _);
+    myFunnel.channel(_, function(_) { /* code with at most 10 concurrent executions */ });
   
 Note: Here also, the `funnel` function only sets things up and is synchronous. 
   The `channel` function deals with the async part.

@@ -12,7 +12,7 @@
 
 var fs = require('fs');
 
-function du(path, _) {
+function du(_, path) {
 	var total = 0;
 	var stat = fs.stat(path, _);
 	if (stat.isFile()) {
@@ -21,7 +21,7 @@ function du(path, _) {
 	else if (stat.isDirectory()) {
 		var files = fs.readdir(path, _);
 		for (var i = 0; i < files.length; i++) {
-			total += du(path + "/" + files[i], _);
+			total += du(_, path + "/" + files[i]);
 		}
 		console.log(path + ": " + total);
 	}
@@ -34,9 +34,10 @@ function du(path, _) {
 var p = process.argv.length > 3 ? process.argv[3] : ".";
 
 var t0 = Date.now();
-du(p, function(err, result) {
+function report(err, result) {
 	if (err)
 		console.log(err.toString() + "\n" + err.stack);
 	console.log("completed in " + (Date.now() - t0) + " ms");
-});
+}
+du(report, p);
 

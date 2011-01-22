@@ -65,7 +65,7 @@ $(document).ready(function(){
 	});
 	
 	test("if", 1, function(){
-		genTest(function f(b, _){
+		genTest(function f(_, b){
 			f1();
 			if (b) {
 				f2();
@@ -73,7 +73,7 @@ $(document).ready(function(){
 				f4();
 			}
 			f5();
-		}, function f(b, _){
+		}, function f(_, b){
 			var __ = _;
 			f1();
 			return (function(__){
@@ -93,7 +93,7 @@ $(document).ready(function(){
 	});
 	
 	test("if else", 1, function(){
-		genTest(function f(b, _){
+		genTest(function f(_, b){
 			f1();
 			if (b) {
 				f2();
@@ -106,7 +106,7 @@ $(document).ready(function(){
 				f7();
 			}
 			f8();
-		}, function f(b, _){
+		}, function f(_, b){
 			var __ = _;
 			f1();
 			return (function(__){
@@ -132,7 +132,7 @@ $(document).ready(function(){
 	});
 	
 	test("if else 2", 1, function(){
-		genTest(function f(b, _){
+		genTest(function f(_, b){
 			f1();
 			if (b) {
 				f2();
@@ -145,7 +145,7 @@ $(document).ready(function(){
 			}
 			f6();
 			return 2;
-		}, function f(b, _){
+		}, function f(_, b){
 			var __ = _;
 			f1();
 			return (function(__){
@@ -168,26 +168,26 @@ $(document).ready(function(){
 	});
 	
 	test("each", 1, function(){
-		genTest(function f(arr, _){
+		genTest(function f(_, arr){
 			f1();
-			each(arr, function(elt, _){
-				f2(elt, _);
+			each(_, arr, function(_, elt){
+				f2(_, elt);
 				f3();
-			}, _)
+			})
 			f4();
-		}, function f(arr, _){
+		}, function f(_, arr){
 			var __ = _;
 			f1();
-			return each(arr, function(elt, _){
-				var __ = _;
-				return f2(elt, __cb(_, function(){
-					f3();
-					return __();
-				}));
-			}, __cb(_, function(){
+			return each(__cb(_, function(){
 				f4();
 				return __();
-			}));
+			}), arr, function(_, elt){
+				var __ = _;
+				return f2(__cb(_, function(){
+					f3();
+					return __();
+				}), elt);
+			});
 		});
 	});
 	
@@ -257,14 +257,14 @@ $(document).ready(function(){
 	});
 	
 	test("for", 1, function(){
-		genTest(function f(arr, _){
+		genTest(function f(_, arr){
 			f1();
 			for (var i = 0; i < arr.length; i++) {
 				f2(_);
 				f3();
 			}
 			f4();
-		}, function f(arr, _){
+		}, function f(_, arr){
 			var __ = _;
 			f1();
 			var i = 0;
@@ -299,7 +299,7 @@ $(document).ready(function(){
 		genTest(function f(_){
 			f1();
 			for (var k in obj) {
-				f2(k, _);
+				f2(_, k);
 				f3(k);
 			}
 			f4();
@@ -316,10 +316,10 @@ $(document).ready(function(){
 					var __ = __loop;
 					if ((__3 < __1.length)) {
 						var k = __1[__3++];
-						return f2(k, __cb(_, function(){
+						return f2(__cb(_, function(){
 							f3(k);
 							return __();
-						}));
+						}), k);
 					}
 					else {
 						return __break();
@@ -415,20 +415,20 @@ $(document).ready(function(){
 	test("nested calls", 1, function(){
 		genTest(function f(_){
 			f1();
-			f2(f3(f4(_), _), f5(f6(), _), _);
+			f2(_, f3(_, f4(_)), f5(_, f6()));
 			f7();
 		}, function f(_){
 			var __ = _;
 			f1();
-			return f4(__cb(_, function(__1){
-				return f3(__1, __cb(_, function(__2){
-					return f5(f6(), __cb(_, function(__3){
-						return f2(__2, __3, __cb(_, function(){
+			return f4(__cb(_, function(__3){
+				return f3(__cb(_, function(__2){
+					return f5(__cb(_, function(__4){
+						return f2(__cb(_, function(){
 							f7();
 							return __();
-						}));
-					}));
-				}));
+						}), __2, __4);
+					}), f6());
+				}), __3);
 			}));
 		});
 	})
@@ -637,13 +637,13 @@ $(document).ready(function(){
 		})();
 	}
 	
-	function delay(val, _){
+	function delay(_, val){
 		setTimeout(function(){
 			_(null, val);
 		}, 0);
 	}
 	
-	function delayFail(err, _){
+	function delayFail(_, err){
 		setTimeout(function(){
 			_(err);
 		}, 0);
@@ -651,14 +651,14 @@ $(document).ready(function(){
 	
 	asyncTest("eval return", 1, function(){
 		evalTest(function f(_){
-			return delay(5, _);
+			return delay(_, 5);
 		}, 5);
 	})
 	
 	asyncTest("eval if true", 1, function(){
 		evalTest(function f(_){
 			if (true) 
-				return delay(3, _);
+				return delay(_, 3);
 			return 4;
 		}, 3);
 	})
@@ -666,7 +666,7 @@ $(document).ready(function(){
 	asyncTest("eval if false", 1, function(){
 		evalTest(function f(_){
 			if (false) 
-				return delay(3, _);
+				return delay(_, 3);
 			return 4;
 		}, 4);
 	})
@@ -675,7 +675,7 @@ $(document).ready(function(){
 		evalTest(function f(_){
 			var i = 1, result = 1;
 			while (i < 5) {
-				result = delay(i * result, _);
+				result = delay(_, i * result);
 				i++;
 			}
 			return result;
@@ -686,7 +686,7 @@ $(document).ready(function(){
 		evalTest(function f(_){
 			var result = 1;
 			for (var i = 1; i < 5; i++) {
-				result = delay(i, _) * delay(result, _);
+				result = delay(_, i) * delay(_, result);
 			}
 			return result;
 		}, 24);
@@ -702,7 +702,7 @@ $(document).ready(function(){
 			}
 			var result = 1;
 			for (var k in foo) {
-				result = delay(foo[delay(k, _)], _) * delay(result, _);
+				result = delay(_, foo[delay(_, k)]) * delay(_, result);
 			}
 			return result;
 		}, 30);
@@ -711,8 +711,8 @@ $(document).ready(function(){
 	asyncTest("fully async for in", 1, function(){
 		evalTest(function f(_){
 			var result = 1;
-			for (var i = delay(1, _); i < delay(5, _); i = delay(i, _) + 1) {
-				result = delay(result, _) * delay(i, _)
+			for (var i = delay(_, 1); i < delay(_, 5); i = delay(_, i) + 1) {
+				result = delay(_, result) * delay(_, i)
 			}
 			return result;
 		}, 24);
@@ -724,7 +724,7 @@ $(document).ready(function(){
 			for (var i = 1; i < 10; i++) {
 				if (i == 5) 
 					break;
-				result = delay(result, _) * delay(i, _)
+				result = delay(_, result) * delay(_, i)
 			}
 			return result;
 		}, 24);
@@ -736,7 +736,7 @@ $(document).ready(function(){
 			for (var i = 1; i < 10; i++) {
 				if (i >= 5) 
 					continue;
-				result = delay(result, _) * delay(i, _)
+				result = delay(_, result) * delay(_, i)
 			}
 			return result;
 		}, 24);
@@ -748,7 +748,7 @@ $(document).ready(function(){
 			while (i < 10) {
 				if (i == 5) 
 					break;
-				result = delay(result, _) * delay(i, _);
+				result = delay(_, result) * delay(_, i);
 				i++;
 			}
 			return result;
@@ -762,7 +762,7 @@ $(document).ready(function(){
 				i++;
 				if (i >= 5) 
 					continue;
-				result = delay(result, _) * delay(i, _);
+				result = delay(_, result) * delay(_, i);
 			}
 			return result;
 		}, 24);
@@ -771,17 +771,17 @@ $(document).ready(function(){
 	asyncTest("eval lazy", 1, function(){
 		evalTest(function f(_){
 			var result = 1;
-			return delay(delay(result + 8, _) < 5, _) && true ? 2 : 4
+			return delay(_, delay(_, result + 8) < 5) && true ? 2 : 4
 		}, 4);
 	})
 	
 	asyncTest("try catch 1", 1, function(){
 		evalTest(function f(_){
 			try {
-				return delay("ok", _);
+				return delay(_, "ok");
 			} 
 			catch (ex) {
-				return delay("err", _);
+				return delay(_, "err");
 			}
 		}, "ok");
 	})
@@ -789,10 +789,10 @@ $(document).ready(function(){
 	asyncTest("try catch 2", 1, function(){
 		evalTest(function f(_){
 			try {
-				throw delay("thrown", _);
+				throw delay(_, "thrown");
 			} 
 			catch (ex) {
-				return delay("caught ", _) + ex;
+				return delay(_, "caught ") + ex;
 			}
 		}, "caught thrown");
 	})
@@ -800,10 +800,10 @@ $(document).ready(function(){
 	asyncTest("try catch 3", 1, function(){
 		evalTest(function f(_){
 			try {
-				throw delay("thrown", _);
+				throw delay(_, "thrown");
 			} 
 			catch (ex) {
-				return delay("caught ", _) + ex;
+				return delay(_, "caught ") + ex;
 			}
 		}, "caught thrown");
 	})
@@ -811,10 +811,10 @@ $(document).ready(function(){
 	asyncTest("try catch 5", 1, function(){
 		evalTest(function f(_){
 			try {
-				delayFail("delay fail", _);
+				delayFail(_, "delay fail");
 			} 
 			catch (ex) {
-				return delay("caught ", _) + ex;
+				return delay(_, "caught ") + ex;
 			}
 		}, "caught delay fail");
 	})
@@ -823,10 +823,10 @@ $(document).ready(function(){
 		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay("try", _)
+				x += delay(_, "try")
 			}
 			finally {
-				x += delay(" finally", _);
+				x += delay(_, " finally");
 			}
 			x += " end"
 			return x;
@@ -837,11 +837,11 @@ $(document).ready(function(){
 		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay("try", _)
+				x += delay(_, "try")
 				return x;
 			}
 			finally {
-				x += delay(" finally", _);
+				x += delay(_, " finally");
 			}
 			x += " end"
 			return x;
@@ -852,11 +852,11 @@ $(document).ready(function(){
 		evalTest(function f(_){
 			var x = "";
 			try {
-				x += delay("try", _)
+				x += delay(_, "try")
 				throw "bad try";
 			}
 			finally {
-				x += delay(" finally", _);
+				x += delay(_, " finally");
 			}
 			x += " end"
 			return x;
@@ -866,23 +866,23 @@ $(document).ready(function(){
 	asyncTest("and ok", 1, function(){
 		evalTest(function f(_){
 			var x = "<<";
-			if (delay(true, _) && delay(true, _)) 
+			if (delay(_, true) && delay(_, true)) 
 				x += "T1";
 			else 
 				x += "F1"
-			if (delay(true, _) && delay(false, _)) 
+			if (delay(_, true) && delay(_, false)) 
 				x += "T2";
 			else 
 				x += "F2"
-			if (delay(false, _) && delay(true, _)) 
+			if (delay(_, false) && delay(_, true)) 
 				x += "T3";
 			else 
 				x += "F3"
-			if (delay(false, _) && delay(false, _)) 
+			if (delay(_, false) && delay(_, false)) 
 				x += "T4";
 			else 
 				x += "F4"
-			if (delay(false, _) && delayFail("bad", _)) 
+			if (delay(_, false) && delayFail(_, "bad")) 
 				x += "T5";
 			else 
 				x += "F5"
@@ -894,23 +894,23 @@ $(document).ready(function(){
 	asyncTest("or ok", 1, function(){
 		evalTest(function f(_){
 			var x = "<<";
-			if (delay(true, _) || delay(true, _)) 
+			if (delay(_, true) || delay(_, true)) 
 				x += "T1";
 			else 
 				x += "F1"
-			if (delay(true, _) || delay(false, _)) 
+			if (delay(_, true) || delay(_, false)) 
 				x += "T2";
 			else 
 				x += "F2"
-			if (delay(false, _) || delay(true, _)) 
+			if (delay(_, false) || delay(_, true)) 
 				x += "T3";
 			else 
 				x += "F3"
-			if (delay(false, _) || delay(false, _)) 
+			if (delay(_, false) || delay(_, false)) 
 				x += "T4";
 			else 
 				x += "F4"
-			if (delay(true, _) || delayFail("bad", _)) 
+			if (delay(_, true) || delayFail(_, "bad")) 
 				x += "T5";
 			else 
 				x += "F5"
@@ -921,32 +921,32 @@ $(document).ready(function(){
 	
 	asyncTest("switch with default", 1, function(){
 		evalTest(function f(_){
-			function g(i, _){
+			function g(_, i){
 				var result = "a"
-				switch (delay(i, _)) {
+				switch (delay(_, i)) {
 					case 1:
-						result = delay("b", _);
+						result = delay(_, "b");
 						break;
 					case 2:
-						return delay("c", _);
+						return delay(_, "c");
 					case 3:
 					case 4:
-						result = delay("d", _);
+						result = delay(_, "d");
 						break;
 					default:
-						result = delay("e", _);
+						result = delay(_, "e");
 				}
 				return result;
 			}
-			return g(0, _) + g(1, _) + g(2, _) + g(3, _) + g(4, _) + g(5, _);
+			return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 		}, "ebcdde");
 	})
 	
 	asyncTest("switch without default", 1, function(){
 		evalTest(function f(_){
-			function g(i, _){
+			function g(_, i){
 				var result = "a"
-				switch (delay(i, _)) {
+				switch (delay(_, i)) {
 					case 1:
 						result = "b";
 						break;
@@ -959,7 +959,7 @@ $(document).ready(function(){
 				}
 				return result;
 			}
-			return g(0, _) + g(1, _) + g(2, _) + g(3, _) + g(4, _) + g(5, _);
+			return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 		}, "abcdda");
 	})
 	
