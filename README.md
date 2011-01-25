@@ -67,7 +67,7 @@ It feels a little bit like your statements have leaked through a hole created by
 
 This creates two problems:
 
-* Writing algorithms become harder because the built-in keywords of Javascript (`if`, `while`, `try/catch`) cannot control the flow as naturally as they did before.
+* Writing algorithms becomes harder because the built-in keywords of Javascript (`if`, `while`, `try/catch`) cannot control the flow as naturally as they did before.
   For example, you have to convert your loops into a recursive form, or use a helper library to write them.
 * The code that you write is harder to read because it is polluted by _callback noise_ that does not have much to do with the problem that you are trying to solve.
 
@@ -159,7 +159,7 @@ But you can get around it by switching to the tradional callback style:
 
     function processFiles() {
         // ...
-        fileLength(p, function(err, len) { // OK
+        fileLength(function(err, len, p) { // OK
             // ...
         });
     }
