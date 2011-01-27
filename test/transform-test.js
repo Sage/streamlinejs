@@ -245,7 +245,7 @@ $(document).ready(function(){
 				f1();
 				return (function(__break){
 					return (function __loop(){
-						var __ = __loop;
+						var __ = __nt(__loop);
 						if (cond) {
 							return f2(__cb(_, function(){
 								f3();
@@ -283,7 +283,7 @@ $(document).ready(function(){
 				var __1 = true;
 				return (function(__break){
 					return (function __loop(){
-						var __ = __loop;
+						var __ = __nt(__loop);
 						if ((__1 || cond)) {
 							__1 = false;
 							return f2(__cb(_, function(){
@@ -322,7 +322,7 @@ $(document).ready(function(){
 				var __2 = false;
 				return (function(__break){
 					return (function __loop(){
-						var __ = __loop;
+						var __ = __nt(__loop);
 						if (__2) {
 							i++;
 						}
@@ -369,7 +369,7 @@ $(document).ready(function(){
 				var __3 = 0;
 				return (function(__break){
 					return (function __loop(){
-						var __ = __loop;
+						var __ = __nt(__loop);
 						if ((__3 < __1.length)) {
 							var k = __1[__3++];
 							return f2(__cb(_, function(){
@@ -520,7 +520,7 @@ $(document).ready(function(){
 				f1();
 				return (function(__break){
 					return (function __loop(){
-						var __ = __loop;
+						var __ = __nt(__loop);
 						return f2(__cb(_, function(__1){
 							if (__1) {
 								f3();

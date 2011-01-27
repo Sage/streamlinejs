@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var module = QUnit.module;
 	var transform = Streamline.transform;
 	var __cb = Streamline.callbackWrapper;
+	var __nt = Streamline.nextTickWrapper;
 	
 	var vars = "";
 	var exports = StreamlineHelpers;
