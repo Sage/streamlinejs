@@ -610,6 +610,7 @@ $(document).ready(function(){
 	test("empty body", 1, function(){
 		genTest(function f(_){
 		}, function f(_){
+			var __ = _;
 			return __();
 		})
 	})
@@ -618,6 +619,7 @@ $(document).ready(function(){
 		genTest(function f(_){
 			return 4;
 		}, function f(_){
+			var __ = _;
 			return _(null, 4);
 		})
 	})
