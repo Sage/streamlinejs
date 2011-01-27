@@ -22,17 +22,22 @@ $(document).ready(function(){
 		}
 		strictEqual(s1, s2);
 	}
-
+	
 	test("basic", 1, function(){
 		genTest(function f(_){
 			f1(_);
 			f2();
 		}, function f(_){
 			var __ = _;
-			return f1(__cb(_, function(){
-				f2();
-				return __();
-			}));
+			try {
+				return f1(__cb(_, function(){
+					f2();
+					return __();
+				}));
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -43,11 +48,16 @@ $(document).ready(function(){
 			return x;
 		}, function f(_){
 			var __ = _;
-			return f1(__cb(_, function(__1){
-				var x = __1;
-				f2();
-				return _(null, x);
-			}));
+			try {
+				return f1(__cb(_, function(__1){
+					var x = __1;
+					f2();
+					return _(null, x);
+				}));
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -57,10 +67,15 @@ $(document).ready(function(){
 			return f2(_);
 		}, function f(_){
 			var __ = _;
-			f1();
-			return f2(__cb(_, function(__1){
-				return _(null, __1);
-			}));
+			try {
+				f1();
+				return f2(__cb(_, function(__1){
+					return _(null, __1);
+				}));
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -75,20 +90,25 @@ $(document).ready(function(){
 			f5();
 		}, function f(_, b){
 			var __ = _;
-			f1();
-			return (function(__){
-				if (b) {
-					f2();
-					return f3(__cb(_, function(){
-						f4();
-						return __();
-					}));
-				};
-				return __();
-			})(function(){
-				f5();
-				return __();
-			});
+			try {
+				f1();
+				return (function(__){
+					if (b) {
+						f2();
+						return f3(__cb(_, function(){
+							f4();
+							return __();
+						}));
+					};
+					return __();
+				})(function(){
+					f5();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -108,26 +128,31 @@ $(document).ready(function(){
 			f8();
 		}, function f(_, b){
 			var __ = _;
-			f1();
-			return (function(__){
-				if (b) {
-					f2();
-					return f3(__cb(_, function(){
-						f4();
-						return __();
-					}));
-				}
-				else {
-					f5();
-					return f6(__cb(_, function(){
-						f7();
-						return __();
-					}));
-				}
-			})(function(){
-				f8();
-				return __();
-			});
+			try {
+				f1();
+				return (function(__){
+					if (b) {
+						f2();
+						return f3(__cb(_, function(){
+							f4();
+							return __();
+						}));
+					}
+					else {
+						f5();
+						return f6(__cb(_, function(){
+							f7();
+							return __();
+						}));
+					}
+				})(function(){
+					f8();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -147,23 +172,28 @@ $(document).ready(function(){
 			return 2;
 		}, function f(_, b){
 			var __ = _;
-			f1();
-			return (function(__){
-				if (b) {
-					f2();
-					return f3(__cb(_, function(){
-						f4();
-						return _(null, 1);
-					}));
-				}
-				else {
-					f5();
-				}
-				return __();
-			})(function(){
-				f6();
-				return _(null, 2);
-			});
+			try {
+				f1();
+				return (function(__){
+					if (b) {
+						f2();
+						return f3(__cb(_, function(){
+							f4();
+							return _(null, 1);
+						}));
+					}
+					else {
+						f5();
+					}
+					return __();
+				})(function(){
+					f6();
+					return _(null, 2);
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -177,17 +207,27 @@ $(document).ready(function(){
 			f4();
 		}, function f(_, arr){
 			var __ = _;
-			f1();
-			return each(__cb(_, function(){
-				f4();
-				return __();
-			}), arr, function(_, elt){
-				var __ = _;
-				return f2(__cb(_, function(){
-					f3();
+			try {
+				f1();
+				return each(__cb(_, function(){
+					f4();
 					return __();
-				}), elt);
-			});
+				}), arr, function(_, elt){
+					var __ = _;
+					try {
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}), elt);
+					} 
+					catch (__err) {
+						return _(__err);
+					}
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -201,24 +241,29 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__break){
-				return (function __loop(){
-					var __ = __loop;
-					if (cond) {
-						return f2(__cb(_, function(){
-							f3();
-							return __();
-						}));
-					}
-					else {
-						return __break();
-					}
-				})();
-			})(function(){
-				f4();
-				return __();
-			});
+			try {
+				f1();
+				return (function(__break){
+					return (function __loop(){
+						var __ = __loop;
+						if (cond) {
+							return f2(__cb(_, function(){
+								f3();
+								return __();
+							}));
+						}
+						else {
+							return __break();
+						}
+					})();
+				})(function(){
+					f4();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -233,26 +278,31 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = _;
-			f1();
-			var __1 = true;
-			return (function(__break){
-				return (function __loop(){
-					var __ = __loop;
-					if ((__1 || cond)) {
-						__1 = false;
-						return f2(__cb(_, function(){
-							f3();
-							return __();
-						}));
-					}
-					else {
-						return __break();
-					}
-				})();
-			})(function(){
-				f4();
-				return __();
-			});
+			try {
+				f1();
+				var __1 = true;
+				return (function(__break){
+					return (function __loop(){
+						var __ = __loop;
+						if ((__1 || cond)) {
+							__1 = false;
+							return f2(__cb(_, function(){
+								f3();
+								return __();
+							}));
+						}
+						else {
+							return __break();
+						}
+					})();
+				})(function(){
+					f4();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	});
 	
@@ -266,32 +316,37 @@ $(document).ready(function(){
 			f4();
 		}, function f(_, arr){
 			var __ = _;
-			f1();
-			var i = 0;
-			var __2 = false;
-			return (function(__break){
-				return (function __loop(){
-					var __ = __loop;
-					if (__2) {
-						i++;
-					}
-					else {
-						__2 = true;
-					}
-					if ((i < arr.length)) {
-						return f2(__cb(_, function(){
-							f3();
-							return __();
-						}));
-					}
-					else {
-						return __break();
-					}
-				})();
-			})(function(){
-				f4();
-				return __();
-			});
+			try {
+				f1();
+				var i = 0;
+				var __2 = false;
+				return (function(__break){
+					return (function __loop(){
+						var __ = __loop;
+						if (__2) {
+							i++;
+						}
+						else {
+							__2 = true;
+						}
+						if ((i < arr.length)) {
+							return f2(__cb(_, function(){
+								f3();
+								return __();
+							}));
+						}
+						else {
+							return __break();
+						}
+					})();
+				})(function(){
+					f4();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		})
 	})
 	
@@ -305,30 +360,35 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = _;
-			f1();
-			var __1 = [];
-			for (var __2 in obj) {
-				__1.push(__2);
+			try {
+				f1();
+				var __1 = [];
+				for (var __2 in obj) {
+					__1.push(__2);
+				}
+				var __3 = 0;
+				return (function(__break){
+					return (function __loop(){
+						var __ = __loop;
+						if ((__3 < __1.length)) {
+							var k = __1[__3++];
+							return f2(__cb(_, function(){
+								f3(k);
+								return __();
+							}), k);
+						}
+						else {
+							return __break();
+						}
+					})();
+				})(function(){
+					f4();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
 			}
-			var __3 = 0;
-			return (function(__break){
-				return (function __loop(){
-					var __ = __loop;
-					if ((__3 < __1.length)) {
-						var k = __1[__3++];
-						return f2(__cb(_, function(){
-							f3(k);
-							return __();
-						}), k);
-					}
-					else {
-						return __break();
-					}
-				})();
-			})(function(){
-				f4();
-				return __();
-			});
 		});
 	})
 	
@@ -352,31 +412,36 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__){
-				var __break = __;
-				switch (exp) {
-					case "a":
-						return f2(__cb(_, function(){
-							f3();
+			try {
+				f1();
+				return (function(__){
+					var __break = __;
+					switch (exp) {
+						case "a":
+							return f2(__cb(_, function(){
+								f3();
+								return __break();
+							}));
+						case "b":
+							
+						case "c":
+							f4();
+							return f5(__cb(_, function(){
+								return __break();
+							}));
+						default:
+							f6();
 							return __break();
-						}));
-					case "b":
-						
-					case "c":
-						f4();
-						return f5(__cb(_, function(){
-							return __break();
-						}));
-					default:
-						f6();
-						return __break();
-				}
-				return __();
-			})(function(){
-				f7();
-				return __();
-			});
+					}
+					return __();
+				})(function(){
+					f7();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	})
 	
@@ -393,22 +458,27 @@ $(document).ready(function(){
 			}
 		}, function f(_){
 			var __ = _;
-			return (function(__){
-				var __break = __;
-				switch (exp) {
-					case "a":
-						return f2(__cb(_, function(){
-							switch (exp2) {
-								case "b":
-									break;
-							}
-							return __break();
-						}));
-				}
-				return __();
-			})(function(){
-				return __();
-			});
+			try {
+				return (function(__){
+					var __break = __;
+					switch (exp) {
+						case "a":
+							return f2(__cb(_, function(){
+								switch (exp2) {
+									case "b":
+										break;
+								}
+								return __break();
+							}));
+					}
+					return __();
+				})(function(){
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	})
 	
@@ -419,17 +489,22 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return f4(__cb(_, function(__3){
-				return f3(__cb(_, function(__2){
-					return f5(__cb(_, function(__4){
-						return f2(__cb(_, function(){
-							f7();
-							return __();
-						}), __2, __4);
-					}), f6());
-				}), __3);
-			}));
+			try {
+				f1();
+				return f4(__cb(_, function(__3){
+					return f3(__cb(_, function(__2){
+						return f5(__cb(_, function(__4){
+							return f2(__cb(_, function(){
+								f7();
+								return __();
+							}), __2, __4);
+						}), f6());
+					}), __3);
+				}));
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	})
 	
@@ -441,24 +516,29 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__break){
-				return (function __loop(){
-					var __ = __loop;
-					return f2(__cb(_, function(__1){
-						if (__1) {
-							f3();
-						}
-						else {
-							return __break();
-						}
-						return __();
-					}));
-				})();
-			})(function(){
-				f4();
-				return __();
-			});
+			try {
+				f1();
+				return (function(__break){
+					return (function __loop(){
+						var __ = __loop;
+						return f2(__cb(_, function(__1){
+							if (__1) {
+								f3();
+							}
+							else {
+								return __break();
+							}
+							return __();
+						}));
+					})();
+				})(function(){
+					f4();
+					return __();
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		})
 	})
 	
@@ -478,35 +558,40 @@ $(document).ready(function(){
 			f8();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__){
-				return (function(_){
-					try {
-						f2();
-						return f3(__cb(_, function(){
-							f4();
-							return __();
-						}));
-					} 
-					catch (__err) {
-						return _(__err);
-					}
-					
-				})(function(ex, __result){
-					if (ex) {
-						f5();
-						return f6(__cb(_, function(){
-							f7();
-							return __();
-						}));
-					}
-					else 
-						return _(null, __result);
+			try {
+				f1();
+				return (function(__){
+					return (function(_){
+						try {
+							f2();
+							return f3(__cb(_, function(){
+								f4();
+								return __();
+							}));
+						} 
+						catch (__err) {
+							return _(__err);
+						}
+						
+					})(function(ex, __result){
+						if (ex) {
+							f5();
+							return f6(__cb(_, function(){
+								f7();
+								return __();
+							}));
+						}
+						else 
+							return _(null, __result);
+					});
+				})(function(){
+					f8();
+					return __();
 				});
-			})(function(){
-				f8();
-				return __();
-			});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		});
 	})
 	
@@ -526,42 +611,47 @@ $(document).ready(function(){
 			f8();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__){
-				return (function(_){
-					function __(){
-						return _(null, null, true);
-					}
-					try {
-						f2();
-						return f3(__cb(_, function(){
-							f4();
-							return __();
-						}));
-					} 
-					catch (__err) {
-						return _(__err);
-					}
-				})(function(__err, __result, __cont){
-					return (function(__){
-						f5();
-						return f6(__cb(_, function(){
-							f7();
-							return __();
-						}));
-					})(function(){
-						if (__cont) {
-							return __()
+			try {
+				f1();
+				return (function(__){
+					return (function(_){
+						function __(){
+							return _(null, null, true);
 						}
-						else {
-							return _(__err, __result)
+						try {
+							f2();
+							return f3(__cb(_, function(){
+								f4();
+								return __();
+							}));
+						} 
+						catch (__err) {
+							return _(__err);
 						}
+					})(function(__err, __result, __cont){
+						return (function(__){
+							f5();
+							return f6(__cb(_, function(){
+								f7();
+								return __();
+							}));
+						})(function(){
+							if (__cont) {
+								return __()
+							}
+							else {
+								return _(__err, __result)
+							}
+						});
 					});
+				})(function(){
+					f8();
+					return __();
 				});
-			})(function(){
-				f8();
-				return __();
-			});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		})
 	})
 	
@@ -576,34 +666,44 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = _;
-			f1();
-			return (function(__){
-				return (function(_){
-					var __ = _;
-					return f2(__cb(_, function(__1){
-						var __val = __1;
-						if ((!__val == true)) {
-							return _(null, __val);
+			try {
+				f1();
+				return (function(__){
+					return (function(_){
+						var __ = _;
+						try {
+							return f2(__cb(_, function(__1){
+								var __val = __1;
+								if ((!__val == true)) {
+									return _(null, __val);
+								}
+								return f3(__cb(_, function(__2){
+									return _(null, __2);
+									
+								}));
+							}));
+						} 
+						catch (__err) {
+							return _(__err);
 						}
-						return f3(__cb(_, function(__2){
-							return _(null, __2);
-							
-						}));
+					})(__cb(_, function(__1){
+						if (__1) {
+							f4();
+							return f5(__cb(_, function(){
+								f6();
+								return __();
+							}));
+						}
+						return __();
 					}));
-				})(__cb(_, function(__1){
-					if (__1) {
-						f4();
-						return f5(__cb(_, function(){
-							f6();
-							return __();
-						}));
-					}
+				})(function(){
+					f7();
 					return __();
-				}));
-			})(function(){
-				f7();
-				return __();
-			});
+				});
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		})
 	})
 	
@@ -611,6 +711,11 @@ $(document).ready(function(){
 		genTest(function f(_){
 		}, function f(_){
 			var __ = _;
+			try {
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 			return __();
 		})
 	})
@@ -620,10 +725,14 @@ $(document).ready(function(){
 			return 4;
 		}, function f(_){
 			var __ = _;
-			return _(null, 4);
+			try {
+				return _(null, 4);
+			} 
+			catch (__err) {
+				return _(__err);
+			}
 		})
 	})
-	
 	
 	
 	module("evaluation");
