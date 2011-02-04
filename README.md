@@ -259,30 +259,29 @@ TODOs, known issues, etc.
 * Irregular `switch` statements (with `case` clauses that flow into each other) are not handled by
 the transformation engine (these constructs are questionable so I am not sure that streamline should support them).
 * Labelled `break` and `continue` are not yet supported.
-* Files are transformed every time node starts. A cache will be added later (implies upgrading to node.js 0.3.X 
-first because the 0.2 `registerExtension` call does not pass the file name to the transformation hook).
+* Files are transformed every time node starts. A cache will be added later.
 * Debugging may be tricky because the line numbers are off in the transformed source.
-* A CoffeeScript version is in the works.
+* Installation via NPM is coming.
 
 Running _streamlined_ code
 ==========================
 
-You can run _streamlined_ code as a node script file directly from the command line:
-
-    node streamline-dir/lib/node-init.js myscript.js [args]
-
-You can also load the transformation engine from your main server script and let the node
-module infrastructure do the job. You need to add the following line to your main server script:
-
-    require('streamline_dir/lib/node-init.js')
-  
-and include the following special marker in all your _streamlined_ source files:
+You must include the following marker in all your _streamlined_ source files:
 
     !!STREAMLINE!!
 
-With this setup, node will automatically transform the files that carry the special marker when your code
-_requires_ them.
+This marker is usually placed inside a comment at the top of the file but you may place it 
+anywhere in the file.
 
+You can run _streamlined_ code as a node script file directly from the command line:
+
+    streamline-dir/bin/node-streamline myscript.js [args]
+
+You can also initialize streamline from your main server script. 
+Just add the following line to your main server script:
+
+    require('streamline_dir/lib/node-init.js')
+    
 On the client side, you can use the `transform.js` API to convert the code and then `eval` it, 
 There is only one call in the `transform.js` API:
 
@@ -290,6 +289,15 @@ There is only one call in the `transform.js` API:
 
 Note: We also have a small `require` infrastructure to let the browser load files that have been _streamlined_ 
 by a `node.js` server but it is not packaged for publication yet. It will be published later.
+
+Running with CoffeeScript
+=========================
+
+You can also use `streamline.js` with CoffeeScript. To do so, just run your script with 
+`streamline-dir/bin/coffee-streamline` instead of `coffee`. For example:
+
+	streamline-dir/bin/coffee-streamline streamline-dir/examples/diskUsage.coffee
+
 
 Installation and dependencies
 =============================
@@ -307,9 +315,6 @@ Another solution is to load a library that emulates the missing ECMAScript 5 cal
 On the other hand, the code which is produced by the transformation engine does not have any special strings attached. 
 You can use it with any Javascript library that uses node.js's callback style (even outside of node as this is
 just an API convention). 
-
-Note: the `!!STREAMLINE!!` marker works with node.js 0.2.6 but will likely fail with 0.3.x as the `registerExtension` API 
-has been deprecated. 
 
 Discussion
 ==========

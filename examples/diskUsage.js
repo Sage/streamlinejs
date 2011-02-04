@@ -1,5 +1,5 @@
 /*
- * Usage: node ../lib/node-init.js diskUsage [path]
+ * Usage: ../bin/node-streamline diskUsage [path]
  *
  * Recursively computes the size of directories.
  * 
@@ -31,7 +31,7 @@ function du(_, path) {
 	return total;
 }
 
-var p = process.argv.length > 3 ? process.argv[3] : ".";
+var p = process.argv.length > 2 ? process.argv[2] : ".";
 
 var t0 = Date.now();
 function report(err, result) {

@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+require("../lib/node-init.js");
+
+var path = require('path');
+
+process.argv.shift();
+
+require(path.join(process.cwd(), process.argv[1]));

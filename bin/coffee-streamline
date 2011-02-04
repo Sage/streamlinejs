@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var coffee = require('coffee-script');
+
+require("../../narcissus/lib/jsdefs");
+require("../../narcissus/lib/jslex");
+require("../../narcissus/lib/jsparse");
+require("../../narcissus/lib/jsdecomp");
+var transform = require('../lib/transform').transform;
+
+var compile = coffee.compile;
+
+coffee.compile = function(content) {
+	var result = compile(content);
+	return content.indexOf('!!STREAMLINE!!') >= 0 ? transform(result) : result; 
+}
+
+global.error = console.log
+
+require('coffee-script/command').run();
