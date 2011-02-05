@@ -8,7 +8,7 @@ $(document).ready(function(){
 		if (jQuery.browser.mozilla) 
 			return new Function(s).toString();
 		else 
-			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}');
+			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/\(_\|\|__throw\)/g, '_||__throw');
 	}
 	
 	function genTest(f1, f2){
@@ -28,7 +28,7 @@ $(document).ready(function(){
 			f1(_);
 			f2();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				return f1(__cb(_, function(){
 					f2();
@@ -47,7 +47,7 @@ $(document).ready(function(){
 			f2();
 			return x;
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				return f1(__cb(_, function(__1){
 					var x = __1;
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			f1();
 			return f2(_);
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return f2(__cb(_, function(__1){
@@ -89,7 +89,7 @@ $(document).ready(function(){
 			}
 			f5();
 		}, function f(_, b){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -127,7 +127,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_, b){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -171,7 +171,7 @@ $(document).ready(function(){
 			f6();
 			return 2;
 		}, function f(_, b){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -206,14 +206,14 @@ $(document).ready(function(){
 			})
 			f4();
 		}, function f(_, arr){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return each(__cb(_, function(){
 					f4();
 					return __();
 				}), arr, function(_, elt){
-					var __ = _;
+					var __ = (_ = _ || __throw);
 					try {
 						return f2(__cb(_, function(){
 							f3();
@@ -240,7 +240,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__break){
@@ -278,7 +278,7 @@ $(document).ready(function(){
 			while (cond);
 			f4();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				var __1 = true;
@@ -317,7 +317,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_, arr){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				var i = 0;
@@ -362,7 +362,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				var __1 = [];
@@ -415,7 +415,7 @@ $(document).ready(function(){
 			}
 			f7();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -461,7 +461,7 @@ $(document).ready(function(){
 					break;
 			}
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				return (function(__){
 					var __break = __;
@@ -492,7 +492,7 @@ $(document).ready(function(){
 			f2(_, f3(_, f4(_)), f5(_, f6()));
 			f7();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return f4(__cb(_, function(__3){
@@ -519,7 +519,7 @@ $(document).ready(function(){
 				f3();
 			f4();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__break){
@@ -562,7 +562,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -615,7 +615,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
@@ -670,12 +670,12 @@ $(document).ready(function(){
 			}
 			f7();
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				f1();
 				return (function(__){
 					return (function(_){
-						var __ = _;
+						var __ = (_ = _ || __throw);
 						try {
 							return f2(__cb(_, function(__1){
 								var __val = __1;
@@ -715,7 +715,7 @@ $(document).ready(function(){
 	test("empty body", 1, function(){
 		genTest(function f(_){
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 			} 
 			catch (__err) {
@@ -729,7 +729,7 @@ $(document).ready(function(){
 		genTest(function f(_){
 			return 4;
 		}, function f(_){
-			var __ = _;
+			var __ = (_ = _ || __throw);
 			try {
 				return _(null, 4);
 			} 
