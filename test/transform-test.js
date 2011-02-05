@@ -244,8 +244,8 @@ $(document).ready(function(){
 			try {
 				f1();
 				return (function(__break){
-					return (function __loop(){
-						var __ = __nt(__loop);
+					var __loop = __nt(function(){
+						var __ = __loop;
 						if (cond) {
 							return f2(__cb(_, function(){
 								f3();
@@ -255,7 +255,8 @@ $(document).ready(function(){
 						else {
 							return __break();
 						}
-					})();
+					});
+					return __loop();
 				})(function(){
 					f4();
 					return __();
@@ -282,8 +283,8 @@ $(document).ready(function(){
 				f1();
 				var __1 = true;
 				return (function(__break){
-					return (function __loop(){
-						var __ = __nt(__loop);
+					var __loop = __nt(function(){
+						var __ = __loop;
 						if ((__1 || cond)) {
 							__1 = false;
 							return f2(__cb(_, function(){
@@ -294,7 +295,8 @@ $(document).ready(function(){
 						else {
 							return __break();
 						}
-					})();
+					});
+					return __loop();
 				})(function(){
 					f4();
 					return __();
@@ -321,8 +323,8 @@ $(document).ready(function(){
 				var i = 0;
 				var __2 = false;
 				return (function(__break){
-					return (function __loop(){
-						var __ = __nt(__loop);
+					var __loop = __nt(function(){
+						var __ = __loop;
 						if (__2) {
 							i++;
 						}
@@ -338,7 +340,8 @@ $(document).ready(function(){
 						else {
 							return __break();
 						}
-					})();
+					});
+					return __loop();
 				})(function(){
 					f4();
 					return __();
@@ -368,8 +371,8 @@ $(document).ready(function(){
 				}
 				var __3 = 0;
 				return (function(__break){
-					return (function __loop(){
-						var __ = __nt(__loop);
+					var __loop = __nt(function(){
+						var __ = __loop;
 						if ((__3 < __1.length)) {
 							var k = __1[__3++];
 							return f2(__cb(_, function(){
@@ -380,7 +383,8 @@ $(document).ready(function(){
 						else {
 							return __break();
 						}
-					})();
+					});
+					return __loop();
 				})(function(){
 					f4();
 					return __();
@@ -519,8 +523,8 @@ $(document).ready(function(){
 			try {
 				f1();
 				return (function(__break){
-					return (function __loop(){
-						var __ = __nt(__loop);
+					var __loop = __nt(function(){
+						var __ = __loop;
 						return f2(__cb(_, function(__1){
 							if (__1) {
 								f3();
@@ -530,7 +534,8 @@ $(document).ready(function(){
 							}
 							return __();
 						}));
-					})();
+					});
+					return __loop();
 				})(function(){
 					f4();
 					return __();
