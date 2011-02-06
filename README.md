@@ -260,20 +260,29 @@ TODOs, known issues, etc.
 the transformation engine (these constructs are questionable so I am not sure that streamline should support them).
 * Labelled `break` and `continue` are not yet supported.
 * Files are transformed every time node starts. A cache will be added later.
-* Debugging may be tricky because the line numbers are off in the transformed source.
 * Installation via NPM is coming.
 
 Running _streamlined_ code
 ==========================
 
-You must include the following marker in all your _streamlined_ source files:
+You have two options to package _streamlined_ code.
 
-    !!STREAMLINE!!
+The first one is to use a special convention for your source file names. 
+Instead of putting the source for module `xxx` into a file called `xxx.js`, you put it into
+a file called `xxx_.js`. When you _require_ `xxx` streamline will read the source from `xxx_.js`,
+transform it and save the transformed code into `xxx.js` and will pass the transformed source
+to node. This option is the preferred option because it works well with debuggers.
 
-This marker is usually placed inside a comment at the top of the file but you may place it 
-anywhere in the file.
+Note: node will not find your module if the `xxx.js` file does not exist. 
+So you have to create an empty `xxx.js` file to initiate the process.
 
-You can run _streamlined_ code as a node script file directly from the command line:
+The second option is to add a special `!!STREAMLINE!!` marker in your source code (anywhere, usually 
+in a comment at the top) and to call your file `xxx.js`, as usual. Streamline will detect
+the marker and transform your code before passing to node. The drawback of this option is that the 
+transformed code is not available for debugging.
+
+Once you have setup your _streamlined_ code with one of these options, 
+you can run it as a node script file directly from the command line:
 
     streamline-dir/bin/node-streamline myscript.js [args]
 
@@ -287,13 +296,11 @@ There is only one call in the `transform.js` API:
 
     var converted = Streamline.transform(source);
 
-Note: We also have a small `require` infrastructure to let the browser load files that have been _streamlined_ 
-by a `node.js` server but it is not packaged for publication yet. It will be published later.
-
 Running with CoffeeScript
 =========================
 
-You can also use `streamline.js` with CoffeeScript. To do so, just run your script with 
+You can also use `streamline.js` with CoffeeScript. To do so, just put the `!!STREAMLINE!!` marker
+in your coffeescript modules and run your program with 
 `streamline-dir/bin/coffee-streamline` instead of `coffee`. For example:
 
 	streamline-dir/bin/coffee-streamline streamline-dir/examples/diskUsage.coffee
