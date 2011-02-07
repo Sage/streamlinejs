@@ -253,6 +253,23 @@ This is not a true monitor though as it does not (yet?) support reentrant calls.
 Note: This is still very experimental and has only been validated on small examples. 
 So, these APIs may evolve.
  
+Context propagation
+-------------------
+
+Streamline also allows you to propagate a global context along a chain of calls and callbacks.
+This context can be used like TLS (Thread Local Storage) in a threaded environment.
+It allows you to have several active chains that each have their own global context. 
+
+This kind of context is very handy to store information that all calls should be able to access
+but that you don't want to pass explicitly via function parameters. The most obvious example is 
+the `locale` that each request may set differently and that your low level libraries should 
+be able to retrieve to format messages.
+
+The `flows` module exposes two functions to manipulate the context:
+
+* `setContext(ctx)` sets the context (and returns the old context).
+* `getContext()` returns the current context.
+
 TODOs, known issues, etc.
 -------------------------
 
