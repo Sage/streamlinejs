@@ -279,7 +279,7 @@ Advanced options
 
 You can control the transformation by placing comments like the following in your source file:
 
-    pragma streamline.xxx
+    // pragma streamline.xxx
 
 For now, only one `xxx` option is implemented:
 
