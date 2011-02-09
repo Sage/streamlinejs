@@ -172,8 +172,8 @@ You can mix _streamlined_ functions and traditional callback based functions in 
 The transformation engine will only convert the functions that have an underscore as one of their parameters.
 It will leave all other functions unmodified.
 
-Array utilities
----------------
+Array and Object utilities
+--------------------------
 
 The standard ES5 Array methods (`forEach`, `map`, `filter`, ...) are nice but they don't deal with callbacks.
 So, they are of little help for _streamlined_ Javascript.
@@ -188,6 +188,10 @@ The `lib/flows` module contains some utilities to fill the gap:
 
 In `each` and `map`, the `fn` callback is called as `fn(_, elt, i)`.  
 In `filter`, `every` and `some`, the `fn` callback is called as `fn(_, elt)`.
+
+The `lib/flows`module also provides a utility to iterate through object properties:
+
+* `eachKey(_, obj, fn)` calls `fn(_, key, obj[key])` for every `key` in `obj`.
 
 Flows
 -----
@@ -269,6 +273,22 @@ The `flows` module exposes two functions to manipulate the context:
 
 * `setContext(ctx)` sets the context (and returns the old context).
 * `getContext()` returns the current context.
+
+Advanced options
+----------------
+
+You can control the transformation by placing comments like the following in your source file:
+
+    pragma streamline.xxx
+
+For now, only one `xxx` option is implemented:
+
+* `noTryCatch` this option removes the `try/catch` blocks generated around the body of every streamlined
+function, as well as the `try/catch` block in the `__cb` callback helper. This option allows you to generate
+more efficient code but requires that you trap exceptions both in low level async libraries called
+by streamlined modules and in high level modules that call them. 
+
+Note: the pragma syntax is experimental and may change.
 
 TODOs, known issues, etc.
 -------------------------

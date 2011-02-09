@@ -11,9 +11,10 @@ $(document).ready(function(){
 			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/\(_\|\|__throw\)/g, '_||__throw');
 	}
 	
-	function genTest(f1, f2){
+	function genTest(f1, f2, withTryCatch){
 		var s1 = clean(transform(f1.toString(), {
-			noHelpers: true
+			noHelpers: true,
+			noTryCatch: !withTryCatch
 		}));
 		var s2 = clean(f2.toString());
 		if (s1 !== s2) {
@@ -29,6 +30,19 @@ $(document).ready(function(){
 			f2();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
+			return f1(__cb(_, function(){
+				f2();
+				return __();
+			}));
+		});
+	});
+	
+	test("basic with try/catch", 1, function(){
+		genTest(function f(_){
+			f1(_);
+			f2();
+		}, function f(_){
+			var __ = (_ = _ || __throw);
 			try {
 				return f1(__cb(_, function(){
 					f2();
@@ -38,7 +52,7 @@ $(document).ready(function(){
 			catch (__err) {
 				return _(__err);
 			}
-		});
+		}, true);
 	});
 	
 	test("var return", 1, function(){
@@ -48,16 +62,11 @@ $(document).ready(function(){
 			return x;
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				return f1(__cb(_, function(__1){
-					var x = __1;
-					f2();
-					return _(null, x);
-				}));
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			return f1(__cb(_, function(__1){
+				var x = __1;
+				f2();
+				return _(null, x);
+			}));
 		});
 	});
 	
@@ -67,15 +76,10 @@ $(document).ready(function(){
 			return f2(_);
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return f2(__cb(_, function(__1){
-					return _(null, __1);
-				}));
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			f1();
+			return f2(__cb(_, function(__1){
+				return _(null, __1);
+			}));
 		});
 	});
 	
@@ -90,25 +94,42 @@ $(document).ready(function(){
 			f5();
 		}, function f(_, b){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					if (b) {
-						f2();
-						return f3(__cb(_, function(){
-							f4();
-							return __();
-						}));
-					};
-					return __();
-				})(function(){
-					f5();
-					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
+			f1();
+			return (function(__){
+				if (b) {
+					f2();
+					return f3(__cb(_, function(){
+						f4();
+						return __();
+					}));
+				};
+				return __();
+			})(function(){
+				f5();
+				return __();
+			});
+		});
+	});
+	
+	test("simplified if", 1, function(){
+		genTest(function f(_, b){
+			f1();
+			if (b) {
+				f2();
+				f3(_);
+				f4();
 			}
+		}, function f(_, b){
+			var __ = (_ = _ || __throw);
+			f1();
+			if (b) {
+				f2();
+				return f3(__cb(_, function(){
+					f4();
+					return __();
+				}));
+			};
+			return __();
 		});
 	});
 	
@@ -128,31 +149,26 @@ $(document).ready(function(){
 			f8();
 		}, function f(_, b){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					if (b) {
-						f2();
-						return f3(__cb(_, function(){
-							f4();
-							return __();
-						}));
-					}
-					else {
-						f5();
-						return f6(__cb(_, function(){
-							f7();
-							return __();
-						}));
-					}
-				})(function(){
-					f8();
-					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			f1();
+			return (function(__){
+				if (b) {
+					f2();
+					return f3(__cb(_, function(){
+						f4();
+						return __();
+					}));
+				}
+				else {
+					f5();
+					return f6(__cb(_, function(){
+						f7();
+						return __();
+					}));
+				}
+			})(function(){
+				f8();
+				return __();
+			});
 		});
 	});
 	
@@ -172,28 +188,23 @@ $(document).ready(function(){
 			return 2;
 		}, function f(_, b){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					if (b) {
-						f2();
-						return f3(__cb(_, function(){
-							f4();
-							return _(null, 1);
-						}));
-					}
-					else {
-						f5();
-					}
-					return __();
-				})(function(){
-					f6();
-					return _(null, 2);
-				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			f1();
+			return (function(__){
+				if (b) {
+					f2();
+					return f3(__cb(_, function(){
+						f4();
+						return _(null, 1);
+					}));
+				}
+				else {
+					f5();
+				}
+				return __();
+			})(function(){
+				f6();
+				return _(null, 2);
+			});
 		});
 	});
 	
@@ -207,27 +218,17 @@ $(document).ready(function(){
 			f4();
 		}, function f(_, arr){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return each(__cb(_, function(){
-					f4();
+			f1();
+			return each(__cb(_, function(){
+				f4();
+				return __();
+			}), arr, function(_, elt){
+				var __ = (_ = _ || __throw);
+				return f2(__cb(_, function(){
+					f3();
 					return __();
-				}), arr, function(_, elt){
-					var __ = (_ = _ || __throw);
-					try {
-						return f2(__cb(_, function(){
-							f3();
-							return __();
-						}), elt);
-					} 
-					catch (__err) {
-						return _(__err);
-					}
-				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				}), elt);
+			});
 		});
 	});
 	
@@ -241,30 +242,25 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__break){
-					var __loop = __nt(function(){
-						var __ = __loop;
-						if (cond) {
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						}
-					});
-					return __loop();
-				})(function(){
-					f4();
-					return __();
+			f1();
+			return (function(__break){
+				var __loop = __nt(function(){
+					var __ = __loop;
+					if (cond) {
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				return __loop();
+			})(function(){
+				f4();
+				return __();
+			});
 		});
 	});
 	
@@ -279,32 +275,27 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				var __1 = true;
-				return (function(__break){
-					var __loop = __nt(function(){
-						var __ = __loop;
-						if ((__1 || cond)) {
-							__1 = false;
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						}
-					});
-					return __loop();
-				})(function(){
-					f4();
-					return __();
+			f1();
+			var __1 = true;
+			return (function(__break){
+				var __loop = __nt(function(){
+					var __ = __loop;
+					if ((__1 || cond)) {
+						__1 = false;
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				return __loop();
+			})(function(){
+				f4();
+				return __();
+			});
 		});
 	});
 	
@@ -318,38 +309,33 @@ $(document).ready(function(){
 			f4();
 		}, function f(_, arr){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				var i = 0;
-				var __2 = false;
-				return (function(__break){
-					var __loop = __nt(function(){
-						var __ = __loop;
-						if (__2) {
-							i++;
-						}
-						else {
-							__2 = true;
-						}
-						if ((i < arr.length)) {
-							return f2(__cb(_, function(){
-								f3();
-								return __();
-							}));
-						}
-						else {
-							return __break();
-						}
-					});
-					return __loop();
-				})(function(){
-					f4();
-					return __();
+			f1();
+			var i = 0;
+			var __2 = false;
+			return (function(__break){
+				var __loop = __nt(function(){
+					var __ = __loop;
+					if (__2) {
+						i++;
+					}
+					else {
+						__2 = true;
+					}
+					if ((i < arr.length)) {
+						return f2(__cb(_, function(){
+							f3();
+							return __();
+						}));
+					}
+					else {
+						return __break();
+					}
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				return __loop();
+			})(function(){
+				f4();
+				return __();
+			});
 		})
 	})
 	
@@ -363,36 +349,31 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				var __1 = [];
-				for (var __2 in obj) {
-					__1.push(__2);
-				}
-				var __3 = 0;
-				return (function(__break){
-					var __loop = __nt(function(){
-						var __ = __loop;
-						if ((__3 < __1.length)) {
-							var k = __1[__3++];
-							return f2(__cb(_, function(){
-								f3(k);
-								return __();
-							}), k);
-						}
-						else {
-							return __break();
-						}
-					});
-					return __loop();
-				})(function(){
-					f4();
-					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
+			f1();
+			var __1 = [];
+			for (var __2 in obj) {
+				__1.push(__2);
 			}
+			var __3 = 0;
+			return (function(__break){
+				var __loop = __nt(function(){
+					var __ = __loop;
+					if ((__3 < __1.length)) {
+						var k = __1[__3++];
+						return f2(__cb(_, function(){
+							f3(k);
+							return __();
+						}), k);
+					}
+					else {
+						return __break();
+					}
+				});
+				return __loop();
+			})(function(){
+				f4();
+				return __();
+			});
 		});
 	})
 	
@@ -416,36 +397,31 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					var __break = __;
-					switch (exp) {
-						case "a":
-							return f2(__cb(_, function(){
-								f3();
-								return __break();
-							}));
-						case "b":
-							
-						case "c":
-							f4();
-							return f5(__cb(_, function(){
-								return __break();
-							}));
-						default:
-							f6();
+			f1();
+			return (function(__){
+				var __break = __;
+				switch (exp) {
+					case "a":
+						return f2(__cb(_, function(){
+							f3();
 							return __break();
-					}
-					return __();
-				})(function(){
-					f7();
-					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+						}));
+					case "b":
+						
+					case "c":
+						f4();
+						return f5(__cb(_, function(){
+							return __break();
+						}));
+					default:
+						f6();
+						return __break();
+				}
+				return __();
+			})(function(){
+				f7();
+				return __();
+			});
 		});
 	})
 	
@@ -462,27 +438,18 @@ $(document).ready(function(){
 			}
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				return (function(__){
-					var __break = __;
-					switch (exp) {
-						case "a":
-							return f2(__cb(_, function(){
-								switch (exp2) {
-									case "b":
-										break;
-								}
-								return __break();
-							}));
-					}
-					return __();
-				})(function(){
-					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
+			var __break = __;
+			switch (exp) {
+				case "a":
+					return f2(__cb(_, function(){
+						switch (exp2) {
+							case "b":
+								break;
+						}
+						return __break();
+					}));
 			}
+			return __();
 		});
 	})
 	
@@ -493,22 +460,17 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return f4(__cb(_, function(__3){
-					return f3(__cb(_, function(__2){
-						return f5(__cb(_, function(__4){
-							return f2(__cb(_, function(){
-								f7();
-								return __();
-							}), __2, __4);
-						}), f6());
-					}), __3);
-				}));
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			f1();
+			return f4(__cb(_, function(__3){
+				return f3(__cb(_, function(__2){
+					return f5(__cb(_, function(__4){
+						return f2(__cb(_, function(){
+							f7();
+							return __();
+						}), __2, __4);
+					}), f6());
+				}), __3);
+			}));
 		});
 	})
 	
@@ -520,30 +482,25 @@ $(document).ready(function(){
 			f4();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__break){
-					var __loop = __nt(function(){
-						var __ = __loop;
-						return f2(__cb(_, function(__1){
-							if (__1) {
-								f3();
-							}
-							else {
-								return __break();
-							}
-							return __();
-						}));
-					});
-					return __loop();
-				})(function(){
-					f4();
-					return __();
+			f1();
+			return (function(__break){
+				var __loop = __nt(function(){
+					var __ = __loop;
+					return f2(__cb(_, function(__1){
+						if (__1) {
+							f3();
+						}
+						else {
+							return __break();
+						}
+						return __();
+					}));
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				return __loop();
+			})(function(){
+				f4();
+				return __();
+			});
 		})
 	})
 	
@@ -563,40 +520,35 @@ $(document).ready(function(){
 			f8();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					return (function(_){
-						try {
-							f2();
-							return f3(__cb(_, function(){
-								f4();
-								return __();
-							}));
-						} 
-						catch (__err) {
-							return _(__err);
-						}
-						
-					})(function(ex, __result){
-						if (ex) {
-							f5();
-							return f6(__cb(_, function(){
-								f7();
-								return __();
-							}));
-						}
-						else 
-							return _(null, __result);
-					});
-				})(function(){
-					f8();
-					return __();
+			f1();
+			return (function(__){
+				return (function(_){
+					try {
+						f2();
+						return f3(__cb(_, function(){
+							f4();
+							return __();
+						}));
+					} 
+					catch (__err) {
+						return _(__err);
+					}
+					
+				})(function(ex, __result){
+					if (ex) {
+						f5();
+						return f6(__cb(_, function(){
+							f7();
+							return __();
+						}));
+					}
+					else 
+						return _(null, __result);
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			})(function(){
+				f8();
+				return __();
+			});
 		});
 	})
 	
@@ -616,47 +568,42 @@ $(document).ready(function(){
 			f8();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					return (function(_){
-						function __(){
-							return _(null, null, true);
+			f1();
+			return (function(__){
+				return (function(_){
+					function __(){
+						return _(null, null, true);
+					}
+					try {
+						f2();
+						return f3(__cb(_, function(){
+							f4();
+							return __();
+						}));
+					} 
+					catch (__err) {
+						return _(__err);
+					}
+				})(function(__err, __result, __cont){
+					return (function(__){
+						f5();
+						return f6(__cb(_, function(){
+							f7();
+							return __();
+						}));
+					})(function(){
+						if (__cont) {
+							return __()
 						}
-						try {
-							f2();
-							return f3(__cb(_, function(){
-								f4();
-								return __();
-							}));
-						} 
-						catch (__err) {
-							return _(__err);
+						else {
+							return _(__err, __result)
 						}
-					})(function(__err, __result, __cont){
-						return (function(__){
-							f5();
-							return f6(__cb(_, function(){
-								f7();
-								return __();
-							}));
-						})(function(){
-							if (__cont) {
-								return __()
-							}
-							else {
-								return _(__err, __result)
-							}
-						});
 					});
-				})(function(){
-					f8();
-					return __();
 				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			})(function(){
+				f8();
+				return __();
+			});
 		})
 	})
 	
@@ -671,44 +618,34 @@ $(document).ready(function(){
 			f7();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				f1();
-				return (function(__){
-					return (function(_){
-						var __ = (_ = _ || __throw);
-						try {
-							return f2(__cb(_, function(__1){
-								var __val = __1;
-								if ((!__val == true)) {
-									return _(null, __val);
-								}
-								return f3(__cb(_, function(__2){
-									return _(null, __2);
-									
-								}));
-							}));
-						} 
-						catch (__err) {
-							return _(__err);
+			f1();
+			return (function(__){
+				return (function(_){
+					var __ = (_ = _ || __throw);
+					return f2(__cb(_, function(__1){
+						var __val = __1;
+						if ((!__val == true)) {
+							return _(null, __val);
 						}
-					})(__cb(_, function(__1){
-						if (__1) {
-							f4();
-							return f5(__cb(_, function(){
-								f6();
-								return __();
-							}));
-						}
-						return __();
+						return f3(__cb(_, function(__2){
+							return _(null, __2);
+							
+						}));
 					}));
-				})(function(){
-					f7();
+				})(__cb(_, function(__1){
+					if (__1) {
+						f4();
+						return f5(__cb(_, function(){
+							f6();
+							return __();
+						}));
+					}
 					return __();
-				});
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+				}));
+			})(function(){
+				f7();
+				return __();
+			});
 		})
 	})
 	
@@ -716,11 +653,6 @@ $(document).ready(function(){
 		genTest(function f(_){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-			} 
-			catch (__err) {
-				return _(__err);
-			}
 			return __();
 		})
 	})
@@ -730,12 +662,7 @@ $(document).ready(function(){
 			return 4;
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			try {
-				return _(null, 4);
-			} 
-			catch (__err) {
-				return _(__err);
-			}
+			return _(null, 4);
 		})
 	})
 	

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var module = QUnit.module;
 	var transform = Streamline.transform;
-	eval(Streamline.helpersSource);
+	eval(Streamline.helpersSource());
 	
 	var vars = "";
 	var exports = StreamlineHelpers;
