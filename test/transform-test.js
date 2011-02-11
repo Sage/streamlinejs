@@ -62,7 +62,7 @@ $(document).ready(function(){
 			return x;
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			return f1(__cb(_, function(__1){
+			return f1(__cb(_, function(__0, __1){
 				var x = __1;
 				f2();
 				return _(null, x);
@@ -77,7 +77,7 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
 			f1();
-			return f2(__cb(_, function(__1){
+			return f2(__cb(_, function(__0, __1){
 				return _(null, __1);
 			}));
 		});
@@ -244,7 +244,7 @@ $(document).ready(function(){
 			var __ = (_ = _ || __throw);
 			f1();
 			return (function(__break){
-				var __loop = __nt(function(){
+				var __loop = __nt(_, function(){
 					var __ = __loop;
 					if (cond) {
 						return f2(__cb(_, function(){
@@ -278,7 +278,7 @@ $(document).ready(function(){
 			f1();
 			var __1 = true;
 			return (function(__break){
-				var __loop = __nt(function(){
+				var __loop = __nt(_, function(){
 					var __ = __loop;
 					if ((__1 || cond)) {
 						__1 = false;
@@ -313,7 +313,7 @@ $(document).ready(function(){
 			var i = 0;
 			var __2 = false;
 			return (function(__break){
-				var __loop = __nt(function(){
+				var __loop = __nt(_, function(){
 					var __ = __loop;
 					if (__2) {
 						i++;
@@ -356,7 +356,7 @@ $(document).ready(function(){
 			}
 			var __3 = 0;
 			return (function(__break){
-				var __loop = __nt(function(){
+				var __loop = __nt(_, function(){
 					var __ = __loop;
 					if ((__3 < __1.length)) {
 						var k = __1[__3++];
@@ -461,9 +461,9 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
 			f1();
-			return f4(__cb(_, function(__3){
-				return f3(__cb(_, function(__2){
-					return f5(__cb(_, function(__4){
+			return f4(__cb(_, function(__0, __3){
+				return f3(__cb(_, function(__0, __2){
+					return f5(__cb(_, function(__0, __4){
 						return f2(__cb(_, function(){
 							f7();
 							return __();
@@ -484,9 +484,9 @@ $(document).ready(function(){
 			var __ = (_ = _ || __throw);
 			f1();
 			return (function(__break){
-				var __loop = __nt(function(){
+				var __loop = __nt(_, function(){
 					var __ = __loop;
-					return f2(__cb(_, function(__1){
+					return f2(__cb(_, function(__0, __1){
 						if (__1) {
 							f3();
 						}
@@ -622,17 +622,17 @@ $(document).ready(function(){
 			return (function(__){
 				return (function(_){
 					var __ = (_ = _ || __throw);
-					return f2(__cb(_, function(__1){
+					return f2(__cb(_, function(__0, __1){
 						var __val = __1;
 						if ((!__val == true)) {
 							return _(null, __val);
 						}
-						return f3(__cb(_, function(__2){
+						return f3(__cb(_, function(__0, __2){
 							return _(null, __2);
 							
 						}));
 					}));
-				})(__cb(_, function(__1){
+				})(__cb(_, function(__0, __1){
 					if (__1) {
 						f4();
 						return f5(__cb(_, function(){
