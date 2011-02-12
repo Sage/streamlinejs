@@ -692,6 +692,10 @@ $(document).ready(function(){
 		}, 0);
 	}
 	
+	function throwError(message) {
+		throw new Error(message);
+	}
+	
 	asyncTest("eval return", 1, function(){
 		evalTest(function f(_){
 			return delay(_, 5);
@@ -862,6 +866,31 @@ $(document).ready(function(){
 		}, "caught delay fail");
 	})
 	
+	asyncTest("try catch 6", 1, function(){
+		evalTest(function f(_){
+			try {
+				throwError("direct")
+				return delay(_, "ok")
+			} 
+			catch (ex) {
+				return delay(_, "caught ") + ex.message;
+			}
+		}, "caught direct");
+	})
+	
+	asyncTest("try catch 7", 1, function(){
+		evalTest(function f(_){
+			try {
+				var message = delay(_, "indirect");
+				throwError(message)
+				return delay(_, "ok")
+			} 
+			catch (ex) {
+				return delay(_, "caught ") + ex.message;
+			}
+		}, "caught indirect");
+	})
+	
 	asyncTest("try finally 1", 1, function(){
 		evalTest(function f(_){
 			var x = "";
@@ -904,6 +933,42 @@ $(document).ready(function(){
 			x += " end"
 			return x;
 		}, "ERR: bad try");
+	})
+	
+	asyncTest("try finally 4", 1, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				x += delay(_, "try")
+				throwError("except");
+			}
+			finally {
+				x += delay(_, " finally");
+			}
+			x += " end"
+			return x;
+		}, "ERR: Error: except");
+	})
+	
+	asyncTest("try finally 5", 1, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+					throwError("except");
+					x += " unreached"
+				}
+				finally {
+					x += delay(_, " finally");
+				}
+				x += " end"
+				return x;
+			}
+			catch (ex) {
+				return x + "/" + ex.message;
+			}
+		}, "try finally/except");
 	})
 	
 	asyncTest("and ok", 1, function(){
