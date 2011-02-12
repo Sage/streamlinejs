@@ -363,7 +363,7 @@ Typical code is:
     eval(converted);
 
 Note: if you transform the code in the browser, you will need to load Narcissus in your browser.
-You can get Narcissus from https://github.com/mozilla/narcissus
+You can get Narcissus from [github.com/mozilla/narcissus](https://github.com/mozilla/narcissus)
 This version of Narcissus requires ECMAScript 5 features (`Object.create`, `Object.defineProperty`, ...). 
 So it may not run in all browsers.
 
