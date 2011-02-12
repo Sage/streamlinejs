@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-require("../lib/node-init.js");
+var Streamline = require("..");
+Streamline.register();
 
 var path = require('path');
 
