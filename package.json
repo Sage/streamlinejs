@@ -1,0 +1,8 @@
+{
+  "name": "streamline",
+  "version": "0.1.0",
+  "engines": { "node": ">=0.2.1" },
+  "dependencies": { "narcissus": "=0.0.1" },
+  "author": "Bruno Jouhier",
+  "directories": {"lib": "./lib", "bin": "./bin" }
+}

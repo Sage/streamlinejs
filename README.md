@@ -19,11 +19,7 @@ traditional, synchronous-looking code into asynchronous, callback-oriented code.
   to write by hand anyway if you were coding directly with callbacks. There is no real
   overhead. The transformation engine just saves you some headaches.
   
-A word of caution: this is **experimental code**. Unit test suites need to be expanded and
-experimentation with real projects have only just started (with good results so far).
-So you can play with it but don't use it for production code yet.
-
-If you're interested by how the genesis of this idea, you can read [the tale of Harry](http://bjouhier.wordpress.com/2011/01/09/asynchronous-javascript-the-tale-of-harry/).
+If you're interested by the genesis of this idea, you can read [the tale of Harry](http://bjouhier.wordpress.com/2011/01/09/asynchronous-javascript-the-tale-of-harry/).
   
 Writing _streamlined_ code
 ==========================
@@ -33,7 +29,8 @@ The problem addressed by streamline.js
 
 `streamline.js` simplifies the code that you have to write when dealing with asynchronous APIs. 
 
-For example, let us assume that you want to write a simple function that returns the length of a file, using the `fs.stat` and `fs.readFile` functions.
+For example, let us assume that you want to write a simple function that returns the length of a file, 
+using the `fs.stat` and `fs.readFile` functions.
 
 If these functions were synchronous, you would probably write the following code:
 
@@ -60,23 +57,29 @@ But, as the node APIs are asynchronous, you have to write the following instead:
         });
      }
 
-You have to restructure your code to deal with the callbacks. On this example, this is not too hard, but the it can become tricky, for example if your code 
-has complex `if/else` branching logic, loops, `try/catch/finally` constructs, etc. The callback pattern is somehow imposing a special flow on your code.
-It is as if every asynchronous call is opening a hole into another flow (the callback flow) and you have to push your statements into this new flow. 
+You have to restructure your code to deal with the callbacks. On this example, this is not too hard, 
+but it can become tricky, for example if your code has complex `if/else` branching logic, 
+loops, `try/catch/finally` constructs, etc. 
+The callback pattern is somehow imposing a special flow on your code.
+It is as if every asynchronous call is opening a hole into another flow (the callback flow) and 
+you have to push your statements into this new flow. 
 It feels a little bit like your statements have leaked through a hole created by the callback. 
 
 This creates two problems:
 
-* Writing algorithms becomes harder because the built-in keywords of Javascript (`if`, `while`, `try/catch`) cannot control the flow as naturally as they did before.
+* Writing algorithms becomes harder because the built-in keywords of Javascript (`if`, `while`, `try/catch`) 
+  cannot control the flow as naturally as they did before.
   For example, you have to convert your loops into a recursive form, or use a helper library to write them.
-* The code that you write is harder to read because it is polluted by _callback noise_ that does not have much to do with the problem that you are trying to solve.
+* The code that you write is harder to read because it is polluted by _callback noise_ that does not have 
+  much to do with the problem that you are trying to solve.
 
 The solution
 ------------
 
-`streamline.js` solves this problem by giving you a special callback that somehow _plugs the holes_ that the asynchronous calls would create in your flow. 
-Once the holes have been plugged, you are back into the familiar synchronous coding style and you can use all the flow control statements of the Javascript 
-language.
+`streamline.js` solves this problem by giving you a special callback that somehow _plugs the holes_ 
+that the asynchronous calls would create in your flow. 
+Once the holes have been plugged, you are back into the familiar synchronous coding style and 
+you can use all the flow control statements of the Javascript language.
 
 The _callback plug_ has a very concise syntax: the _underscore_ character. 
 
@@ -110,12 +113,10 @@ _callback plug_ as last parameter when you call node APIs that expect it this wa
 The transformation engine will convert all the calls to which you pass the _callback plug_ inside the function body
 into traditional node.js-style calls with callbacks. The transformed code will be very similar to the code you would have written by hand
 (in the case of the `fileLength` function, it will be similar to the callback version that we gave above).
-  
-Note: if you look at the generated code you won't see the `err` parameter because it is hidden in a 
-small callback wrapper.
 
 One very important point is that the transformation engine knows how to convert _all_ the constructs of the Javascript language. 
-So, the calls that contain the _callback plug_ can be placed anywhere in your code: subexpressions, `if` statements, `while` loops, even `try/catch/finally`. 
+So, the calls that contain the _callback plug_ can be placed anywhere in your code: subexpressions, `if` statements, 
+`while` loops, even `try/catch/finally`. 
 
 For example, you can write code like:
 
@@ -132,8 +133,10 @@ and you can reason about your asynchronous code the same way you reason about yo
 
 The fileLength function that we defined above can be called in two ways:
 
-* as `fileLength(_, p)` from another _streamlined_ function. When you use this form, the result is "returned" directly as if you were calling a synchronous function.
-* as `fileLength(cb, p)` from a regular Javascript function (or at top level in a script). When you use this form the result is passed to your callback.
+* as `fileLength(_, p)` from another _streamlined_ function. 
+  When you use this form, the result is "returned" directly as if you were calling a synchronous function.
+* as `fileLength(cb, p)` from a regular Javascript function (or at top level in a script). 
+  When you use this form the result is passed to your callback.
 
 You can call a _streamlined_ function from the body of another _streamlined_ function. 
 So, the following code is valid:
@@ -159,9 +162,9 @@ But you can get around it by switching to the tradional callback style:
 
     function processFiles() {
         // ...
-        fileLength(function(err, len, p) { // OK
+        fileLength(function(err, len) { // OK
             // ...
-        });
+        }, p);
     }
 
 Mixing with regular node.js code
@@ -178,7 +181,7 @@ Array and Object utilities
 The standard ES5 Array methods (`forEach`, `map`, `filter`, ...) are nice but they don't deal with callbacks.
 So, they are of little help for _streamlined_ Javascript.
 
-The `lib/flows` module contains some utilities to fill the gap:
+The `streamline/flows` module contains some utilities to fill the gap:
 
 * `each(_, array, fn)` applies `fn` sequentially to the elements of `array`.
 * `map(_, array, fn)` transforms `array` by applying `fn` to each element in turn.
@@ -202,7 +205,7 @@ So, will you still be able to take advantage of asynchronous calls to paralleliz
 The answer is yes, simply because you can mix _streamlined_ code with regular code. 
 So _streamlined_ code can benefit from parallelizing constructs that have been written in _non streamlined_ Javascript.
 
-The `lib/flows` module contains some experimental API to parallelize _streamlined_ code. 
+The `streamline/flows` module contains some experimental API to parallelize _streamlined_ code. 
 
 The main functions are:
 
@@ -211,7 +214,7 @@ The main functions are:
   
 `spray` is typically used as follows:
 
-    var results = spray([
+    var results = flows.spray([
         function(_) { /* branch 1 */ },
         function(_) { /* branch 2 */ },
         function(_) { /* branch 3 */ },
@@ -224,7 +227,7 @@ returned by `collectAll(_)`.
 
 Another typical pattern is:
 
-    var result = spray([
+    var result = flows.spray([
         function(_) { /* what we want to do */ },
         function(_) { /* set timeout */ }
     ]).collectOne(_);
@@ -236,7 +239,7 @@ Note: `spray` is synchronous as it only sets things up. So don't call it with an
 The `funnel` function is typically used with the following pattern:
 
     // somewhere
-    var myFunnel = funnel(10); // create a funnel that only allows 10 concurrent streamlines.
+    var myFunnel = flows.funnel(10); // create a funnel that only allows 10 concurrent streamlines.
   
     // elsewhere
     myFunnel.channel(_, function(_) { /* code with at most 10 concurrent executions */ });
@@ -253,9 +256,6 @@ parallel calls.
 
 The `funnel` function can also be used to implement critical sections. Just set funnel's `max` parameter to 1. 
 This is not a true monitor though as it does not (yet?) support reentrant calls.
-
-Note: This is still very experimental and has only been validated on small examples. 
-So, these APIs may evolve.
  
 Context propagation
 -------------------
@@ -269,7 +269,7 @@ but that you don't want to pass explicitly via function parameters. The most obv
 the `locale` that each request may set differently and that your low level libraries should 
 be able to retrieve to format messages.
 
-The `flows` module exposes two functions to manipulate the context:
+The `streamline.flows` module exposes two functions to manipulate the context:
 
 * `setContext(ctx)` sets the context (and returns the old context).
 * `getContext()` returns the current context.
@@ -288,16 +288,12 @@ function, as well as the `try/catch` block in the `__cb` callback helper. This o
 more efficient code but requires that you trap exceptions both in low level async libraries called
 by streamlined modules and in high level modules that call them. 
 
-Note: the pragma syntax is experimental and may change.
-
 TODOs, known issues, etc.
 -------------------------
 
 * Irregular `switch` statements (with `case` clauses that flow into each other) are not handled by
 the transformation engine (these constructs are questionable so I am not sure that streamline should support them).
 * Labelled `break` and `continue` are not yet supported.
-* Files are transformed every time node starts. A cache will be added later.
-* Installation via NPM is coming.
 
 Running _streamlined_ code
 ==========================
@@ -308,57 +304,68 @@ The first one is to use a special convention for your source file names.
 Instead of putting the source for module `xxx` into a file called `xxx.js`, you put it into
 a file called `xxx_.js`. When you _require_ `xxx` streamline will read the source from `xxx_.js`,
 transform it and save the transformed code into `xxx.js` and will pass the transformed source
-to node. This option is the preferred option because it works well with debuggers.
+to node. 
+This option is the preferred option because it works well with debuggers and the transformed file will be cached.
 
 Note: node will not find your module if the `xxx.js` file does not exist. 
 So you have to create an empty `xxx.js` file to initiate the process.
 
 The second option is to add a special `!!STREAMLINE!!` marker in your source code (anywhere, usually 
-in a comment at the top) and to call your file `xxx.js`, as usual. Streamline will detect
-the marker and transform your code before passing to node. The drawback of this option is that the 
-transformed code is not available for debugging.
+in a comment at the top) and to call your file `xxx.js`, as usual. 
+Streamline will detect the marker and transform your code before passing to node. 
+The drawback of this option is that the transformed code won't be cached and won't be not available for debugging.
 
 Once you have setup your _streamlined_ code with one of these options, 
 you can run it as a node script file directly from the command line:
 
-    streamline-dir/bin/node-streamline myscript.js [args]
+    node-streamline myscript.js [args]
 
 You can also initialize streamline from your main server script. 
 Just add the following line to your main server script:
 
-    require('streamline_dir/lib/node-init.js')
-    
-On the client side, you can use the `transform.js` API to convert the code and then `eval` it, 
-There is only one call in the `transform.js` API:
-
-    var converted = Streamline.transform(source);
+    require('streamline')
 
 Running with CoffeeScript
 =========================
 
 You can also use `streamline.js` with CoffeeScript. To do so, just put the `!!STREAMLINE!!` marker
 in your coffeescript modules and run your program with 
-`streamline-dir/bin/coffee-streamline` instead of `coffee`. For example:
+`coffee-streamline` instead of `coffee`. For example:
 
-	streamline-dir/bin/coffee-streamline streamline-dir/examples/diskUsage.coffee
+	coffee-streamline myscript.coffee [args]
 
+Node.js installation
+====================
 
-Installation and dependencies
-=============================
+Streamline can be installed with NPM. 
 
-The transformation engine (`transform.js`) uses the Narcissus compiler and decompiler. 
-You need to get it from  [https://github.com/mozilla/narcissus/](https://github.com/mozilla/narcissus/) 
-and install it side-by-side with `streamline.js` 
-(the `streamlinejs` and `narcissus` directories need to be siblings to each other).
+For a developper setup, use:
 
+	git clone git@github.com:Sage/streamlinejs.git
+	cd streamline
+	npm install
+	
+For a runtime setup, use:
+
+	npm install streamline
+
+Client-side Use
+===============
+
+The transformed code is standard Javascript and does not need any special runtime support.
+So you can run transformed code directly in the browser.
+
+But you can also transform the code in the browser. 
+For this, you can use the `transform.js` API to convert the code and then `eval` it. 
+Typical code is:
+
+    var converted = Streamline.transform(source);
+    eval(converted);
+
+Note: if you transform the code in the browser, you will need to load Narcissus in your browser.
+You can get Narcissus from https://github.com/mozilla/narcissus
 This version of Narcissus requires ECMAScript 5 features (`Object.create`, `Object.defineProperty`, ...). 
-So `transform.js` may not run in all browsers. 
-You may try to use an older version of Narcissus but you may have to adapt the code then. 
-Another solution is to load a library that emulates the missing ECMAScript 5 calls.
-
-On the other hand, the code which is produced by the transformation engine does not have any special strings attached. 
-You can use it with any Javascript library that uses node.js's callback style (even outside of node as this is
-just an API convention). 
+So it may not run in all browsers.
 
 Discussion
 ==========

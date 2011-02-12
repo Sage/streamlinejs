@@ -1,5 +1,5 @@
 #
-# Usage: ../bin/coffee-streamline diskUsage2.coffee [path]
+# Usage: coffee-streamline diskUsage2.coffee [path]
 #
 # This file is a parralelized version of the `diskUsage.coffee` example. 
 # 
@@ -21,7 +21,7 @@
 # !!STREAMLINE!!
 
 fs = require 'fs'
-flows = require '../lib/flows'
+flows = require 'streamline/flows'
 
 fileFunnel = flows.funnel 20
 

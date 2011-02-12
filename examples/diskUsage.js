@@ -1,5 +1,5 @@
 /*
- * Usage: ../bin/node-streamline diskUsage [path]
+ * Usage: node-streamline diskUsage [path]
  *
  * Recursively computes the size of directories.
  * 

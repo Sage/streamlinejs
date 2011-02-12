@@ -1,5 +1,5 @@
 #
-# Usage: ../bin/coffee-streamline diskUsage.coffee [path]
+# Usage: coffee-streamline diskUsage.coffee [path]
 #
 # Recursively computes the size of directories.
 # 

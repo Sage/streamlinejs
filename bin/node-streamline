@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-var Streamline = require("..");
-Streamline.register();
+require('streamline');
 
 var path = require('path');
 
 process.argv.shift();
 
-require(path.join(process.cwd(), process.argv[1]));
+if (process.argv.length > 1)
+	require(path.join(process.cwd(), process.argv[1]));
+else
+	require("repl").start("node-streamline> ");

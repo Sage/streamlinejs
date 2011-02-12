@@ -1,5 +1,5 @@
 /*
- * Usage: ../bin/node-streamline diskUsage2 [path]
+ * Usage: node-streamline diskUsage2 [path]
  *
  * This file is a parralelized version of the `diskUsage.js` example. 
  * 
@@ -22,7 +22,7 @@
  */
 
 var fs = require('fs');
-var flows = require('../lib/flows');
+var flows = require('streamline/flows');
 
 var fileFunnel = flows.funnel(20);
 
