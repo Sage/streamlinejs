@@ -1,26 +1,7 @@
 $(document).ready(function(){
 	var module = QUnit.module;
 	var transform = Streamline.transform;
-	eval(Streamline.helpersSource());
-	
-	var vars = "";
-	var exports = StreamlineHelpers;
-	for (var i in StreamlineHelpers) {
-		try {
-			var src = StreamlineHelpers[i].toString();
-			src = "(" + src + ")";
-			src = transform(src, {
-				noHelpers: true
-			});
-			StreamlineHelpers[i] = eval(src);
-			vars += "var " + i + " = StreamlineHelpers." + i + ";";
-			
-		} 
-		catch (ex) {
-			console.log(ex);
-		}
-	}
-	eval(vars);
+	var flows = StreamlineFlows;
 	
 	function evalTest(f, val){
 		var str = transform(f.toString());
@@ -51,7 +32,7 @@ $(document).ready(function(){
 	asyncTest("each", 1, function(){
 		evalTest(function f(_){
 			var result = 1;
-			each(_, [1, 2, 3, 4], function(_, val){
+			flows.each(_, [1, 2, 3, 4], function(_, val){
 				result = result * delay(_, val);
 			})
 			return result;
@@ -60,7 +41,7 @@ $(document).ready(function(){
 	
 	asyncTest("map", 1, function(){
 		evalTest(function f(_){
-			return map(_, [1, 2, 3, 4], function(_, val){
+			return flows.map(_, [1, 2, 3, 4], function(_, val){
 				return 2 * delay(_, val);
 			})
 		}, [2, 4, 6, 8]);
@@ -68,7 +49,7 @@ $(document).ready(function(){
 	
 	asyncTest("filter", 1, function(){
 		evalTest(function f(_){
-			return filter(_, [1, 2, 3, 4], function(_, val){
+			return flows.filter(_, [1, 2, 3, 4], function(_, val){
 				return delay(_, val) % 2;
 			})
 		}, [1, 3]);
@@ -76,7 +57,7 @@ $(document).ready(function(){
 	
 	asyncTest("every", 1, function(){
 		evalTest(function f(_){
-			return every(_, [1, 2, 3, 4], function(_, val){
+			return flows.every(_, [1, 2, 3, 4], function(_, val){
 				return delay(_, val) < 5;
 			})
 		}, true);
@@ -84,7 +65,7 @@ $(document).ready(function(){
 	
 	asyncTest("every", 1, function(){
 		evalTest(function f(_){
-			return every(_, [1, 2, 3, 4], function(_, val){
+			return flows.every(_, [1, 2, 3, 4], function(_, val){
 				return delay(_, val) < 3;
 			})
 		}, false);
@@ -92,7 +73,7 @@ $(document).ready(function(){
 	
 	asyncTest("some", 1, function(){
 		evalTest(function f(_){
-			return some(_, [1, 2, 3, 4], function(_, val){
+			return flows.some(_, [1, 2, 3, 4], function(_, val){
 				return delay(_, val) < 3;
 			})
 		}, true);
@@ -100,7 +81,7 @@ $(document).ready(function(){
 	
 	asyncTest("some", 1, function(){
 		evalTest(function f(_){
-			return some(_, [1, 2, 3, 4], function(_, val){
+			return flows.some(_, [1, 2, 3, 4], function(_, val){
 				return delay(_, val) < 0;
 			})
 		}, false);
@@ -123,7 +104,7 @@ $(document).ready(function(){
 					return 2 * i;
 				}
 			}
-			var results = spray([doIt(1), doIt(2), doIt(3)]).collectAll(_);
+			var results = flows.spray([doIt(1), doIt(2), doIt(3)]).collectAll(_);
 			return [total, peak, count, results];
 		}, [6, 3, 0, [2, 4, 6]]);
 	})
@@ -142,7 +123,7 @@ $(document).ready(function(){
 					return 2 * i;
 				}
 			}
-			var result = spray([doIt(1), doIt(2), doIt(3)]).collectOne(_);
+			var result = flows.spray([doIt(1), doIt(2), doIt(3)]).collectOne(_);
 			return [total, peak, count, result];
 		}, [1, 3, 2, 2]);
 	})
@@ -161,7 +142,7 @@ $(document).ready(function(){
 					return 2 * i;
 				}
 			}
-			var results = spray([doIt(1), doIt(2), doIt(3)], 2).collectAll(_);
+			var results = flows.spray([doIt(1), doIt(2), doIt(3)], 2).collectAll(_);
 			return [total, peak, count, results];
 		}, [6, 2, 0, [2, 4, 6]]);
 	})
@@ -169,14 +150,14 @@ $(document).ready(function(){
 	asyncTest("contexts", 3, function(){
 		evalTest(function f(_){
 			function testContext(_, x){
-				setContext({
+				flows.setContext({
 					val: x
 				});
 				var y = delay(_, 2 * x);
-				strictEqual(y, 2 * getContext().val);
+				strictEqual(y, 2 * flows.getContext().val);
 				return y + 1;
 			}
-			return spray([function(_){
+			return flows.spray([function(_){
 				return testContext(_, 3);
 			}, function(_){
 				return testContext(_, 5);
