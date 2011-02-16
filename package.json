@@ -1,6 +1,6 @@
 {
   "name": "streamline",
-  "version": "0.1.1a",
+  "version": "0.1.1b",
   "engines": { "node": ">=0.2.1" },
   "dependencies": { "narcissus": "=0.0.1" },
   "author": "Bruno Jouhier",

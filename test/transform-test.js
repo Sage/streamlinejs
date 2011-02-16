@@ -546,8 +546,13 @@ $(document).ready(function(){
 						return _(null, __result);
 				});
 			})(function(){
-				f8();
-				return __();
+				try {
+					f8();
+					return __();
+				}
+				catch (__err) {
+					return __propagate(_, __err);
+				}
 			});
 		});
 	})
@@ -601,8 +606,13 @@ $(document).ready(function(){
 					});
 				});
 			})(function(){
-				f8();
-				return __();
+				try {
+					f8();
+					return __();
+				}
+				catch (__err) {
+					return __propagate(_, __err);
+				}
 			});
 		})
 	})
@@ -679,7 +689,7 @@ $(document).ready(function(){
 			})
 		})();
 	}
-	
+
 	function evalTest(f, val){
 		delay = delayUnsafe;
 		evalTest1(f, val, null, function(){
@@ -992,6 +1002,164 @@ $(document).ready(function(){
 				return x + "/" + ex.message;
 			}
 		}, "try finally/except");
+	})
+	
+	asyncTest("try catch finally 1", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+					throw new Error("except");
+					x += " unreached"
+				}
+				catch (ex) {
+					x += delay(_, " catch " + ex.message);
+					throw ex;
+				}
+				finally {
+					x += delay(_, " finally");
+				}
+				x += " end"
+				return x;
+			} 
+			catch (ex) {
+				return x + "/" + ex.message;
+			}
+		}, "try catch except finally/except");
+	})
+
+	asyncTest("try catch finally 2", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+					throwError("except");
+					x += " unreached"
+				}
+				catch (ex) {
+					x += " catch " + ex.message;
+					throw ex;
+				}
+				finally {
+					x += " finally";
+				}
+				x += " end"
+				return x;
+			} 
+			catch (ex) {
+				return x + "/" + ex.message;
+			}
+		}, "try catch except finally/except");
+	})
+
+	asyncTest("nested try/catch 1", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				catch (ex) {
+					x += delay(_, " inner catch " + ex.message);
+				}
+				throwError(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try outer catch except");
+	})
+	
+	asyncTest("nested try/catch 2", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				catch (ex) {
+					x += " inner catch " + ex.message;
+				}
+				throw new Error(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try outer catch except");
+	})
+	
+	asyncTest("nested try/catch 3", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				catch (ex) {
+					x += delay(_, " inner catch " + ex.message);
+				}
+				throw new Error(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try outer catch except");
+	})
+	
+	asyncTest("nested try/finally 1", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				finally {
+					x += delay(_, " inner finally");
+				}
+				throwError(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try inner finally outer catch except");
+	})
+	
+	asyncTest("nested try/finally 2", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				finally {
+					x += " inner finally";
+				}
+				throwError(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try inner finally outer catch except");
+	})
+	
+	asyncTest("nested try/finally 3", 2, function(){
+		evalTest(function f(_){
+			var x = "";
+			try {
+				try {
+					x += delay(_, "try")
+				}
+				finally {
+					x += delay(_, " inner finally");
+				}
+				throw new Error(" except");
+			} 
+			catch (ex) {
+				return x + " outer catch" + ex.message;
+			}
+		}, "try inner finally outer catch except");
 	})
 	
 	asyncTest("and ok", 2, function(){
