@@ -49,8 +49,8 @@ $(document).ready(function(){
 					return __();
 				}));
 			} 
-			catch (__err) {
-				return _(__err);
+			catch (e) {
+				return __propagate(_, e);
 			}
 		}, true);
 	});
@@ -530,8 +530,8 @@ $(document).ready(function(){
 							return __();
 						}));
 					} 
-					catch (__err) {
-						return _(__err);
+					catch (e) {
+						return __propagate(_, e);
 					}
 					
 				})(function(ex, __result){
@@ -550,8 +550,8 @@ $(document).ready(function(){
 					f8();
 					return __();
 				}
-				catch (__err) {
-					return __propagate(_, __err);
+				catch (e) {
+					return __propagate(_, e);
 				}
 			});
 		});
@@ -586,8 +586,8 @@ $(document).ready(function(){
 							return __();
 						}));
 					} 
-					catch (__err) {
-						return _(__err);
+					catch (e) {
+						return __propagate(_, e);
 					}
 				})(function(__err, __result, __cont){
 					return (function(__){
@@ -610,8 +610,8 @@ $(document).ready(function(){
 					f8();
 					return __();
 				}
-				catch (__err) {
-					return __propagate(_, __err);
+				catch (e) {
+					return __propagate(_, e);
 				}
 			});
 		})
