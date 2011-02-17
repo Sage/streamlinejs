@@ -30,7 +30,7 @@ $(document).ready(function(){
 			f2();
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			return f1(__cb(_, function(){
+			return f1(__cb(_, this, function(){
 				f2();
 				return __();
 			}));
@@ -44,13 +44,13 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
 			try {
-				return f1(__cb(_, function(){
+				return f1(__cb(_, this, function(){
 					f2();
 					return __();
 				}));
 			} 
 			catch (e) {
-				return __propagate(_, e);
+				return __propagate(_, this, e);
 			}
 		}, true);
 	});
@@ -62,7 +62,7 @@ $(document).ready(function(){
 			return x;
 		}, function f(_){
 			var __ = (_ = _ || __throw);
-			return f1(__cb(_, function(__0, __1){
+			return f1(__cb(_, this, function(__0, __1){
 				var x = __1;
 				f2();
 				return _(null, x);
@@ -77,7 +77,7 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
 			f1();
-			return f2(__cb(_, function(__0, __1){
+			return f2(__cb(_, this, function(__0, __1){
 				return _(null, __1);
 			}));
 		});
@@ -98,7 +98,7 @@ $(document).ready(function(){
 			return (function(__){
 				if (b) {
 					f2();
-					return f3(__cb(_, function(){
+					return f3(__cb(_, this, function(){
 						f4();
 						return __();
 					}));
@@ -124,7 +124,7 @@ $(document).ready(function(){
 			f1();
 			if (b) {
 				f2();
-				return f3(__cb(_, function(){
+				return f3(__cb(_, this, function(){
 					f4();
 					return __();
 				}));
@@ -153,14 +153,14 @@ $(document).ready(function(){
 			return (function(__){
 				if (b) {
 					f2();
-					return f3(__cb(_, function(){
+					return f3(__cb(_, this, function(){
 						f4();
 						return __();
 					}));
 				}
 				else {
 					f5();
-					return f6(__cb(_, function(){
+					return f6(__cb(_, this, function(){
 						f7();
 						return __();
 					}));
@@ -192,7 +192,7 @@ $(document).ready(function(){
 			return (function(__){
 				if (b) {
 					f2();
-					return f3(__cb(_, function(){
+					return f3(__cb(_, this, function(){
 						f4();
 						return _(null, 1);
 					}));
@@ -219,12 +219,12 @@ $(document).ready(function(){
 		}, function f(_, arr){
 			var __ = (_ = _ || __throw);
 			f1();
-			return each(__cb(_, function(){
+			return each(__cb(_, this, function(){
 				f4();
 				return __();
 			}), arr, function(_, elt){
 				var __ = (_ = _ || __throw);
-				return f2(__cb(_, function(){
+				return f2(__cb(_, this, function(){
 					f3();
 					return __();
 				}), elt);
@@ -244,10 +244,10 @@ $(document).ready(function(){
 			var __ = (_ = _ || __throw);
 			f1();
 			return (function(__break){
-				var __loop = __nt(_, function(){
+				var __loop = __nt(_, this, function(){
 					var __ = __loop;
 					if (cond) {
-						return f2(__cb(_, function(){
+						return f2(__cb(_, this, function(){
 							f3();
 							return __();
 						}));
@@ -278,11 +278,11 @@ $(document).ready(function(){
 			f1();
 			var __1 = true;
 			return (function(__break){
-				var __loop = __nt(_, function(){
+				var __loop = __nt(_, this, function(){
 					var __ = __loop;
 					if ((__1 || cond)) {
 						__1 = false;
-						return f2(__cb(_, function(){
+						return f2(__cb(_, this, function(){
 							f3();
 							return __();
 						}));
@@ -313,7 +313,7 @@ $(document).ready(function(){
 			var i = 0;
 			var __2 = false;
 			return (function(__break){
-				var __loop = __nt(_, function(){
+				var __loop = __nt(_, this, function(){
 					var __ = __loop;
 					if (__2) {
 						i++;
@@ -322,7 +322,7 @@ $(document).ready(function(){
 						__2 = true;
 					}
 					if ((i < arr.length)) {
-						return f2(__cb(_, function(){
+						return f2(__cb(_, this, function(){
 							f3();
 							return __();
 						}));
@@ -356,11 +356,11 @@ $(document).ready(function(){
 			}
 			var __3 = 0;
 			return (function(__break){
-				var __loop = __nt(_, function(){
+				var __loop = __nt(_, this, function(){
 					var __ = __loop;
 					if ((__3 < __1.length)) {
 						var k = __1[__3++];
-						return f2(__cb(_, function(){
+						return f2(__cb(_, this, function(){
 							f3(k);
 							return __();
 						}), k);
@@ -402,7 +402,7 @@ $(document).ready(function(){
 				var __break = __;
 				switch (exp) {
 					case "a":
-						return f2(__cb(_, function(){
+						return f2(__cb(_, this, function(){
 							f3();
 							return __break();
 						}));
@@ -410,7 +410,7 @@ $(document).ready(function(){
 						
 					case "c":
 						f4();
-						return f5(__cb(_, function(){
+						return f5(__cb(_, this, function(){
 							return __break();
 						}));
 					default:
@@ -441,7 +441,7 @@ $(document).ready(function(){
 			var __break = __;
 			switch (exp) {
 				case "a":
-					return f2(__cb(_, function(){
+					return f2(__cb(_, this, function(){
 						switch (exp2) {
 							case "b":
 								break;
@@ -461,10 +461,10 @@ $(document).ready(function(){
 		}, function f(_){
 			var __ = (_ = _ || __throw);
 			f1();
-			return f4(__cb(_, function(__0, __3){
-				return f3(__cb(_, function(__0, __2){
-					return f5(__cb(_, function(__0, __4){
-						return f2(__cb(_, function(){
+			return f4(__cb(_, this, function(__0, __3){
+				return f3(__cb(_, this, function(__0, __2){
+					return f5(__cb(_, this, function(__0, __4){
+						return f2(__cb(_, this, function(){
 							f7();
 							return __();
 						}), __2, __4);
@@ -484,9 +484,9 @@ $(document).ready(function(){
 			var __ = (_ = _ || __throw);
 			f1();
 			return (function(__break){
-				var __loop = __nt(_, function(){
+				var __loop = __nt(_, this, function(){
 					var __ = __loop;
-					return f2(__cb(_, function(__0, __1){
+					return f2(__cb(_, this, function(__0, __1){
 						if (__1) {
 							f3();
 						}
@@ -525,19 +525,19 @@ $(document).ready(function(){
 				return (function(_){
 					try {
 						f2();
-						return f3(__cb(_, function(){
+						return f3(__cb(_, this, function(){
 							f4();
 							return __();
 						}));
 					} 
 					catch (e) {
-						return __propagate(_, e);
+						return __propagate(_, this, e);
 					}
 					
 				})(function(ex, __result){
 					if (ex) {
 						f5();
-						return f6(__cb(_, function(){
+						return f6(__cb(_, this, function(){
 							f7();
 							return __();
 						}));
@@ -551,7 +551,7 @@ $(document).ready(function(){
 					return __();
 				}
 				catch (e) {
-					return __propagate(_, e);
+					return __propagate(_, this, e);
 				}
 			});
 		});
@@ -581,18 +581,18 @@ $(document).ready(function(){
 					}
 					try {
 						f2();
-						return f3(__cb(_, function(){
+						return f3(__cb(_, this, function(){
 							f4();
 							return __();
 						}));
 					} 
 					catch (e) {
-						return __propagate(_, e);
+						return __propagate(_, this, e);
 					}
 				})(function(__err, __result, __cont){
 					return (function(__){
 						f5();
-						return f6(__cb(_, function(){
+						return f6(__cb(_, this, function(){
 							f7();
 							return __();
 						}));
@@ -611,7 +611,7 @@ $(document).ready(function(){
 					return __();
 				}
 				catch (e) {
-					return __propagate(_, e);
+					return __propagate(_, this, e);
 				}
 			});
 		})
@@ -632,20 +632,20 @@ $(document).ready(function(){
 			return (function(__){
 				return (function(_){
 					var __ = (_ = _ || __throw);
-					return f2(__cb(_, function(__0, __1){
+					return f2(__cb(_, this, function(__0, __1){
 						var __val = __1;
 						if ((!__val == true)) {
 							return _(null, __val);
 						}
-						return f3(__cb(_, function(__0, __2){
+						return f3(__cb(_, this, function(__0, __2){
 							return _(null, __2);
 							
 						}));
 					}));
-				})(__cb(_, function(__0, __1){
+				})(__cb(_, this, function(__0, __1){
 					if (__1) {
 						f4();
-						return f5(__cb(_, function(){
+						return f5(__cb(_, this, function(){
 							f6();
 							return __();
 						}));
@@ -1262,5 +1262,20 @@ $(document).ready(function(){
 		}, "abcdda");
 	})
 	
+	asyncTest("this", 4, function(){
+		evalTest(function f(_){
+			function O(x) {
+				this.x = x;
+			}
+			O.prototype.test = function(_) {
+				var self = this;
+				this.x = delay(_, this.x + 1);
+				strictEqual(this, self);
+			}
+			var o = new O(1);
+			o.test(_);
+			return o.x;
+		}, 2);
+	})
 })
 
