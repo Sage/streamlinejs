@@ -23,6 +23,10 @@ You just have to follow a simple rule:
 
 Streamline will transform the code and generate the callbacks for you!
 
+And streamline is not limited to a subset of Javascript. 
+You can use all the flow control features of Javascript in your asynchronous code: conditionals, 
+loops, `try/catch/finally` blocks, anonymous functions, `this`, etc. 
+
 # Installation
 
 The easiest way to install `streamline.js` is with NPM:
@@ -31,9 +35,9 @@ The easiest way to install `streamline.js` is with NPM:
     
 # Creating a streamline module
 
-To create a module called myModule, put your _streamlined_ source in a file called myModule_.js.
-Streamline will transform the code and will save it into a file called myModule.js. 
-You just need to create an empty myModule.js file to initiate the process.
+To create a module called `myModule`, put your _streamlined_ source in a file called `myModule_.js`.
+Streamline will transform the code and will save it into a file called `myModule.js`. 
+You just need to create an empty `myModule.js` file to initiate the process.
 
 See `examples/diskUsage_.js` for a simple streamline module that traverses directories to compute disk usage.
 
@@ -41,7 +45,7 @@ See `examples/diskUsage_.js` for a simple streamline module that traverses direc
 
 You can run standalone streamline modules with `node-streamline`. For example:
 
-    node-streamline ./examples/diskUsage
+    node-streamline examples/diskUsage
 
 You can also integrate streamline modules into an existing node application. 
 You just need to add the following line to your initialization script:
@@ -69,17 +73,16 @@ You can also call streamline functions as if they were standard node functions. 
 
 `streamline.js` generates vanilla Javascript code that may be run browser-side too.
 
-You can also transform the code in the browser. See the `test/*.js` unit tests for examples.
+You can also transform the code in the browser. See the `test/*.js` unit test files for examples.
 
 You can also use `streamline.js` with CoffeeScript. For example:
 
-   coffee-streamline ./examples/diskUsage.coffee
+    coffee-streamline examples/diskUsage.coffee
 
 # Goodies
 
-The `streamline/flows` module contains some handy utilities to deal with arrays, parallel flows, etc.
+The `streamline/flows` module contains some utilities to deal with arrays, parallel execution, context propagation, etc.
 See the [flows module](https://github.com/Sage/streamlinejs/wiki/Flows-module) wiki page for details.
-
 
 ## Resources
 
