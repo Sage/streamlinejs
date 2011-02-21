@@ -27,6 +27,10 @@ And streamline is not limited to a subset of Javascript.
 You can use all the flow control features of Javascript in your asynchronous code: conditionals, 
 loops, `try/catch/finally` blocks, anonymous functions, `this`, etc. 
 
+Streamline generates more or less the callbacks that you would write yourself. So you get the same level
+of performance as with hand-written callbacks. 
+Also, the generated code is nicely indented, easy to read, and directly available to debuggers.
+
 # Installation
 
 The easiest way to install `streamline.js` is with NPM:
