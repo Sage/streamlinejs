@@ -175,105 +175,6 @@ You can mix _streamlined_ functions and traditional callback based functions in 
 The transformation engine will only convert the functions that have an underscore as one of their parameters.
 It will leave all other functions unmodified.
 
-Array and Object utilities
---------------------------
-
-The standard ES5 Array methods (`forEach`, `map`, `filter`, ...) are nice but they don't deal with callbacks.
-So, they are of little help for _streamlined_ Javascript.
-
-The `streamline/flows` module contains some utilities to fill the gap:
-
-* `each(_, array, fn)` applies `fn` sequentially to the elements of `array`.
-* `map(_, array, fn)` transforms `array` by applying `fn` to each element in turn.
-* `filter(_, array, fn)` generates a new array that only contains the elements that satisfy the `fn` predicate.
-* `every(_, array, fn)` returns true if `fn` is true on every element (if `array` is empty too).
-* `some(_, array, fn)` returns true if `fn` is true for at least one element.
-
-In `each` and `map`, the `fn` callback is called as `fn(_, elt, i)`.  
-In `filter`, `every` and `some`, the `fn` callback is called as `fn(_, elt)`.
-
-The `lib/flows`module also provides a utility to iterate through object properties:
-
-* `eachKey(_, obj, fn)` calls `fn(_, key, obj[key])` for every `key` in `obj`.
-
-Flows
------
-
-Getting rid of callbacks is a great relief but now the code is completely pseudo-synchronous. 
-So, will you still be able to take advantage of asynchronous calls to parallelize processing?
-
-The answer is yes, simply because you can mix _streamlined_ code with regular code. 
-So _streamlined_ code can benefit from parallelizing constructs that have been written in _non streamlined_ Javascript.
-
-The `streamline/flows` module contains some experimental API to parallelize _streamlined_ code. 
-
-The main functions are:
-
-* `spray(fns, [max=-1])` sets up parallel execution of an array of functions. 
-* `funnel(max)` limits the number of concurrent executions of a given code block.
-  
-`spray` is typically used as follows:
-
-    var results = flows.spray([
-        function(_) { /* branch 1 */ },
-        function(_) { /* branch 2 */ },
-        function(_) { /* branch 3 */ },
-        ...
-    ]).collectAll(_);
-    // do something with results...
-  
-This code executes the different branches in parallel and collects the result into an array which is
-returned by `collectAll(_)`.
-
-Another typical pattern is:
-
-    var result = flows.spray([
-        function(_) { /* what we want to do */ },
-        function(_) { /* set timeout */ }
-    ]).collectOne(_);
-    // test result to find out which branch completed first.
-  
-Note: `spray` is synchronous as it only sets things up. So don't call it with an underscore. 
-  The `collect` functions are the asynchronous ones that start and control parallel execution.
-  
-The `funnel` function is typically used with the following pattern:
-
-    // somewhere
-    var myFunnel = flows.funnel(10); // create a funnel that only allows 10 concurrent streamlines.
-  
-    // elsewhere
-    myFunnel.channel(_, function(_) { /* code with at most 10 concurrent executions */ });
-  
-Note: Here also, the `funnel` function only sets things up and is synchronous. 
-  The `channel` function deals with the async part.
-  
-The `diskUsage2.js` example demonstrates how these calls can be combined to control
-concurrent execution. 
-
-One idea behind these APIs is that you can take an existing algorithm and parallelize it 
-by _spraying_ execution in a few places and _funnelling_ it in other places to limit the explosion of
-parallel calls.
-
-The `funnel` function can also be used to implement critical sections. Just set funnel's `max` parameter to 1. 
-This is not a true monitor though as it does not (yet?) support reentrant calls.
- 
-Context propagation
--------------------
-
-Streamline also allows you to propagate a global context along a chain of calls and callbacks.
-This context can be used like TLS (Thread Local Storage) in a threaded environment.
-It allows you to have several active chains that each have their own global context. 
-
-This kind of context is very handy to store information that all calls should be able to access
-but that you don't want to pass explicitly via function parameters. The most obvious example is 
-the `locale` that each request may set differently and that your low level libraries should 
-be able to retrieve to format messages.
-
-The `streamline.flows` module exposes two functions to manipulate the context:
-
-* `setContext(ctx)` sets the context (and returns the old context).
-* `getContext()` returns the current context.
-
 Advanced options
 ----------------
 
@@ -367,8 +268,10 @@ You can get Narcissus from [github.com/mozilla/narcissus](https://github.com/moz
 This version of Narcissus requires ECMAScript 5 features (`Object.create`, `Object.defineProperty`, ...). 
 So it may not run in all browsers.
 
-Discussion
+Resources
 ==========
+
+The [[wiki]] discusses advanced topics like utility APIs, exception handling, etc.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
