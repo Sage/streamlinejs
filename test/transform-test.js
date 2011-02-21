@@ -8,13 +8,13 @@ $(document).ready(function(){
 		if (jQuery.browser.mozilla) 
 			return new Function(s).toString();
 		else 
-			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/\(_\|\|__throw\)/g, '_||__throw');
+			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__throw\)/g, '=_||__throw');
 	}
 	
-	function genTest(f1, f2, withTryCatch){
+	function genTest(f1, f2, extraTryCatch){
 		var s1 = clean(transform(f1.toString(), {
 			noHelpers: true,
-			noTryCatch: !withTryCatch
+			extraTryCatch: extraTryCatch
 		}));
 		var s2 = clean(f2.toString());
 		if (s1 !== s2) {
@@ -42,7 +42,7 @@ $(document).ready(function(){
 			f1(_);
 			f2();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = __wrapIn((_ || __throw)));
 			try {
 				return f1(__cb(_, this, function(){
 					f2();
@@ -675,6 +675,17 @@ $(document).ready(function(){
 		})
 	})
 	
+	test("out wrappers", 1, function(){
+		genTest(function f(_, arg1){
+			return g(__wrapOut(_), arg2) + 5;
+		}, function f(_, arg1){
+			var __ = (_ = _ || __throw);
+			return g(__wrapOut(__cb(_, this, function(__0, __1){
+				return _(null, (__1 + 5));
+			})), arg2);
+		})
+	})
+	
 	module("evaluation");
 	function evalTest1(f, val, options, next){
 		var str = transform(f.toString(), options);
@@ -690,11 +701,11 @@ $(document).ready(function(){
 
 	function evalTest(f, val){
 		delay = delayUnsafe;
-		evalTest1(f, val, null, function(){
+		evalTest1(f, val, {
+				extraTryCatch: true
+			}, function(){
 			delay = delaySafe;
-			evalTest1(f, val, {
-				noTryCatch: true
-			}, start)
+			evalTest1(f, val, null, start)
 		})
 	}
 	
