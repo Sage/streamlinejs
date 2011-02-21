@@ -271,7 +271,7 @@ So it may not run in all browsers.
 Resources
 ==========
 
-The [[wiki]] discusses advanced topics like utility APIs, exception handling, etc.
+The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like utility APIs, exception handling, etc.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
