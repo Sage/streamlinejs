@@ -72,7 +72,10 @@ You can also call streamline functions as if they were standard node functions. 
       if (err) return console.error("ERROR: " + err.message);
       console.log("readme has " + result + " lines.");
     });
-    
+
+And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
+Streamline will only transform the functions that have the special `_` parameter. The other functions will end up unmodified in the output file.
+
 # Running in other environments
 
 `streamline.js` generates vanilla Javascript code that may be run browser-side too.
