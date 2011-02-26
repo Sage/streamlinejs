@@ -74,7 +74,7 @@ You can also call streamline functions as if they were standard node functions. 
     });
 
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
-Streamline will only transform the functions that have the special `_` parameter. The other functions will end up unmodified in the output file.
+Streamline will only transform the functions that have the special `_` parameter. The other functions will end up unmodified in the output file (maybe slightly reformatted by the narcissus pretty printer).
 
 # Running in other environments
 
