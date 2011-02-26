@@ -86,6 +86,8 @@ You can also use `streamline.js` with CoffeeScript. For example:
 
     coffee-streamline examples/diskUsage.coffee
 
+See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) for details.
+
 # Goodies
 
 The `streamline/flows` module contains some utilities to deal with arrays, parallel execution, context propagation, etc.
