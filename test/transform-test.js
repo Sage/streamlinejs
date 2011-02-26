@@ -686,6 +686,84 @@ $(document).ready(function(){
 		})
 	})
 	
+	test("scoping", 1, function(){
+		genTest(function f(_){
+			g(_);
+			if (x) {
+				var a1, a2, a3, b1 = 1, b2 = 2, b3 = 3;
+				var c1, c2;
+				a1 = 1;
+				a2 = 2;
+			}
+			else {
+				var a2 = 2;
+				b2++;
+				c1 = 1;
+			}
+			a3++;
+			b3++;
+			c2 = 2;
+		}, function f(_){
+			var __ = (_ = _ || __throw);
+			var a2, a3, b2, b3, c1, c2;
+			return g(__cb(_, this, function(){
+				if (x) {
+					var a1;
+					var b1 = 1;
+					b2 = 2;
+					b3 = 3;
+					a1 = 1;
+					a2 = 2;
+				}
+				else {
+					a2 = 2;
+					b2++;
+					c1 = 1;
+				}
+				a3++;
+				b3++;
+				c2 = 2;
+				return __();
+			}));
+		})
+	})
+	
+	test("sync code not modified", 1, function(){
+		genTest(function f(){
+			g();
+			if (x) {
+				var a1, a2, a3, b1 = 1, b2 = 2, b3 = 3;
+				var c1, c2;
+				a1 = 1;
+				a2 = 2;
+			}
+			else {
+				var a2 = 2;
+				b2++;
+				c1 = 1;
+			}
+			a3++;
+			b3++;
+			c2 = 2;
+		}, function f(){
+			g();
+			if (x) {
+				var a1, a2, a3, b1 = 1, b2 = 2, b3 = 3;
+				var c1, c2;
+				a1 = 1;
+				a2 = 2;
+			}
+			else {
+				var a2 = 2;
+				b2++;
+				c1 = 1;
+			}
+			a3++;
+			b3++;
+			c2 = 2;
+		})
+	})
+	
 	module("evaluation");
 	function evalTest1(f, val, options, next){
 		var str = transform(f.toString(), options);
@@ -1310,5 +1388,21 @@ $(document).ready(function(){
 			return o.x;
 		}, 5);
 	})
+
+	asyncTest("scoping", 2, function(){
+		evalTest(function f(_){
+			function test(_){
+				var foo = "abc";
+				function bar(){
+					return foo;
+				}
+				delay(_);
+				var foo = "xyz";
+				return bar;
+			}
+			return test(_)();
+		}, "xyz");
+	})
+	
 })
 
