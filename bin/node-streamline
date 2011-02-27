@@ -1,12 +1,54 @@
 #!/usr/bin/env node
 
-require('streamline');
+var streamline = require('streamline');
 
 var path = require('path');
+var argv = process.argv;
+argv.shift();
 
-process.argv.shift();
+if (argv.length <= 1)
+	return require("repl").start("node-streamline> ");
 
-if (process.argv.length > 1)
-	require(path.join(process.cwd(), process.argv[1]));
-else
-	require("repl").start("node-streamline> ");
+// for now!
+return require(path.join(process.cwd(), argv[1]));
+
+var options = { action: "run" };
+while (argv[1] && argv[1][0] == '-') {
+	var arg = argv.splice(1, 1)[0];
+	switch (arg) {
+	case '-o':
+	case '--output':
+		options.output = argv.splice(1, 1)[0];
+		break;
+	case '-c':
+	case '--compile':
+		options.action = "compile";
+		options.inputs = argv.splice(1, argv.length - 1);
+		break;
+	case '-h':
+	case '--help':
+		options.action = "help";
+		break;
+	default:
+		throw new Error("unkown option " + arg + ". Try -h for help");
+}
+
+switch (options.action) {
+	case "run":
+		if (argv.length < 1)
+			throw new Error("invalid command line. Try -h for help");
+		require(path.join(process.cwd(), argv[1]));
+		break;
+	case "compile":
+		streamline.compile(options);
+		break;
+	case "help":
+		console.log("Usage:\n");
+		console.log("  node-streamline module\n\n");
+		console.log("Available options:\n");
+		console.log("  -c, --compile      compile *_.js files and save as *.js files\n");
+		console.log("  -o, --output       set the directory for compiled files\n");
+		console.log("  -h, --help         displays this help message\n");
+		break;			
+	}
+}

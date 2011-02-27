@@ -21,7 +21,7 @@
 # !!STREAMLINE!!
 
 fs = require 'fs'
-flows = require 'streamline/flows'
+flows = require 'streamline/lib/flows'
 
 fileFunnel = flows.funnel 20
 

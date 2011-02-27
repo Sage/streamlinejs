@@ -13,4 +13,4 @@ coffee.compile = function(content) {
 
 global.error = console.log
 
-require('coffee-script/command').run();
+require('coffee-script/lib/command').run();

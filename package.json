@@ -1,8 +1,9 @@
 {
   "name": "streamline",
-  "version": "0.1.1g",
+  "version": "0.1.1h",
   "engines": { "node": ">=0.2.1" },
   "dependencies": { "narcissus": "=0.0.1" },
   "author": "Bruno Jouhier",
-  "directories": {"lib": "./lib", "bin": "./bin" }
+  "directories": {"lib": "./lib", "bin": "./bin" },
+  "main": "lib/index.js"
 }
