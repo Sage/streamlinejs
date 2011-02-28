@@ -25,7 +25,6 @@ flows = require 'streamline/lib/flows'
 
 fileFunnel = flows.funnel 20
 
-console.error("WARNING: this example is broken because of a bug in CoffeeScript 1.0.0 and 1.0.1 -- use CoffeeScript 0.9.6");
 du = (_, path) ->
 	total = 0
 	stat = fs.stat path, _
@@ -34,7 +33,9 @@ du = (_, path) ->
 			total += fs.readFile(path, _).length
 	else if stat.isDirectory()
 		files = fs.readdir path, _
-		flows.spray(((_) -> total += du _, path + "/" + f) for f in files).collectAll _
+		fns = for f in files 
+			do (f) -> ((_) -> total += du _, path + "/" + f)
+		flows.spray(fns).collectAll _
 		console.log path + ": " + total
 	else
 		console.log path + ": odd file"
