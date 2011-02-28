@@ -25,7 +25,7 @@ du = (_, path) ->
 		console.log path + ": odd file"
 	total
 
-p = if process.argv.length > 0 then process.argv[0] else "."
+p = if process.argv.length > 2 then process.argv[2] else "."
 
 t0 = Date.now()
 
