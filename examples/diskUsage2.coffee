@@ -25,6 +25,7 @@ flows = require 'streamline/lib/flows'
 
 fileFunnel = flows.funnel 20
 
+console.error("WARNING: this example is broken because of a bug in CoffeeScript 1.0.0 and 1.0.1 -- use CoffeeScript 0.9.6");
 du = (_, path) ->
 	total = 0
 	stat = fs.stat path, _
