@@ -593,7 +593,7 @@ $(document).ready(function(){
 						}));
 					}).call(this, function(){
 						if (__cont) {
-							return __()
+							return __();
 						}
 						else {
 							return _(__err, __result)
