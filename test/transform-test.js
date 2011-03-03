@@ -14,6 +14,7 @@ $(document).ready(function(){
 	function genTest(f1, f2, extraTryCatch){
 		var s1 = clean(transform(f1.toString(), {
 			noHelpers: true,
+			lines: "ignore",
 			extraTryCatch: extraTryCatch
 		}));
 		var s2 = clean(f2.toString());
