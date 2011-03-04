@@ -51,9 +51,5 @@ function du(_, path){
 var p = process.argv.length > 2 ? process.argv[2] : ".";
 
 var t0 = Date.now();
-function report(err, result) {
-	if (err)
-		console.log(err.toString() + "\n" + err.stack);
-	console.log("completed in " + (Date.now() - t0) + " ms");
-}
-du(report, p);
+du(_, p);
+console.log("completed in " + (Date.now() - t0) + " ms");
