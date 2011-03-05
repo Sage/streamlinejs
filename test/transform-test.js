@@ -1405,5 +1405,14 @@ $(document).ready(function(){
 		}, "xyz");
 	})
 	
+	asyncTest("return undefined", 2, function(){
+		evalTest(function f(_){
+			function test(_){
+				delay(_);
+				return;
+			}
+			return test(_);
+		}, undefined);
+	})
 })
 
