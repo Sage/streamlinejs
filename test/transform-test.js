@@ -943,6 +943,13 @@ $(document).ready(function(){
 		}, 4);
 	})
 	
+	asyncTest("eval lazy full async", 2, function(){
+		evalTest(function f(_){
+			var result = 1;
+			return delay(_, delay(_, result + 8) < 5) && true ? delay(_, 2) : delay(_, 4)
+		}, 4);
+	})
+	
 	asyncTest("try catch 1", 2, function(){
 		evalTest(function f(_){
 			try {
