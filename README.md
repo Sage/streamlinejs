@@ -31,6 +31,10 @@ Streamline generates more or less the callbacks that you would write yourself. S
 of performance as with hand-written callbacks. 
 Also, the generated code is nicely indented, easy to read, and directly available to debuggers.
 
+# On-line demo
+
+You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe.html)
+
 # Installation
 
 The easiest way to install `streamline.js` is with NPM:

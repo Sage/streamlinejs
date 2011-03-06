@@ -10,7 +10,10 @@ h1#header {
     -moz-border-radius-topleft: 15px;
     -webkit-border-top-right-radius: 15px;
     -webkit-border-top-left-radius: 15px;
-    text-shadow: rgba(0, 0, 0, 0.5) 4px 4px 1px;
+}
+
+h1#header a {
+	color: #fff;	
 }
 
 h2#result {
@@ -39,7 +42,7 @@ input[type="button"] {
 
 textarea {
     font-family: Courier;
-	font-size: small;
+	font-size: x-small;
 	margin: 0.5em 0 0 0;
 	padding: 0.1em 1.0em 0.1em -1.0em;
     width: 100%;
