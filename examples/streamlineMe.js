@@ -1,27 +1,108 @@
 var _samples = {
-	sequenceSample: "demo('call 1', _); demo('call 2', _); demo('call 3', _);",
-	compositionSample: "demo(demo('call 1', _) + demo('call 2' + demo('call 2.1', _), _) + demo('call 3', _), _);",
-	functionsSample: "function f(message, _) { return demo('f: ' + message, _); }" +
-	 "function g(message, _) { return f('g: ' + message, _); }" +
-	 "demo(g('hello world', _), _)",
-	ifElseSample: "var cond = true; demo('before if', _);" +
-	"if (cond) { demo('true branch', _); }" +
-	"else { demo('false branch', _); }" +
-	"demo('after branch', _)",
-	whileSample: "var count = 3; demo('before loop', _);" +
-	"while (count-- > 0)" +
-	" { demo('looping: count is ' + count, _); }" +
-	"demo('after loop', _)",
-	tryCatchSample: "var fail = true; demo('before try', _);" +
-	"try { demo('before fail test', _);" +
-	" if (fail) throw new Error('test exception');" +
-	" demo('did not fail', _); }" +
-	"catch (ex) { demo('caught ' + ex.message, _); }" +
-	"finally { demo('inside finally', _); }" +
-	"demo('after try catch', _);",
-	lazySample: "var len = 4;" +
-	"var result = len >= demo('--5', _).length && len <= demo('----7', _).length ? 'inside' : 'outside';" +
-	"demo('val is ' + result, _);"
+	introSample: "" +
+	"// Demonstrates how 'streamline.js' transforms synchronous-looking code" +
+	"\n// into asynchronous code with callbacks." +
+	"\n// You can use this little tool to investigate the callback patterns" +
+	"\n// that correspond to various Javascript constructs." +
+	"\n//" +
+	"\n// Try one of the samples above, or write your own code below." +
+	"\n// Syntax is simple: just use '_' anywhere a callback is expected" +
+	"\n//" +
+	"\n// You can use the 'demo' function:" +
+	"\n//" +
+	"\n// demo(message, callback)" +
+	"\n//  displays message with 1s timeout and" +
+	"\n//  returns '[message]' through callback" +
+	"\n//" +
+	"\n// Look at the transformed code and run it with the 'execute' button." +
+	"\n//" +
+	"\n// The transformed code has been simplified a bit." +
+	"\n// Select the 'show complete code' option to see the whole code." +
+	"\n//" +
+	"\n// The 'beautify' button can help you tidy your code." +
+	"\n" +
+	"\ndemo('Hello world!', _);",
+	
+	sequenceSample: "" +
+	"// Simple sequence of asynchronous calls:" +
+	"\n" +
+	"\ndemo('hello', _);" +
+	"\ndemo('world', _);" +
+	"\ndemo('how\\'s life?', _);",
+	
+	expressionsSample: "" +
+	"// Expression that combines asynchronous calls:" +
+	"\n" +
+	"\ndemo(demo('call 1', _) + " +
+	"\n  demo('call 2', _) + " +
+	"\n  demo('call 3', _) + " +
+	"\n  demo('call 4', _), _);",
+	
+	functionsSample: "" +
+	"// Asynchronous functions that call each other: " +
+	"\n" +
+	"\nfunction f(message, _) {" +
+	"\n  return demo('f: ' + message, _);" +
+	"\n}" +
+	"\n" +
+	"\nfunction g(message, _) {" +
+	"\n  return f('g: ' + message, _);" +
+	"\n}" +
+	"\n" +
+	"\ndemo(g('hello world', _), _);",
+	
+	ifElseSample: "" +
+	"// if/else demo. Try toggling 'cond'." +
+	"\n" +
+	"\nvar cond = true;" +
+	"\ndemo('before if', _);" +
+	"\n" +
+	"\nif (cond) { demo('true branch', _); }" +
+	"\nelse { demo('false branch', _); }" +
+	"\n" +
+	"\ndemo('after branch', _);",
+	
+	whileSample: "" +
+	"// Loop demo." +
+	"\n// See what happens if you increase count and run another sample!" +
+	"\n" +
+	"\nvar count = 3;" +
+	"\ndemo('before loop', _);" +
+	"\n" +
+	"\nwhile (count-- > 0) {" +
+	"\n  demo('looping: count is ' + count, _);" +
+	"\n}" +
+	"\n" +
+	"\ndemo('after loop', _);",
+	
+	tryCatchSample: "" +
+	"// try/catch demo. Try toggling 'fail'." +
+	"\n" +
+	"\nvar fail = true;" +
+	"\ndemo('before try', _);" +
+	"\n" +
+	"\ntry {" +
+	"\n  demo('before fail test', _);" +
+	"\n  if (fail) throw new Error('test exception');" +
+	"\n  demo('did not fail', _);" +
+	"\n}" +
+	"\ncatch (ex) { demo('caught ' + ex.message, _); }" +
+	"\nfinally { demo('inside finally', _); }" +
+	"\n" +
+	"\ndemo('after try catch', _);",
+	
+	lazySample: "" +
+	"// Lazy operators demo." +
+	"\n// Try increasing len and check that only " +
+	"\n// relevant sub-expressions are evaluated." +
+	"\n" +
+	"\nvar len = 4;" +
+	"\nvar result = len >= demo('--5', _).length " +
+	"\n  && len <= demo('----7', _).length" +
+	"\n  ? demo('inside', _)" +
+	"\n  : demo('outside', _);" +
+	"\n" +
+	"\ndemo(len + ' is ' + result, _);"
 }
 
 var _complete = false;
@@ -103,8 +184,8 @@ function _beautify(str){
 $(function(){
 	$('#codeIn').keyup(_transform);
 	$('.sample').click(function(){
-		if (_beautify(_samples[this.id])) 
-			_transform();
+		$('#codeIn').val(_samples[this.id]);
+		_transform();
 	});
 	$('#beautify').click(function(){
 		_beautify($('#codeIn').val());
@@ -116,5 +197,6 @@ $(function(){
 	$('#execute').click(function(){
 		_execute();
 	})
+	$('#codeIn').val(_samples["introSample"]);
 	_transform();
 })
