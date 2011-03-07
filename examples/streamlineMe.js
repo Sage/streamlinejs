@@ -16,6 +16,12 @@ var _samples = {
 	"\n//" +
 	"\n// Look at the transformed code and run it with the 'execute' button." +
 	"\n//" +
+	"\n// The generated code uses two parameters/variables to control the flow:" +
+	"\n//   _:  the callback. This is where execution will continue on a return or" +
+	"\n//       throw statement." +
+	"\n//   __: the 'next' flow. This is where execution will continue at the end of" +
+	"\n//       the construct if it didn't encounter a return or throw." +
+	"\n//" +
 	"\n// The transformed code has been simplified a bit." +
 	"\n// Select the 'show complete code' option to see the whole code." +
 	"\n//" +
