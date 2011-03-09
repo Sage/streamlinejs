@@ -141,6 +141,12 @@ function _success(message){
 	$('#result').removeClass('error').addClass('success').text(message);
 }
 
+window.__context = {
+	errorHandler: function(err) {
+		_error(err.message || err.toString());
+	}
+}
+
 function _transform(){
 	var codeIn = $('#codeIn').val();
 	try {

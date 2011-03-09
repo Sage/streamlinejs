@@ -24,11 +24,11 @@ h2#result {
 }
 
 h2#result.success {
-    background-color: #0c0;
+    background-color: #090;
 }
 
 h2#result.error {
-    background-color: #c00;
+    background-color: #900;
 }
 
 h2 {
