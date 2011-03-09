@@ -8,7 +8,7 @@ $(document).ready(function(){
 		if (jQuery.browser.mozilla) 
 			return new Function(s).toString();
 		else 
-			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__throw\)/g, '=_||__throw');
+			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap');
 	}
 	
 	function genTest(f1, f2, extraTryCatch){
@@ -30,7 +30,7 @@ $(document).ready(function(){
 			f1(_);
 			f2();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return f1(__cb(_, this, function(){
 				f2();
 				return __();
@@ -43,7 +43,7 @@ $(document).ready(function(){
 			f1(_);
 			f2();
 		}, function f(_){
-			var __ = (_ = __wrapIn((_ || __throw)));
+			var __ = (_ = __wrapIn((_ || __trap)));
 			try {
 				return f1(__cb(_, this, function(){
 					f2();
@@ -62,7 +62,7 @@ $(document).ready(function(){
 			f2();
 			return x;
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return f1(__cb(_, this, function(__0, x){
 				f2();
 				return _(null, x);
@@ -75,7 +75,7 @@ $(document).ready(function(){
 			f1();
 			return f2(_);
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return f2(_);
 		});
@@ -91,7 +91,7 @@ $(document).ready(function(){
 			}
 			f5();
 		}, function f(_, b){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				if (b) {
@@ -118,7 +118,7 @@ $(document).ready(function(){
 				f4();
 			}
 		}, function f(_, b){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			if (b) {
 				f2();
@@ -146,7 +146,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_, b){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				if (b) {
@@ -185,7 +185,7 @@ $(document).ready(function(){
 			f6();
 			return 2;
 		}, function f(_, b){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				if (b) {
@@ -215,13 +215,13 @@ $(document).ready(function(){
 			})
 			f4();
 		}, function f(_, arr){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return each(__cb(_, this, function(){
 				f4();
 				return __();
 			}), arr, function(_, elt){
-				var __ = (_ = _ || __throw);
+				var __ = (_ = _ || __trap);
 				return f2(__cb(_, this, function(){
 					f3();
 					return __();
@@ -239,7 +239,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__break){
 				var __loop = __nt(_, this, function(){
@@ -272,7 +272,7 @@ $(document).ready(function(){
 			while (cond);
 			f4();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			var __1 = true;
 			return (function(__break){
@@ -306,7 +306,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_, arr){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			var i = 0;
 			var __2 = false;
@@ -346,7 +346,7 @@ $(document).ready(function(){
 			}
 			f4();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			var __1 = __forIn(obj);
 			var __2 = 0;
@@ -391,7 +391,7 @@ $(document).ready(function(){
 			}
 			f7();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				var __break = __;
@@ -432,7 +432,7 @@ $(document).ready(function(){
 					break;
 			}
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			var __break = __;
 			switch (exp) {
 				case "a":
@@ -454,7 +454,7 @@ $(document).ready(function(){
 			f2(_, f3(_, f4(_)), f5(_, f6()));
 			f7();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return f4(__cb(_, this, function(__0, __3){
 				return f3(__cb(_, this, function(__0, __2){
@@ -476,7 +476,7 @@ $(document).ready(function(){
 				f3();
 			f4();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__break){
 				var __loop = __nt(_, this, function(){
@@ -514,7 +514,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				return (function(_){
@@ -567,7 +567,7 @@ $(document).ready(function(){
 			}
 			f8();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				return (function(_){
@@ -622,11 +622,11 @@ $(document).ready(function(){
 			}
 			f7();
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			f1();
 			return (function(__){
 				return (function(_){
-					var __ = (_ = _ || __throw);
+					var __ = (_ = _ || __trap);
 					return f2(__cb(_, this, function(__0, __val){
 						if ((!__val == true)) {
 							return _(null, __val);
@@ -653,7 +653,7 @@ $(document).ready(function(){
 	test("empty body", 1, function(){
 		genTest(function f(_){
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return __();
 		})
 	})
@@ -662,7 +662,7 @@ $(document).ready(function(){
 		genTest(function f(_){
 			return 4;
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return _(null, 4);
 		})
 	})
@@ -671,7 +671,7 @@ $(document).ready(function(){
 		genTest(function f(_, arg1){
 			return g(_, arg2);
 		}, function f(_, arg1){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return g(_, arg2);
 		})
 	})
@@ -680,7 +680,7 @@ $(document).ready(function(){
 		genTest(function f(_, arg1){
 			return g(__wrapOut(_), arg2) + 5;
 		}, function f(_, arg1){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			return g(__wrapOut(__cb(_, this, function(__0, __1){
 				return _(null, (__1 + 5));
 			})), arg2);
@@ -705,7 +705,7 @@ $(document).ready(function(){
 			b3++;
 			c2 = 2;
 		}, function f(_){
-			var __ = (_ = _ || __throw);
+			var __ = (_ = _ || __trap);
 			var a2, a3, b2, b3, c1, c2;
 			return g(__cb(_, this, function(){
 				if (x) {
