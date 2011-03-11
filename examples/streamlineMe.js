@@ -2,11 +2,12 @@
 var _demo = "\n" +
     "\nwindow.demo = function(message, callback) {" +
 	"\n  if (typeof callback !== 'function')" +
-	"\n    return error('bad callback: ' + callback);" +
+	"\n    throw new Error('bad callback: ' + callback);" +
 	"\n  info(message + ' (waiting 1s)');" +
 	"\n  setTimeout(function() {" +
 	"\n    info(message + ' (done!)');" +
-	"\n    callback(null, message.length);" +
+	"\n    try { callback(null, message.length); }" +
+	"\n    catch (err) { callback(err); }" +	
 	"\n  }, 1000);" +
 	"\n}" +
 	"\n";
