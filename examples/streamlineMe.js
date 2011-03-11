@@ -31,7 +31,7 @@ var _samples = {
 	"\n//       the construct if it didn't encounter a return or throw." +
 	"\n//" +
 	"\n// The transformed code has been simplified a bit." +
-	"\n// Select the 'info complete code' option to see the whole code." +
+	"\n// Select the 'show complete code' option to see the whole code." +
 	"\n//" +
 	"\n// The 'beautify' button can help you tidy your code." +
 	_demo +
