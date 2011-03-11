@@ -33,7 +33,7 @@ $(document).ready(function(){
 			var __ = (_ = _ || __trap);
 			return f1(__cb(_, this, function(){
 				f2();
-				return __();
+				return __.call(this);
 			}));
 		});
 	});
@@ -47,7 +47,7 @@ $(document).ready(function(){
 			try {
 				return f1(__cb(_, this, function(){
 					f2();
-					return __();
+					return __.call(this);
 				}));
 			} 
 			catch (e) {
@@ -65,7 +65,7 @@ $(document).ready(function(){
 			var __ = (_ = _ || __trap);
 			return f1(__cb(_, this, function(__0, x){
 				f2();
-				return _(null, x);
+				return _.call(this, null, x);
 			}));
 		});
 	});
@@ -98,13 +98,13 @@ $(document).ready(function(){
 					f2();
 					return f3(__cb(_, this, function(){
 						f4();
-						return __();
+						return __.call(this);
 					}));
 				};
-				return __();
+				return __.call(this);
 			}).call(this, function(){
 				f5();
-				return __();
+				return __.call(this);
 			});
 		});
 	});
@@ -124,10 +124,10 @@ $(document).ready(function(){
 				f2();
 				return f3(__cb(_, this, function(){
 					f4();
-					return __();
+					return __.call(this);
 				}));
 			};
-			return __();
+			return __.call(this);
 		});
 	});
 	
@@ -153,19 +153,19 @@ $(document).ready(function(){
 					f2();
 					return f3(__cb(_, this, function(){
 						f4();
-						return __();
+						return __.call(this);
 					}));
 				}
 				else {
 					f5();
 					return f6(__cb(_, this, function(){
 						f7();
-						return __();
+						return __.call(this);
 					}));
 				}
 			}).call(this, function(){
 				f8();
-				return __();
+				return __.call(this);
 			});
 		});
 	});
@@ -192,16 +192,16 @@ $(document).ready(function(){
 					f2();
 					return f3(__cb(_, this, function(){
 						f4();
-						return _(null, 1);
+						return _.call(this, null, 1);
 					}));
 				}
 				else {
 					f5();
 				}
-				return __();
+				return __.call(this);
 			}).call(this, function(){
 				f6();
-				return _(null, 2);
+				return _.call(this, null, 2);
 			});
 		});
 	});
@@ -219,12 +219,12 @@ $(document).ready(function(){
 			f1();
 			return each(__cb(_, this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			}), arr, function(_, elt){
 				var __ = (_ = _ || __trap);
 				return f2(__cb(_, this, function(){
 					f3();
-					return __();
+					return __.call(this);
 				}), elt);
 			});
 		});
@@ -247,17 +247,17 @@ $(document).ready(function(){
 					if (cond) {
 						return f2(__cb(_, this, function(){
 							f3();
-							return __();
+							return __.call(this);
 						}));
 					}
 					else {
-						return __break();
+						return __break.call(this);
 					}
 				});
 				return __loop();
 			}).call(this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			});
 		});
 	});
@@ -282,17 +282,17 @@ $(document).ready(function(){
 						__1 = false;
 						return f2(__cb(_, this, function(){
 							f3();
-							return __();
+							return __.call(this);
 						}));
 					}
 					else {
-						return __break();
+						return __break.call(this);
 					}
 				});
 				return __loop();
 			}).call(this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			});
 		});
 	});
@@ -322,17 +322,17 @@ $(document).ready(function(){
 					if ((i < arr.length)) {
 						return f2(__cb(_, this, function(){
 							f3();
-							return __();
+							return __.call(this);
 						}));
 					}
 					else {
-						return __break();
+						return __break.call(this);
 					}
 				});
 				return __loop();
 			}).call(this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			});
 		})
 	})
@@ -357,17 +357,17 @@ $(document).ready(function(){
 						var k = __1[__2++];
 						return f2(__cb(_, this, function(){
 							f3(k);
-							return __();
+							return __.call(this);
 						}), k);
 					}
 					else {
-						return __break();
+						return __break.call(this);
 					}
 				});
 				return __loop();
 			}).call(this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			});
 		});
 	})
@@ -399,23 +399,23 @@ $(document).ready(function(){
 					case "a":
 						return f2(__cb(_, this, function(){
 							f3();
-							return __break();
+							return __break.call(this);
 						}));
 					case "b":
 						
 					case "c":
 						f4();
 						return f5(__cb(_, this, function(){
-							return __break();
+							return __break.call(this);
 						}));
 					default:
 						f6();
-						return __break();
+						return __break.call(this);
 				}
-				return __();
+				return __.call(this);
 			}).call(this, function(){
 				f7();
-				return __();
+				return __.call(this);
 			});
 		});
 	})
@@ -441,10 +441,10 @@ $(document).ready(function(){
 							case "b":
 								break;
 						}
-						return __break();
+						return __break.call(this);
 					}));
 			}
-			return __();
+			return __.call(this);
 		});
 	})
 	
@@ -461,7 +461,7 @@ $(document).ready(function(){
 					return f5(__cb(_, this, function(__0, __4){
 						return f2(__cb(_, this, function(){
 							f7();
-							return __();
+							return __.call(this);
 						}), __2, __4);
 					}), f6());
 				}), __3);
@@ -486,15 +486,15 @@ $(document).ready(function(){
 							f3();
 						}
 						else {
-							return __break();
+							return __break.call(this);
 						}
-						return __();
+						return __.call(this);
 					}));
 				});
 				return __loop();
 			}).call(this, function(){
 				f4();
-				return __();
+				return __.call(this);
 			});
 		})
 	})
@@ -522,7 +522,7 @@ $(document).ready(function(){
 						f2();
 						return f3(__cb(_, this, function(){
 							f4();
-							return __();
+							return __.call(this);
 						}));
 					} 
 					catch (e) {
@@ -534,16 +534,16 @@ $(document).ready(function(){
 						f5();
 						return f6(__cb(_, this, function(){
 							f7();
-							return __();
+							return __.call(this);
 						}));
 					}
 					else 
-						return _(null, __result);
+						return _.call(this, null, __result);
 				});
 			}).call(this, function(){
 				try {
 					f8();
-					return __();
+					return __.call(this);
 				}
 				catch (e) {
 					return __propagate(_, this, e);
@@ -572,13 +572,13 @@ $(document).ready(function(){
 			return (function(__){
 				return (function(_){
 					function __(){
-						return _(null, null, true);
+						return _.call(this, null, null, true);
 					}
 					try {
 						f2();
 						return f3(__cb(_, this, function(){
 							f4();
-							return __();
+							return __.call(this);
 						}));
 					} 
 					catch (e) {
@@ -589,21 +589,21 @@ $(document).ready(function(){
 						f5();
 						return f6(__cb(_, this, function(){
 							f7();
-							return __();
+							return __.call(this);
 						}));
 					}).call(this, function(){
 						if (__cont) {
-							return __();
+							return __.call(this);
 						}
 						else {
-							return _(__err, __result)
+							return _.call(this, __err, __result)
 						}
 					});
 				});
 			}).call(this, function(){
 				try {
 					f8();
-					return __();
+					return __.call(this);
 				}
 				catch (e) {
 					return __propagate(_, this, e);
@@ -629,7 +629,7 @@ $(document).ready(function(){
 					var __ = (_ = _ || __trap);
 					return f2(__cb(_, this, function(__0, __val){
 						if ((!__val == true)) {
-							return _(null, __val);
+							return _.call(this, null, __val);
 						}
 						return f3(_);
 					}));
@@ -638,14 +638,14 @@ $(document).ready(function(){
 						f4();
 						return f5(__cb(_, this, function(){
 							f6();
-							return __();
+							return __.call(this);
 						}));
 					}
-					return __();
+					return __.call(this);
 				}));
 			}).call(this, function(){
 				f7();
-				return __();
+				return __.call(this);
 			});
 		})
 	})
@@ -654,7 +654,7 @@ $(document).ready(function(){
 		genTest(function f(_){
 		}, function f(_){
 			var __ = (_ = _ || __trap);
-			return __();
+			return __.call(this);
 		})
 	})
 	
@@ -663,7 +663,7 @@ $(document).ready(function(){
 			return 4;
 		}, function f(_){
 			var __ = (_ = _ || __trap);
-			return _(null, 4);
+			return _.call(this, null, 4);
 		})
 	})
 	
@@ -682,7 +682,7 @@ $(document).ready(function(){
 		}, function f(_, arg1){
 			var __ = (_ = _ || __trap);
 			return g(__wrapOut(__cb(_, this, function(__0, __1){
-				return _(null, (__1 + 5));
+				return _.call(this, null, (__1 + 5));
 			})), arg2);
 		})
 	})
@@ -724,7 +724,7 @@ $(document).ready(function(){
 				a3++;
 				b3++;
 				c2 = 2;
-				return __();
+				return __.call(this);
 			}));
 		})
 	})
@@ -790,17 +790,17 @@ $(document).ready(function(){
 	
 	function delayUnsafe(_, val){
 		setTimeout(function(){
-			_(null, val);
+			_.call(this, null, val);
 		}, 0);
 	}
 	
 	function delaySafe(_, val){
 		setTimeout(function(){
 			try {
-				_(null, val);
+				_.call(this, null, val);
 			} 
 			catch (ex) {
-				_(ex)
+				_.call(this, ex)
 			}
 		}, 0);
 	}
@@ -809,7 +809,7 @@ $(document).ready(function(){
 	
 	function delayFail(_, err){
 		setTimeout(function(){
-			_(err);
+			_.call(this, err);
 		}, 0);
 	}
 	
