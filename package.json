@@ -1,6 +1,7 @@
 {
   "name": "streamline",
-  "version": "0.1.3j",
+  "description": "Asynchronous Javascript for dummies",
+  "version": "0.1.4",
   "engines": { "node": ">=0.2.1" },
   "dependencies": { "narcissus": "=0.0.1" },
   "author": "Bruno Jouhier",
