@@ -765,6 +765,19 @@ $(document).ready(function(){
 		})
 	})
 	
+	test("function forward reference", 1, function(){
+		genTest(function f(_){
+			foo();
+			g(_);
+			function foo() {};
+		}, function f(_){
+			var __ = (_ = _ || __trap);
+			function foo() {}
+			foo();
+			return g(__cb(_, __.bind(this)));
+		})
+	})
+	
 	module("evaluation");
 	function evalTest1(f, val, options, next){
 		var str = transform(f.toString(), options);

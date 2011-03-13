@@ -153,7 +153,6 @@ function _transform(){
 			lines: "ignore",
 			demo: true
 		});
-		console.log(codeOut);
 		$('#codeOut').val(codeOut);
 		info("ready")
 	} 
