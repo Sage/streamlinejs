@@ -2,7 +2,7 @@
 
 var __global = typeof global !== 'undefined' ? global : window;
 function __cb(_, fn){ var ctx = __global.__context; return function(err, result){ __global.__context = ctx; if (err) return _(err); return fn(null, result); } }
-function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + ex.message + "\n" + ex.stack); } }
+function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
             (function(_) {
               var __ = (_ = (_ || __trap));
               {
