@@ -402,7 +402,6 @@ $(document).ready(function(){
 							return __break();
 						}.bind(this)));
 					case "b":
-						
 					case "c":
 						f4();
 						return f5(__cb(_, function(){
