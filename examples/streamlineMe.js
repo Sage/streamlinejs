@@ -1,16 +1,15 @@
-
 var _demo = "\n" +
-    "\nwindow.demo = function(message, callback) {" +
-	"\n  if (typeof callback !== 'function')" +
-	"\n    throw new Error('bad callback: ' + callback);" +
-	"\n  info(message + ' (waiting 1s)');" +
-	"\n  setTimeout(function() {" +
-	"\n    info(message + ' (done!)');" +
-	"\n    try { callback(null, message.length); }" +
-	"\n    catch (err) { callback(err); }" +	
-	"\n  }, 1000);" +
-	"\n}" +
-	"\n";
+"\nwindow.demo = function(message, callback) {" +
+"\n  if (typeof callback !== 'function')" +
+"\n    throw new Error('bad callback: ' + callback);" +
+"\n  info(message + ' (waiting 1s)');" +
+"\n  setTimeout(function() {" +
+"\n    info(message + ' (done!)');" +
+"\n    try { callback(null, message.length); }" +
+"\n    catch (err) { callback(err); }" +
+"\n  }, 1000);" +
+"\n}" +
+"\n";
 
 var _samples = {
 	introSample: "" +
@@ -24,20 +23,26 @@ var _samples = {
 	"\n//" +
 	"\n// Look at the transformed code and run it with the 'execute' button." +
 	"\n//" +
-	"\n// The generated code uses two parameters/variables to control the flow:" +
-	"\n//   _:  the callback. This is where execution will continue on a return or" +
-	"\n//       throw statement." +
-	"\n//   __: the 'next' flow. This is where execution will continue at the end of" +
-	"\n//       the construct if it didn't encounter a return or throw." +
-	"\n//" +
-	"\n// The transformed code has been simplified a bit." +
+	"\n// The transformation generates some one-liner auxiliary functions." +
 	"\n// Select the 'show complete code' option to see the whole code." +
 	"\n//" +
 	"\n// The 'beautify' button can help you tidy your code." +
 	_demo +
 	"\ndemo('Straight to the answer: fact(4) = 24', _);" +
+	"\n" +
+	"\n// A few pointers to understand the generated code:" +
+	"\n//" +
+	"\n// * the '_' parameter is the callback. This is where execution will" +
+	"\n//   continue on a return or throw statement." +
+	"\n// * the '__' variable is a 'next' callback. This is where execution will" +
+	"\n//   resume at the end of the construct if it didn't encounter a return " +
+	"\n//   or throw." +
+	"\n// * the '__cb' function is just a little callback wrapper that deals with " +
+	"\n//   error handling and other small matters in a generic way." +
+	"\n// * the 'bind' and 'call' functions ensure that the code works as expected" +
+	"\n//   inside methods (when 'this' is used in the scope)" +
 	"\n",
-	
+
 	sequenceSample: "" +
 	"// Multiply one step at a time:" +
 	"\n" +
@@ -47,14 +52,14 @@ var _samples = {
 	"\nfact *= demo('1234', _);" +
 	"\ndemo('fact(4) = ' + fact, _);" +
 	"\n",
-	
+
 	expressionsSample: "" +
 	"// Multiply all at once:" +
 	"\n" +
 	"\nvar fact = demo('1', _) * demo('12', _) * demo('123', _) * demo('1234', _);" +
 	"\ndemo('fact(4) = ' + fact, _)" +
 	"\n",
-	
+
 	functionsSample: "" +
 	"// Go through intermediate functions: " +
 	"\n" +
@@ -68,7 +73,7 @@ var _samples = {
 	"\n" +
 	"\ndemo('fact(4) = ' + g(_), _);" +
 	"\n",
-	
+
 	ifElseSample: "" +
 	"// Natural recursive version with if/else test." +
 	"\n" +
@@ -79,7 +84,7 @@ var _samples = {
 	"\n" +
 	"\ndemo('fact(4) = ' + fact(4, _), _);" +
 	"\n",
-	
+
 	loopSample: "" +
 	"// Natural iterative version" +
 	"\n" +
@@ -93,7 +98,7 @@ var _samples = {
 	"\n" +
 	"\ndemo('fact(4) = ' + fact(4, _), _);" +
 	"\n",
-	
+
 	tryCatchSample: "" +
 	"// Recursive variant with throw/catch." +
 	"\n" +
@@ -109,7 +114,7 @@ var _samples = {
 	"\n" +
 	"\ndemo('fact(4) = ' + fact(4, _), _);" +
 	"\n",
-	
+
 	lazySample: "" +
 	"// Variant with lazy eval operators." +
 	"\n// Note that fact(3, _) is evaluated but fact(5, _) is not" +
@@ -127,11 +132,11 @@ var _samples = {
 
 var _complete = false;
 
-function error(message){
+function error(message) {
 	$('#result').removeClass('info').addClass('error').text(message);
 }
 
-function info(message){
+function info(message) {
 	$('#result').removeClass('error').addClass('success').text(message);
 }
 
@@ -143,65 +148,59 @@ window.__context = {
 
 eval(_demo); // define demo if user does not execute intro
 
-function _transform(){
+function _transform() {
 	var codeIn = $('#codeIn').val();
 	try {
-		var codeOut = Streamline.transform(codeIn, _complete ? {
-			lines: "mark"
-		} : {
-			noHelpers: true,
-			lines: "ignore",
-			demo: true
+		var codeOut = Streamline.transform(codeIn, {
+			noHelpers: !_complete,
+			lines: _complete ? "mark" : "ignore"
 		});
 		$('#codeOut').val(codeOut);
 		info("ready")
-	} 
-	catch (ex) {
+	} catch (ex) {
 		console.error(ex);
 		error(ex.message)
 	}
 }
 
-function _execute(){
+function _execute() {
 	var codeIn = $('#codeIn').val();
 	try {
 		var codeOut = Streamline.transform(codeIn, {
 			lines: "preserve"
 		});
 		eval(codeOut);
-	} 
-	catch (ex) {
+	} catch (ex) {
 		error(ex.message);
 	}
 }
 
-function _beautify(str){
+function _beautify(str) {
 	try {
 		var str = Narcissus.decompiler.pp(Narcissus.parser.parse(str));
 		str = str.replace(/}\s*;/g, "}")
 		$('#codeIn').val(str);
 		return true;
-	} 
-	catch (ex) {
+	} catch (ex) {
 		error(ex.message);
 		return false;
 	}
 }
 
-$(function(){
+$( function() {
 	$('#codeIn').keyup(_transform);
-	$('.sample').click(function(){
+	$('.sample').click( function() {
 		$('#codeIn').val(_samples[this.id]);
 		_transform();
 	});
-	$('#beautify').click(function(){
+	$('#beautify').click( function() {
 		_beautify($('#codeIn').val());
 	})
-	$('#complete').change(function(){
+	$('#complete').change( function() {
 		_complete = !_complete;
 		_transform();
 	})
-	$('#execute').click(function(){
+	$('#execute').click( function() {
 		_execute();
 	})
 	$('#codeIn').val(_samples["introSample"]);
