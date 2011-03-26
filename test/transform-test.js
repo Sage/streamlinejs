@@ -34,7 +34,7 @@ $(document).ready(function(){
 			return f1(__cb(_, function(){
 				f2();
 				return __();
-			}.bind(this)));
+			}));
 		});
 	});
 	
@@ -48,7 +48,7 @@ $(document).ready(function(){
 				return f1(__cb(_, function(){
 					f2();
 					return __();
-				}.bind(this)));
+				}));
 			} 
 			catch (e) {
 				return __propagate(_, e);
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			return f1(__cb(_, function(__0, x){
 				f2();
 				return _(null, x);
-			}.bind(this)));
+			}));
 		});
 	});
 	
@@ -99,13 +99,13 @@ $(document).ready(function(){
 					return f3(__cb(_, function(){
 						f4();
 						return __();
-					}.bind(this)));
+					}));
 				};
 				return __();
-			}.call(this, function(){
+			}(function(){
 				f5();
 				return __();
-			}.bind(this));
+			});
 		});
 	});
 	
@@ -125,7 +125,7 @@ $(document).ready(function(){
 				return f3(__cb(_, function(){
 					f4();
 					return __();
-				}.bind(this)));
+				}));
 			};
 			return __();
 		});
@@ -154,19 +154,19 @@ $(document).ready(function(){
 					return f3(__cb(_, function(){
 						f4();
 						return __();
-					}.bind(this)));
+					}));
 				}
 				else {
 					f5();
 					return f6(__cb(_, function(){
 						f7();
 						return __();
-					}.bind(this)));
+					}));
 				}
-			}.call(this, function(){
+			}(function(){
 				f8();
 				return __();
-			}.bind(this));
+			});
 		});
 	});
 	
@@ -193,16 +193,16 @@ $(document).ready(function(){
 					return f3(__cb(_, function(){
 						f4();
 						return _(null, 1);
-					}.bind(this)));
+					}));
 				}
 				else {
 					f5();
 				}
 				return __();
-			}.call(this, function(){
+			}(function(){
 				f6();
 				return _(null, 2);
-			}.bind(this));
+			});
 		});
 	});
 	
@@ -220,12 +220,12 @@ $(document).ready(function(){
 			return each(__cb(_, function(){
 				f4();
 				return __();
-			}.bind(this)), arr, function(_, elt){
+			}), arr, function(_, elt){
 				var __ = (_ = _ || __trap);
 				return f2(__cb(_, function(){
 					f3();
 					return __();
-				}.bind(this)), elt);
+				}), elt);
 			});
 		});
 	});
@@ -248,17 +248,17 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f3();
 							return __();
-						}.bind(this)));
+						}));
 					}
 					else {
 						return __break();
 					}
-				}.bind(this));
+				});
 				return __loop();
-			}.call(this, function(){
+			}(function(){
 				f4();
 				return __();
-			}.bind(this));
+			});
 		});
 	});
 	
@@ -283,17 +283,17 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f3();
 							return __();
-						}.bind(this)));
+						}));
 					}
 					else {
 						return __break();
 					}
-				}.bind(this));
+				});
 				return __loop();
-			}.call(this, function(){
+			}(function(){
 				f4();
 				return __();
-			}.bind(this));
+			});
 		});
 	});
 	
@@ -323,17 +323,17 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f3();
 							return __();
-						}.bind(this)));
+						}));
 					}
 					else {
 						return __break();
 					}
-				}.bind(this));
+				});
 				return __loop();
-			}.call(this, function(){
+			}(function(){
 				f4();
 				return __();
-			}.bind(this));
+			});
 		})
 	})
 	
@@ -358,17 +358,17 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f3(k);
 							return __();
-						}.bind(this)), k);
+						}), k);
 					}
 					else {
 						return __break();
 					}
-				}.bind(this));
+				});
 				return __loop();
-			}.call(this, function(){
+			}(function(){
 				f4();
 				return __();
-			}.bind(this));
+			});
 		});
 	})
 	
@@ -400,22 +400,22 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f3();
 							return __break();
-						}.bind(this)));
+						}));
 					case "b":
 					case "c":
 						f4();
 						return f5(__cb(_, function(){
 							return __break();
-						}.bind(this)));
+						}));
 					default:
 						f6();
 						return __break();
 				}
 				return __();
-			}.call(this, function(){
+			}(function(){
 				f7();
 				return __();
-			}.bind(this));
+			});
 		});
 	})
 	
@@ -441,7 +441,7 @@ $(document).ready(function(){
 								break;
 						}
 						return __break();
-					}.bind(this)));
+					}));
 			}
 			return __();
 		});
@@ -461,10 +461,10 @@ $(document).ready(function(){
 						return f2(__cb(_, function(){
 							f7();
 							return __();
-						}.bind(this)), __2, __4);
-					}.bind(this)), f6());
-				}.bind(this)), __3);
-			}.bind(this)));
+						}), __2, __4);
+					}), f6());
+				}), __3);
+			}));
 		});
 	})
 	
@@ -488,13 +488,13 @@ $(document).ready(function(){
 							return __break();
 						}
 						return __();
-					}.bind(this)));
-				}.bind(this));
+					}));
+				});
 				return __loop();
-			}.call(this, function(){
+			}(function(){
 				f4();
 				return __();
-			}.bind(this));
+			});
 		})
 	})
 	
@@ -522,24 +522,24 @@ $(document).ready(function(){
 						return f3(__cb(_, function(){
 							f4();
 							return __();
-						}.bind(this)));
+						}));
 					} 
 					catch (e) {
 						return __propagate(_, e);
 					}
 					
-				}.call(this, function(ex, __result){
+				}(function(ex, __result){
 					if (ex) {
 						f5();
 						return f6(__cb(_, function(){
 							f7();
 							return __();
-						}.bind(this)));
+						}));
 					}
 					else 
 						return _(null, __result);
-				}.bind(this));
-			}.call(this, function(){
+				});
+			}(function(){
 				try {
 					f8();
 					return __();
@@ -547,7 +547,7 @@ $(document).ready(function(){
 				catch (e) {
 					return __propagate(_, e);
 				}
-			}.bind(this));
+			});
 		});
 	})
 	
@@ -572,34 +572,34 @@ $(document).ready(function(){
 				return function(_){
 					var __ = function(){
 						return _(null, null, true);
-					}.bind(this);
+					};
 					try {
 						f2();
 						return f3(__cb(_, function(){
 							f4();
 							return __();
-						}.bind(this)));
+						}));
 					} 
 					catch (e) {
 						return __propagate(_, e);
 					}
-				}.call(this, function(__err, __result, __cont){
+				}(function(__err, __result, __cont){
 					return function(__){
 						f5();
 						return f6(__cb(_, function(){
 							f7();
 							return __();
-						}.bind(this)));
-					}.call(this, function(){
+						}));
+					}(function(){
 						if (__cont) {
 							return __();
 						}
 						else {
 							return _(__err, __result)
 						}
-					}.bind(this));
-				}.bind(this));
-			}.call(this, function(){
+					});
+				});
+			}(function(){
 				try {
 					f8();
 					return __();
@@ -607,7 +607,7 @@ $(document).ready(function(){
 				catch (e) {
 					return __propagate(_, e);
 				}
-			}.bind(this));
+			});
 		})
 	})
 	
@@ -631,21 +631,21 @@ $(document).ready(function(){
 							return _(null, __val);
 						}
 						return f3(_);
-					}.bind(this)));
-				}.call(this, __cb(_, function(__0, __1){
+					}));
+				}(__cb(_, function(__0, __1){
 					if (__1) {
 						f4();
 						return f5(__cb(_, function(){
 							f6();
 							return __();
-						}.bind(this)));
+						}));
 					}
 					return __();
-				}.bind(this)));
-			}.call(this, function(){
+				}));
+			}(function(){
 				f7();
 				return __();
-			}.bind(this));
+			});
 		})
 	})
 	
@@ -682,7 +682,7 @@ $(document).ready(function(){
 			var __ = (_ = _ || __trap);
 			return g(__wrapOut(__cb(_, function(__0, __1){
 				return _(null, (__1 + 5));
-			}.bind(this))), arg2);
+			})), arg2);
 		})
 	})
 	
@@ -724,7 +724,7 @@ $(document).ready(function(){
 				b3++;
 				c2 = 2;
 				return __();
-			}.bind(this)));
+			}));
 		})
 	})
 	
@@ -773,7 +773,7 @@ $(document).ready(function(){
 			var __ = (_ = _ || __trap);
 			function foo() {}
 			foo();
-			return g(__cb(_, __.bind(this)));
+			return g(__cb(_, __));
 		})
 	})
 	
