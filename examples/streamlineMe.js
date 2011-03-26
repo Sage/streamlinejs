@@ -39,6 +39,7 @@ var _samples = {
 	"\n//   or throw." +
 	"\n// * the '__cb' function is just a little callback wrapper that deals with " +
 	"\n//   error handling and other small matters in a generic way." +
+	"\n// * the '__trap' function handles errors if the callback is missing." +
 	"\n// * the 'bind' and 'call' functions ensure that the code works as expected" +
 	"\n//   inside methods (when 'this' is used in the scope)" +
 	"\n",
