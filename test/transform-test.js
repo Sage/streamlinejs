@@ -563,10 +563,14 @@ $(document).ready( function() {
 							return __propagate(_, e);
 						}
 					}( function() {
-						if (__cont) {
-							return __();
-						} else {
-							return _(__err, __result)
+						try {
+							if (__cont) {
+								return __();
+							} else {
+								return _(__err, __result)
+							}
+						} catch (e) {
+							return __propagate(_, e);
 						}
 					});
 				});
