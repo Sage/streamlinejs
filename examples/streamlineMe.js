@@ -89,7 +89,7 @@ var _samples = {
 	"\n" +
 	"\nfunction fact(n, _) {" +
 	"\n  var result = 1;" +
-	"\n  for (var str = '-'; str.length < 5; str += '-') {" +
+	"\n  for (var str = '-'; str.length <= n; str += '-') {" +
 	"\n    result *= demo(str, _);" +
 	"\n  }" +
 	"\n  return result;" +
