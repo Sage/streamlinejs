@@ -87,6 +87,22 @@ $(document).ready(function(){
 		}, false);
 	});
 	
+	asyncTest("reduce", 1, function(){
+		evalTest(function f(_){
+			return flows.reduce(_, [1, 2, 3, 4], function(_, v, val){
+				return v * delay(_, val);
+			}, 1);
+		}, 24);
+	});
+	
+	asyncTest("reduceRight", 1, function(){
+		evalTest(function f(_){
+			return flows.reduceRight(_, [1, 2, 3, 4], function(_, v, val){
+				return v * delay(_, val);
+			}, 1);
+		}, 24);
+	});
+	
 	
 	module("flow");
 	
