@@ -30,7 +30,10 @@ $(document).ready( function() {
 			f1(_);
 			f2();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return f1(__cb(_, function() {
 				f2();
 				return __();
@@ -42,7 +45,10 @@ $(document).ready( function() {
 			f1(_);
 			f2();
 		}, function f(_) {
-			var __ = (_ = __wrapIn((_ || __trap)));
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = (_ = __wrapIn(_));
 			try {
 				return f1(__cb(_, function() {
 					f2();
@@ -59,7 +65,10 @@ $(document).ready( function() {
 			f2();
 			return x;
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return f1(__cb(_, function(__0, x) {
 				f2();
 				return _(null, x);
@@ -71,7 +80,10 @@ $(document).ready( function() {
 			f1();
 			return f2(_);
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return f2(_);
 		});
@@ -86,7 +98,10 @@ $(document).ready( function() {
 			}
 			f5();
 		}, function f(_, b) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				if (b) {
@@ -112,7 +127,10 @@ $(document).ready( function() {
 				f4();
 			}
 		}, function f(_, b) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			if (b) {
 				f2();
@@ -138,7 +156,10 @@ $(document).ready( function() {
 			}
 			f8();
 		}, function f(_, b) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				if (b) {
@@ -174,7 +195,10 @@ $(document).ready( function() {
 			f6();
 			return 2;
 		}, function f(_, b) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				if (b) {
@@ -202,13 +226,19 @@ $(document).ready( function() {
 			})
 			f4();
 		}, function f(_, arr) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return each(__cb(_, function() {
 				f4();
 				return __();
 			}), arr, function(_, elt) {
-				var __ = (_ = _ || __trap);
+				if (!_) {
+					return __future(null, arguments, 0);
+				}
+				var __ = _;
 				return f2(__cb(_, function() {
 					f3();
 					return __();
@@ -225,7 +255,10 @@ $(document).ready( function() {
 			}
 			f4();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__break) {
 				var __loop = __nt(_, function() {
@@ -255,7 +288,10 @@ $(document).ready( function() {
 			} while (cond);
 			f4();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			var __1 = true;
 			return function(__break) {
@@ -287,7 +323,10 @@ $(document).ready( function() {
 			}
 			f4();
 		}, function f(_, arr) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			var i = 0;
 			var __2 = false;
@@ -324,7 +363,10 @@ $(document).ready( function() {
 			}
 			f4();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			var __1 = __forIn(obj);
 			var __2 = 0;
@@ -367,7 +409,10 @@ $(document).ready( function() {
 			}
 			f7();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				var __break = __;
@@ -406,7 +451,10 @@ $(document).ready( function() {
 					break;
 			}
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			var __break = __;
 			switch (exp) {
 				case "a":
@@ -427,7 +475,10 @@ $(document).ready( function() {
 			f2(_, f3(_, f4(_)), f5(_, f6()));
 			f7();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return f4(__cb(_, function(__0, __3) {
 				return f3(__cb(_, function(__0, __2) {
@@ -448,7 +499,10 @@ $(document).ready( function() {
 				f3();
 			f4();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__break) {
 				var __loop = __nt(_, function() {
@@ -483,7 +537,10 @@ $(document).ready( function() {
 			}
 			f8();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				return function(_) {
@@ -535,7 +592,10 @@ $(document).ready( function() {
 			}
 			f8();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				return function(_) {
@@ -585,6 +645,7 @@ $(document).ready( function() {
 		})
 	})
 	test("lazy and", 1, function() {
+		 // Note: __future is overkill in inner as _ cannot be null - fix later
 		genTest( function f(_) {
 			f1();
 			if (f2(_) && f3(_)) {
@@ -594,11 +655,17 @@ $(document).ready( function() {
 			}
 			f7();
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			f1();
 			return function(__) {
 				return function(_) {
-					var __ = (_ = _ || __trap);
+					if (!_) {
+						return __future(null, arguments, 0);
+					}
+					var __ = _;
 					return f2(__cb(_, function(__0, __val) {
 						if ((!__val == true)) {
 							return _(null, __val);
@@ -624,7 +691,10 @@ $(document).ready( function() {
 	test("empty body", 1, function() {
 		genTest( function f(_) {
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return __();
 		})
 	})
@@ -632,7 +702,10 @@ $(document).ready( function() {
 		genTest( function f(_) {
 			return 4;
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return _(null, 4);
 		})
 	})
@@ -640,7 +713,10 @@ $(document).ready( function() {
 		genTest( function f(_, arg1) {
 			return g(_, arg2);
 		}, function f(_, arg1) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return g(_, arg2);
 		})
 	})
@@ -648,7 +724,10 @@ $(document).ready( function() {
 		genTest( function f(_, arg1) {
 			return g(__wrapOut(_), arg2) + 5;
 		}, function f(_, arg1) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			return g(__wrapOut(__cb(_, function(__0, __1) {
 				return _(null, (__1 + 5));
 			})), arg2);
@@ -671,7 +750,10 @@ $(document).ready( function() {
 			b3++;
 			c2 = 2;
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			var a2, a3, b2, b3, c1, c2;
 			return g(__cb(_, function() {
 				if (x) {
@@ -734,7 +816,10 @@ $(document).ready( function() {
 			};
 
 		}, function f(_) {
-			var __ = (_ = _ || __trap);
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __ = _;
 			function foo() {
 			}
 
@@ -1332,6 +1417,16 @@ $(document).ready( function() {
 
 			return test(_);
 		}, undefined);
+	})
+	asyncTest("futures test", 2, function() {
+		evalTest( function f(_) {
+			function delay2(val, _) { return delay(_, val); }
+			var a = delay2('a');
+			var b = delay2('b');
+			var c = delay2('c');
+			var d = delay2('d');
+			return a(_) + b(_) + d(_) + c(_);
+		}, "abdc");
 	})
 })
 
