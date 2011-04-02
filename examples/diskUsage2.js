@@ -19,9 +19,9 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
 /*    29 */     return fs.stat(path, __cb(_, function(__0, stat) {
                   return function(__) {
 /*    30 */         if (stat.isFile()) {
-/*    31 */           return fileFunnel.channel(__cb(_, __), function(_) {
+/*    31 */           return fileFunnel.channel(__cb(_, __), function __1(_) {
                         if (!_) {
-                          return __future(null, arguments, 0);
+                          return __future(__1, arguments, 0);
                         }
                       ;
                         var __ = _;
@@ -34,16 +34,16 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
                      else {
 /*    36 */           if (stat.isDirectory()) {
 /*    37 */             return fs.readdir(path, __cb(_, function(__0, files) {
-/*    38 */               var futures = files.map(function(file) {
+/*    38 */               var futures = files.map(function __2(file) {
 /*    39 */                 return du(null, ((path + "/") + file));
                           });
-/*    41 */               return flows.reduce(__cb(_, function(__0, __4) {
-/*    41 */                 total += __4;
+/*    41 */               return flows.reduce(__cb(_, function(__0, __7) {
+/*    41 */                 total += __7;
 /*    44 */                 console.log(((path + ": ") + total));
                             return __();
-/*    41 */               }), futures, function(_, val, future) {
+/*    41 */               }), futures, function __3(_, val, future) {
                             if (!_) {
-                              return __future(null, arguments, 0);
+                              return __future(__3, arguments, 0);
                             }
                           ;
                             var __ = _;
