@@ -1354,7 +1354,7 @@ $(document).ready( function() {
 			return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 		}, "abcdda");
 	})
-	asyncTest("this", 8, function() {
+	asyncTest("this", 10, function() {
 		evalTest( function f(_) {
 			function O(x) {
 				this.x = x;
@@ -1385,12 +1385,23 @@ $(document).ready( function() {
 					this.x = delay(_, this.x + 1);
 				}
 			}
+			function delay2(val, _) {
+				return delay(_, val);
+			}
+			O.prototype.test4 = function(_) {
+				var self = this;
+				v1 = delay2(this.x + 1);
+				v2 = delay2(1);
+				this.x = v1(_) + v2(_);
+				strictEqual(this, self);
+			}
 			var o = new O(1);
 			o.test1(_);
 			o.test2(_);
 			o.test3(_);
+			o.test4(_);
 			return o.x;
-		}, 5);
+		}, 7);
 	})
 	asyncTest("scoping", 2, function() {
 		evalTest( function f(_) {
