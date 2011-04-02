@@ -127,6 +127,22 @@ var _samples = {
 	"\n" +
 	"\ndemo('fact(4) = ' + fact4, _);" +
 	"\n",
+
+	futuresSample: "" +
+	"// Variant with futures." +
+	"\n// Much faster because all futures wait together" +
+	"\n" +
+	"\n// Intermediate function to return future when called" +
+	"\n// without _ (demo does not return future)" +
+	"\nfunction demo2(str, _) { return demo(str, _); }" +
+	"\n" +
+	"\nvar v1 = demo2('1');" +
+	"\nvar v2 = demo2('12');" +
+	"\nvar v3 = demo2('123');" +
+	"\nvar v4 = demo2('1234');" +
+	"\n" +
+	"\ndemo2('fact(4) = ' +v1(_) * v2(_) * v3(_) * v4(_) , _);" +
+	"\n",
 }
 
 var _complete = false;
