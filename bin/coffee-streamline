@@ -9,7 +9,7 @@ var streamline = require('streamline');
 var compile = coffee.compile;
 coffee.compile = function(content, options) {
 	var result = compile(content, options);
-	return content.indexOf('!!STREAMLINE!!') >= 0 ? streamline.transform(result) : result; 
+	return content.indexOf('!!STREAMLINE!!') >= 0 ? streamline.transform.transform(result, { coffee: true }) : result; 
 }
 
 if (require.extensions) {

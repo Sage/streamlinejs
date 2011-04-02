@@ -33,9 +33,9 @@ du = (_, path) ->
 			total += fs.readFile(path, _).length
 	else if stat.isDirectory()
 		files = fs.readdir path, _
-		fns = for f in files 
-			do (f) -> ((_) -> total += du _, path + "/" + f)
-		flows.spray(fns).collectAll _
+		futures = for f in files 
+			du null, path + "/" + f
+		total += flows.reduce _, futures, ((_, val, future) -> val + future _), 0
 		console.log path + ": " + total
 	else
 		console.log path + ": odd file"
