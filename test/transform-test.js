@@ -234,9 +234,9 @@ $(document).ready( function() {
 			return each(__cb(_, function() {
 				f4();
 				return __();
-			}), arr, function(_, elt) {
+			}), arr, function __1(_, elt) {
 				if (!_) {
-					return __future(null, arguments, 0);
+					return __future(__1, arguments, 0);
 				}
 				var __ = _;
 				return f2(__cb(_, function() {
@@ -661,9 +661,9 @@ $(document).ready( function() {
 			var __ = _;
 			f1();
 			return function(__) {
-				return function(_) {
+				return function __1(_) {
 					if (!_) {
-						return __future(null, arguments, 0);
+						return __future(__1, arguments, 0);
 					}
 					var __ = _;
 					return f2(__cb(_, function(__0, __val) {
@@ -672,8 +672,8 @@ $(document).ready( function() {
 						}
 						return f3(_);
 					}));
-				}(__cb(_, function(__0, __1) {
-					if (__1) {
+				}(__cb(_, function(__0, __2) {
+					if (__2) {
 						f4();
 						return f5(__cb(_, function() {
 							f6();
