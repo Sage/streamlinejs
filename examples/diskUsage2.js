@@ -2,7 +2,7 @@
 
 var __global = typeof global !== 'undefined' ? global : window;
 function __cb(_, fn) { var ctx = __global.__context; return function(err, result) { __global.__context = ctx; if (err) return _(err); return fn(null, result); } }
-function __future(fn, args, i) { if (!fn) throw new Error("anonymous function requires callback"); var done, err, result; var cb = function(e, r) { done = true; err = e, result = r; }; args = Array.prototype.slice.call(args); args[i] = function(e, r) { cb(e, r); }; fn.apply(this, args); return function(_) { if (typeof _ !== "function") throw new Error("future requires callback"); if (done) _.call(this, err, result); else cb = _.bind(this); }.bind(this); }
+function __future(fn, args, i) { var done, err, result; var cb = function(e, r) { done = true; err = e, result = r; }; args = Array.prototype.slice.call(args); args[i] = function(e, r) { cb(e, r); }; fn.apply(this, args); return function(_) { if (done) _.call(this, err, result); else cb = _.bind(this); }.bind(this); }
 function __trap(err) { if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
             (function(_) {
               var __ = (_ = (_ || __trap));
