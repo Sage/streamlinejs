@@ -31,7 +31,7 @@ Streamline generates more or less the callbacks that you would write yourself. S
 of performance as with hand-written callbacks. 
 Also, the generated code is nicely indented, easy to read, and directly available to debuggers.
 
-Streamline also provides 'futures', and comes with a small optional library of helper functions (see Goodies section below).
+Streamline also provides _futures_, and comes with a small optional library of helper functions (see Goodies section below).
 
 # On-line demo
 
