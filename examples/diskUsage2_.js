@@ -28,7 +28,7 @@ function du(_, path){
 	var total = 0;
 	var stat = fs.stat(path, _);
 	if (stat.isFile()) {
-		fileFunnel.channel(_, function(_){
+		fileFunnel(_, function(_){
 			total += fs.readFile(path, _).length;
 		});
 	}

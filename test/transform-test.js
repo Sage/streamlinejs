@@ -33,10 +33,10 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			return f1(__cb(_, function() {
 				f2();
-				return __();
+				return __then();
 			}));
 		});
 	});
@@ -48,11 +48,11 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = (_ = __wrapIn(_));
+			var __then = (_ = __wrapIn(_));
 			try {
 				return f1(__cb(_, function() {
 					f2();
-					return __();
+					return __then();
 				}));
 			} catch (e) {
 				return __propagate(_, e);
@@ -68,7 +68,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			return f1(__cb(_, function(__0, x) {
 				f2();
 				return _(null, x);
@@ -83,7 +83,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			return f2(_);
 		});
@@ -101,20 +101,20 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, function() {
 						f4();
-						return __();
+						return __then();
 					}));
 				};
-				return __();
+				return __then();
 			}( function() {
 				f5();
-				return __();
+				return __then();
 			});
 		});
 	});
@@ -130,16 +130,16 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			if (b) {
 				f2();
 				return f3(__cb(_, function() {
 					f4();
-					return __();
+					return __then();
 				}));
 			};
-			return __();
+			return __then();
 		});
 	});
 	test("if else", 1, function() {
@@ -159,25 +159,25 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, function() {
 						f4();
-						return __();
+						return __then();
 					}));
 				} else {
 					f5();
 					return f6(__cb(_, function() {
 						f7();
-						return __();
+						return __then();
 					}));
 				}
 			}( function() {
 				f8();
-				return __();
+				return __then();
 			});
 		});
 	});
@@ -198,9 +198,9 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, function() {
@@ -210,7 +210,7 @@ $(document).ready( function() {
 				} else {
 					f5();
 				}
-				return __();
+				return __then();
 			}( function() {
 				f6();
 				return _(null, 2);
@@ -229,19 +229,19 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			return each(__cb(_, function() {
 				f4();
-				return __();
+				return __then();
 			}), arr, function __1(_, elt) {
 				if (!_) {
 					return __future(__1, arguments, 0);
 				}
-				var __ = _;
+				var __then = _;
 				return f2(__cb(_, function() {
 					f3();
-					return __();
+					return __then();
 				}), elt);
 			});
 		});
@@ -258,15 +258,15 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			return function(__break) {
 				var __loop = __nt(_, function() {
-					var __ = __loop;
+					var __then = __loop;
 					if (cond) {
 						return f2(__cb(_, function() {
 							f3();
-							return __();
+							return __then();
 						}));
 					} else {
 						return __break();
@@ -275,7 +275,7 @@ $(document).ready( function() {
 				return __loop();
 			}( function() {
 				f4();
-				return __();
+				return __then();
 			});
 		});
 	});
@@ -291,17 +291,17 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			var __1 = true;
 			return function(__break) {
 				var __loop = __nt(_, function() {
-					var __ = __loop;
+					var __then = __loop;
 					if ((__1 || cond)) {
 						__1 = false;
 						return f2(__cb(_, function() {
 							f3();
-							return __();
+							return __then();
 						}));
 					} else {
 						return __break();
@@ -310,7 +310,7 @@ $(document).ready( function() {
 				return __loop();
 			}( function() {
 				f4();
-				return __();
+				return __then();
 			});
 		});
 	});
@@ -326,13 +326,13 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			var i = 0;
 			var __2 = false;
 			return function(__break) {
 				var __loop = __nt(_, function() {
-					var __ = __loop;
+					var __then = __loop;
 					if (__2) {
 						i++;
 					} else {
@@ -341,7 +341,7 @@ $(document).ready( function() {
 					if ((i < arr.length)) {
 						return f2(__cb(_, function() {
 							f3();
-							return __();
+							return __then();
 						}));
 					} else {
 						return __break();
@@ -350,7 +350,7 @@ $(document).ready( function() {
 				return __loop();
 			}( function() {
 				f4();
-				return __();
+				return __then();
 			});
 		})
 	})
@@ -366,18 +366,18 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			var __1 = __forIn(obj);
 			var __2 = 0;
 			return function(__break) {
 				var __loop = __nt(_, function() {
-					var __ = __loop;
+					var __then = __loop;
 					if ((__2 < __1.length)) {
 						var k = __1[__2++];
 						return f2(__cb(_, function() {
 							f3(k);
-							return __();
+							return __then();
 						}), k);
 					} else {
 						return __break();
@@ -386,7 +386,7 @@ $(document).ready( function() {
 				return __loop();
 			}( function() {
 				f4();
-				return __();
+				return __then();
 			});
 		});
 	})
@@ -412,10 +412,10 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
-				var __break = __;
+			return function(__then) {
+				var __break = __then;
 				switch (exp) {
 					case "a":
 						return f2(__cb(_, function() {
@@ -432,10 +432,10 @@ $(document).ready( function() {
 						f6();
 						return __break();
 				}
-				return __();
+				return __then();
 			}( function() {
 				f7();
-				return __();
+				return __then();
 			});
 		});
 	})
@@ -454,8 +454,8 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
-			var __break = __;
+			var __then = _;
+			var __break = __then;
 			switch (exp) {
 				case "a":
 					return f2(__cb(_, function() {
@@ -466,7 +466,7 @@ $(document).ready( function() {
 						return __break();
 					}));
 			}
-			return __();
+			return __then();
 		});
 	})
 	test("nested calls", 1, function() {
@@ -478,14 +478,14 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			return f4(__cb(_, function(__0, __3) {
 				return f3(__cb(_, function(__0, __2) {
 					return f5(__cb(_, function(__0, __4) {
 						return f2(__cb(_, function() {
 							f7();
-							return __();
+							return __then();
 						}), __2, __4);
 					}), f6());
 				}), __3);
@@ -502,24 +502,24 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
 			return function(__break) {
 				var __loop = __nt(_, function() {
-					var __ = __loop;
+					var __then = __loop;
 					return f2(__cb(_, function(__0, __1) {
 						if (__1) {
 							f3();
 						} else {
 							return __break();
 						}
-						return __();
+						return __then();
 					}));
 				});
 				return __loop();
 			}( function() {
 				f4();
-				return __();
+				return __then();
 			});
 		})
 	})
@@ -540,15 +540,15 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				return function(_) {
 					try {
 						f2();
 						return f3(__cb(_, function() {
 							f4();
-							return __();
+							return __then();
 						}));
 					} catch (e) {
 						return __propagate(_, e);
@@ -560,7 +560,7 @@ $(document).ready( function() {
 							f5();
 							return f6(__cb(_, function() {
 								f7();
-								return __();
+								return __then();
 							}));
 						} else
 							return _(null, __result);
@@ -571,7 +571,7 @@ $(document).ready( function() {
 			}( function() {
 				try {
 					f8();
-					return __();
+					return __then();
 				} catch (e) {
 					return __propagate(_, e);
 				}
@@ -595,29 +595,29 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				return function(_) {
-					var __ = function() {
+					var __then = function() {
 						return _(null, null, true);
 					};
 					try {
 						f2();
 						return f3(__cb(_, function() {
 							f4();
-							return __();
+							return __then();
 						}));
 					} catch (e) {
 						return __propagate(_, e);
 					}
 				}( function(__err, __result, __cont) {
-					return function(__) {
+					return function(__then) {
 						try {
 							f5();
 							return f6(__cb(_, function() {
 								f7();
-								return __();
+								return __then();
 							}));
 						} catch (e) {
 							return __propagate(_, e);
@@ -625,7 +625,7 @@ $(document).ready( function() {
 					}( function() {
 						try {
 							if (__cont) {
-								return __();
+								return __then();
 							} else {
 								return _(__err, __result)
 							}
@@ -637,7 +637,7 @@ $(document).ready( function() {
 			}( function() {
 				try {
 					f8();
-					return __();
+					return __then();
 				} catch (e) {
 					return __propagate(_, e);
 				}
@@ -658,14 +658,14 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			f1();
-			return function(__) {
+			return function(__then) {
 				return function __1(_) {
 					if (!_) {
 						return __future(__1, arguments, 0);
 					}
-					var __ = _;
+					var __then = _;
 					return f2(__cb(_, function(__0, __val) {
 						if ((!__val == true)) {
 							return _(null, __val);
@@ -677,14 +677,14 @@ $(document).ready( function() {
 						f4();
 						return f5(__cb(_, function() {
 							f6();
-							return __();
+							return __then();
 						}));
 					}
-					return __();
+					return __then();
 				}));
 			}( function() {
 				f7();
-				return __();
+				return __then();
 			});
 		})
 	})
@@ -694,8 +694,8 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
-			return __();
+			var __then = _;
+			return __then();
 		})
 	})
 	test("only return in body", 1, function() {
@@ -705,7 +705,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			return _(null, 4);
 		})
 	})
@@ -716,7 +716,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			return g(_, arg2);
 		})
 	})
@@ -727,7 +727,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			return g(__wrapOut(__cb(_, function(__0, __1) {
 				return _(null, (__1 + 5));
 			})), arg2);
@@ -753,7 +753,7 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			var a2, a3, b2, b3, c1, c2;
 			return g(__cb(_, function() {
 				if (x) {
@@ -771,7 +771,7 @@ $(document).ready( function() {
 				a3++;
 				b3++;
 				c2 = 2;
-				return __();
+				return __then();
 			}));
 		})
 	})
@@ -819,12 +819,12 @@ $(document).ready( function() {
 			if (!_) {
 				return __future(f, arguments, 0);
 			}
-			var __ = _;
+			var __then = _;
 			function foo() {
 			}
 
 			foo();
-			return g(__cb(_, __));
+			return g(__cb(_, __then));
 		})
 	})
 	module("evaluation");

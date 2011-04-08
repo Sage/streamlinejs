@@ -34,7 +34,7 @@ var _samples = {
 	"\n//" +
 	"\n// * the '_' parameter is the callback. This is where execution will" +
 	"\n//   continue on a return or throw statement." +
-	"\n// * the '__' variable is a 'next' callback. This is where execution will" +
+	"\n// * the '__then' variable is a 'then' callback. This is where execution will" +
 	"\n//   resume at the end of the construct if it didn't encounter a return " +
 	"\n//   or throw." +
 	"\n// * the '__cb' function is just a little callback wrapper that deals with " +
