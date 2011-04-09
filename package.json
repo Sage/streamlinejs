@@ -3,7 +3,7 @@
   "description": "Asynchronous Javascript for dummies",
   "version": "0.1.13",
   "engines": { "node": ">=0.2.1" },
-  "dependencies": { "narcissus": "=0.0.1" },
+  "dependencies": {},
   "author": "Bruno Jouhier",
   "directories": {"lib": "./lib", "bin": "./bin" },
   "main": "lib/index.js"
