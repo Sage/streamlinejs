@@ -110,7 +110,8 @@ Narcissus.lexer = (function() {
 
         forceIdentifier: function() {
         	if (!this.match(IDENTIFIER)) {
-        		if (this.match(TRUE) || this.match(FALSE) || this.match(NULL)) {
+        		// keywords are valid property names in ES 5
+        		if (this.get() >= definitions.keywords[0] || this.unget) {
         			this.token.type = IDENTIFIER;
         		}
         		else {
