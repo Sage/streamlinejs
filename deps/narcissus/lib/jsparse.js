@@ -1238,7 +1238,7 @@ Narcissus.parser = (function() {
               case DOT:
                 n2 = new Node(t);
                 n2.push(n);
-                t.mustMatch(IDENTIFIER);
+                t.forceIdentifier();
                 n2.push(new Node(t));
                 break;
 

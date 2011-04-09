@@ -108,6 +108,18 @@ Narcissus.lexer = (function() {
             return this.token;
         },
 
+        forceIdentifier: function() {
+        	if (!this.match(IDENTIFIER)) {
+        		if (this.match(TRUE) || this.match(FALSE) || this.match(NULL)) {
+        			this.token.type = IDENTIFIER;
+        		}
+        		else {
+        			throw this.newSyntaxError("Missing identifier");
+        		}
+        	}
+        	return this.token;
+        },
+
         peek: function (scanOperand) {
             var tt, next;
             if (this.lookahead) {
