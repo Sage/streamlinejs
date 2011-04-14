@@ -11,11 +11,11 @@ $(document).ready( function() {
 			return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap');
 	}
 
-	function genTest(f1, f2, extraTryCatch) {
+	function genTest(f1, f2, pedantic) {
 		var s1 = clean(transform(f1.toString(), {
 			noHelpers: true,
 			lines: "ignore",
-			extraTryCatch: extraTryCatch
+			tryCatch: pedantic ? "pedantic" : "safe"
 		}));
 		var s2 = clean(f2.toString());
 		if (s1 !== s2) {
@@ -843,10 +843,12 @@ $(document).ready( function() {
 	function evalTest(f, val) {
 		delay = delayUnsafe;
 		evalTest1(f, val, {
-			extraTryCatch: true
+			tryCatch: "safe"
 		}, function() {
 			delay = delaySafe;
-			evalTest1(f, val, null, start)
+			evalTest1(f, val, {
+				tryCatch: "fast"
+			}, start)
 		})
 	}
 

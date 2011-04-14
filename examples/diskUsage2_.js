@@ -20,7 +20,7 @@
  */
 
 var fs = require('fs');
-var flows = require('streamline').flows;
+var flows = require('../lib/flows');
 
 var fileFunnel = flows.funnel(20);
 
