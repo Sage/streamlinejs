@@ -5,8 +5,7 @@ var _demo = "\n" +
 "\n  info(message + ' (waiting 1s)');" +
 "\n  setTimeout(function() {" +
 "\n    info(message + ' (done!)');" +
-"\n    try { callback(null, message.length); }" +
-"\n    catch (err) { callback(err); }" +
+"\n    callback(null, message.length);" +
 "\n  }, 1000);" +
 "\n}" +
 "\n";
