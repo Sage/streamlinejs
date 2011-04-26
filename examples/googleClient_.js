@@ -10,16 +10,10 @@ var streams = require('../lib/streams');
 function google(str, _) {
 	// Create the request.
 	// The options are the same as for node's http.request call.
+	// But the call also accepts a simple URL for the GET case
 	// But httpw.request does not take any callback parameter.
 	// Instead, the callback is passed to the end method (a few lines below).
-	var req = streams.httpRequest({
-		//host: 'www.google.com',
-		host: 'ajax.googleapis.com',
-		port: 80,
-		//path: '/search?q=' + str,
-		path: '/ajax/services/search/web?v=1.0&q=' + str,
-		method: 'GET'
-	});
+	var req = streams.httpRequest('http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + str);
 	
 	// In the case of a POST request, this is where you would send
 	// the body with req.write calls.
