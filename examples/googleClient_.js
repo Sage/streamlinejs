@@ -13,7 +13,10 @@ function google(str, _) {
 	// But the call also accepts a simple URL for the GET case
 	// But httpw.request does not take any callback parameter.
 	// Instead, the callback is passed to the end method (a few lines below).
-	var req = streams.httpRequest('http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + str);
+	var req = streams.httpRequest({
+		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + str,
+		proxy: process.env.http_proxy
+	});
 	
 	// In the case of a POST request, this is where you would send
 	// the body with req.write calls.

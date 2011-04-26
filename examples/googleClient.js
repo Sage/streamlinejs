@@ -14,19 +14,22 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
                 }
               ;
                 var __then = _;
-/*    16 */     var req = streams.httpRequest(("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=" + str));
-/*    22 */     return req.end().response(__cb(_, function(__0, resp) {
-/*    24 */       return resp.checkStatus(200).readAll(__cb(_, function(__0, __2) {
-/*    24 */         return _(null, JSON.parse(__2));
+/*    16 */     var req = streams.httpRequest({
+/*    17 */       url: ("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=" + str),
+/*    18 */       proxy: process.env.http_proxy
+                });
+/*    25 */     return req.end().response(__cb(_, function(__0, resp) {
+/*    27 */       return resp.checkStatus(200).readAll(__cb(_, function(__0, __2) {
+/*    27 */         return _(null, JSON.parse(__2));
                   }));
                 }));
               };
-/*    28 */   var str = ((process.argv.length > 2) ? process.argv[2] : "node.js");
-/*    31 */   return google(str, __cb(_, function(__0, result) {
-/*    34 */     var formatted = result.responseData.results.map(function __1(entry) {
-/*    35 */       return ((entry.url + "\n	") + entry.titleNoFormatting);
-/*    36 */     }).join("\n");
-/*    37 */     console.log(formatted);
+/*    31 */   var str = ((process.argv.length > 2) ? process.argv[2] : "node.js");
+/*    34 */   return google(str, __cb(_, function(__0, result) {
+/*    37 */     var formatted = result.responseData.results.map(function __1(entry) {
+/*    38 */       return ((entry.url + "\n	") + entry.titleNoFormatting);
+/*    39 */     }).join("\n");
+/*    40 */     console.log(formatted);
                 return __then();
               }));
             })();
