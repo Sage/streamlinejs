@@ -1,3 +1,4 @@
+//streamline.options = { "lines" : "ignore" }
 var http = require('http');
 var streams = require('../lib/streams');
 
@@ -63,7 +64,7 @@ function test(_, name, options, fn) {
 function dot(_) {
 	process.nextTick(_);
 	process.stderr.write(".");
-
+	
 }
 
 function testPass(_, name, options) {
