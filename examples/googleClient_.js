@@ -11,8 +11,8 @@ function google(str, _) {
 	// Create the request.
 	// The options are the same as for node's http.request call.
 	// But the call also accepts a simple URL for the GET case
-	// But httpw.request does not take any callback parameter.
-	// Instead, the callback is passed to the end method (a few lines below).
+	// But streams.requestRequest does not take any callback parameter.
+	// Instead, the callback is passed to the response(_) method (a few lines below).
 	var req = streams.httpRequest({
 		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + str,
 		proxy: process.env.http_proxy
