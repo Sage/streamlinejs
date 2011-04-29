@@ -2,8 +2,9 @@
 var http = require('http');
 var streams = require('../lib/streams');
 
-var bufSize = 1000;
-var bufCount = 8;
+var bufSize = 30000;
+var bufCount = 80;
+var totalSize = bufCount * bufSize;
 var modulo = 50;
 
 function makeBuffer(i) {
@@ -14,23 +15,29 @@ function makeBuffer(i) {
 	return buf;
 }
 
-function checkBuffer(buf, i, offset, size) {
+function checkBuffer(buf, start) {
 	if (buf == null)
-		throw new Error("null buffer: " + i);
-	if (buf.length != size)
-		throw new Error("bad buffer length: " + buf.length);
-	for (var j = 0; j < size; j++) {
-		var ii = i + Math.floor((offset + j) / bufSize);
-		var jj = offset + j;
-		if (buf[j] !== 0x30 + ii + (jj % modulo))
-			throw new Error("data corruption: ii=" + ii + ", jj=" + jj + " val=" + buf[j]);
+		throw new Error("null buffer");
+	var i = Math.floor(start / bufSize);
+	var j = start % bufSize;
+	for (var k = 0; k < buf.length; k++, j++) {
+		if (j == bufSize) {
+			i++;
+			j = 0;
+		}
+		if (buf[k] !== 0x30 + i + (j % modulo))
+			throw new Error("data corruption: i=" + i + ", j=" + j + " k=" + k + " val=" + buf[k]);
 	}
+	return start + buf.length;
 }
 
-http.createServer( function (req, res, _) {
+streams.httpServer( function (req, res, _) {
 	res.writeHead(200, {'Content-Type': 'application/octet-stream'});
+	res.stream.on("drain", function() {
+		process.stderr.write("*");
+	})
 	for (var i = 0; i < bufCount; i++) {
-		res.write(makeBuffer(i));
+		res.write(_, makeBuffer(i));
 		process.nextTick(_);
 	}
 	res.end();
@@ -64,65 +71,29 @@ function test(_, name, options, fn) {
 function dot(_) {
 	process.nextTick(_);
 	process.stderr.write(".");
-	
+
 }
 
 function testPass(_, name, options) {
 	console.error("pass " + name);
 	var t0 = Date.now();
 
-	test(_, "chunk read", options, function(_, resp) {
-		for (var i = 0; i < bufCount; i++) {
-			var buf = resp.read(_);
-			checkBuffer(buf, i, 0, bufSize);
-			dot(_);
-		}
-	});
-	test(_, "half size read", options, function(_, resp) {
-		for (var i = 0; i < bufCount * 2; i++) {
-			var half = bufSize / 2;
-			var buf = resp.read(_, half);
-			checkBuffer(buf, Math.floor(i / 2), (i % 2) * half, half);
-			dot(_);
-		}
-	});
-	test(_, "double size read", options, function(_, resp) {
-		for (var i = 0; i < Math.floor(bufCount / 2); i++) {
-			var dbl = bufSize * 2;
-			var buf = resp.read(_, dbl);
-			checkBuffer(buf, i * 2, 0, dbl);
-			dot(_);
-		}
-	});
-	test(_, "odd size read", options, function(_, resp) {
-		var total = 0;
-		for (var i = 0; i < Math.floor(bufCount * 7); i++) {
-			var len = Math.floor(bufSize / 7);
-			var buf = resp.read(_, len);
-			checkBuffer(buf, Math.floor(total / bufSize), total % bufSize, len);
-			total += buf.length;
-			dot(_);
-		}
-		var remain = bufCount * bufSize - total;
-		var buf = resp.read(_, remain);
-		checkBuffer(buf, bufCount - 1, total % bufSize, remain);
-		total += buf.length;
-		if (total != bufCount * bufSize)
-			throw new Error("bad total at end");
-	});
-	test(_, "random size read", options, function(_, resp) {
-		var total = 0;
-		while (total < bufCount * bufSize) {
-			var len = Math.floor(Math.random() * 3 * bufSize);
-			var buf = resp.read(_, len);
-			var expected = total + len < bufCount * bufSize ? len : bufCount * bufSize - total;
-			checkBuffer(buf, Math.floor(total / bufSize), total % bufSize, expected);
-			total += buf.length;
-			dot(_);
-		}
-		if (total != bufCount * bufSize)
-			throw new Error("bad total at end");
-	})
+	function testRead(_, name, size) {
+		test(_, name, options, function(_, resp) {
+			for (var i = 0, total = 0; total < totalSize; i++) {
+				var len = size && typeof size === "function" ? size() : size;
+				var buf = resp.read(_, len);
+				total = checkBuffer(buf, total);
+				dot(_);
+			}
+		});
+	}
+
+	testRead(_, "chunk read");
+	testRead(_, "half size read", Math.floor(bufSize / 2));
+	testRead(_, "double size read", bufSize * 2);
+	testRead(_, "odd size read", Math.floor(bufSize / 7));
+	testRead(_, "random size read", function() { var r = Math.random(); return Math.floor(r * r * r * r * 3 * bufSize); });
 	console.error("pass completed in " + (Date.now() - t0) + " ms");
 }
 

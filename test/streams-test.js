@@ -10,8 +10,9 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
   var __then = (_ = (_ || __trap));
   var http = require("http");
   var streams = require("../lib/streams");
-  var bufSize = 1000;
-  var bufCount = 8;
+  var bufSize = 30000;
+  var bufCount = 80;
+  var totalSize = (bufCount * bufSize);
   var modulo = 50;
   function makeBuffer(i) {
     var buf = new Buffer(bufSize);
@@ -20,22 +21,25 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     };
     return buf;
   };
-  function checkBuffer(buf, i, offset, size) {
+  function checkBuffer(buf, start) {
     if ((buf == null)) {
-      throw new Error(("null buffer: " + i))
+      throw new Error("null buffer")
     };
-    if ((buf.length != size)) {
-      throw new Error(("bad buffer length: " + buf.length))
-    };
-    for (var j = 0; (j < size); j++) {
-      var ii = (i + Math.floor((((offset + j)) / bufSize)));
-      var jj = (offset + j);
-      if ((buf[j] !== ((48 + ii) + ((jj % modulo))))) {
-        throw new Error(((((("data corruption: ii=" + ii) + ", jj=") + jj) + " val=") + buf[j]))
+    var i = Math.floor((start / bufSize));
+    var j = (start % bufSize);
+    for (var k = 0; (k < buf.length); k++, j++) {
+      if ((j == bufSize)) {
+        i++;
+        j = 0;
+      }
+    ;
+      if ((buf[k] !== ((48 + i) + ((j % modulo))))) {
+        throw new Error(((((((("data corruption: i=" + i) + ", j=") + j) + " k=") + k) + " val=") + buf[k]))
       };
     };
+    return (start + buf.length);
   };
-  http.createServer(function __1(req, res, _) {
+  streams.httpServer(function __1(req, res, _) {
     if (!_) {
       return __future(__1, arguments, 2);
     }
@@ -44,21 +48,25 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     res.writeHead(200, {
       "Content-Type": "application/octet-stream"
     });
+    res.stream.on("drain", function __1() {
+      process.stderr.write("*");
+    });
     var i = 0;
-    var __2 = false;
+    var __4 = false;
     return function(__break) {
       var __loop = __nt(_, function() {
         var __then = __loop;
-        if (__2) {
+        if (__4) {
           i++;
         }
          else {
-          __2 = true;
+          __4 = true;
         }
       ;
         if ((i < bufCount)) {
-          res.write(makeBuffer(i));
-          return process.nextTick(__cb(_, __then));
+          return res.write(__cb(_, function() {
+            return process.nextTick(__cb(_, __then));
+          }), makeBuffer(i));
         }
          else {
           return __break();
@@ -129,133 +137,19 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     var __then = _;
     console.error(("pass " + name));
     var t0 = Date.now();
-    return test(__cb(_, function() {
-      return test(__cb(_, function() {
-        return test(__cb(_, function() {
-          return test(__cb(_, function() {
-            return test(__cb(_, function() {
-              console.error((("pass completed in " + ((Date.now() - t0))) + " ms"));
-              return __then();
-            }), "random size read", options, function __5(_, resp) {
-              if (!_) {
-                return __future(__5, arguments, 0);
-              }
-            ;
-              var __then = _;
-              var total = 0;
-              return function(__break) {
-                var __loop = __nt(_, function() {
-                  var __then = __loop;
-                  if ((total < (bufCount * bufSize))) {
-                    var len = Math.floor(((Math.random() * 3) * bufSize));
-                    return resp.read(__cb(_, function(__0, buf) {
-                      var expected = (((total + len) < (bufCount * bufSize)) ? len : ((bufCount * bufSize) - total));
-                      checkBuffer(buf, Math.floor((total / bufSize)), (total % bufSize), expected);
-                      total += buf.length;
-                      return dot(__cb(_, __then));
-                    }), len);
-                  }
-                   else {
-                    return __break();
-                  }
-                ;
-                });
-                return __loop();
-              }(function() {
-                if ((total != (bufCount * bufSize))) {
-                  return _(new Error("bad total at end"))
-                };
-                return __then();
-              });
-            });
-          }), "odd size read", options, function __4(_, resp) {
-            if (!_) {
-              return __future(__4, arguments, 0);
-            }
-          ;
-            var __then = _;
-            var buf;
-            var total = 0;
-            var i = 0;
-            var __3 = false;
-            return function(__break) {
-              var __loop = __nt(_, function() {
-                var __then = __loop;
-                if (__3) {
-                  i++;
-                }
-                 else {
-                  __3 = true;
-                }
-              ;
-                if ((i < Math.floor((bufCount * 7)))) {
-                  var len = Math.floor((bufSize / 7));
-                  return resp.read(__cb(_, function(__0, __1) {
-                    buf = __1;
-                    checkBuffer(buf, Math.floor((total / bufSize)), (total % bufSize), len);
-                    total += buf.length;
-                    return dot(__cb(_, __then));
-                  }), len);
-                }
-                 else {
-                  return __break();
-                }
-              ;
-              });
-              return __loop();
-            }(function() {
-              var remain = ((bufCount * bufSize) - total);
-              return resp.read(__cb(_, function(__0, __4) {
-                buf = __4;
-                checkBuffer(buf, (bufCount - 1), (total % bufSize), remain);
-                total += buf.length;
-                if ((total != (bufCount * bufSize))) {
-                  return _(new Error("bad total at end"))
-                };
-                return __then();
-              }), remain);
-            });
-          });
-        }), "double size read", options, function __3(_, resp) {
-          if (!_) {
-            return __future(__3, arguments, 0);
-          }
-        ;
-          var __then = _;
-          var i = 0;
-          var __3 = false;
-          return function(__break) {
-            var __loop = __nt(_, function() {
-              var __then = __loop;
-              if (__3) {
-                i++;
-              }
-               else {
-                __3 = true;
-              }
-            ;
-              if ((i < Math.floor((bufCount / 2)))) {
-                var dbl = (bufSize * 2);
-                return resp.read(__cb(_, function(__0, buf) {
-                  checkBuffer(buf, (i * 2), 0, dbl);
-                  return dot(__cb(_, __then));
-                }), dbl);
-              }
-               else {
-                return __break();
-              }
-            ;
-            });
-            return __loop();
-          }(__then);
-        });
-      }), "half size read", options, function __2(_, resp) {
+    function testRead(_, name, size) {
+      if (!_) {
+        return __future(testRead, arguments, 0);
+      }
+    ;
+      var __then = _;
+      return test(__cb(_, __then), name, options, function __1(_, resp) {
         if (!_) {
-          return __future(__2, arguments, 0);
+          return __future(__1, arguments, 0);
         }
       ;
         var __then = _;
-        var i = 0;
+        var i = 0, total = 0;
         var __3 = false;
         return function(__break) {
           var __loop = __nt(_, function() {
@@ -267,12 +161,12 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
               __3 = true;
             }
           ;
-            if ((i < (bufCount * 2))) {
-              var half = (bufSize / 2);
+            if ((total < totalSize)) {
+              var len = ((size && (typeof size === "function")) ? size() : size);
               return resp.read(__cb(_, function(__0, buf) {
-                checkBuffer(buf, Math.floor((i / 2)), (((i % 2)) * half), half);
+                total = checkBuffer(buf, total);
                 return dot(__cb(_, __then));
-              }), half);
+              }), len);
             }
              else {
               return __break();
@@ -282,38 +176,22 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
           return __loop();
         }(__then);
       });
-    }), "chunk read", options, function __1(_, resp) {
-      if (!_) {
-        return __future(__1, arguments, 0);
-      }
-    ;
-      var __then = _;
-      var i = 0;
-      var __3 = false;
-      return function(__break) {
-        var __loop = __nt(_, function() {
-          var __then = __loop;
-          if (__3) {
-            i++;
-          }
-           else {
-            __3 = true;
-          }
-        ;
-          if ((i < bufCount)) {
-            return resp.read(__cb(_, function(__0, buf) {
-              checkBuffer(buf, i, 0, bufSize);
-              return dot(__cb(_, __then));
-            }));
-          }
-           else {
-            return __break();
-          }
-        ;
-        });
-        return __loop();
-      }(__then);
-    });
+    };
+    return testRead(__cb(_, function() {
+      return testRead(__cb(_, function() {
+        return testRead(__cb(_, function() {
+          return testRead(__cb(_, function() {
+            return testRead(__cb(_, function() {
+              console.error((("pass completed in " + ((Date.now() - t0))) + " ms"));
+              return __then();
+            }), "random size read", function __1() {
+              var r = Math.random();
+              return Math.floor((((((r * r) * r) * r) * 3) * bufSize));
+            });
+          }), "odd size read", Math.floor((bufSize / 7)));
+        }), "double size read", (bufSize * 2));
+      }), "half size read", Math.floor((bufSize / 2)));
+    }), "chunk read");
   };
   var oneTenth = Math.floor(((bufCount * bufSize) / 10));
   return testPass(__cb(_, function() {
