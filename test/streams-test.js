@@ -48,7 +48,7 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     res.writeHead(200, {
       "Content-Type": "application/octet-stream"
     });
-    res.stream.on("drain", function __1() {
+    res.emitter.on("drain", function __1() {
       process.stderr.write("*");
     });
     var i = 0;
@@ -101,7 +101,7 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     process.stderr.write(("	testing " + name));
     options.url = "http://127.0.0.1:1337/";
     return streams.httpRequest(options).end().response(__cb(_, function(__0, resp) {
-      addBufferHooks(resp.stream);
+      addBufferHooks(resp.emitter);
       return fn(__cb(_, function() {
         return function(__then) {
           return resp.read(__cb(_, function(__0, __3) {

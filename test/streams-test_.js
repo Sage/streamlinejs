@@ -33,7 +33,7 @@ function checkBuffer(buf, start) {
 
 streams.httpServer( function (req, res, _) {
 	res.writeHead(200, {'Content-Type': 'application/octet-stream'});
-	res.stream.on("drain", function() {
+	res.emitter.on("drain", function() {
 		process.stderr.write("*");
 	})
 	for (var i = 0; i < bufCount; i++) {
@@ -61,7 +61,7 @@ function test(_, name, options, fn) {
 	process.stderr.write("\ttesting " + name);
 	options.url = 'http://127.0.0.1:1337/';
 	var resp =  streams.httpRequest(options).end().response(_);
-	addBufferHooks(resp.stream);
+	addBufferHooks(resp.emitter);
 	fn(_, resp);
 	if (resp.read(_))
 		throw new Error("unexpected data at end")
