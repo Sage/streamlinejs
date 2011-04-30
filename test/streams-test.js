@@ -39,7 +39,7 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
     };
     return (start + buf.length);
   };
-  streams.httpServer(function __1(req, res, _) {
+  return new streams.HttpServer(function __1(req, res, _) {
     if (!_) {
       return __future(__1, arguments, 2);
     }
@@ -78,148 +78,149 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
       res.end();
       return __then();
     });
-  }).listen(1337, "127.0.0.1");
-  console.error("Server running at http://127.0.0.1:1337/");
-  function addBufferHooks(stream) {
-    var pause = stream.pause.bind(stream);
-    stream.pause = function __1() {
-      process.stderr.write("<");
-      pause();
+  }).listen(__cb(_, function() {
+    console.error("Server running at http://127.0.0.1:1337/");
+    function addBufferHooks(stream) {
+      var pause = stream.pause.bind(stream);
+      stream.pause = function __1() {
+        process.stderr.write("<");
+        pause();
+      };
+      var resume = stream.resume.bind(stream);
+      stream.resume = function __2() {
+        process.stderr.write(">");
+        resume();
+      };
     };
-    var resume = stream.resume.bind(stream);
-    stream.resume = function __2() {
-      process.stderr.write(">");
-      resume();
-    };
-  };
-  function test(_, name, options, fn) {
-    if (!_) {
-      return __future(test, arguments, 0);
-    }
-  ;
-    var __then = _;
-    process.stderr.write(("	testing " + name));
-    options.url = "http://127.0.0.1:1337/";
-    return streams.httpRequest(options).end().response(__cb(_, function(__0, resp) {
-      addBufferHooks(resp.emitter);
-      return fn(__cb(_, function() {
-        return function(__then) {
-          return resp.read(__cb(_, function(__0, __3) {
-            if (__3) {
-              return _(new Error("unexpected data at end"));
-            }
-          ;
-            return __then();
-          }));
-        }(function() {
-          console.error(" ok");
-          return __then();
-        });
-      }), resp);
-    }));
-  };
-  function dot(_) {
-    if (!_) {
-      return __future(dot, arguments, 0);
-    }
-  ;
-    var __then = _;
-    return process.nextTick(__cb(_, function() {
-      process.stderr.write(".");
-      return __then();
-    }));
-  };
-  function testPass(_, name, options) {
-    if (!_) {
-      return __future(testPass, arguments, 0);
-    }
-  ;
-    var __then = _;
-    console.error(("pass " + name));
-    var t0 = Date.now();
-    function testRead(_, name, size) {
+    function test(_, name, options, fn) {
       if (!_) {
-        return __future(testRead, arguments, 0);
+        return __future(test, arguments, 0);
       }
     ;
       var __then = _;
-      return test(__cb(_, __then), name, options, function __1(_, resp) {
+      process.stderr.write(("	testing " + name));
+      options.url = "http://127.0.0.1:1337/";
+      return streams.httpRequest(options).end().response(__cb(_, function(__0, resp) {
+        addBufferHooks(resp.emitter);
+        return fn(__cb(_, function() {
+          return function(__then) {
+            return resp.read(__cb(_, function(__0, __3) {
+              if (__3) {
+                return _(new Error("unexpected data at end"));
+              }
+            ;
+              return __then();
+            }));
+          }(function() {
+            console.error(" ok");
+            return __then();
+          });
+        }), resp);
+      }));
+    };
+    function dot(_) {
+      if (!_) {
+        return __future(dot, arguments, 0);
+      }
+    ;
+      var __then = _;
+      return process.nextTick(__cb(_, function() {
+        process.stderr.write(".");
+        return __then();
+      }));
+    };
+    function testPass(_, name, options) {
+      if (!_) {
+        return __future(testPass, arguments, 0);
+      }
+    ;
+      var __then = _;
+      console.error(("pass " + name));
+      var t0 = Date.now();
+      function testRead(_, name, size) {
         if (!_) {
-          return __future(__1, arguments, 0);
+          return __future(testRead, arguments, 0);
         }
       ;
         var __then = _;
-        var i = 0, total = 0;
-        var __3 = false;
-        return function(__break) {
-          var __loop = __nt(_, function() {
-            var __then = __loop;
-            if (__3) {
-              i++;
-            }
-             else {
-              __3 = true;
-            }
-          ;
-            if ((total < totalSize)) {
-              var len = ((size && (typeof size === "function")) ? size() : size);
-              return resp.read(__cb(_, function(__0, buf) {
-                total = checkBuffer(buf, total);
-                return dot(__cb(_, __then));
-              }), len);
-            }
-             else {
-              return __break();
-            }
-          ;
-          });
-          return __loop();
-        }(__then);
-      });
-    };
-    return testRead(__cb(_, function() {
+        return test(__cb(_, __then), name, options, function __1(_, resp) {
+          if (!_) {
+            return __future(__1, arguments, 0);
+          }
+        ;
+          var __then = _;
+          var i = 0, total = 0;
+          var __3 = false;
+          return function(__break) {
+            var __loop = __nt(_, function() {
+              var __then = __loop;
+              if (__3) {
+                i++;
+              }
+               else {
+                __3 = true;
+              }
+            ;
+              if ((total < totalSize)) {
+                var len = ((size && (typeof size === "function")) ? size() : size);
+                return resp.read(__cb(_, function(__0, buf) {
+                  total = checkBuffer(buf, total);
+                  return dot(__cb(_, __then));
+                }), len);
+              }
+               else {
+                return __break();
+              }
+            ;
+            });
+            return __loop();
+          }(__then);
+        });
+      };
       return testRead(__cb(_, function() {
         return testRead(__cb(_, function() {
           return testRead(__cb(_, function() {
             return testRead(__cb(_, function() {
-              console.error((("pass completed in " + ((Date.now() - t0))) + " ms"));
-              return __then();
-            }), "random size read", function __1() {
-              var r = Math.random();
-              return Math.floor((((((r * r) * r) * r) * 3) * bufSize));
-            });
-          }), "odd size read", Math.floor((bufSize / 7)));
-        }), "double size read", (bufSize * 2));
-      }), "half size read", Math.floor((bufSize / 2)));
-    }), "chunk read");
-  };
-  var oneTenth = Math.floor(((bufCount * bufSize) / 10));
-  return testPass(__cb(_, function() {
+              return testRead(__cb(_, function() {
+                console.error((("pass completed in " + ((Date.now() - t0))) + " ms"));
+                return __then();
+              }), "random size read", function __1() {
+                var r = Math.random();
+                return Math.floor((((((r * r) * r) * r) * 3) * bufSize));
+              });
+            }), "odd size read", Math.floor((bufSize / 7)));
+          }), "double size read", (bufSize * 2));
+        }), "half size read", Math.floor((bufSize / 2)));
+      }), "chunk read");
+    };
+    var oneTenth = Math.floor(((bufCount * bufSize) / 10));
     return testPass(__cb(_, function() {
       return testPass(__cb(_, function() {
         return testPass(__cb(_, function() {
           return testPass(__cb(_, function() {
             return testPass(__cb(_, function() {
-              process.exit();
-              return __then();
-            }), "buffer all", {
-              lowMark: 0,
+              return testPass(__cb(_, function() {
+                process.exit();
+                return __then();
+              }), "buffer all", {
+                lowMark: 0,
+                highMark: (11 * oneTenth)
+              });
+            }), "buffer 1 tenth and above", {
+              lowMark: oneTenth,
               highMark: (11 * oneTenth)
             });
-          }), "buffer 1 tenth and above", {
-            lowMark: oneTenth,
-            highMark: (11 * oneTenth)
+          }), "buffer 2/3 tenth", {
+            lowMark: (2 * oneTenth),
+            highMark: (3 * oneTenth)
           });
-        }), "buffer 2/3 tenth", {
-          lowMark: (2 * oneTenth),
-          highMark: (3 * oneTenth)
+        }), "buffer 0/1 tenth", {
+          lowMark: 0,
+          highMark: oneTenth
         });
-      }), "buffer 0/1 tenth", {
-        lowMark: 0,
-        highMark: oneTenth
+      }), "default buffering", {
       });
-    }), "default buffering", {
+    }), "default buffering (warm up)", {
     });
-  }), "default buffering (warm up)", {
-  });
+  }), 1337, "127.0.0.1");
 })();

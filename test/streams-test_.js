@@ -31,7 +31,7 @@ function checkBuffer(buf, start) {
 	return start + buf.length;
 }
 
-streams.httpServer( function (req, res, _) {
+new streams.HttpServer( function (req, res, _) {
 	res.writeHead(200, {'Content-Type': 'application/octet-stream'});
 	res.emitter.on("drain", function() {
 		process.stderr.write("*");
@@ -41,7 +41,7 @@ streams.httpServer( function (req, res, _) {
 		process.nextTick(_);
 	}
 	res.end();
-}).listen(1337, "127.0.0.1");
+}).listen(_, 1337, "127.0.0.1");
 console.error('Server running at http://127.0.0.1:1337/');
 
 function addBufferHooks(stream) {
