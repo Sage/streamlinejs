@@ -8,7 +8,7 @@ function __trap(err) { if (err) { if (__global.__context && __global.__context.e
             (function(_) {
               var __then = (_ = (_ || __trap));
 /*    22 */   var fs = require("fs");
-/*    23 */   var flows = require("../lib/flows");
+/*    23 */   var flows = require("../deps/streamlib/lib/flows");
 /*    25 */   var fileFunnel = flows.funnel(20);
 /*    27 */   function du(_, path) {
                 if (!_) {
