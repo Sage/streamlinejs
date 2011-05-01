@@ -102,7 +102,7 @@ The [streamlib](https://github.com/Sage/streamlib) project contains various modu
 
 ## Resources
 
-The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like utility APIs, exception handling, etc.
+The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like exception handling.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
