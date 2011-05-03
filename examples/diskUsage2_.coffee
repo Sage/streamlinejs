@@ -1,5 +1,5 @@
 #
-# Usage: coffee-streamline diskUsage2.coffee [path]
+# Usage: coffee-streamline diskUsage2_.coffee [path]
 #
 # This file is a parralelized version of the `diskUsage.coffee` example. 
 # 
