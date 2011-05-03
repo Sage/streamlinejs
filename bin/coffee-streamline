@@ -1,24 +1,9 @@
 #!/usr/bin/env node
 
 var coffee = require('coffee-script');
-var fs = require('fs');
 var path = require('path');
 
 var streamline = require('streamline');
-
-var compile = coffee.compile;
-coffee.compile = function(content, options) {
-	var result = compile(content, options);
-	return content.indexOf('!!STREAMLINE!!') >= 0 ? streamline.transform.transform(result, { coffee: true }) : result; 
-}
-
-if (require.extensions) {
-	require.extensions[".coffee"] = function(module, filename){
-		var content = fs.readFileSync(filename, 'utf8');
-		content = coffee.compile(content, {});
-		module._compile(content, filename);
-	};
-}
 
 if (process.argv.length >= 3 && process.argv[2][0] != '-') {
 	// coffee-streamline myScript.coffee args
