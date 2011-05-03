@@ -18,7 +18,6 @@
 # 
 # On my machine, the parallel version is almost twice faster than the sequential version.
 #
-# !!STREAMLINE!!
 
 fs = require 'fs'
 flows = require '../deps/streamlib/lib/flows'
