@@ -28,7 +28,7 @@ du = (_, path) ->
 	total = 0
 	stat = fs.stat path, _
 	if stat.isFile()
-		fileFunnel.channel _, (_) ->
+		fileFunnel _, (_) ->
 			total += fs.readFile(path, _).length
 	else if stat.isDirectory()
 		files = fs.readdir path, _
