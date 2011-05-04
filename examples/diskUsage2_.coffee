@@ -1,5 +1,5 @@
 #
-# Usage: coffee-streamline diskUsage2.coffee [path]
+# Usage: coffee-streamline diskUsage2_.coffee [path]
 #
 # This file is a parralelized version of the `diskUsage.coffee` example. 
 # 
@@ -18,7 +18,6 @@
 # 
 # On my machine, the parallel version is almost twice faster than the sequential version.
 #
-# !!STREAMLINE!!
 
 fs = require 'fs'
 flows = require '../deps/streamlib/lib/flows'
@@ -29,7 +28,7 @@ du = (_, path) ->
 	total = 0
 	stat = fs.stat path, _
 	if stat.isFile()
-		fileFunnel.channel _, (_) ->
+		fileFunnel _, (_) ->
 			total += fs.readFile(path, _).length
 	else if stat.isDirectory()
 		files = fs.readdir path, _
@@ -45,10 +44,8 @@ p = if process.argv.length > 2 then process.argv[2] else "."
 
 t0 = Date.now()
 
-report = (err, result) ->
-	if err
-		console.log err.toString() + "\n" + err.stack
+try
+	result = du _, p
 	console.log "completed in " + (Date.now() - t0) + " ms"
-
-du report, p
-
+catch err
+	console.log err.toString() + "\n" + err.stack
