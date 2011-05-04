@@ -2,7 +2,7 @@
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
   "version": "0.1.19",
-  "engines": { "node": ">=0.2.1" },
+  "engines": { "node": ">=0.4.0" },
   "dependencies": {},
   "author": "Bruno Jouhier",
   "directories": {"lib": "./lib", "bin": "./bin" },
