@@ -390,6 +390,44 @@ $(document).ready( function() {
 			});
 		});
 	})
+	test("for in (without var)", 1, function() {
+		genTest( function f(_) {
+			var k;
+			f1();
+			for (k in obj) {
+				f2(_, k);
+				f3(k);
+			}
+			f4();
+		}, function f(_) {
+			if (!_) {
+				return __future(f, arguments, 0);
+			}
+			var __then = _;
+			var k;
+			f1();
+			var __1 = __forIn(obj);
+			var __2 = 0;
+			return function(__break) {
+				var __loop = __nt(_, function() {
+					var __then = __loop;
+					if ((__2 < __1.length)) {
+						k = __1[__2++];
+						return f2(__cb(_, function() {
+							f3(k);
+							return __then();
+						}), k);
+					} else {
+						return __break();
+					}
+				});
+				return __loop();
+			}( function() {
+				f4();
+				return __then();
+			});
+		});
+	})
 	test("switch", 1, function() {
 		genTest( function f(_) {
 			f1();
