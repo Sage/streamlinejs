@@ -41,28 +41,54 @@ You can test `streamline.js` directly with the [on-line demo](http://sage.github
 
 The easiest way to install `streamline.js` is with NPM:
 
-    npm install streamline
+    npm install streamline -g
+
+The `-g` option installs it _globally_.
+You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
+commands will not be in default PATH.
+
+Note: if you encounter a permission error when installing on UNIX systems, you should retry with `sudo`.
     
-# Creating a streamline module
+# Creating and running streamline modules
 
 To create a module called `myModule`, put your _streamlined_ source in a file called `myModule_.js`.
-Streamline will transform the code and will save it into a file called `myModule.js`. 
-You just need to create an empty `myModule.js` file to initiate the process.
 
-See `examples/diskUsage_.js` for a simple streamline module that traverses directories to compute disk usage.
+Then you have several options:
 
-# Running with node.js
+1) You can _compile_ your module. This will create a file called `myModule.js` that you can directly run with the `node` command,
+or _require_ from a normal node program.
+2) You can run the module with `node-streamline myModule_` or require it as `require('myModule_')` from a program that you launch with `node-streamline`. 
+If you choose this option, the `myModule.js` file will not be created.
+3) You can run the module with `node-streamline myModule` or require it as `require('myModule')` from a program that you launch with `node-streamline`. 
+If you choose this option, you have to create an empty `myModule.js` file to initiate the process.
+4) You can load source and transform it _on the fly_ with the `transform` API.
 
-You can run standalone streamline modules with `node-streamline`. For example:
+Option 1 is ideal for production code, as your transformed module will be loaded standalone. The transformation engine will not be loaded.
 
-    node-streamline examples/diskUsage
+Option 2 is your best option if you do not want to save the transformed code to disk.
 
-You can also integrate streamline modules into an existing node application. 
-You just need to add the following line to your initialization script:
+Option 3 is ideal for the development phase if you do not have a build script. 
+The files will only be recompiled if the source has changed (so you won't get the overhead every time you launch your program).
+The transformed source will be available on disk, and will be loaded by the debugger (because you require `myModule`, not `myModule_`).
+Also, this option makes the switch to production really easy: recompile the whole tree and run with `node` rather than with `node-streamline`.
 
-    require('streamline');
+Option 4 is reserved for advanced scenarios where the code is transformed on the fly.
 
-Then you can _require_ streamline modules. They will be automatically transformed at require time.
+There an alternative to running your application with `node-streamline`: 
+you can call `require('streamline')` from your main script and then run it with `node`. 
+Modules that are required (directly or indirectly) by your main script will be transformed on demand.
+
+Note: streamline can also transform vanilla Javascript files that don't use CommonJS modules and don't target node. 
+So you can compile them (option 1) and load them directly in the browser from a `<script>` directive.
+
+# Examples
+
+The `examples/diskUsage_.js` module is a simple example that traverses directories to compute disk usage.
+You can run as follows:
+
+    node-streamline examples/diskUsage_ (will not regenerate examples/diskUsage.js)
+    node-streamline examples/diskUsage (will regenerate examples/diskUsage.js if necessary)
+    node examples/diskUsage (assumes that examples/diskUsage.js is there and up-to-date)
 
 # Interoperability with standard node.js code
 
@@ -74,9 +100,9 @@ You can call standard node functions from streamline code. For example the `fs.r
 
 You can also call streamline functions as if they were standard node functions. For example:
 
-    lineCount("README.MD", function(err, result) {
+    lineCount("README.md", function(err, result) {
       if (err) return console.error("ERROR: " + err.message);
-      console.log("readme has " + result + " lines.");
+      console.log("README has " + result + " lines.");
     });
 
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
@@ -86,7 +112,7 @@ Streamline will only transform the functions that have the special `_` parameter
 
 `streamline.js` generates vanilla Javascript code that may be run browser-side too.
 
-You can also transform the code in the browser. See the `test/*.js` unit test files for examples.
+You can also transform the code in the browser with the `transform` API. See the `test/*.js` unit test files for examples.
 
 You can also use `streamline.js` with CoffeeScript. For example:
 
@@ -96,7 +122,9 @@ See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compiler
 
 # Goodies
 
-The functions generated by streamline return a _future_ if you call them without a callback. This gives you an easy way to run several asynchronous operations in parallel and resynchronize later. See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
+The functions generated by streamline return a _future_ if you call them without a callback. 
+This gives you an easy way to run several asynchronous operations in parallel and resynchronize later. 
+See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
 The following projects contain various modules that have been written with streamline.js:
 
