@@ -55,7 +55,7 @@ To create a module called `myModule`, put your _streamlined_ source in a file ca
 
 Then you have several options:
 
-1. You can _compile_ your module. This will create a file called `myModule.js` that you can directly run with the `node` command,
+1. You can _compile_ your module with `node-streamline -c`. This will create a file called `myModule.js` that you can directly run with the `node` command,
 or _require_ from a normal node program.
 2. You can run the module with `node-streamline myModule_` or require it as `require('myModule_')` from a program that you launch with `node-streamline`. 
 If you choose this option, the `myModule.js` file will not be created.
@@ -133,6 +133,7 @@ The following projects contain various modules that have been written with strea
 
 ## Resources
 
+The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md) discusses advanced topics like exception handling.
 The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like exception handling.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
