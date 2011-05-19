@@ -55,13 +55,13 @@ To create a module called `myModule`, put your _streamlined_ source in a file ca
 
 Then you have several options:
 
-1) You can _compile_ your module. This will create a file called `myModule.js` that you can directly run with the `node` command,
+1. You can _compile_ your module. This will create a file called `myModule.js` that you can directly run with the `node` command,
 or _require_ from a normal node program.
-2) You can run the module with `node-streamline myModule_` or require it as `require('myModule_')` from a program that you launch with `node-streamline`. 
+2. You can run the module with `node-streamline myModule_` or require it as `require('myModule_')` from a program that you launch with `node-streamline`. 
 If you choose this option, the `myModule.js` file will not be created.
-3) You can run the module with `node-streamline myModule` or require it as `require('myModule')` from a program that you launch with `node-streamline`. 
+3. You can run the module with `node-streamline myModule` or require it as `require('myModule')` from a program that you launch with `node-streamline`. 
 If you choose this option, you have to create an empty `myModule.js` file to initiate the process.
-4) You can load source and transform it _on the fly_ with the `transform` API.
+4. You can load source and transform it _on the fly_ with the `transform` API.
 
 Option 1 is ideal for production code, as your transformed module will be loaded standalone. The transformation engine will not be loaded.
 
