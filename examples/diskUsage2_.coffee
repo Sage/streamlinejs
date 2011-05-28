@@ -20,7 +20,7 @@
 #
 
 fs = require 'fs'
-flows = require '../deps/streamlib/lib/flows'
+flows = require 'streamline/lib/util/flows'
 
 fileFunnel = flows.funnel 20
 
