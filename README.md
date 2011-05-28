@@ -35,7 +35,7 @@ Streamline also provides _futures_, and comes with a small optional library of h
 
 # On-line demo
 
-You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe.html)
+You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
 
 # Installation
 
@@ -83,12 +83,12 @@ So you can compile them (option 1) and load them directly in the browser from a 
 
 # Examples
 
-The `examples/diskUsage_.js` module is a simple example that traverses directories to compute disk usage.
+The `examples/diskUsage` directory contains a simple example that traverses directories to compute disk usage.
 You can run as follows:
 
-    node-streamline examples/diskUsage_ (will not regenerate examples/diskUsage.js)
-    node-streamline examples/diskUsage (will regenerate examples/diskUsage.js if necessary)
-    node examples/diskUsage (assumes that examples/diskUsage.js is there and up-to-date)
+    node-streamline diskUsage_ (will not regenerate diskUsage.js)
+    node-streamline diskUsage (will regenerate diskUsage.js if necessary)
+    node diskUsage (assumes that diskUsage.js is there and up-to-date)
 
 # Interoperability with standard node.js code
 
@@ -116,7 +116,7 @@ You can also transform the code in the browser with the `transform` API. See the
 
 You can also use `streamline.js` with CoffeeScript. For example:
 
-    coffee-streamline examples/diskUsage.coffee
+    coffee-streamline diskUsage.coffee
 
 See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) for details.
 
