@@ -1,10 +1,14 @@
 
-# Streamline commmand line analyzer / dispatcher
+# streamline/lib/compiler/command
+ 
+Streamline commmand line analyzer / dispatcher
 
 * `command.run()`  
   runs `node-streamline` command line analyzer / dispatcher
 
-# Streamline compiler and file loader
+# streamline/lib/compiler/compile
+ 
+Streamline compiler and file loader
 
 * `script = compile.loadFile(_, path, options)`  
   Loads Javascript file and transforms it if necessary.  
@@ -28,13 +32,17 @@
   will be traversed recursively.  
   `options`  is a set of options for the `transform` operation.
 
-# Streamline `require` handler registration
+# streamline/lib/compiler/register
+ 
+Streamline `require` handler registration
 
 * `register.register(options)`  
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
 
-# Streamline's transformation engine
+# streamline/lib/compiler/transform
+ 
+Streamline's transformation engine
 
 * `transformed = transform.transform(source, options)`  
   Transforms streamline source.  
@@ -44,7 +52,38 @@
   * `callback` alternative identifier if `_` is already used.
   * `noHelpers` disables generation of helper functions (`__cb`, etc.)
 
-# Server Streams module
+# streamline/lib/require/client/require
+ 
+Client-side require script
+
+* `id = module.id`  
+  the `id` of the current module.
+* `module = require(id)`  
+  _requires_ a module synchronously.  
+  `id` _must_ be a string literal.
+* `module = require.async(id, _)`  
+  _requires_ a module asynchronously.  
+  `id` may be a variable or an expression.
+* `main = require.main`  
+  return the main module
+* `require.main(id)`  
+  loads main module from HTML page.
+
+# streamline/lib/require/server/require
+ 
+Server-side require handler
+
+Handles require requests coming from the client.
+
+* `dispatcher = require.dispatcher(options)`  
+  returns an HTTP request dispatcher that responds to requests
+  issued by the client-side `require` script.  
+  The dispatcher is called as `dispatcher(_, request, response)`
+
+# streamline/lib/streams/server/streams
+ 
+Server Streams module
+
 The `streams` module contains _pull mode_ wrappers around node streams.
 
 These wrappers implement a _pull style_ API. 
@@ -215,11 +254,13 @@ These are wrappers around node's `net.createConnection`:
   The `options` parameter of the constructor provide options for the stream (`lowMark` and `highMark`). If you want different options for `read` and `write` operations, you can specify them by creating `options.read` and `options.write` sub-objects inside `options`.
 * `stream = client.connect(_)`  
    connects the client and returns a network stream.
-# docTool module
+# streamline/lib/tools/docTool
+ 
+Documentation tool
 
 Usage:
 
-     node streamline/lib/util/docTool [path]
+     node streamline/lib/tools/docTool [path]
 
 Extracts documentation comments from `.js` files and generates `API.md` file 
 under package root.
@@ -233,7 +274,9 @@ The tool can also be invoked programatically with:
 * `doc = docTool.generate(_, path)`
   extracts documentation comments from file `path`
 
-# Flows Module
+# streamline/lib/util/flows
+ 
+Flows Module
 
 The `streamline/lib/util/flows` module contains some handy utilities for streamline code
 
