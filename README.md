@@ -74,7 +74,7 @@ Also, this option makes the switch to production really easy: recompile the whol
 
 Option 4 is reserved for advanced scenarios where the code is transformed on the fly.
 
-There an alternative to running your application with `node-streamline`: 
+There is an alternative to running your application with `node-streamline`: 
 you can call `require('streamline')` from your main script and then run it with `node`. 
 Modules that are required (directly or indirectly) by your main script will be transformed on demand.
 
