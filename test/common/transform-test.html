@@ -9,7 +9,7 @@
   	if (!Object.create || !Object.defineProperty || !Object.defineProperties)
 		alert("Test will fail because your browser does not support ECMAScript 5. Try with another browser!");
 	  function require(str) {
-	  	if (str == "streamline/lib/transform")
+	  	if (str == "streamline/lib/compiler/transform")
 	  		return Streamline;
 	  	else
 	  		alert("cannot require " + str)
