@@ -223,7 +223,7 @@ Narcissus.lexer = (function() {
                 this.cursor--;
 
                 this.lexExponent();
-                token.value = parseFloat(token.start, this.cursor);
+                token.value = parseFloat(input.substring(token.start, this.cursor));
             } else if (ch === 'x' || ch === 'X') {
                 do {
                     ch = input[this.cursor++];
@@ -280,7 +280,7 @@ Narcissus.lexer = (function() {
                 this.lexExponent();
 
                 token.type = NUMBER;
-                token.value = parseFloat(token.start, this.cursor);
+                token.value = parseFloat(input.substring(token.start, this.cursor));
             } else {
                 token.type = DOT;
                 token.assignOp = null;
