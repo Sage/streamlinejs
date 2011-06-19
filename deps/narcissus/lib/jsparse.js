@@ -220,7 +220,8 @@ Narcissus.parser = (function() {
         var n = ++Node.indentLevel;
         var s = "{\n" + INDENTATION.repeat(n) + "type: " + tokenString(this.type);
         for (i = 0; i < a.length; i++)
-            s += ",\n" + INDENTATION.repeat(n) + a[i].id + ": " + a[i].value;
+            s += ", " + a[i].id + ": " + a[i].value;
+            //s += ",\n" + INDENTATION.repeat(n) + a[i].id + ": " + a[i].value;
         n = --Node.indentLevel;
         s += "\n" + INDENTATION.repeat(n) + "}";
         return s;
