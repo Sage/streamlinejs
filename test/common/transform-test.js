@@ -686,15 +686,23 @@ test("lazy and", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__then){
-			return function __1(_){
-				return f2(__cb(_, function(__0, __val){
-					if (!__val) {
-						return _(null, __val);
+		return function(_){
+			return f2(__cb(_, function(__0, __1){
+				var __2 = !__1;
+				return function(__then){
+					if (__2) {
+						var __3 = __1;
+						return _(null, __3);
 					}
+					else {
+						__then();
+					}
+				}(function(){
 					return f3(_);
-				}));
-			}(__cb(_, function(__0, __2){
+				});
+			}));
+		}(__cb(_, function(__0, __2){
+			return function(__then){
 				if (__2) {
 					f4();
 					return f5(__cb(_, function(){
@@ -702,12 +710,14 @@ test("lazy and", 1, function(){
 						__then();
 					}));
 				}
-				__then();
-			}));
-		})(function(){
-			f7();
-			_();
-		});
+				else {
+					__then();
+				}
+			}(function(){
+				f7();
+				_();
+			});
+		}));
 	})
 })
 test("empty body", 1, function(){
@@ -746,8 +756,9 @@ test("out wrappers", 1, function(){
 		if (!_) {
 			return __future(f, arguments, 0);
 		}
-		return g(__wrapOut(__cb(_, function(__0, __1){
-			return _(null, (__1 + 5));
+		return g(__wrapOut(__cb(_, function(__0, __2){
+			var __1 = __2 + 5;
+			return _(null, __1);
 		})), arg2);
 	})
 })
@@ -843,7 +854,7 @@ test("function forward reference", 1, function(){
 		}
 		
 		foo();
-		return g(__cb(_, _));
+		return g(_);
 	})
 })
 module("streamline evaluation");
