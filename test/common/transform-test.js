@@ -101,7 +101,7 @@ test("if", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		return function(__then){
+		return (function(__then){
 			if (b) {
 				f2();
 				return f3(__cb(_, function(){
@@ -112,7 +112,7 @@ test("if", 1, function(){
 			else {
 				__then();
 			}
-		}(function(){
+		})(function(){
 			f5();
 			_();
 		});
@@ -131,7 +131,7 @@ test("simplified if", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		return function(__then){
+		return (function(__then){
 			if (b) {
 				f2();
 				return f3(__cb(_, function(){
@@ -142,7 +142,7 @@ test("simplified if", 1, function(){
 			else {
 				__then();
 			}
-		}(_);
+		})(_);
 	});
 });
 test("if else", 1, function(){
@@ -164,7 +164,7 @@ test("if else", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		return function(__then){
+		return (function(__then){
 			if (b) {
 				f2();
 				return f3(__cb(_, function(){
@@ -179,7 +179,7 @@ test("if else", 1, function(){
 					__then();
 				}));
 			}
-		}(function(){
+		})(function(){
 			f8();
 			_();
 		});
@@ -204,7 +204,7 @@ test("if else 2", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		return function(__then){
+		return (function(__then){
 			if (b) {
 				f2();
 				return f3(__cb(_, function(){
@@ -216,7 +216,7 @@ test("if else 2", 1, function(){
 				f5();
 				__then();
 			}
-		}(function(){
+		})(function(){
 			f6();
 			return _(null, 2);
 		});
@@ -299,7 +299,7 @@ test("do while", 1, function(){
 		var __1 = true;
 		(function(__break){
 			var __loop = __nt(_, function(){
-				var __2 = __1 || cond;
+				var __2 = (__1 || cond);
 				if (__2) {
 					__1 = false;
 					return f2(__cb(_, function(){
@@ -342,7 +342,7 @@ test("for", 1, function(){
 				else {
 					__2 = true;
 				}
-				var __1 = i < arr.length;
+				var __1 = (i < arr.length);
 				if (__1) {
 					return f2(__cb(_, function(){
 						f3();
@@ -378,7 +378,7 @@ test("for in", 1, function(){
 		var __2 = 0;
 		(function(__break){
 			var __loop = __nt(_, function(){
-				var __3 = __2 < __1.length;
+				var __3 = (__2 < __1.length);
 				if (__3) {
 					k = __1[__2++];
 					return f2(__cb(_, function(){
@@ -416,7 +416,7 @@ test("for in (without var)", 1, function(){
 		var __2 = 0;
 		(function(__break){
 			var __loop = __nt(_, function(){
-				var __3 = __2 < __1.length;
+				var __3 = (__2 < __1.length);
 				if (__3) {
 					k = __1[__2++];
 					return f2(__cb(_, function(){
@@ -591,7 +591,7 @@ test("try catch", 1, function(){
 						f4();
 						__then();
 					}));
-				})
+				});
 				
 			})(function(ex, __result){
 				__tryCatch(_, function(){
@@ -686,10 +686,10 @@ test("lazy and", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		return function(_){
+		return (function(_){
 			return f2(__cb(_, function(__0, __1){
 				var __2 = !__1;
-				return function(__then){
+				return (function(__then){
 					if (__2) {
 						var __3 = __1;
 						return _(null, __3);
@@ -697,12 +697,12 @@ test("lazy and", 1, function(){
 					else {
 						__then();
 					}
-				}(function(){
+				})(function(){
 					return f3(_);
 				});
 			}));
-		}(__cb(_, function(__0, __2){
-			return function(__then){
+		})(__cb(_, function(__0, __2){
+			return (function(__then){
 				if (__2) {
 					f4();
 					return f5(__cb(_, function(){
@@ -713,7 +713,7 @@ test("lazy and", 1, function(){
 				else {
 					__then();
 				}
-			}(function(){
+			})(function(){
 				f7();
 				_();
 			});
@@ -757,7 +757,7 @@ test("out wrappers", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		return g(__wrapOut(__cb(_, function(__0, __2){
-			var __1 = __2 + 5;
+			var __1 = (__2 + 5);
 			return _(null, __1);
 		})), arg2);
 	})
