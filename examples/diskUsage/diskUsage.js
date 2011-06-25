@@ -6,11 +6,7 @@ function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ 
 function __nt(_, fn){ var i = 0; var cb = __cb(_, fn); var safeCb = function(){ try { cb(); } catch (ex) { __propagate(cb, ex); } }; if (typeof process != "undefined" && typeof process.nextTick == "function") return function(){ if (++i % 20 == 0) process.nextTick(safeCb); else cb(); }; else return function(){ if (++i % 20 == 0) setTimeout(safeCb); else cb(); }; }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
-            (function __1(_) {
-              if (!_) {
-                return __future(__1, arguments, 0);
-              }
-            ;
+            (function __main(_) {
               var fs, p, t0;
 /*    13 */   function du(_, path) {
                 if (!_) {

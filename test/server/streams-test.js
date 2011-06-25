@@ -40,7 +40,7 @@ new streams.HttpServer(function __1(req, res, _) { if (!_) { return __future(__1
 
  i = 0; var __2 = false; (function(__break) { var __loop = __nt(_, function() { if (__2) { i++; } else { __2 = true; } ; var __1 = (i < bufCount); if (__1) {
  return res.write(__cb(_, function() {
- return process.nextTick(__cb(_, function() { __loop(); })); }), makeBuffer(i)); } else { __break(); } ; }); __loop(); })(function() {
+ return process.nextTick(__cb(_, __loop)); }), makeBuffer(i)); } else { __break(); } ; }); __loop(); })(function() {
 
  res.end(); _(); });
 }).listen(null, 1337, "127.0.0.1");
