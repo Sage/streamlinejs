@@ -857,6 +857,50 @@ test("function forward reference", 1, function(){
 		return g(_);
 	})
 })
+test("CoffeeScript closure ()", 1, function(){
+	genTest(function f(_){
+		(function(){
+			return g(_);
+		})();
+	}, function f(_){
+		if (!_) {
+			return __future(f, arguments, 0);
+		};
+		return (function __1(_){
+			return g(_);
+		})(_);
+	})
+})
+test("CoffeeScript closure (this)", 1, function(){
+	genTest(function f(_){
+		(function(){
+			return g(_, this);
+		}).call(this);
+	}, function f(_){
+		if (!_) {
+			return __future.call(this, f, arguments, 0);
+		};
+		var __this = this;
+		return (function __1(_){
+			return g(_, __this);
+		})(_);
+	})
+})
+test("CoffeeScript closure (this, arguments)", 1, function(){
+	genTest(function f(_){
+		(function(){
+			return g(_, this, arguments);
+		}).apply(this, arguments);
+	}, function f(_){
+		if (!_) {
+			return __future.call(this, f, arguments, 0);
+		};
+		var __this = this, __arguments = arguments;
+		return (function __1(_){
+			return g(_, __this, __arguments);
+		})(_);
+	})
+})
 module("streamline evaluation");
 function evalTest1(f, val, options, next){
 	var str = transform(f.toString(), options);
