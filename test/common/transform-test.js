@@ -1552,4 +1552,13 @@ asyncTest("futures test", 2, function(){
 		return a(_) + b(_) + d(_) + c(_);
 	}, "abdc");
 })
+asyncTest("last case without break", 2, function(){
+	evalTest(function f(_){
+		switch (true) {
+			case true:
+				delay(_);
+		}
+		return 1;
+	}, 1);
+})
 
