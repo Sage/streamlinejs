@@ -4,13 +4,14 @@
 
 Instead of writing hairy code like:
 
-    function lineCount(path, callback) {
-      fs.readFile(path, function(err, data) {
-        if (err) { callback(err); return; }
-        callback(null, data.split('\n').length);
-      });
-    }
-
+```javascript
+function lineCount(path, callback) {
+  fs.readFile(path, function(err, data) {
+    if (err) { callback(err); return; }
+    callback(null, data.split('\n').length);
+  });
+}
+```
 Streamline.js lets you write:
 
     function lineCount(path, _) {
