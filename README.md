@@ -43,7 +43,9 @@ You can test `streamline.js` directly with the [on-line demo](http://sage.github
 
 The easiest way to install `streamline.js` is with NPM:
 
-    npm install streamline -g
+```sh
+npm install streamline -g
+```
 
 The `-g` option installs it _globally_.
 You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
@@ -88,9 +90,11 @@ So you can compile them (option 1) and load them directly in the browser from a 
 The `examples/diskUsage` directory contains a simple example that traverses directories to compute disk usage.
 You can run as follows:
 
-    node-streamline diskUsage_ (will not regenerate diskUsage.js)
-    node-streamline diskUsage (will regenerate diskUsage.js if necessary)
-    node diskUsage (assumes that diskUsage.js is there and up-to-date)
+```sh
+node-streamline diskUsage_ (will not regenerate diskUsage.js)
+node-streamline diskUsage (will regenerate diskUsage.js if necessary)
+node diskUsage (assumes that diskUsage.js is there and up-to-date)
+```
 
 # Interoperability with standard node.js code
 
@@ -120,7 +124,9 @@ You can also transform the code in the browser with the `transform` API. See the
 
 You can also use `streamline.js` with CoffeeScript. For example:
 
-    coffee-streamline diskUsage_.coffee
+```sh
+coffee-streamline diskUsage_.coffee
+```
 
 See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) for details.
 
