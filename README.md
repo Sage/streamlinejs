@@ -3,21 +3,20 @@
 `streamline.js` is a small tool to simplify asynchronous Javascript programming.
 
 Instead of writing hairy code like:
-
 ```javascript
 function lineCount(path, callback) {
-  fs.readFile(path, function(err, data) {
+  fs.readFile(path, "utf8", function(err, data) {
     if (err) { callback(err); return; }
     callback(null, data.split('\n').length);
   });
 }
 ```
 Streamline.js lets you write:
-
-    function lineCount(path, _) {
-      return fs.readFile(path, _).split('\n').length;
-    }
-
+```javascript
+function lineCount(path, _) {
+  return fs.readFile(path, "utf8", _).split('\n').length;
+}
+```
 You just have to follow a simple rule:
 
 > Replace all callbacks by an underscore and write your code as if all functions were synchronous.
@@ -94,18 +93,19 @@ You can run as follows:
 # Interoperability with standard node.js code
 
 You can call standard node functions from streamline code. For example the `fs.readFile` function:
-
-    function lineCount(path, _) {
-      return fs.readFile(path, _).split('\n').length;
-    }
-
+```javascript
+function lineCount(path, _) {
+  return fs.readFile(path, "utf8", _).split('\n').length;
+}
+```
 You can also call streamline functions as if they were standard node functions. For example:
 
-    lineCount("README.md", function(err, result) {
-      if (err) return console.error("ERROR: " + err.message);
-      console.log("README has " + result + " lines.");
-    });
-
+```javascript
+lineCount("README.md", function(err, result) {
+  if (err) return console.error("ERROR: " + err.message);
+  console.log("README has " + result + " lines.");
+});
+```
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
 Streamline will only transform the functions that have the special `_` parameter. The other functions will end up unmodified in the output file (maybe slightly reformatted by the narcissus pretty printer though).
 
