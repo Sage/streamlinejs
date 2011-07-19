@@ -116,7 +116,7 @@ You can also transform the code in the browser with the `transform` API. See the
 
 You can also use `streamline.js` with CoffeeScript. For example:
 
-    coffee-streamline diskUsage.coffee
+    coffee-streamline diskUsage_.coffee
 
 See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) for details.
 
