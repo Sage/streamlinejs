@@ -3,6 +3,7 @@
 `streamline.js` is a small tool to simplify asynchronous Javascript programming.
 
 Instead of writing hairy code like:
+
 ```javascript
 function lineCount(path, callback) {
   fs.readFile(path, "utf8", function(err, data) {
@@ -12,6 +13,7 @@ function lineCount(path, callback) {
 }
 ```
 Streamline.js lets you write:
+
 ```javascript
 function lineCount(path, _) {
   return fs.readFile(path, "utf8", _).split('\n').length;
@@ -93,6 +95,7 @@ You can run as follows:
 # Interoperability with standard node.js code
 
 You can call standard node functions from streamline code. For example the `fs.readFile` function:
+
 ```javascript
 function lineCount(path, _) {
   return fs.readFile(path, "utf8", _).split('\n').length;
