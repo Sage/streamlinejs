@@ -49,7 +49,7 @@ npm install streamline -g
 
 The `-g` option installs it _globally_.
 You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
-commands will not be in default PATH.
+commands will not be in your default PATH.
 
 Note: if you encounter a permission error when installing on UNIX systems, you should retry with `sudo`.
     
