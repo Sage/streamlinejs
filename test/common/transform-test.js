@@ -468,9 +468,7 @@ test("switch", 1, function(){
 				case "b":
 				case "c":
 					f4();
-					return f5(__cb(_, function(){
-						return __break();
-					}));
+					return f5(__cb(_, __break));
 				default:
 					f6();
 					return __break();
