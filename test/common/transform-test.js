@@ -262,7 +262,7 @@ test("while", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				var __1 = cond;
 				if (__1) {
@@ -297,7 +297,7 @@ test("do while", 1, function(){
 		}
 		f1();
 		var __1 = true;
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				var __2 = (__1 || cond);
 				if (__2) {
@@ -334,7 +334,7 @@ test("for", 1, function(){
 		f1();
 		i = 0;
 		var __2 = false;
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				if (__2) {
 					i++;
@@ -376,7 +376,7 @@ test("for in", 1, function(){
 		f1();
 		var __1 = __forIn(obj);
 		var __2 = 0;
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				var __3 = (__2 < __1.length);
 				if (__3) {
@@ -414,7 +414,7 @@ test("for in (without var)", 1, function(){
 		f1();
 		var __1 = __forIn(obj);
 		var __2 = 0;
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				var __3 = (__2 < __1.length);
 				if (__3) {
@@ -458,7 +458,7 @@ test("switch", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__break){
+		return (function(__break){
 			switch (exp) {
 				case "a":
 					return f2(__cb(_, function(){
@@ -496,7 +496,7 @@ test("nested switch", 1, function(){
 		if (!_) {
 			return __future(f, arguments, 0);
 		}
-		(function(__break){
+		return (function(__break){
 			switch (exp) {
 				case "a":
 					return f2(__cb(_, function(){
@@ -545,7 +545,7 @@ test("async while condition", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__break){
+		return (function(__break){
 			var __loop = __nt(_, function(){
 				return f2(__cb(_, function(__0, __1){
 					if (__1) {
@@ -583,7 +583,7 @@ test("try catch", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__then){
+		return (function(__then){
 			(function(_){
 				__tryCatch(_, function(){
 					f2();
@@ -634,7 +634,7 @@ test("try finally", 1, function(){
 			return __future(f, arguments, 0);
 		}
 		f1();
-		(function(__then){
+		return (function(__then){
 			(function(_){
 				__tryCatch(_, function(){
 					f2();
