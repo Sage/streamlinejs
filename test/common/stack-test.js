@@ -63,7 +63,7 @@ function D(_, code) { if (!_) { return __future(D, arguments, 0); }; return (fun
  return fail(__cb(_, function __$D() { __then(); }), code); } else { __then(); } ; })(function __$D() { _(); });};
 
 
-function T(_, code, failFn) { if (!_) { return __future(T, arguments, 0); }; var s;
+function T(_, code, failFn) { if (!_) { return __future(T, arguments, 0); }; var s, ff;
  fail = failFn;
  s = "{"; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$T() {
 
@@ -72,11 +72,25 @@ function T(_, code, failFn) { if (!_) { return __future(T, arguments, 0); }; var
 
  s = flows.stackTrace(ex);
 
+
  s = s.split("\n").map(function(l) {
+
  var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
- return (m ? ((m[1] + ":") + m[2]) : l);
+ if (m) {
+ return ((m[1] + ":") + m[2]) };
+
+ m = /^([^(]+)\([^)]+\)@.*\:(\d+)$/.exec(l);
+
+
+ if (m) {
+ ff = true;
+ return ((m[1] + ":") + m[2]); } ;
+
+ return l;
  }).join("/");
- return _(null, s.substring(0, s.indexOf("/T:"))); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$T() { _(); }); });};
+
+
+ return _(null, (ff ? ((("Error: " + code) + "/") + s) : s.substring(0, s.indexOf("/T:")))); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$T() { _(); }); });};
 
 
 
