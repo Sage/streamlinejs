@@ -78,7 +78,7 @@ asyncTest("reduceRight", 1, function __9(_) { if (!_) { return __future(__9, arg
  strictEqual(result, 24);
  start(); _(); }), [1,2,3,4,], function __1(_, v, val) { if (!_) { return __future(__1, arguments, 0); } ; var __frame = __global.__frame = { file: __srcName, name: "__1", prev: __global.__frame }; try { return delay(__cb(_, __frame, 76, 1, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }), val); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }, 1); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); };});
 
-asyncTest("collectAll", 1, function __10(_) { if (!_) { return __future(__10, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__10", prev: __global.__frame }; try { var total, peak, count, results;
+asyncTest("collectAll", 1, function __10(_) { if (!_) { return __future(__10, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__10", prev: __global.__frame }; var total, peak, count, results;
 
 
 
@@ -88,7 +88,7 @@ asyncTest("collectAll", 1, function __10(_) { if (!_) { return __future(__10, ar
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 89, 1, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; try { total = 0; peak = 0; count = 0;
 
 
 
@@ -96,7 +96,7 @@ asyncTest("collectAll", 1, function __10(_) { if (!_) { return __future(__10, ar
  deepEqual([total,peak,count,results,], [6,3,0,[2,4,6,],]);
  start(); _(); })); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); };});
 
-asyncTest("collectOne", 1, function __11(_) { if (!_) { return __future(__11, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__11", prev: __global.__frame }; try { var total, peak, count, result;
+asyncTest("collectOne", 1, function __11(_) { if (!_) { return __future(__11, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__11", prev: __global.__frame }; var total, peak, count, result;
 
 
 
@@ -106,7 +106,7 @@ asyncTest("collectOne", 1, function __11(_) { if (!_) { return __future(__11, ar
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 107, 1, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; try { total = 0; peak = 0; count = 0;
 
 
 
@@ -114,7 +114,7 @@ asyncTest("collectOne", 1, function __11(_) { if (!_) { return __future(__11, ar
  deepEqual([total,peak,count,result,], [1,3,2,2,]);
  start(); _(); })); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); };});
 
-asyncTest("collectAll with limit", 1, function __12(_) { if (!_) { return __future(__12, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__12", prev: __global.__frame }; try { var total, peak, count, results;
+asyncTest("collectAll with limit", 1, function __12(_) { if (!_) { return __future(__12, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__12", prev: __global.__frame }; var total, peak, count, results;
 
 
 
@@ -124,7 +124,7 @@ asyncTest("collectAll with limit", 1, function __12(_) { if (!_) { return __futu
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 125, 1, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; }; try { total = 0; peak = 0; count = 0;
 
 
 
@@ -132,14 +132,14 @@ asyncTest("collectAll with limit", 1, function __12(_) { if (!_) { return __futu
  deepEqual([total,peak,count,results,], [6,2,0,[2,4,6,],]);
  start(); _(); })); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); };});
 
-asyncTest("contexts", 3, function __13(_) { if (!_) { return __future(__13, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__13", prev: __global.__frame }; try { var result;
+asyncTest("contexts", 3, function __13(_) { if (!_) { return __future(__13, arguments, 0); }; var __frame = __global.__frame = { file: __srcName, name: "__13", prev: __global.__frame }; var result;
  function testContext(_, x) { if (!_) { return __future(testContext, arguments, 0); } ; var __frame = __global.__frame = { file: __srcName, name: "testContext", prev: __global.__frame }; try { var y;
  flows.setContext({
  val: x });
 
  return delay(__cb(_, __frame, 140, 1, function ___(__0, __1) { y = __1;
  strictEqual(y, (2 * flows.getContext().val));
- return _(null, (y + 1)); }), (2 * x)); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; };
+ return _(null, (y + 1)); }), (2 * x)); } catch (e) { e.__frame = (e.__frame || __frame.prev); __global.__frame = __frame; return __propagate(_, e); }; }; try {
 
 
 

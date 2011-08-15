@@ -364,3 +364,5 @@ The `streamline.flows` module exposes two functions to manipulate the context:
 * `str = flows.stackTrace(err)`
   Formats a clean stackTrace that contains the _sync_ stack.
   Note that `err.stack` is still the raw _async_ stack.
+  Also, the result may look a bit awkward with non-V8 engines
+  because the reconstructed sync frames will be formatted in V8 style.   
