@@ -71,13 +71,13 @@ function T(_, code, failFn){
 	} 
 	catch (ex) {
 		var s = flows.stackTrace(ex);
-		//console.log("STACK: " + s);
 		var ff;
 		s = s.split('\n').map(function(l){
 			// V8 format
 			var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
+			/*
 			// FF format
 			m = /^([^(]+)\([^)]+\)@.*\:(\d+)$/.exec(l);
 			//console.log("l=" + l + ", m=" + m)
@@ -85,12 +85,14 @@ function T(_, code, failFn){
 			if (m) {
 				ff = true;
 				return m[1] + ":" + m[2];
-			}
+			}*/
 			return l;
 		}).join('/');
 		// TODO: we don't get the /T:xxx frame on FF.
 		// investigate why
-		return ff ? "Error: " + code + "/" + s : s.substring(0, s.indexOf('/T:'));
+		var end = s.indexOf('/T:');
+		return end < 0 ? s + "@END" : s.substring(0, end); 
+		// FF: "Error: " + code + "/" + s : s.substring(0, s.indexOf('/T:'));
 	}
 }
 
