@@ -84,6 +84,8 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = flows.stackTrace(ex);
+		//console.log(ex.stack);
+		//console.log(s);
 		var ff;
 		s = s.split('\n').map(function(l){
 			var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);

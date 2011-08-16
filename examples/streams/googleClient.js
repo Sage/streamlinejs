@@ -13,7 +13,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                   name: "google",
                   line: 10
                 };
-                __func(_, this, arguments, google, 1, __frame, function() {
+                __func(_, this, arguments, google, 1, __frame, function __$google() {
 /*    16 */       req = streams.httpRequest({
 /*    17 */         url: ("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=" + str),
 /*    18 */         proxy: process.env.http_proxy

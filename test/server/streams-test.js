@@ -32,7 +32,7 @@ function checkBuffer(buf, start) {
  return (start + buf.length);};
 
 
-new streams.HttpServer(function __1(req, res, _) { var i; var __frame = { name: "__1", line: 35 }; __func(_, this, arguments, __1, 2, __frame, function() {
+new streams.HttpServer(function __1(req, res, _) { var i; var __frame = { name: "__1", line: 35 }; __func(_, this, arguments, __1, 2, __frame, function __$__1() {
  res.writeHead(200, { "Content-Type": "application/octet-stream" });
  res.emitter.on("drain", function() {
  process.stderr.write("*"); });
@@ -76,7 +76,7 @@ function addBufferHooks(stream) {
 
 
 
-function doTest(_, name, options, fn) { var resp, last; var __frame = { name: "doTest", line: 79 }; __func(_, this, arguments, doTest, 0, __frame, function() {
+function doTest(_, name, options, fn) { var resp, last; var __frame = { name: "doTest", line: 79 }; __func(_, this, arguments, doTest, 0, __frame, function __$doTest() {
 
  options.url = "http://127.0.0.1:1337/";
  return streams.httpRequest(options).end().response(__cb(_, __frame, 3, 13, function ___(__0, __1) { resp = __1;
@@ -87,7 +87,7 @@ function doTest(_, name, options, fn) { var resp, last; var __frame = { name: "d
 
 
 
-function dot(_) { var __frame = { name: "dot", line: 90 }; __func(_, this, arguments, dot, 0, __frame, function() {
+function dot(_) { var __frame = { name: "dot", line: 90 }; __func(_, this, arguments, dot, 0, __frame, function __$dot() {
  return process.nextTick(__cb(_, __frame, 1, 1, _)); });};
 
 
@@ -98,7 +98,7 @@ function testPass(name, options) {
  var t0 = Date.now();
 
  function testRead(name, detail, size) {
- asyncTest(((name + " / ") + detail), function __1(_) { var __frame = { name: "__1", line: 101 }; __func(_, this, arguments, __1, 0, __frame, function() {
+ asyncTest(((name + " / ") + detail), function __1(_) { var __frame = { name: "__1", line: 101 }; __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  return doTest(__cb(_, __frame, 1, 3, function __$__1() {
 
 
@@ -107,7 +107,7 @@ function testPass(name, options) {
 
 
 
- start(); _(); }), name, options, function __1(_, resp) { var i, total, len, buf; var __frame = { name: "__1", line: 102 }; __func(_, this, arguments, __1, 0, __frame, function() { i = 0; total = 0; var __3 = false; return (function ___(__break) { var __loop = __nt(_, __frame, function __$__1() { if (__3) { i++; } else { __3 = true; } ; var __2 = (total < totalSize); if (__2) { len = ((size && (typeof size === "function")) ? size() : size); return resp.read(__cb(_, __frame, 3, 15, function ___(__0, __1) { buf = __1; total = checkBuffer(buf, total); __loop(); }), len); } else { __break(); } ; }); __loop(); })(_); }); }); }); }); };
+ start(); _(); }), name, options, function __1(_, resp) { var i, total, len, buf; var __frame = { name: "__1", line: 102 }; __func(_, this, arguments, __1, 0, __frame, function __$__1() { i = 0; total = 0; var __3 = false; return (function ___(__break) { var __loop = __nt(_, __frame, function __$__1() { if (__3) { i++; } else { __3 = true; } ; var __2 = (total < totalSize); if (__2) { len = ((size && (typeof size === "function")) ? size() : size); return resp.read(__cb(_, __frame, 3, 15, function ___(__0, __1) { buf = __1; total = checkBuffer(buf, total); __loop(); }), len); } else { __break(); } ; }); __loop(); })(_); }); }); }); }); };
 
 
 
@@ -130,6 +130,6 @@ testPass("buffer 2/3 tenth", { lowMark: (2 * oneTenth), highMark: (3 * oneTenth)
 testPass("buffer 1 tenth and above", { lowMark: oneTenth, highMark: (11 * oneTenth)});
 testPass("buffer all", { lowMark: 0, highMark: (11 * oneTenth)});
 
-asyncTest("stop  tests", 0, function __2(_) { var __frame = { name: "__2", line: 133 }; __func(_, this, arguments, __2, 0, __frame, function() {
+asyncTest("stop  tests", 0, function __2(_) { var __frame = { name: "__2", line: 133 }; __func(_, this, arguments, __2, 0, __frame, function __$__2() {
  doStop = true;
  start(); _(); });});
