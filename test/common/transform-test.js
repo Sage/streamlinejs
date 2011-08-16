@@ -7,14 +7,16 @@ function clean(s){
 	if (typeof jQuery === "function" && jQuery.browser.mozilla) 
 		return new Function(s).toString();
 	else 
-		return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap');
+		return s.replace(/[\n\t ]/g, '').replace(/};/g, '}')
+		.replace(/=\(_\|\|__trap\)/g, '=_||__trap')
+		.replace(/__frame,\d+,\d+,/g, '__frame,?,?,');
 }
 
-function genTest(f1, f2, pedantic){
+function genTest(f1, f2){
 	var s1 = clean(transform(f1.toString(), {
 		noHelpers: true,
 		lines: "ignore",
-		tryCatch: pedantic ? "pedantic" : "safe"
+		optimize: true,
 	}));
 	var s2 = clean(f2.toString());
 	if (s1 !== s2) {
@@ -37,7 +39,7 @@ test("basic", 1, function(){
 			return f1(__cb(_, __frame, 1, 4, function __$f(){
 				f2();
 				_();
-			}))
+			}));
 		});
 	});
 });
