@@ -88,7 +88,7 @@ function doTest(_, name, options, fn) { var resp, last; var __frame = { name: "d
 
 
 function dot(_) { var __frame = { name: "dot", line: 90 }; return __func(_, this, arguments, dot, 0, __frame, function __$dot() {
- return process.nextTick(__cb(_, __frame, 1, 1, _)); });};
+ return process.nextTick(_); });};
 
 
 

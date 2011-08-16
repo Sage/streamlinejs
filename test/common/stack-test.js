@@ -50,7 +50,7 @@ function B(_, code) { var __frame = { name: "B", line: 47 }; return __func(_, th
  return C(__cb(_, __frame, 3, 1, function __$B() {
  return nextTick(__cb(_, __frame, 4, 1, function __$B() {
  return C(__cb(_, __frame, 5, 1, function __$B() {
- return D(__cb(_, __frame, 6, 1, _), code); }), code); })); }), code); }); });};
+ return D(_, code); }), code); })); }), code); }); });};
 
 
 function C(_, code) { var __frame = { name: "C", line: 56 }; return __func(_, this, arguments, C, 0, __frame, function __$C() { return (function __$C(__then) {
@@ -80,7 +80,7 @@ function T(_, fn, code, failFn) { var s, ff, end; var __frame = { name: "T", lin
  fail = failFn;
  s = "{"; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$T() {
 
- return fn(__cb(_, __frame, 4, 9, _), code); }); })(function ___(ex, __result) { __tryCatch(_, function __$T() { if (ex) {
+ return fn(_, code); }); })(function ___(ex, __result) { __tryCatch(_, function __$T() { if (ex) {
 
 
  s = flows.stackTrace(ex);

@@ -151,6 +151,6 @@ asyncTest("contexts", 3, function __13(_) { var result;
 
 
 
- return flows.spray([function __1(_) { var __frame = { name: "__1", line: 146 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _), 3); }); },function __2(_) { var __frame = { name: "__2", line: 150 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _), 5); }); },]).collectAll(__cb(_, __frame, 19, 14, function ___(__0, __3) { result = __3;
+ return flows.spray([function __1(_) { var __frame = { name: "__1", line: 146 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(_, 3); }); },function __2(_) { var __frame = { name: "__2", line: 150 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(_, 5); }); },]).collectAll(__cb(_, __frame, 19, 14, function ___(__0, __3) { result = __3;
  deepEqual(result, [7,11,]);
  start(); _(); })); });});
