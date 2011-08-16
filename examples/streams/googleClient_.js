@@ -5,7 +5,7 @@
 */
 
 // require the streamline streams wrapper
-var streams = require('../lib/server/streams');
+var streams = require('streamline/lib/streams/server/streams');
 
 function google(str, _) {
 	// Create the request.

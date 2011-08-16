@@ -5,7 +5,7 @@ function __cb(_, frame, offset, col, fn){ frame.offset = offset; frame.col = col
 function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ done = true; err = e, result = r; }; args = Array.prototype.slice.call(args); args[i] = function ___(e, r){ cb(e, r); }; fn.apply(this, args); return function ___(_){ if (done) _.call(this, err, result); else cb = _.bind(this); } .bind(this); }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
-            (function __$main(_) {
+            (function main(_) {
               var fs, flows, fileFunnel, p, t0;
 /*    27 */   function du(_, path) {
                 var total, stat, files, futures;
@@ -72,13 +72,19 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                   }));
                 });
               };
-/*    22 */   fs = require("fs");
-/*    23 */   flows = require("streamline/lib/util/flows");
-/*    25 */   fileFunnel = flows.funnel(20);
-/*    52 */   p = ((process.argv.length > 2) ? process.argv[2] : ".");
-/*    54 */   t0 = Date.now();
-/*    55 */   return du(__cb(_, __frame, 53, 0, function __$__$main() {
-/*    56 */     console.log((("completed in " + ((Date.now() - t0))) + " ms"));
-                _();
-/*    55 */   }), p);
+              var __frame = {
+                name: "main",
+                line: 2
+              };
+              return __func(_, this, arguments, main, 0, __frame, function __$main() {
+/*    22 */     fs = require("fs");
+/*    23 */     flows = require("streamline/lib/util/flows");
+/*    25 */     fileFunnel = flows.funnel(20);
+/*    52 */     p = ((process.argv.length > 2) ? process.argv[2] : ".");
+/*    54 */     t0 = Date.now();
+/*    55 */     return du(__cb(_, __frame, 53, 0, function __$main() {
+/*    56 */       console.log((("completed in " + ((Date.now() - t0))) + " ms"));
+                  _();
+/*    55 */     }), p);
+              });
             }).call(this, __trap);

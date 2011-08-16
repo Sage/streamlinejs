@@ -6,7 +6,7 @@ function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ 
 function __nt(_, frame, fn){ var i = 0; var cb = __cb(_, frame, 0, 0, fn); if (typeof process != "undefined" && typeof process.nextTick == "function") return function ___(){ if (++i % 20 == 0) process.nextTick(cb); else cb(); }; else return function ___(){ if (++i % 20 == 0) setTimeout(cb, 0); else cb(); }; }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
-            (function __$main(_) {
+            (function main(_) {
               var fs, p, t0;
 /*    13 */   function du(_, path) {
                 var total, stat, files, i;
@@ -74,11 +74,17 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                   }));
                 });
               };
-/*    11 */   fs = require("fs");
-/*    32 */   p = ((process.argv.length > 2) ? process.argv[2] : ".");
-/*    34 */   t0 = Date.now();
-/*    35 */   return du(__cb(_, __frame, 33, 0, function __$__$main() {
-/*    36 */     console.log((("completed in " + ((Date.now() - t0))) + " ms"));
-                _();
-/*    35 */   }), p);
+              var __frame = {
+                name: "main",
+                line: 2
+              };
+              return __func(_, this, arguments, main, 0, __frame, function __$main() {
+/*    11 */     fs = require("fs");
+/*    32 */     p = ((process.argv.length > 2) ? process.argv[2] : ".");
+/*    34 */     t0 = Date.now();
+/*    35 */     return du(__cb(_, __frame, 33, 0, function __$main() {
+/*    36 */       console.log((("completed in " + ((Date.now() - t0))) + " ms"));
+                  _();
+/*    35 */     }), p);
+              });
             }).call(this, __trap);
