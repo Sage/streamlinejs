@@ -13,7 +13,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                   name: "du",
                   line: 27
                 };
-                __func(_, this, arguments, du, 0, __frame, function __$du() {
+                return __func(_, this, arguments, du, 0, __frame, function __$du() {
 /*    28 */       total = 0;
 /*    29 */       return fs.stat(path, __cb(_, __frame, 2, 12, function ___(__0, __3) {
                     stat = __3;
@@ -24,7 +24,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                             name: "__1",
                             line: 31
                           };
-                          __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+                          return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
 /*    32 */                 return fs.readFile(path, __cb(_, __frame, 1, 12, function ___(__0, __1) {
 /*    32 */                   total += __1.length;
                               _();
@@ -49,7 +49,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                                   name: "__2",
                                   line: 41
                                 };
-                                __func(_, this, arguments, __2, 0, __frame, function __$__2() {
+                                return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
 /*    42 */                       return future(__cb(_, __frame, 1, 17, function ___(__0, __2) {
 /*    42 */                         var __1 = (val + __2);
                                     return _(null, __1);

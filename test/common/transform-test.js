@@ -1498,8 +1498,8 @@ asyncTest("this", 10, function(){
 		
 		O.prototype.test4 = function(_){
 			var self = this;
-			v1 = delay2(this.x + 1);
-			v2 = delay2(1);
+			var v1 = delay2(this.x + 1);
+			var v2 = delay2(1);
 			this.x = v1(_) + v2(_);
 			strictEqual(this, self);
 		}

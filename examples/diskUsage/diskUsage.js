@@ -14,7 +14,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                   name: "du",
                   line: 13
                 };
-                __func(_, this, arguments, du, 0, __frame, function __$du() {
+                return __func(_, this, arguments, du, 0, __frame, function __$du() {
 /*    14 */       total = 0;
 /*    15 */       return fs.stat(path, __cb(_, __frame, 2, 12, function ___(__0, __1) {
                     stat = __1;
