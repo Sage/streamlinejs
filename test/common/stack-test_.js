@@ -76,6 +76,13 @@ function E(_, code){
 			return "OK " + code;
 	}
 }
+
+function F(_, code) {
+	var f1 = A(null, code);
+	var f2 = A(null, code + 1);
+	return f1(_) + " & " + f2(_);
+}
+
 function T(_, fn, code, failFn){
 	fail = failFn;
 	var s = "{"
@@ -146,4 +153,29 @@ asyncTest("catch", 20, function(_){
 	strictEqual(T(_, E, 10, failSync), "Error: 10/fail:20/failSync:21/E:72");
 	start();
 })
+
+asyncTest("futures", 20, function(_){
+	strictEqual(T(_, F, 1, failAsync), "Error: 1/failAsync:15/A:28/F:83");
+	strictEqual(T(_, F, 1, failSync), "Error: 1/fail:20/failSync:21/A:28/F:83");
+	strictEqual(T(_, F, 2, failAsync), "Error: 2/failAsync:15/A:30/F:83");
+	strictEqual(T(_, F, 2, failSync), "Error: 2/fail:20/failSync:21/A:30/F:83");
+	strictEqual(T(_, F, 3, failAsync), "Error: 3/failAsync:15/A:33/F:83");
+	strictEqual(T(_, F, 3, failSync), "Error: 3/fail:20/failSync:21/A:33/F:83");
+	strictEqual(T(_, F, 4, failAsync), "Error: 4/failAsync:15/A:36/F:83");
+	strictEqual(T(_, F, 4, failSync), "Error: 4/fail:20/failSync:21/A:36/F:83");
+	strictEqual(T(_, F, 5, failAsync), "Error: 5/failAsync:15/A:36/F:83");
+	strictEqual(T(_, F, 5, failSync), "Error: 5/fail:20/failSync:21/A:36/F:83");
+	strictEqual(T(_, F, 6, failAsync), "Error: 6/failAsync:15/A:40/F:83");
+	strictEqual(T(_, F, 6, failSync), "Error: 6/fail:20/failSync:21/A:40/F:83");
+	strictEqual(T(_, F, 7, failAsync), "Error: 7/failAsync:15/B:49/A:42/F:83");
+	strictEqual(T(_, F, 7, failSync), "Error: 7/fail:20/failSync:21/B:49/A:42/F:83");
+	strictEqual(T(_, F, 8, failAsync), "Error: 8/failAsync:15/C:58/B:50/A:42/F:83");
+	strictEqual(T(_, F, 8, failSync), "Error: 8/fail:20/failSync:21/C:58/B:50/A:42/F:83");
+	strictEqual(T(_, F, 9, failAsync), "Error: 9/failAsync:15/D:63/B:53/A:42/F:83");
+	strictEqual(T(_, F, 9, failSync), "Error: 9/fail:20/failSync:21/D:63/B:53/A:42/F:83");
+	strictEqual(T(_, F, 10, failAsync), "END & END");
+	strictEqual(T(_, F, 10, failSync), "END & END");
+	start();
+})
+
 
