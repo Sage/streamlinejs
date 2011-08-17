@@ -12,11 +12,12 @@ function clean(s){
 		.replace(/__frame,\d+,\d+,/g, '__frame,?,?,');
 }
 
-function genTest(f1, f2){
+function genTest(f1, f2, ninja){
 	var s1 = clean(transform(f1.toString(), {
 		noHelpers: true,
 		lines: "ignore",
 		optimize: true,
+		ninja: ninja
 	}));
 	var s2 = clean(f2.toString());
 	if (s1 !== s2) {
@@ -965,7 +966,7 @@ test("CoffeeScript closure (this, arguments)", 1, function(){
 				return g(_, __this, __arguments);
 			})(_);
 		});
-	});
+	}, true);
 })
 module("streamline evaluation");
 function evalTest1(f, val, options, next){
