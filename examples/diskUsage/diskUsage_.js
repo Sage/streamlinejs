@@ -29,9 +29,13 @@ function du(_, path) {
 	return total;
 }
 
-var p = process.argv.length > 2 ? process.argv[2] : ".";
-
-var t0 = Date.now();
-du(_, p);
-console.log("completed in " + (Date.now() - t0) + " ms");
-
+try {
+	var p = process.argv.length > 2 ? process.argv[2] : ".";
+	
+	var t0 = Date.now();
+	du(_, p);
+	console.log("completed in " + (Date.now() - t0) + " ms");
+}
+catch (ex) {
+	console.error(ex.stack);
+}

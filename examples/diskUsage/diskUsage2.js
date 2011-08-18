@@ -5,28 +5,29 @@ function __cb(_, frame, offset, col, fn){ frame.offset = offset; frame.col = col
 function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ done = true; err = e, result = r; }; args = Array.prototype.slice.call(args); args[i] = function ___(e, r){ cb(e, r); }; fn.apply(this, args); return function ___(_){ if (done) _.call(this, err, result); else cb = _.bind(this); } .bind(this); }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
+function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) { __trap(ex); } } }
             (function main(_) {
               var fs, flows, fileFunnel, p, t0;
-/*    27 */   function du(_, path) {
+/*    18 */   function du(_, path) {
                 var total, stat, files, futures;
                 var __frame = {
                   name: "du",
-                  line: 27
+                  line: 18
                 };
                 return __func(_, this, arguments, du, 0, __frame, function __$du() {
-/*    28 */       total = 0;
-/*    29 */       return fs.stat(path, __cb(_, __frame, 2, 12, function ___(__0, __3) {
+/*    19 */       total = 0;
+/*    20 */       return fs.stat(path, __cb(_, __frame, 2, 12, function ___(__0, __3) {
                     stat = __3;
                     return (function __$du(__then) {
-/*    30 */           if (stat.isFile()) {
-/*    31 */             return fileFunnel(__cb(_, __frame, 4, 2, __then), function __1(_) {
+/*    21 */           if (stat.isFile()) {
+/*    22 */             return fileFunnel(__cb(_, __frame, 4, 2, __then), function __1(_) {
                           var __frame = {
                             name: "__1",
-                            line: 31
+                            line: 22
                           };
                           return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
-/*    32 */                 return fs.readFile(path, __cb(_, __frame, 1, 12, function ___(__0, __1) {
-/*    32 */                   total += __1.length;
+/*    23 */                 return fs.readFile(path, __cb(_, __frame, 1, 12, function ___(__0, __1) {
+/*    23 */                   total += __1.length;
                               _();
                             }));
                           });
@@ -34,32 +35,32 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                       }
                        else {
                         return (function __$du(__then) {
-/*    36 */               if (stat.isDirectory()) {
-/*    37 */                 return fs.readdir(path, __cb(_, __frame, 10, 15, function ___(__0, __4) {
+/*    27 */               if (stat.isDirectory()) {
+/*    28 */                 return fs.readdir(path, __cb(_, __frame, 10, 15, function ___(__0, __4) {
                               files = __4;
-/*    38 */                   futures = files.map(function(file) {
-/*    39 */                     return du(null, ((path + "/") + file));
+/*    29 */                   futures = files.map(function(file) {
+/*    30 */                     return du(null, ((path + "/") + file));
                               });
-/*    41 */                   return flows.reduce(__cb(_, __frame, 14, 12, function ___(__0, __5) {
-/*    41 */                     total += __5;
-/*    44 */                     console.log(((path + ": ") + total));
+/*    32 */                   return flows.reduce(__cb(_, __frame, 14, 12, function ___(__0, __5) {
+/*    32 */                     total += __5;
+/*    35 */                     console.log(((path + ": ") + total));
                                 __then();
-/*    41 */                   }), futures, function __2(_, val, future) {
+/*    32 */                   }), futures, function __2(_, val, future) {
                                 var __frame = {
                                   name: "__2",
-                                  line: 41
+                                  line: 32
                                 };
                                 return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
-/*    42 */                       return future(__cb(_, __frame, 1, 17, function ___(__0, __2) {
-/*    42 */                         var __1 = (val + __2);
+/*    33 */                       return future(__cb(_, __frame, 1, 17, function ___(__0, __2) {
+/*    33 */                         var __1 = (val + __2);
                                     return _(null, __1);
                                   }));
                                 });
-/*    43 */                   }, 0);
+/*    34 */                   }, 0);
                             }));
                           }
                            else {
-/*    47 */                 console.log((path + ": odd file"));
+/*    38 */                 console.log((path + ": odd file"));
                             __then();
                           }
                         ;
@@ -67,7 +68,7 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                       }
                     ;
                     })(function __$du() {
-/*    49 */           return _(null, total);
+/*    40 */           return _(null, total);
                     });
                   }));
                 });
@@ -77,14 +78,33 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
                 line: 1
               };
               return __func(_, this, arguments, main, 0, __frame, function __$main() {
-/*    22 */     fs = require("fs");
-/*    23 */     flows = require("streamline/lib/util/flows");
-/*    25 */     fileFunnel = flows.funnel(20);
-/*    52 */     p = ((process.argv.length > 2) ? process.argv[2] : ".");
-/*    54 */     t0 = Date.now();
-/*    55 */     return du(__cb(_, __frame, 54, 0, function __$main() {
-/*    56 */       console.log((("completed in " + ((Date.now() - t0))) + " ms"));
-                  _();
-/*    55 */     }), p);
+/*    13 */     fs = require("fs");
+/*    14 */     flows = require("streamline/lib/util/flows");
+/*    16 */     fileFunnel = flows.funnel(20);
+                return (function ___(__then) {
+                  (function ___(_) {
+                    __tryCatch(_, function __$main() {
+/*    44 */           p = ((process.argv.length > 2) ? process.argv[2] : ".");
+/*    46 */           t0 = Date.now();
+/*    47 */           return du(__cb(_, __frame, 46, 1, function __$main() {
+/*    48 */             console.log((("completed in " + ((Date.now() - t0))) + " ms"));
+                        __then();
+/*    47 */           }), p);
+                    });
+                  })(function ___(ex, __result) {
+                    __tryCatch(_, function __$main() {
+                      if (ex) {
+/*    51 */             console.error(ex.stack);
+                        __then();
+                      }
+                       else {
+                        _(null, __result);
+                      }
+                    ;
+                    });
+                  });
+                })(function ___() {
+                  __tryCatch(_, _);
+                });
               });
             }).call(this, __trap);

@@ -27,14 +27,19 @@ function google(str, _) {
 	return JSON.parse(resp.checkStatus(200).readAll(_));
 }
 
-// get the search string from the command line, defaulting to "node.js"
-var str = process.argv.length > 2 ? process.argv[2] : "node.js";
-
-// call google to get search results
-var result = google(str, _);
-
-// format the result and print it to console
-var formatted = result.responseData.results.map( function(entry) {
-	return entry.url + '\n\t' + entry.titleNoFormatting;
-}).join('\n');
-console.log(formatted);
+try {
+	// get the search string from the command line, defaulting to "node.js"
+	var str = process.argv.length > 2 ? process.argv[2] : "node.js";
+	
+	// call google to get search results
+	var result = google(str, _);
+	
+	// format the result and print it to console
+	var formatted = result.responseData.results.map(function(entry){
+		return entry.url + '\n\t' + entry.titleNoFormatting;
+	}).join('\n');
+	console.log(formatted);
+}
+catch (ex) {
+	console.error(ex.stack);
+}

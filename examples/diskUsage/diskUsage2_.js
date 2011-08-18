@@ -1,18 +1,9 @@
 /*
  * Usage: node-streamline diskUsage2 [path]
  *
- * This file is a parralelized version of the `diskUsage.js` example. 
+ * This file is a parallelized version of the `diskUsage.js` example. 
  * 
- * The `spray` function is used to parallelize the processing on all the entries under a directory.
- * We use it with `collectAll_` because we want to continue the algorithm when all the 
- * entries have been processed. 
- * 
- * Without any additional preventive measure, this 'sprayed' implementation quickly exhausts  
- * file descriptors because of the number of concurrently open file increases exponentially
- * as we go deeper in the tree.
- * 
- * The remedy is to channel the call that opens the file through a funnel.
- * With the funnel there won't be more that 20 files concurrently open at any time 
+ * The fileFunnel call limits the number of concurrent open files to 20.
  * 
  * Note: You can disable the funnel by setting its size to -1.
  * 
@@ -49,8 +40,13 @@ function du(_, path){
 	return total;
 }
 
-var p = process.argv.length > 2 ? process.argv[2] : ".";
-
-var t0 = Date.now();
-du(_, p);
-console.log("completed in " + (Date.now() - t0) + " ms");
+try {
+	var p = process.argv.length > 2 ? process.argv[2] : ".";
+	
+	var t0 = Date.now();
+	du(_, p);
+	console.log("completed in " + (Date.now() - t0) + " ms");
+} 
+catch (ex) {
+	console.error(ex.stack);
+}

@@ -5,6 +5,7 @@ function __cb(_, frame, offset, col, fn){ frame.offset = offset; frame.col = col
 function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ done = true; err = e, result = r; }; args = Array.prototype.slice.call(args); args[i] = function ___(e, r){ cb(e, r); }; fn.apply(this, args); return function ___(_){ if (done) _.call(this, err, result); else cb = _.bind(this); } .bind(this); }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
+function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) { __trap(ex); } } }
             (function main(_) {
               var streams, str, result, formatted;
 /*    10 */   function google(str, _) {
@@ -33,14 +34,33 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
               };
               return __func(_, this, arguments, main, 0, __frame, function __$main() {
 /*     8 */     streams = require("streamline/lib/streams/server/streams");
-/*    31 */     str = ((process.argv.length > 2) ? process.argv[2] : "node.js");
-/*    34 */     return google(str, __cb(_, __frame, 33, 13, function ___(__0, __1) {
-                  result = __1;
-/*    39 */       formatted = result.responseData.results.map(function(entry) {
-/*    38 */         return ((entry.url + "\n	") + entry.titleNoFormatting);
-/*    39 */       }).join("\n");
-/*    40 */       console.log(formatted);
-                  _();
-                }));
+                return (function ___(__then) {
+                  (function ___(_) {
+                    __tryCatch(_, function __$main() {
+/*    32 */           str = ((process.argv.length > 2) ? process.argv[2] : "node.js");
+/*    35 */           return google(str, __cb(_, __frame, 34, 14, function ___(__0, __1) {
+                        result = __1;
+/*    40 */             formatted = result.responseData.results.map(function(entry) {
+/*    39 */               return ((entry.url + "\n	") + entry.titleNoFormatting);
+/*    40 */             }).join("\n");
+/*    41 */             console.log(formatted);
+                        __then();
+                      }));
+                    });
+                  })(function ___(ex, __result) {
+                    __tryCatch(_, function __$main() {
+                      if (ex) {
+/*    44 */             console.error(ex.stack);
+                        __then();
+                      }
+                       else {
+                        _(null, __result);
+                      }
+                    ;
+                    });
+                  });
+                })(function ___() {
+                  __tryCatch(_, _);
+                });
               });
             }).call(this, __trap);

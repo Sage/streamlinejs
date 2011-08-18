@@ -6,6 +6,7 @@ function __future(fn, args, i){ var done, err, result; var cb = function(e, r){ 
 function __nt(_, frame, fn){ var i = 0; var cb = __cb(_, frame, 0, 0, fn); if (typeof process != "undefined" && typeof process.nextTick == "function") return function ___(){ if (++i % 20 == 0) process.nextTick(cb); else cb(); }; else return function ___(){ if (++i % 20 == 0) setTimeout(cb, 0); else cb(); }; }
 function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__global.__context && __global.__context.errorHandler) __global.__context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
+function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) { __trap(ex); } } }
             (function main(_) {
               var fs, p, t0;
 /*    13 */   function du(_, path) {
@@ -80,11 +81,30 @@ function __trap(err){ if (err) { if (__global.__context && __global.__context.er
               };
               return __func(_, this, arguments, main, 0, __frame, function __$main() {
 /*    11 */     fs = require("fs");
-/*    32 */     p = ((process.argv.length > 2) ? process.argv[2] : ".");
-/*    34 */     t0 = Date.now();
-/*    35 */     return du(__cb(_, __frame, 34, 0, function __$main() {
-/*    36 */       console.log((("completed in " + ((Date.now() - t0))) + " ms"));
-                  _();
-/*    35 */     }), p);
+                return (function ___(__then) {
+                  (function ___(_) {
+                    __tryCatch(_, function __$main() {
+/*    33 */           p = ((process.argv.length > 2) ? process.argv[2] : ".");
+/*    35 */           t0 = Date.now();
+/*    36 */           return du(__cb(_, __frame, 35, 1, function __$main() {
+/*    37 */             console.log((("completed in " + ((Date.now() - t0))) + " ms"));
+                        __then();
+/*    36 */           }), p);
+                    });
+                  })(function ___(ex, __result) {
+                    __tryCatch(_, function __$main() {
+                      if (ex) {
+/*    40 */             console.error(ex.stack);
+                        __then();
+                      }
+                       else {
+                        _(null, __result);
+                      }
+                    ;
+                    });
+                  });
+                })(function ___() {
+                  __tryCatch(_, _);
+                });
               });
             }).call(this, __trap);
