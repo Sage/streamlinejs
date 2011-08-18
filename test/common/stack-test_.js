@@ -90,7 +90,7 @@ function T(_, fn, code, failFn){
 		return fn(_, code);
 	} 
 	catch (ex) {
-		var s = flows.stackTrace(ex);
+		var s = ex.stack;
 		//console.log(ex.stack);
 		//console.log(s);
 		s = s.split('\n').map(function(l){

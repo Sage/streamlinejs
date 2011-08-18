@@ -361,8 +361,8 @@ The `streamline.flows` module exposes two functions to manipulate the context:
   Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
   a modified argument list in which the callback has been inserted at `index` 
   (at the end of the argument list if `index` is not specified).
-* `str = flows.stackTrace(err)`
-  Formats a clean stackTrace that contains the _sync_ stack.
-  Note that `err.stack` is still the raw _async_ stack.
-  Also, the result may look a bit awkward with non-V8 engines
-  because the reconstructed sync frames will be formatted in V8 style.   
+* `flows.stackTraceEnabled = true/false;`
+  If true, `err.stack` returns the reconstructed _sync_ stack trace.
+  Otherwise, it returns the _raw_ stack trace.
+  The default is true, but you must require the flows module
+  at least once to enable sync stack traces.
