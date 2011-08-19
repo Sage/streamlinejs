@@ -91,7 +91,8 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		//console.log(ex.stack);
+		console.log(ex.rawStack);
+		console.log(ex.stack);
 		//console.log(s);
 		s = s.split('\n').map(function(l){
 			var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
