@@ -66,21 +66,40 @@ function D(_, code){
 function E(_, code){
 	try {
 		fail(_, code);
-	}
+	} 
 	catch (ex) {
-		if (code % 3 == 1)
+		if (code % 3 == 1) 
 			fail(_, code);
-		else if (code % 3 == 2)
+		else if (code % 3 == 2) 
 			A(_, code);
-		else
+		else 
 			return "OK " + code;
 	}
 }
 
-function F(_, code) {
+function F(_, code){
 	var f1 = A(null, code);
 	var f2 = A(null, code + 1);
 	return f1(_) + " & " + f2(_);
+}
+
+function G(_, code){
+	if (code == 5) 
+		fail(_, code);
+	return "" + code;
+}
+
+function H(_, code){
+	if (code % 2 == 0) 
+		nextTick(_);
+	return G(_, code);
+}
+
+function I(_, code){
+	var s = "";
+	for (var i = 0; i < code; i++) 
+		s += H(_, i);
+	return s;
 }
 
 function T(_, fn, code, failFn){
@@ -91,8 +110,8 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		console.log(ex.rawStack);
-		console.log(ex.stack);
+		//console.log(ex.rawStack);
+		//console.log(ex.stack);
 		//console.log(s);
 		s = s.split('\n').map(function(l){
 			var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
@@ -101,7 +120,7 @@ function T(_, fn, code, failFn){
 			return l;
 		}).join('/');
 		var end = s.indexOf('/T:');
-		return end < 0 ? s + "-- end frame missing" : s.substring(0, end); 
+		return end < 0 ? s + "-- end frame missing" : s.substring(0, end);
 	}
 }
 
@@ -176,6 +195,18 @@ asyncTest("futures", 20, function(_){
 	strictEqual(T(_, F, 9, failSync), "Error: 9/fail:20/failSync:21/D:63/B:53/A:42/F:83");
 	strictEqual(T(_, F, 10, failAsync), "END & END");
 	strictEqual(T(_, F, 10, failSync), "END & END");
+	start();
+})
+
+asyncTest("loop", 8, function(_){
+	strictEqual(T(_, I, 4, failAsync), "0123");
+	strictEqual(T(_, I, 4, failSync), "0123");
+	strictEqual(T(_, I, 5, failAsync), "01234");
+	strictEqual(T(_, I, 5, failSync), "01234");
+	strictEqual(T(_, I, 6, failAsync), "Error: 5/failAsync:15/G:88/H:95/I:101");
+	strictEqual(T(_, I, 6, failSync), "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
+	strictEqual(T(_, I, 7, failAsync), "Error: 5/failAsync:15/G:88/H:95/I:101");
+	strictEqual(T(_, I, 7, failSync), "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
 	start();
 })
 

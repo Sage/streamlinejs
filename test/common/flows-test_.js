@@ -78,7 +78,7 @@ asyncTest("reduceRight", 1, function(_) {
 	strictEqual(result, 24);
 	start();
 });
-asyncTest("collectAll", 1, function(_) {
+asyncTest("collectAll", 4, function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
@@ -93,10 +93,13 @@ asyncTest("collectAll", 1, function(_) {
 	}
 
 	var results = flows.spray([doIt(1), doIt(2), doIt(3)]).collectAll(_);
-	deepEqual([total, peak, count, results], [6, 3, 0, [2, 4, 6]]);
+	equal(total, 6);
+	ok(peak >= 2);
+	equal(count, 0);
+	deepEqual(results, [2, 4, 6]);
 	start();
 })
-asyncTest("collectOne", 1, function(_) {
+asyncTest("collectOne", 4, function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
@@ -111,7 +114,10 @@ asyncTest("collectOne", 1, function(_) {
 	}
 
 	var result = flows.spray([doIt(1), doIt(2), doIt(3)]).collectOne(_);
-	deepEqual([total, peak, count, result], [1, 3, 2, 2]);
+	ok(total == 1 || total == 2);
+	ok(peak >= 2);
+	ok(count > 0);
+	ok(result == 2 || result == 4);
 	start();
 })
 asyncTest("collectAll with limit", 1, function(_) {

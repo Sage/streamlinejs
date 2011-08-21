@@ -83,7 +83,26 @@ function F(_, code) { var f1, f2; var __frame = { name: "F", line: 80 }; return 
  return f1(__cb(_, __frame, 3, 8, function ___(__0, __2) { return f2(__cb(_, __frame, 3, 24, function ___(__0, __3) { var __1 = ((__2 + " & ") + __3); return _(null, __1); })); })); });};
 
 
-function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 86 }; return __func(_, this, arguments, T, 0, __frame, function __$T() {
+function G(_, code) { var __frame = { name: "G", line: 86 }; return __func(_, this, arguments, G, 0, __frame, function __$G() { return (function __$G(__then) {
+ if ((code == 5)) {
+ return fail(__cb(_, __frame, 2, 2, __then), code); } else { __then(); } ; })(function __$G() {
+ return _(null, ("" + code)); }); });};
+
+
+function H(_, code) { var __frame = { name: "H", line: 92 }; return __func(_, this, arguments, H, 0, __frame, function __$H() { return (function __$H(__then) {
+ if (((code % 2) == 0)) {
+ return nextTick(__cb(_, __frame, 2, 2, __then)); } else { __then(); } ; })(function __$H() {
+ return G(__cb(_, __frame, 3, 8, _), code); }); });};
+
+
+function I(_, code) { var s, i; var __frame = { name: "I", line: 98 }; return __func(_, this, arguments, I, 0, __frame, function __$I() {
+ s = "";
+ i = 0; var __3 = false; return (function ___(__break) { var __loop = __nt(_, __frame, function __$I() { if (__3) { i++; } else { __3 = true; } ; var __2 = (i < code); if (__2) {
+ return H(__cb(_, __frame, 3, 7, function ___(__0, __1) { s += __1; __loop(); }), i); } else { __break(); } ; }); __loop(); })(function __$I() {
+ return _(null, s); }); });};
+
+
+function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 105 }; return __func(_, this, arguments, T, 0, __frame, function __$T() {
  fail = failFn;
  s = "{"; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$T() {
 
@@ -91,8 +110,8 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 8
 
 
  s = ex.stack;
- console.log(ex.rawStack);
- console.log(ex.stack);
+
+
 
  s = s.split("\n").map(function(l) {
  var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
@@ -107,7 +126,7 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 8
 
 module("flows");
 
-asyncTest("stacks", 20, function __1(_) { var __frame = { name: "__1", line: 110 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+asyncTest("stacks", 20, function __1(_) { var __frame = { name: "__1", line: 129 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "Error: 1/failAsync:15/A:28");
  return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, "Error: 1/fail:20/failSync:21/A:28");
  return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, "Error: 2/failAsync:15/A:30");
@@ -131,7 +150,7 @@ asyncTest("stacks", 20, function __1(_) { var __frame = { name: "__1", line: 110
  start(); _(); }), A, 10, failSync); }), A, 10, failAsync); }), A, 9, failSync); }), A, 9, failAsync); }), A, 8, failSync); }), A, 8, failAsync); }), A, 7, failSync); }), A, 7, failAsync); }), A, 6, failSync); }), A, 6, failAsync); }), A, 5, failSync); }), A, 5, failAsync); }), A, 4, failSync); }), A, 4, failAsync); }), A, 3, failSync); }), A, 3, failAsync); }), A, 2, failSync); }), A, 2, failAsync); }), A, 1, failSync); }), A, 1, failAsync); });});
 
 
-asyncTest("catch", 20, function __2(_) { var __frame = { name: "__2", line: 134 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
+asyncTest("catch", 20, function __2(_) { var __frame = { name: "__2", line: 153 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
  return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "Error: 1/failAsync:15/E:72");
  return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, "Error: 1/fail:20/failSync:21/E:72");
  return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, "Error: 2/failAsync:15/A:30/E:74");
@@ -155,7 +174,7 @@ asyncTest("catch", 20, function __2(_) { var __frame = { name: "__2", line: 134 
  start(); _(); }), E, 10, failSync); }), E, 10, failAsync); }), E, 9, failSync); }), E, 9, failAsync); }), E, 8, failSync); }), E, 8, failAsync); }), E, 7, failSync); }), E, 7, failAsync); }), E, 6, failSync); }), E, 6, failAsync); }), E, 5, failSync); }), E, 5, failAsync); }), E, 4, failSync); }), E, 4, failAsync); }), E, 3, failSync); }), E, 3, failAsync); }), E, 2, failSync); }), E, 2, failAsync); }), E, 1, failSync); }), E, 1, failAsync); });});
 
 
-asyncTest("futures", 20, function __3(_) { var __frame = { name: "__3", line: 158 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
+asyncTest("futures", 20, function __3(_) { var __frame = { name: "__3", line: 177 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
  return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "Error: 1/failAsync:15/A:28/F:83");
  return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, "Error: 1/fail:20/failSync:21/A:28/F:83");
  return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, "Error: 2/failAsync:15/A:30/F:83");
@@ -177,3 +196,15 @@ asyncTest("futures", 20, function __3(_) { var __frame = { name: "__3", line: 15
  return T(__cb(_, __frame, 19, 13, function ___(__0, __19) { strictEqual(__19, "END & END");
  return T(__cb(_, __frame, 20, 13, function ___(__0, __20) { strictEqual(__20, "END & END");
  start(); _(); }), F, 10, failSync); }), F, 10, failAsync); }), F, 9, failSync); }), F, 9, failAsync); }), F, 8, failSync); }), F, 8, failAsync); }), F, 7, failSync); }), F, 7, failAsync); }), F, 6, failSync); }), F, 6, failAsync); }), F, 5, failSync); }), F, 5, failAsync); }), F, 4, failSync); }), F, 4, failAsync); }), F, 3, failSync); }), F, 3, failAsync); }), F, 2, failSync); }), F, 2, failAsync); }), F, 1, failSync); }), F, 1, failAsync); });});
+
+
+asyncTest("loop", 8, function __4(_) { var __frame = { name: "__4", line: 201 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
+ return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "0123");
+ return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, "0123");
+ return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, "01234");
+ return T(__cb(_, __frame, 4, 13, function ___(__0, __4) { strictEqual(__4, "01234");
+ return T(__cb(_, __frame, 5, 13, function ___(__0, __5) { strictEqual(__5, "Error: 5/failAsync:15/G:88/H:95/I:101");
+ return T(__cb(_, __frame, 6, 13, function ___(__0, __6) { strictEqual(__6, "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
+ return T(__cb(_, __frame, 7, 13, function ___(__0, __7) { strictEqual(__7, "Error: 5/failAsync:15/G:88/H:95/I:101");
+ return T(__cb(_, __frame, 8, 13, function ___(__0, __8) { strictEqual(__8, "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
+ start(); _(); }), I, 7, failSync); }), I, 7, failAsync); }), I, 6, failSync); }), I, 6, failAsync); }), I, 5, failSync); }), I, 5, failAsync); }), I, 4, failSync); }), I, 4, failAsync); });});
