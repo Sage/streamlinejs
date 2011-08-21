@@ -124,7 +124,7 @@ function T(_, fn, code, failFn){
 	}
 }
 
-module("flows");
+module("stacks");
 
 asyncTest("stacks", 20, function(_){
 	strictEqual(T(_, A, 1, failAsync), "Error: 1/failAsync:15/A:28");

@@ -124,7 +124,7 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 1
 
 
 
-module("flows");
+module("stacks");
 
 asyncTest("stacks", 20, function __1(_) { var __frame = { name: "__1", line: 129 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "Error: 1/failAsync:15/A:28");
