@@ -800,16 +800,16 @@ test("optim pass _", 1, function(){
 		});
 	});
 })
-test("out wrappers", 1, function(){
+test("wrappers", 1, function(){
 	genTest(function f(_, arg1){
-		return g(__wrapOut(_), arg2) + 5;
+		return g(__wrap1(_), arg2) + 5;
 	}, function f(_, arg1){
 		var __frame = {
 			name: "f",
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f(){
-			return g(__wrapOut(__cb(_, __frame, 1, 11, function ___(__0, __2){
+			return g(__wrap1(__cb(_, __frame, 1, 11, function ___(__0, __2){
 				var __1 = (__2 + 5);
 				return _(null, __1);
 			})), arg2);
