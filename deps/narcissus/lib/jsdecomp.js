@@ -467,7 +467,7 @@ Narcissus.decompiler = (function() {
                     var tc = t.children;
                     var l;
                     // see if the left needs to be a string
-                    if (tc[0].value === "" || /[^A-Za-z0-9_$]/.test(tc[0].value)) {
+                    if (!/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(tc[0].value)) {
                         l = nodeStr(tc[0]);
                     } else {
                         l = pp(tc[0], d);
