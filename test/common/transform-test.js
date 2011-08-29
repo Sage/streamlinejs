@@ -275,19 +275,28 @@ test("while", 1, function(){
 		return __func(_, this, arguments, f, 0, __frame, function __$f(){
 			f1();
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					var __1 = cond;
 					if (__1) {
 						return f2(__cb(_, __frame, 3, 8, function __$f(){
 							f3();
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}));
 					}
 					else {
 						__break();
 					}
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
@@ -313,20 +322,29 @@ test("do while", 1, function(){
 			f1();
 			var __1 = true;
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					var __2 = (__1 || cond);
 					if (__2) {
 						__1 = false;
 						return f2(__cb(_, __frame, 3, 8, function __$f(){
 							f3();
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}));
 					}
 					else {
 						__break();
 					}
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
@@ -353,7 +371,9 @@ test("for", 1, function(){
 			i = 0;
 			var __2 = false;
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					if (__2) {
 						i++;
 					}
@@ -364,14 +384,21 @@ test("for", 1, function(){
 					if (__1) {
 						return f2(__cb(_, __frame, 3, 8, function __$f(){
 							f3();
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}));
 					}
 					else {
 						__break();
 					}
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
@@ -398,20 +425,29 @@ test("for in", 1, function(){
 			var __1 = __forIn(obj);
 			var __2 = 0;
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					var __3 = (__2 < __1.length);
 					if (__3) {
 						k = __1[__2++];
 						return f2(__cb(_, __frame, 3, 8, function __$f(){
 							f3(k);
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}), k);
 					}
 					else {
 						__break();
 					}
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
@@ -439,20 +475,29 @@ test("for in (without var)", 1, function(){
 			var __1 = __forIn(obj);
 			var __2 = 0;
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					var __3 = (__2 < __1.length);
 					if (__3) {
 						k = __1[__2++];
 						return f2(__cb(_, __frame, 4, 8, function __$f(){
 							f3(k);
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}), k);
 					}
 					else {
 						__break();
 					}
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
@@ -580,18 +625,27 @@ test("async while condition", 1, function(){
 		return __func(_, this, arguments, f, 0, __frame, function __$f(){
 			f1();
 			return (function ___(__break){
-				var __loop = __nt(_, __frame, function __$f(){
+				var __more;
+				var __loop = __cb(_, __frame, 0, 0, function __$f(){
+					__more = false;
 					return f2(__cb(_, __frame, 2, 11, function ___(__0, __1){
 						if (__1) {
 							f3();
-							__loop();
+							while (__more) {
+								__loop();
+							}
+							__more = true;
 						}
 						else {
 							__break();
 						}
 					}));
 				});
-				__loop();
+				do {
+					__loop();
+				}
+				while (__more);
+				__more = true;
 			})(function __$f(){
 				f4();
 				_();
