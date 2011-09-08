@@ -78,17 +78,35 @@ asyncTest("reduceRight", 1, function __9(_) { var result; var __frame = { name: 
  strictEqual(result, 24);
  start(); _(); }), [1,2,3,4,], function __1(_, v, val) { var __frame = { name: "__1", line: 75 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }), val); }); }, 1); });});
 
-asyncTest("collectAll", 4, function __10(_) { var total, peak, count, results;
+asyncTest("sort", 3, function __10(_) { var array; var __frame = { name: "__10", line: 81 }; return __func(_, this, arguments, __10, 0, __frame, function __$__10() {
+ array = [1,2,3,4,];
+ return flows.sort(__cb(_, __frame, 2, 1, function __$__10() {
+
+
+ deepEqual(array, [1,2,3,4,], "In order array sort ok");
+ array = [4,3,2,1,];
+ return flows.sort(__cb(_, __frame, 7, 1, function __$__10() {
+
+
+ deepEqual(array, [1,2,3,4,], "Reverse array sort ok");
+ array = [1,4,2,3,];
+ return flows.sort(__cb(_, __frame, 12, 1, function __$__10() {
+
+
+ deepEqual(array, [1,2,3,4,], "Random array sort ok");
+ start(); _(); }), array, function __3(_, a, b) { var __frame = { name: "__3", line: 93 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return _(null, (a - b)); }); }); }), array, function __2(_, a, b) { var __frame = { name: "__2", line: 88 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return _(null, (a - b)); }); }); }), array, function __1(_, a, b) { var __frame = { name: "__1", line: 83 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return _(null, (a - b)); }); }); });});
+
+asyncTest("collectAll", 4, function __11(_) { var total, peak, count, results;
 
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 86 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 104 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__10", line: 81 }; return __func(_, this, arguments, __10, 0, __frame, function __$__10() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__11", line: 99 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0;
 
 
 
@@ -99,17 +117,17 @@ asyncTest("collectAll", 4, function __10(_) { var total, peak, count, results;
  deepEqual(results, [2,4,6,]);
  start(); _(); })); });});
 
-asyncTest("collectOne", 4, function __11(_) { var total, peak, count, result;
+asyncTest("collectOne", 4, function __12(_) { var total, peak, count, result;
 
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 107 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 125 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__11", line: 102 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__12", line: 120 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0;
 
 
 
@@ -120,17 +138,17 @@ asyncTest("collectOne", 4, function __11(_) { var total, peak, count, result;
  ok(((result == 2) || (result == 4)));
  start(); _(); })); });});
 
-asyncTest("collectAll with limit", 1, function __12(_) { var total, peak, count, results;
+asyncTest("collectAll with limit", 1, function __13(_) { var total, peak, count, results;
 
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 128 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 146 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
  count--;
- return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__12", line: 123 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__13", line: 141 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0;
 
 
 
@@ -138,14 +156,14 @@ asyncTest("collectAll with limit", 1, function __12(_) { var total, peak, count,
  deepEqual([total,peak,count,results,], [6,2,0,[2,4,6,],]);
  start(); _(); })); });});
 
-asyncTest("contexts", 3, function __13(_) { var result;
- function testContext(_, x) { var y; var __frame = { name: "testContext", line: 142 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() {
+asyncTest("contexts", 3, function __14(_) { var result;
+ function testContext(_, x) { var y; var __frame = { name: "testContext", line: 160 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() {
  flows.setContext({
  val: x });
 
  return delay(__cb(_, __frame, 4, 10, function ___(__0, __1) { y = __1;
  strictEqual(y, (2 * flows.getContext().val));
- return _(null, (y + 1)); }), (2 * x)); }); }; var __frame = { name: "__13", line: 141 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() {
+ return _(null, (y + 1)); }), (2 * x)); }); }; var __frame = { name: "__14", line: 159 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() {
 
 
 
@@ -157,6 +175,6 @@ asyncTest("contexts", 3, function __13(_) { var result;
 
 
 
- return flows.spray([function __1(_) { var __frame = { name: "__1", line: 152 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _), 3); }); },function __2(_) { var __frame = { name: "__2", line: 156 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _), 5); }); },]).collectAll(__cb(_, __frame, 19, 14, function ___(__0, __3) { result = __3;
+ return flows.spray([function __1(_) { var __frame = { name: "__1", line: 170 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _), 3); }); },function __2(_) { var __frame = { name: "__2", line: 174 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _), 5); }); },]).collectAll(__cb(_, __frame, 19, 14, function ___(__0, __3) { result = __3;
  deepEqual(result, [7,11,]);
  start(); _(); })); });});
