@@ -305,6 +305,11 @@ The following functions are async equivalents of the ES5 Array methods (`forEach
 * `result = flows.reduceRight(_, array, fn, val, [thisObj])`  
   reduces from end to start by applying `fn` to each element.  
   `fn` is called as `val = fn(_, val, elt, i, array)`.
+* `array = flows.sort(_, array, compare, [beg], [end])`  
+  sorts the array.  
+  `compare` is called as `cmp = compare(_, elt1, elt2)`
+  
+  Note: this function _changes_ the original array (and returns it)
 
 ## Object utility
 
