@@ -81,17 +81,17 @@ asyncTest("reduceRight", 1, function(_) {
 asyncTest("sort", 3, function(_) {
 	var array = [1, 2, 3, 4];
 	flows.sort(_, array, function(_, a, b) {
-		return a - b;
+		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "In order array sort ok");
 	array = [4, 3, 2, 1];
 	flows.sort(_, array, function(_, a, b) {
-		return a - b;
+		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "Reverse array sort ok");
 	array = [1, 4, 2, 3];
 	flows.sort(_, array, function(_, a, b) {
-		return a - b;
+		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "Random array sort ok");
 	start();

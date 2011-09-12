@@ -5,15 +5,16 @@
   <script src="../qunit/jquery.js"></script>
   <link rel="stylesheet" href="../qunit/qunit.css" type="text/css" media="screen" />
   <script type="text/javascript" src="../qunit/qunit.js"></script>
+  <script src="../../lib/util/flows.js" type="application/javascript"></script>
   <script type="application/javascript">
   	function require(str) {
-  		if (str == "streamline-util/lib/flows")
+		__streamline.ffOffset = 0;
+  		if (str == "streamline/lib/util/flows")
   			return StreamlineFlows;
   		else
   			alert("cannot require " + str)
   	}
   </script>
-  <script src="../../lib/flows.js" type="application/javascript"></script>
   <script src="stack-test.js" type="application/javascript"></script>
 </head>
 <body>

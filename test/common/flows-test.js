@@ -94,7 +94,7 @@ asyncTest("sort", 3, function __10(_) { var array; var __frame = { name: "__10",
 
 
  deepEqual(array, [1,2,3,4,], "Random array sort ok");
- start(); _(); }), array, function __3(_, a, b) { var __frame = { name: "__3", line: 93 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return _(null, (a - b)); }); }); }), array, function __2(_, a, b) { var __frame = { name: "__2", line: 88 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return _(null, (a - b)); }); }); }), array, function __1(_, a, b) { var __frame = { name: "__1", line: 83 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return _(null, (a - b)); }); }); });});
+ start(); _(); }), array, function __3(_, a, b) { var __frame = { name: "__3", line: 93 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, _), (a - b)); }); }); }), array, function __2(_, a, b) { var __frame = { name: "__2", line: 88 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, _), (a - b)); }); }); }), array, function __1(_, a, b) { var __frame = { name: "__1", line: 83 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, _), (a - b)); }); }); });});
 
 asyncTest("collectAll", 4, function __11(_) { var total, peak, count, results;
 
