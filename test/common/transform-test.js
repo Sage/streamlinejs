@@ -1683,3 +1683,10 @@ asyncTest("last case without break", 2, function(){
 	}, 1);
 })
 
+asyncTest("async comma operator", 2, function(){
+	evalTest(function f(_){
+		var a;
+		return a = 4, a++, a = delay(_, 2 * a), delay(_, a + 1);
+	}, 11);
+})
+
