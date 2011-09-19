@@ -9,7 +9,7 @@ function clean(s){
 	else 
 		return s.replace(/[\n\t ]/g, '').replace(/};/g, '}')
 		.replace(/=\(_\|\|__trap\)/g, '=_||__trap')
-		.replace(/__frame,\d+,\d+,/g, '__frame,?,?,');
+		.replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
 }
 
 function genTest(f1, f2, ninja){
