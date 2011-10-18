@@ -4,6 +4,7 @@
   "version": "0.1.45",
   "engines": { "node": ">=0.4.0" },
   "dependencies": {},
+  "bundledDependencies": ["streamline-runtime"],
   "author": "Bruno Jouhier",
   "directories": {"lib": "./lib", "bin": "./bin" },
   "main": "lib/index.js"
