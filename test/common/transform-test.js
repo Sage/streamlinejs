@@ -798,7 +798,7 @@ test("lazy and", 1, function(){
 						return f3(_);
 					});
 				}));
-			})(__cb(_, __frame, 0, 6, function ___(__0, __2){
+			})(__cb(_, __frame, 0, 5, function ___(__0, __2){
 				return (function __$f(__then){
 					if (__2) {
 						f4();
