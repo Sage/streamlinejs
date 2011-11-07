@@ -305,6 +305,7 @@ Narcissus.parser = (function() {
         var n = new Node(t, blockInit());
         Statements(t, x.update({ parentBlock: n }).pushTarget(n), n);
         t.mustMatch(RIGHT_CURLY);
+        n.end = t.token.end;
         return n;
     }
 
@@ -332,6 +333,7 @@ Narcissus.parser = (function() {
             n = new Node(t, blockInit());
             Statements(t, x.update({ parentBlock: n }).pushTarget(n).nest(NESTING_SHALLOW), n);
             t.mustMatch(RIGHT_CURLY);
+            n.end = t.token.end;
             return n;
 
           case IF:
@@ -372,6 +374,7 @@ Narcissus.parser = (function() {
                     n2.statements.push(Statement(t, x2));
                 n.cases.push(n2);
             }
+            n.end = t.token.end;
             return n;
 
           case FOR:
@@ -449,12 +452,14 @@ Narcissus.parser = (function() {
             if (!x.parenFreeMode)
                 t.mustMatch(RIGHT_PAREN);
             n.body = Statement(t, x2);
+            n.end = t.token.end;
             return n;
 
           case WHILE:
             n = new Node(t, { isLoop: true });
             n.condition = HeadExpression(t, x);
             n.body = Statement(t, x.pushTarget(n).nest(NESTING_DEEP));
+            n.end = t.token.end;
             return n;
 
           case DO:
@@ -467,6 +472,7 @@ Narcissus.parser = (function() {
                 // automatic semicolon insertion without a newline after do-while.
                 // See http://bugzilla.mozilla.org/show_bug.cgi?id=238945.
                 t.match(SEMICOLON);
+                n.end = t.token.end;
                 return n;
             }
             break;
@@ -529,6 +535,7 @@ Narcissus.parser = (function() {
                 n.finallyBlock = Block(t, x);
             if (!n.catchClauses.length && !n.finallyBlock)
                 throw t.newSyntaxError("Invalid try statement");
+            n.end = t.token.end;
             return n;
 
           case CATCH:
@@ -548,6 +555,7 @@ Narcissus.parser = (function() {
             n = new Node(t);
             n.object = HeadExpression(t, x);
             n.body = Statement(t, x.pushTarget(n).nest(NESTING_DEEP));
+            n.end = t.token.end;
             return n;
 
           case VAR:
@@ -584,6 +592,7 @@ Narcissus.parser = (function() {
                     n = new Node(t, { type: LABEL, label: label });
                     n.statement = Statement(t, x.pushLabel(label).nest(NESTING_SHALLOW));
                     n.target = (n.statement.type === LABEL) ? n.statement.target : n.statement;
+                    n.end = t.token.end;
                     return n;
                 }
             }
@@ -598,6 +607,7 @@ Narcissus.parser = (function() {
         }
 
         MagicalSemicolon(t);
+        n.end = t.token.end;
         return n;
     }
 
@@ -1248,6 +1258,7 @@ Narcissus.parser = (function() {
                 n2.push(n);
                 n2.push(Expression(t, x));
                 t.mustMatch(RIGHT_BRACKET);
+                n2.end = t.token.end;
                 break;
 
               case LEFT_PAREN:
@@ -1274,8 +1285,10 @@ Narcissus.parser = (function() {
         var n, n2;
 
         n = new Node(t, { type: LIST });
-        if (t.match(RIGHT_PAREN, true))
+        if (t.match(RIGHT_PAREN, true)) {
+            n.end = t.token.end;
             return n;
+        }
         do {
             n2 = AssignExpression(t, x);
             if (n2.type === YIELD && !n2.parenthesized && t.peek() === COMMA)
@@ -1288,6 +1301,7 @@ Narcissus.parser = (function() {
             n.push(n2);
         } while (t.match(COMMA));
         t.mustMatch(RIGHT_PAREN);
+        n.end = t.token.end;
 
         return n;
     }
@@ -1322,6 +1336,7 @@ Narcissus.parser = (function() {
                 n = n2;
             }
             t.mustMatch(RIGHT_BRACKET);
+            n.end = t.token.end;
             break;
 
           case LEFT_CURLY:
@@ -1368,12 +1383,16 @@ Narcissus.parser = (function() {
                     }
                 } while (t.match(COMMA));
                 t.mustMatch(RIGHT_CURLY);
+                n.end = t.token.end;
             }
             break;
 
           case LEFT_PAREN:
+            var start = t.token.start;
             n = ParenExpression(t, x);
             t.mustMatch(RIGHT_PAREN);
+            n.start = start;
+            n.end = t.token.end;
             n.parenthesized = true;
             break;
 
