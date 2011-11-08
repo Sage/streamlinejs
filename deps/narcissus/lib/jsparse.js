@@ -1383,8 +1383,8 @@ Narcissus.parser = (function() {
                     }
                 } while (t.match(COMMA));
                 t.mustMatch(RIGHT_CURLY);
-                n.end = t.token.end;
             }
+            n.end = t.token.end;
             break;
 
           case LEFT_PAREN:
