@@ -178,3 +178,25 @@ asyncTest("contexts", 3, function __14(_) { var result;
  return flows.spray([function __1(_) { var __frame = { name: "__1", line: 170 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _), 3); }); },function __2(_) { var __frame = { name: "__2", line: 174 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _), 5); }); },]).collectAll(__cb(_, __frame, 19, 14, function ___(__0, __3) { result = __3;
  deepEqual(result, [7,11,]);
  start(); _(); })); });});
+
+
+asyncTest("futures multiplex", 3, function __15(_) { var result1, result2, result3, f1, f10;
+
+
+
+ function doIt(future, _) { var __frame = { name: "doIt", line: 187 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() {
+ return future(__cb(_, __frame, 1, 13, function ___(__0, __1) { result1 += __1;
+ return future(__cb(_, __frame, 2, 13, function ___(__0, __2) { result2 += __2;
+ return delay(__cb(_, __frame, 3, 2, function __$doIt() {
+ return future(__cb(_, __frame, 4, 13, function ___(__0, __3) { result3 += __3; _(); })); })); })); })); }); }; var __frame = { name: "__15", line: 183 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0;
+
+
+ f1 = delay(null, 1);
+ f10 = delay(null, 10);
+
+ return flows.collect(__cb(_, __frame, 14, 1, function __$__15() {
+
+ deepEqual(result1, 12);
+ deepEqual(result2, 12);
+ deepEqual(result3, 12);
+ start(); _(); }), [doIt(f1),doIt(f10),doIt(f1),]); });});

@@ -180,6 +180,27 @@ asyncTest("contexts", 3, fstreamline__.create(function(_) {var testContext_ = fs
 	start();
 }, 0))
 
+asyncTest("futures multiplex", 3, fstreamline__.create(function(_) {var doIt_ = fstreamline__.create(doIt);
+	var result1 = 0;
+	var result2 = 0;
+	var result3 = 0;
+	function doIt(future, _) { var __tmp;
+		 __tmp = (__tmp = fstreamline__.invoke(null, future, [_], 0), result1 += __tmp);
+		 __tmp = (__tmp = fstreamline__.invoke(null, future, [_], 0), result2 += __tmp);
+		fstreamline__.invoke(null, delay_, [_], 0);
+		 __tmp = (__tmp = fstreamline__.invoke(null, future, [_], 0), result3 += __tmp);
+	}
+
+	var f1 = delay_(null, 1);
+	var f10 = delay_(null, 10);
+
+	fstreamline__.invoke(flows, "collect", [_, [doIt_(f1), doIt_(f10), doIt_(f1)]], 0);
+
+	deepEqual(result1, 12);
+	deepEqual(result2, 12);
+	deepEqual(result3, 12);
+	start();
+}, 0))
 
 }, 0).call(this, function(err) {
   if (err) throw err;

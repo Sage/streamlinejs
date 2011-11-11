@@ -180,3 +180,24 @@ asyncTest("contexts", 3, function(_) {
 	start();
 })
 
+asyncTest("futures multiplex", 3, function(_) {
+	var result1 = 0;
+	var result2 = 0;
+	var result3 = 0;
+	function doIt(future, _) {
+		result1 += future(_);
+		result2 += future(_);
+		delay(_);
+		result3 += future(_);
+	}
+
+	var f1 = delay(null, 1);
+	var f10 = delay(null, 10);
+
+	flows.collect(_, [doIt(f1), doIt(f10), doIt(f1)]);
+
+	deepEqual(result1, 12);
+	deepEqual(result2, 12);
+	deepEqual(result3, 12);
+	start();
+})
