@@ -69,9 +69,9 @@ function E(_, code){
 	} 
 	catch (ex) {
 		if (code % 3 == 1) 
-			fail(_, code);
+			fstreamline__.invoke(null, fail, [_, code], 0);
 		else if (code % 3 == 2) 
-			A(_, code);
+			fstreamline__.invoke(null, A_, [_, code], 0);
 		else 
 			return "OK " + code;
 	}
