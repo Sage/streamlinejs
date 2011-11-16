@@ -29,12 +29,24 @@ And streamline is not limited to a subset of Javascript.
 You can use all the flow control features of Javascript in your asynchronous code: conditionals, 
 loops, `try/catch/finally` blocks, anonymous functions, `this`, etc. 
 
-Streamline generates more or less the callbacks that you would write yourself. So you get the same level
-of performance as with hand-written callbacks. 
-Also, the generated code is nicely indented, easy to read, and directly available to debuggers.
-
 Streamline also provides _futures_, and comes with a small optional library of helper functions (see Goodies section below).
 
+# Generation options
+
+Streamline gives you the choice between generating regular callback-based asynchronous code, 
+or generating code that takes advantage of the fibers library.
+
+The _callback_ option produces code that does not have any special runtime dependencies. You may even use it 
+to generate asynchronous code for the browser.
+
+The _fibers_ option produces simpler code but requires that you install 
+the [fibers library](https://github.com/laverdet/node-fibers) (easy: `npm install fibers`). 
+This option gives superior development experience: line numbers are always preserved in the transformed code; 
+you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
+It may also generate more efficient code (to be confirmed by benchmarks).
+
+The fibers option can be activated by passing `--fibers` to the `node-streamline` command or by setting the `fibers` option when registering streamline (see `streamline/lib/compiler/register.register`)
+ 
 # On-line demo
 
 You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
@@ -114,7 +126,11 @@ lineCount("README.md", function(err, result) {
 });
 ```
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
-Streamline will only transform the functions that have the special `_` parameter. The other functions will end up unmodified in the output file (maybe slightly reformatted by the narcissus pretty printer though).
+Streamline will only transform the functions that have the special `_` parameter. 
+
+Note: this works with both transformation options. 
+Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
+and the asynchronous functions that you create with streamline have the standard node callback signature.
 
 # Running in other environments
 
@@ -149,6 +165,10 @@ The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/AP
 The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like exception handling.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
+
+## Credits
+
+Special thanks to Marcel Laverdet who contributed the _fibers_ implementation.
 
 ## License
 
