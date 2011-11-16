@@ -34,18 +34,20 @@ Streamline also provides _futures_, and comes with a small optional library of h
 # Generation options
 
 Streamline gives you the choice between generating regular callback-based asynchronous code, 
-or generating code that takes advantage of the fibers library.
+or generating code that takes advantage of the [fibers library](https://github.com/laverdet/node-fibers).
 
 The _callback_ option produces code that does not have any special runtime dependencies. You may even use it 
 to generate asynchronous code for the browser.
 
 The _fibers_ option produces simpler code but requires that you install 
-the [fibers library](https://github.com/laverdet/node-fibers) (easy: `npm install fibers`). 
+the fibers library (easy: `npm install fibers`). 
 This option gives superior development experience: line numbers are always preserved in the transformed code; 
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
 It may also generate more efficient code (to be confirmed by benchmarks).
 
-The fibers option can be activated by passing `--fibers` to the `node-streamline` command or by setting the `fibers` option when registering streamline (see `streamline/lib/compiler/register.register`)
+The fibers option can be activated by passing `--fibers` to the `node-streamline` command or by 
+setting the `fibers` option when registering streamline 
+(see the `register(options)` function in `streamline/lib/compiler/register`).
  
 # On-line demo
 
