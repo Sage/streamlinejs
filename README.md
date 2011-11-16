@@ -45,7 +45,7 @@ This option gives superior development experience: line numbers are always prese
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
 It may also generate more efficient code (to be confirmed by benchmarks).
 
-The fibers option can be activated by passing `--fibers` to the `node-streamline` command or by 
+The _fibers_ option can be activated by passing `--fibers` to the `node-streamline` command or by 
 setting the `fibers` option when registering streamline 
 (see the `register(options)` function in `streamline/lib/compiler/register`).
  
@@ -66,6 +66,12 @@ You can also install it _locally_, without `-g` but then the `node-streamline` a
 commands will not be in your default PATH.
 
 Note: if you encounter a permission error when installing on UNIX systems, you should retry with `sudo`.
+
+If you want to use the _fibers_ option, you must also install the fibers library:
+
+```sh
+npm install fibers
+```
     
 # Creating and running streamline modules
 
