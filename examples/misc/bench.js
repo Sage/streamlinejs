@@ -7,56 +7,62 @@ function __propagate(_, err){ try { _(err); } catch (ex) { __trap(ex); } }
 function __trap(err){ if (err) { if (__g.context && __g.context.errorHandler) __g.context.errorHandler(err); else console.error("UNCAUGHT EXCEPTION: " + err.message + "\n" + err.stack); } }
 function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) { __trap(ex); } } }
             (function main(_) {
-/*     2 */   function bench(_, name, fn) {
-                var count;
-/*     3 */     function tryItNative(cb, count) {
-/*     4 */       var t0 = Date.now();
+/*     1 */   function bench(_, name, fn) {
+/*     2 */     function tryItNative(cb, count) {
+/*     3 */       var t0 = Date.now();
+/*     4 */       var failed;
 /*     6 */       function loop(i) {
 /*     7 */         if ((i < count)) {
 /*     8 */           fn(function(err) {
 /*     9 */             if (err) {
 /*     9 */               return cb(err)
                         };
-/*    10 */             loop((i + 1));
+/*    10 */             try {
+/*    11 */               loop((i + 1));
+/*    12 */             } catch (ex) {
+/*    13 */               (!failed && console.log(((("Native		" + name) + "	FAILED: ") + ex.message)));
+/*    14 */               failed = true;
+/*    15 */               cb(null, true);
+                        };
                       });
                     }
-/*    12 */          else {
-/*    13 */           var dt = ((Date.now() - t0));
-/*    14 */           if ((dt < 100)) {
-/*    14 */             return cb(null, false)
+/*    18 */          else {
+/*    19 */           var dt = ((Date.now() - t0));
+/*    20 */           if ((dt < 100)) {
+/*    20 */             return cb(null, false)
                       };
-/*    15 */           dt = (Math.round((((dt * 100) * 1000) / count)) / 100);
-/*    16 */           console.log((((("Native		" + name) + "	") + dt) + "ns"));
-/*    17 */           return cb(null, true);
+/*    21 */           dt = (Math.round((((dt * 100) * 1000) / count)) / 100);
+/*    22 */           console.log((((("Native		" + name) + "	") + dt) + "ns"));
+/*    23 */           return cb(null, true);
                     }
                   ;
                   };
-/*    20 */       loop(0);
+/*    26 */       loop(0);
                 };
-/*    23 */     function tryItStreamline(_, count) {
+/*    29 */     function tryItStreamline(_, count) {
                   var t0, i, dt;
                   var __frame = {
                     name: "tryItStreamline",
-                    line: 23
+                    line: 29
                   };
                   return __func(_, this, arguments, tryItStreamline, 0, __frame, function __$tryItStreamline() {
-/*    24 */         t0 = Date.now();
-/*    25 */         i = 0;
+/*    30 */         t0 = Date.now();
+/*    31 */         i = 0;
                     var __2 = false;
                     return (function ___(__break) {
                       var __more;
                       var __loop = __cb(_, __frame, 0, 0, function __$tryItStreamline() {
                         __more = false;
                         if (__2) {
-/*    25 */               i++;
+/*    31 */               i++;
                         }
                          else {
                           __2 = true;
                         }
                       ;
-/*    25 */             var __1 = (i < count);
+/*    31 */             var __1 = (i < count);
                         if (__1) {
-/*    26 */               return fn(__cb(_, __frame, 3, 2, function __$tryItStreamline() {
+/*    31 */               return fn(__cb(_, __frame, 2, 34, function __$tryItStreamline() {
                             while (__more) {
                               __loop();
                             };
@@ -73,64 +79,37 @@ function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) {
                       } while (__more);
                       __more = true;
                     })(function __$tryItStreamline() {
-/*    27 */           dt = ((Date.now() - t0));
-/*    28 */           if ((dt < 100)) {
-/*    28 */             return _(null, false);
+/*    32 */           dt = ((Date.now() - t0));
+/*    33 */           if ((dt < 100)) {
+/*    33 */             return _(null, false);
                       }
                     ;
-/*    29 */           dt = (Math.round((((dt * 100) * 1000) / count)) / 100);
-/*    30 */           console.log((((("Streamline	" + name) + "	") + dt) + "ns"));
-/*    31 */           return _(null, true);
+/*    34 */           dt = (Math.round((((dt * 100) * 1000) / count)) / 100);
+/*    35 */           console.log((((("Streamline	" + name) + "	") + dt) + "ns"));
+/*    36 */           return _(null, true);
                     });
                   });
                 };
-                var __frame = {
-                  name: "bench",
-                  line: 2
-                };
-                return __func(_, this, arguments, bench, 0, __frame, function __$bench() {
-/*    34 */       count = 1;
-                  return (function ___(__break) {
-                    var __more;
-                    var __loop = __cb(_, __frame, 0, 0, function __$bench() {
-                      __more = false;
-                      return (function __$bench(_) {
-/*    35 */             return tryItStreamline(__cb(_, __frame, 33, 9, function ___(__0, __2) {
-/*    35 */               var __1 = !__2;
-                          return _(null, __1);
-/*    35 */             }), count);
-                      })(__cb(_, __frame, -1, 20, function ___(__0, __1) {
-                        if (__1) {
-/*    35 */               count *= 2;
-                          while (__more) {
-                            __loop();
-                          };
-                          __more = true;
-                        }
-                         else {
-                          __break();
-                        }
-                      ;
-                      }));
-                    });
-                    do {
-                      __loop();
-                    } while (__more);
-                    __more = true;
-                  })(function __$bench() {
-/*    36 */         count = 1;
+/*    40 */     function run(_, tryIt) {
+                  var count;
+                  var __frame = {
+                    name: "run",
+                    line: 40
+                  };
+                  return __func(_, this, arguments, run, 0, __frame, function __$run() {
+/*    41 */         count = 1;
                     return (function ___(__break) {
                       var __more;
-                      var __loop = __cb(_, __frame, 0, 0, function __$bench() {
+                      var __loop = __cb(_, __frame, 0, 0, function __$run() {
                         __more = false;
-                        return (function __$bench(_) {
-/*    37 */               return tryItNative(__cb(_, __frame, 35, 9, function ___(__0, __2) {
-/*    37 */                 var __1 = !__2;
+                        return (function __$run(_) {
+/*    42 */               return tryIt(__cb(_, __frame, 2, 10, function ___(__0, __2) {
+/*    42 */                 var __1 = !__2;
                             return _(null, __1);
-/*    37 */               }), count);
-                        })(__cb(_, __frame, -1, 20, function ___(__0, __3) {
-                          if (__3) {
-/*    37 */                 count *= 2;
+/*    42 */               }), count);
+                        })(__cb(_, __frame, -39, 21, function ___(__0, __1) {
+                          if (__1) {
+/*    42 */                 count *= 2;
                             while (__more) {
                               __loop();
                             };
@@ -148,16 +127,25 @@ function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) {
                       __more = true;
                     })(_);
                   });
+                };
+                var __frame = {
+                  name: "bench",
+                  line: 1
+                };
+                return __func(_, this, arguments, bench, 0, __frame, function __$bench() {
+/*    44 */       return run(__cb(_, __frame, 43, 1, function __$bench() {
+/*    45 */         return run(__cb(_, __frame, 44, 1, _), tryItNative);
+/*    44 */       }), tryItStreamline);
                 });
               };
-/*    40 */   function delay(_, val) {
+/*    48 */   function delay(_, val) {
                 var __frame = {
                   name: "delay",
-                  line: 40
+                  line: 48
                 };
                 return __func(_, this, arguments, delay, 0, __frame, function __$delay() {
-/*    41 */       return process.nextTick(__cb(_, __frame, 1, 1, function __$delay() {
-/*    42 */         return _(null, val);
+/*    49 */       return process.nextTick(__cb(_, __frame, 1, 1, function __$delay() {
+/*    50 */         return _(null, val);
                   }));
                 });
               };
@@ -166,156 +154,186 @@ function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) {
                 line: 1
               };
               return __func(_, this, arguments, main, 0, __frame, function __$main() {
-/*    46 */     return bench(__cb(_, __frame, 45, 0, function __$main() {
-/*    50 */       return bench(__cb(_, __frame, 49, 0, function __$main() {
-/*    54 */         return bench(__cb(_, __frame, 53, 0, function __$main() {
-/*    60 */           return bench(__cb(_, __frame, 59, 0, function __$main() {
-/*    67 */             return bench(__cb(_, __frame, 66, 0, function __$main() {
-/*    73 */               return bench(__cb(_, __frame, 72, 0, function __$main() {
-/*    77 */                 return bench(__cb(_, __frame, 76, 0, function __$main() {
-/*    85 */                   return bench(__cb(_, __frame, 84, 0, _), "mixed", function __8(_) {
-                                var i;
+/*    53 */     return bench(__cb(_, __frame, 52, 0, function __$main() {
+/*    54 */       return bench(__cb(_, __frame, 53, 0, function __$main() {
+/*    58 */         return bench(__cb(_, __frame, 57, 0, function __$main() {
+/*    62 */           return bench(__cb(_, __frame, 61, 0, function __$main() {
+/*    68 */             return bench(__cb(_, __frame, 67, 0, function __$main() {
+/*    75 */               return bench(__cb(_, __frame, 74, 0, function __$main() {
+/*    81 */                 return bench(__cb(_, __frame, 80, 0, function __$main() {
+/*    85 */                   return bench(__cb(_, __frame, 84, 0, function __$main() {
+/*    93 */                     return bench(__cb(_, __frame, 92, 0, _), "mixed", function __9(_) {
+                                  var i;
+                                  var __frame = {
+                                    name: "__9",
+                                    line: 93
+                                  };
+                                  return __func(_, this, arguments, __9, 0, __frame, function __$__9() {
+/*    94 */                         i = 0;
+                                    var __4 = false;
+                                    return (function ___(__break) {
+                                      var __more;
+                                      var __loop = __cb(_, __frame, 0, 0, function __$__9() {
+                                        __more = false;
+                                        if (__4) {
+/*    94 */                               i++;
+                                        }
+                                         else {
+                                          __4 = true;
+                                        }
+                                      ;
+                                        return (function __$__9(_) {
+/*    94 */                               return delay(__cb(_, __frame, 1, 17, function ___(__0, __2) {
+/*    94 */                                 var __1 = (__2 < 10);
+                                            return _(null, __1);
+/*    94 */                               }), i);
+                                        })(__cb(_, __frame, -92, 21, function ___(__0, __3) {
+                                          if (__3) {
+                                            return (function ___(__then) {
+                                              (function ___(_) {
+                                                __tryCatch(_, function __$__9() {
+/*    96 */                                       return delay(__cb(_, __frame, 3, 7, function ___(__0, __2) {
+/*    96 */                                         var __1 = (__2 % 2);
+                                                    return (function __$__9(__then) {
+                                                      if (__1) {
+/*    97 */                                             return process.nextTick(__cb(_, __frame, 4, 4, __then));
+                                                      }
+                                                       else {
+                                                        __then();
+                                                      }
+                                                    ;
+                                                    })(__then);
+/*    96 */                                       }), i);
+                                                });
+                                              })(function ___(ex, __result) {
+                                                __tryCatch(_, function __$__9() {
+                                                  if (ex) {
+                                                    __then();
+                                                  }
+                                                   else {
+                                                    _(null, __result);
+                                                  }
+                                                ;
+                                                });
+                                              });
+                                            })(function ___() {
+                                              __tryCatch(_, function __$__9() {
+                                                while (__more) {
+                                                  __loop();
+                                                };
+                                                __more = true;
+                                              });
+                                            });
+                                          }
+                                           else {
+                                            __break();
+                                          }
+                                        ;
+                                        }));
+                                      });
+                                      do {
+                                        __loop();
+                                      } while (__more);
+                                      __more = true;
+                                    })(_);
+                                  });
+                                });
+/*    85 */                   }), "recurse", function __8(_) {
+/*    86 */                     function f(_, depth) {
+                                  var __frame = {
+                                    name: "f",
+                                    line: 86
+                                  };
+                                  return __func(_, this, arguments, f, 0, __frame, function __$f() {
+                                    return (function __$f(__then) {
+/*    87 */                           if ((depth > 0)) {
+/*    87 */                             return f(__cb(_, __frame, 1, 17, __then), (depth - 1));
+                                      }
+                                       else {
+/*    88 */                             return process.nextTick(__cb(_, __frame, 2, 7, __then));
+                                      }
+                                    ;
+                                    })(_);
+                                  });
+                                };
                                 var __frame = {
                                   name: "__8",
                                   line: 85
                                 };
                                 return __func(_, this, arguments, __8, 0, __frame, function __$__8() {
-/*    86 */                       i = 0;
-                                  var __4 = false;
-                                  return (function ___(__break) {
-                                    var __more;
-                                    var __loop = __cb(_, __frame, 0, 0, function __$__8() {
-                                      __more = false;
-                                      if (__4) {
-/*    86 */                             i++;
-                                      }
-                                       else {
-                                        __4 = true;
-                                      }
-                                    ;
-                                      return (function __$__8(_) {
-/*    86 */                             return delay(__cb(_, __frame, 1, 17, function ___(__0, __2) {
-/*    86 */                               var __1 = (__2 < 10);
-                                          return _(null, __1);
-/*    86 */                             }), i);
-                                      })(__cb(_, __frame, -84, 20, function ___(__0, __3) {
-                                        if (__3) {
-                                          return (function ___(__then) {
-                                            (function ___(_) {
-                                              __tryCatch(_, function __$__8() {
-/*    88 */                                     return delay(__cb(_, __frame, 3, 7, function ___(__0, __2) {
-/*    88 */                                       var __1 = (__2 % 2);
-                                                  return (function __$__8(__then) {
-                                                    if (__1) {
-/*    89 */                                           return process.nextTick(__cb(_, __frame, 4, 4, __then));
-                                                    }
-                                                     else {
-                                                      __then();
-                                                    }
-                                                  ;
-                                                  })(__then);
-/*    88 */                                     }), i);
-                                              });
-                                            })(function ___(ex, __result) {
-                                              __tryCatch(_, function __$__8() {
-                                                if (ex) {
-                                                  __then();
-                                                }
-                                                 else {
-                                                  _(null, __result);
-                                                }
-                                              ;
-                                              });
-                                            });
-                                          })(function ___() {
-                                            __tryCatch(_, function __$__8() {
-                                              while (__more) {
-                                                __loop();
-                                              };
-                                              __more = true;
-                                            });
-                                          });
-                                        }
-                                         else {
-                                          __break();
-                                        }
-                                      ;
-                                      }));
-                                    });
-                                    do {
-                                      __loop();
-                                    } while (__more);
-                                    __more = true;
-                                  })(_);
+/*    90 */                       return f(__cb(_, __frame, 5, 1, _), 100);
                                 });
                               });
-/*    77 */                 }), "recurse", function __7(_) {
-/*    78 */                   function f(_, depth) {
-                                var __frame = {
-                                  name: "f",
-                                  line: 78
-                                };
-                                return __func(_, this, arguments, f, 0, __frame, function __$f() {
-                                  return (function __$f(__then) {
-/*    79 */                         if ((depth > 0)) {
-/*    79 */                           return f(__cb(_, __frame, 1, 17, __then), (depth - 1));
-                                    }
-                                     else {
-/*    80 */                           return process.nextTick(__cb(_, __frame, 2, 7, __then));
-                                    }
-                                  ;
-                                  })(_);
-                                });
-                              };
+/*    81 */                 }), "nextTick if", function __7(_) {
                               var __frame = {
                                 name: "__7",
-                                line: 77
+                                line: 81
                               };
                               return __func(_, this, arguments, __7, 0, __frame, function __$__7() {
-/*    82 */                     return f(__cb(_, __frame, 5, 1, _), 100);
+                                return (function __$__7(__then) {
+/*    82 */                       if (true) {
+/*    82 */                         return process.nextTick(__cb(_, __frame, 1, 11, __then));
+                                  }
+                                   else {
+                                    __then();
+                                  }
+                                ;
+                                })(_);
                               });
                             });
-/*    73 */               }), "nextTick if", function __6(_) {
+/*    75 */               }), "try/finally", function __6(_) {
                             var __frame = {
                               name: "__6",
-                              line: 73
+                              line: 75
                             };
                             return __func(_, this, arguments, __6, 0, __frame, function __$__6() {
-                              return (function __$__6(__then) {
-/*    74 */                     if (true) {
-/*    74 */                       return process.nextTick(__cb(_, __frame, 1, 11, __then));
-                                }
-                                 else {
-                                  __then();
-                                }
-                              ;
-                              })(_);
+                              return (function ___(__then) {
+                                (function ___(_) {
+                                  __tryCatch(_, function __$__6() {
+/*    77 */                         return process.nextTick(__cb(_, __frame, 2, 2, function __$__6() {
+                                      _(null, null, true);
+                                    }));
+                                  });
+                                })(function ___(__e, __r, __cont) {
+                                  (function ___(__then) {
+                                    __tryCatch(_, __then);
+                                  })(function ___() {
+                                    __tryCatch(_, function ___() {
+                                      if (__cont) {
+                                        __then();
+                                      } else {
+                                        _(__e, __r);
+                                      };
+                                    });
+                                  });
+                                });
+                              })(function ___() {
+                                __tryCatch(_, _);
+                              });
                             });
                           });
-/*    67 */             }), "try/finally", function __5(_) {
+/*    68 */             }), "try/catch/throw", function __5(_) {
                           var __frame = {
                             name: "__5",
-                            line: 67
+                            line: 68
                           };
                           return __func(_, this, arguments, __5, 0, __frame, function __$__5() {
                             return (function ___(__then) {
                               (function ___(_) {
                                 __tryCatch(_, function __$__5() {
-/*    69 */                       return process.nextTick(__cb(_, __frame, 2, 2, function __$__5() {
-                                    _(null, null, true);
+/*    70 */                       return process.nextTick(__cb(_, __frame, 2, 2, function __$__5() {
+/*    71 */                         return _(new Error(""));
                                   }));
                                 });
-                              })(function ___(__e, __r, __cont) {
-                                (function ___(__then) {
-                                  __tryCatch(_, __then);
-                                })(function ___() {
-                                  __tryCatch(_, function ___() {
-                                    if (__cont) {
-                                      __then();
-                                    } else {
-                                      _(__e, __r);
-                                    };
-                                  });
+                              })(function ___(ex, __result) {
+                                __tryCatch(_, function __$__5() {
+                                  if (ex) {
+                                    __then();
+                                  }
+                                   else {
+                                    _(null, __result);
+                                  }
+                                ;
                                 });
                               });
                             })(function ___() {
@@ -323,18 +341,16 @@ function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) {
                             });
                           });
                         });
-/*    60 */           }), "try/catch/throw", function __4(_) {
+/*    62 */           }), "try/catch", function __4(_) {
                         var __frame = {
                           name: "__4",
-                          line: 60
+                          line: 62
                         };
                         return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
                           return (function ___(__then) {
                             (function ___(_) {
                               __tryCatch(_, function __$__4() {
-/*    62 */                     return process.nextTick(__cb(_, __frame, 2, 2, function __$__4() {
-/*    63 */                       return _(new Error(""));
-                                }));
+/*    64 */                     return process.nextTick(__cb(_, __frame, 2, 2, __then));
                               });
                             })(function ___(ex, __result) {
                               __tryCatch(_, function __$__4() {
@@ -352,50 +368,30 @@ function __tryCatch(_, fn){ try { fn(); } catch (e) { try { _(e); } catch (ex) {
                           });
                         });
                       });
-/*    54 */         }), "try/catch", function __3(_) {
+/*    58 */         }), "delay", function __3(_) {
                       var __frame = {
                         name: "__3",
-                        line: 54
+                        line: 58
                       };
                       return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
-                        return (function ___(__then) {
-                          (function ___(_) {
-                            __tryCatch(_, function __$__3() {
-/*    56 */                   return process.nextTick(__cb(_, __frame, 2, 2, __then));
-                            });
-                          })(function ___(ex, __result) {
-                            __tryCatch(_, function __$__3() {
-                              if (ex) {
-                                __then();
-                              }
-                               else {
-                                _(null, __result);
-                              }
-                            ;
-                            });
-                          });
-                        })(function ___() {
-                          __tryCatch(_, _);
-                        });
+/*    59 */             return delay(__cb(_, __frame, 1, 1, _));
                       });
                     });
-/*    50 */       }), "delay", function __2(_) {
+/*    54 */       }), "nextTick", function __2(_) {
                     var __frame = {
                       name: "__2",
-                      line: 50
+                      line: 54
                     };
                     return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
-/*    51 */           return delay(__cb(_, __frame, 1, 1, _));
+/*    55 */           return process.nextTick(__cb(_, __frame, 1, 1, _));
                     });
                   });
-/*    46 */     }), "nextTick", function __1(_) {
+/*    53 */     }), "nop", function __1(_) {
                   var __frame = {
                     name: "__1",
-                    line: 46
+                    line: 53
                   };
-                  return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
-/*    47 */         return process.nextTick(__cb(_, __frame, 1, 1, _));
-                  });
+                  return __func(_, this, arguments, __1, 0, __frame, _);
                 });
               });
             }).call(this, __trap);

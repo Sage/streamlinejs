@@ -1,13 +1,19 @@
-
 function bench(_, name, fn) {
 	function tryItNative(cb, count) {
 		var t0 = Date.now();
+		var failed;
 
 		function loop(i) {
 			if (i < count) {
 				fn(function(err) {
 					if (err) return cb(err);
-					loop(i + 1);
+					try {
+						loop(i + 1);
+					} catch (ex) {
+						!failed && console.log("Native\t\t" + name + "\tFAILED: " + ex.message);
+						failed = true;
+						cb(null, true);
+					}
 				});
 			} else {
 				var dt = (Date.now() - t0);
@@ -22,8 +28,7 @@ function bench(_, name, fn) {
 
 	function tryItStreamline(_, count) {
 		var t0 = Date.now();
-		for (var i = 0; i < count; i++)
-		fn(_);
+		for (var i = 0; i < count; i++) fn(_);
 		var dt = (Date.now() - t0);
 		if (dt < 100) return false;
 		dt = Math.round(dt * 100 * 1000 / count) / 100;
@@ -31,10 +36,13 @@ function bench(_, name, fn) {
 		return true;
 
 	}
-	var count = 1;
-	while (!tryItStreamline(_, count)) count *= 2;
-	var count = 1;
-	while (!tryItNative(_, count)) count *= 2;
+
+	function run(_, tryIt) {
+		var count = 1;
+		while (!tryIt(_, count)) count *= 2;
+	}
+	run(_, tryItStreamline);
+	run(_, tryItNative);
 }
 
 function delay(_, val) {
@@ -42,7 +50,7 @@ function delay(_, val) {
 	return val;
 }
 
-//bench(_, "nop", function(_) {})
+bench(_, "nop", function(_) {})
 bench(_, "nextTick", function(_) {
 	process.nextTick(_);
 })
