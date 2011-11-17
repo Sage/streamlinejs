@@ -10,16 +10,16 @@
 
 var fs = require('fs');
 
-function du(_, path) { var __tmp;
+function du(_, path) {
 	var total = 0;
 	var stat = fstreamline__.invoke(fs, "stat", [path, _], 1);
 	if (stat.isFile()) {
-		 __tmp = (__tmp = fstreamline__.invoke(fs, "readFile", [path, _], 1).length, total += __tmp);
+		total += fstreamline__.invoke(fs, "readFile", [path, _], 1).length;
 	}
 	else if (stat.isDirectory()) {
 		var files = fstreamline__.invoke(fs, "readdir", [path, _], 1);
 		for (var i = 0; i < files.length; i++) {
-			 __tmp = (__tmp = fstreamline__.invoke(null, du_, [_, path + "/" + files[i]], 0), total += __tmp);
+			total += fstreamline__.invoke(null, du_, [_, path + "/" + files[i]], 0);
 		}
 		console.log(path + ": " + total);
 	}

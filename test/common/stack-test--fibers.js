@@ -95,10 +95,10 @@ function H(_, code){
 	return fstreamline__.invoke(null, G_, [_, code], 0);
 }
 
-function I(_, code){ var __tmp;
+function I(_, code){
 	var s = "";
 	for (var i = 0; i < code; i++) 
-		 __tmp = (__tmp = fstreamline__.invoke(null, H_, [_, i], 0), s += __tmp);
+		s += fstreamline__.invoke(null, H_, [_, i], 0);
 	return s;
 }
 
