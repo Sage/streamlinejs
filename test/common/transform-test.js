@@ -1184,6 +1184,14 @@ asyncTest("continue in while", 2, function(){
 		return result;
 	}, 24);
 })
+asyncTest("for (;;)", 2, function(){
+	evalTest(function f(_){
+		var i = 0;
+		for (;;) {
+			if (delay(_, ++i) === 10) return i;
+		}
+	}, 10);
+})
 asyncTest("eval lazy", 2, function(){
 	evalTest(function f(_){
 		var result = 1;
