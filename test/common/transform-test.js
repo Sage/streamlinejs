@@ -1,5 +1,5 @@
 var module = QUnit.module;
-var transform = require('streamline/lib/compiler/transform').transform;
+var transform = require('streamline/lib/callbacks/transform').transform;
 
 module("streamline generation");
 

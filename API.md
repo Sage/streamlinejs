@@ -40,7 +40,7 @@ Streamline `require` handler registration
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
 
-# streamline/lib/compiler/transform
+# streamline/lib/callbacks/transform
  
 Streamline's transformation engine
 
