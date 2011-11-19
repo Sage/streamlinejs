@@ -8,13 +8,17 @@
   <script type="application/javascript">
   	if (!Object.create || !Object.defineProperty || !Object.defineProperties)
 		alert("Test will fail because your browser does not support ECMAScript 5. Try with another browser!");
+    var __filename = "" + window.location;
 	  function require(str) {
 	  	if (str == "streamline/lib/callbacks/transform")
 	  		return Streamline;
+      else if (str == "streamline/lib/callbacks/runtime")
+        return StreamlineRuntime;
 	  	else
 	  		alert("cannot require " + str)
 	  }
   </script>
+  <script src="../../lib/callbacks/runtime.js" type="application/javascript"></script>
   <script src="../../deps/narcissus/lib/jsdefs.js" type="application/javascript"></script>
   <script src="../../deps/narcissus/lib/jslex.js" type="application/javascript"></script>
   <script src="../../deps/narcissus/lib/jsparse.js" type="application/javascript"></script>

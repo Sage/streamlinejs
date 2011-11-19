@@ -1,4 +1,16 @@
 
+# streamline/lib/callbacks/transform
+ 
+Streamline's transformation engine
+
+* `transformed = transform.transform(source, options)`  
+  Transforms streamline source.  
+  The following `options` may be specified:
+  * `tryCatch` controls exception handling
+  * `lines` controls line mapping
+  * `callback` alternative identifier if `_` is already used.
+  * `noHelpers` disables generation of helper functions (`__cb`, etc.)
+
 # streamline/lib/compiler/command
  
 Streamline commmand line analyzer / dispatcher
@@ -31,6 +43,8 @@ Streamline compiler and file loader
   `paths` may be a list of files or a list of directories which
   will be traversed recursively.  
   `options`  is a set of options for the `transform` operation.
+* `compile.installRuntime()
+  Installs the Streamline Runtime into the directory/node_modules/ (default to CWD)
 
 # streamline/lib/compiler/register
  
@@ -39,18 +53,6 @@ Streamline `require` handler registration
 * `register.register(options)`  
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
-
-# streamline/lib/callbacks/transform
- 
-Streamline's transformation engine
-
-* `transformed = transform.transform(source, options)`  
-  Transforms streamline source.  
-  The following `options` may be specified:
-  * `tryCatch` controls exception handling
-  * `lines` controls line mapping
-  * `callback` alternative identifier if `_` is already used.
-  * `noHelpers` disables generation of helper functions (`__cb`, etc.)
 
 # streamline/lib/require/client/require
  
@@ -366,8 +368,3 @@ The `streamline.flows` module exposes two functions to manipulate the context:
   Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
   a modified argument list in which the callback has been inserted at `index` 
   (at the end of the argument list if `index` is not specified).
-* `flows.stackTraceEnabled = true/false;`
-  If true, `err.stack` returns the reconstructed _sync_ stack trace.
-  Otherwise, it returns the _raw_ stack trace.
-  The default is true, but you must require the flows module
-  at least once to enable sync stack traces.
