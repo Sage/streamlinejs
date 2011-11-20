@@ -54,6 +54,20 @@ Streamline `require` handler registration
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
 
+# streamline/lib/globals
+
+The `streamline.lib.globals` is a container for the global `context` object which is maintained across
+asynchronous calls.
+
+This context is very handy to store information that all calls should be able to access
+but that you don't want to pass explicitly via function parameters. The most obvious example is
+the `locale` that each request may set differently and that your low level libraries should
+be able to retrieve to format messages.
+
+* `globals.context = ctx`
+* `ctx = globals.context`  
+  sets and gets the context
+
 # streamline/lib/require/client/require
  
 Client-side require script
@@ -339,24 +353,6 @@ The `funnel` function can also be used to implement critical sections. Just set 
 
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
-
-## Context propagation
-
-Streamline also allows you to propagate a global context along a chain of calls and callbacks.
-This context can be used like TLS (Thread Local Storage) in a threaded environment.
-It allows you to have several active chains that each have their own global context.
-
-This kind of context is very handy to store information that all calls should be able to access
-but that you don't want to pass explicitly via function parameters. The most obvious example is
-the `locale` that each request may set differently and that your low level libraries should
-be able to retrieve to format messages.
-
-The `streamline.flows` module exposes two functions to manipulate the context:
-
-* `oldCtx = flows.setContext(ctx)`  
-  sets the context (and returns the old context).
-* `ctx = flows.getContext()`  
-  returns the current context.
 
 ## Miscellaneous
 
@@ -424,6 +420,20 @@ Streamline `require` handler registration
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
 
+# streamline/lib/globals
+
+The `streamline.lib.globals` is a container for the global `context` object which is maintained across
+asynchronous calls.
+
+This context is very handy to store information that all calls should be able to access
+but that you don't want to pass explicitly via function parameters. The most obvious example is
+the `locale` that each request may set differently and that your low level libraries should
+be able to retrieve to format messages.
+
+* `globals.context = ctx`
+* `ctx = globals.context`  
+  sets and gets the context
+
 # streamline/lib/require/client/require
  
 Client-side require script
@@ -709,24 +719,6 @@ The `funnel` function can also be used to implement critical sections. Just set 
 
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
-
-## Context propagation
-
-Streamline also allows you to propagate a global context along a chain of calls and callbacks.
-This context can be used like TLS (Thread Local Storage) in a threaded environment.
-It allows you to have several active chains that each have their own global context.
-
-This kind of context is very handy to store information that all calls should be able to access
-but that you don't want to pass explicitly via function parameters. The most obvious example is
-the `locale` that each request may set differently and that your low level libraries should
-be able to retrieve to format messages.
-
-The `streamline.flows` module exposes two functions to manipulate the context:
-
-* `oldCtx = flows.setContext(ctx)`  
-  sets the context (and returns the old context).
-* `ctx = flows.getContext()`  
-  returns the current context.
 
 ## Miscellaneous
 
