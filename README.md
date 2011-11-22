@@ -49,9 +49,9 @@ The _fibers_ option can be activated by passing `--fibers` to the `node-streamli
 setting the `fibers` option when registering streamline 
 (see the `register(options)` function in `streamline/lib/compiler/register`).
  
-# On-line demo
+# Online demo
 
-You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
+You can test `streamline.js` directly with the [online demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
 
 # Installation
 
