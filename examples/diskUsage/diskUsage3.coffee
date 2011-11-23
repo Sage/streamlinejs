@@ -1,5 +1,5 @@
 #
-# Usage: coffee-streamline diskUsage_.coffee [path]
+# Usage: coffee-streamline diskUsage_3.coffee [path]
 #
 # Recursively computes the size of directories.
 # 
@@ -7,6 +7,8 @@
 # like fs.stat, fs.readdir, fs.readFile can be called from 'streamlined'
 # Javascript code.  
 #
+if not require('streamline/module')(module, {})
+	return
 
 fs = require 'fs'
 
