@@ -627,7 +627,8 @@ Narcissus.parser = (function() {
         var parentScript = x.parentScript;
 
         if (tt === RETURN) {
-            if (!x.inFunction)
+            // Disabled test because node accepts return at top level in modules
+            if (false && !x.inFunction)
                 throw t.newSyntaxError("Return not in function");
         } else /* if (tt === YIELD) */ {
             if (!x.inFunction)
