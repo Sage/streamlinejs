@@ -1,5 +1,5 @@
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 // require_error_.js
 // Simple test script that simulates an asynchronous wait and then throws an
 // error from a particular line, while specifying partial options. Tests

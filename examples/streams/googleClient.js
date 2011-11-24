@@ -4,7 +4,7 @@
  * Demonstrates the streamline http client wrapper
  */
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 
 // require the streamline streams wrapper
 var streams = require('streamline/lib/streams/server/streams');

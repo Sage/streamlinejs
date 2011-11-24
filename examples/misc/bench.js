@@ -1,5 +1,5 @@
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 
 var mode = typeof fstreamline__ !== 'undefined' ? "fibers" : "callback";
 

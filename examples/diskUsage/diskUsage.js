@@ -8,7 +8,7 @@
  * Javascript code.
  */
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 
 var fs = require('fs');
 

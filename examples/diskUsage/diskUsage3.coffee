@@ -7,7 +7,7 @@
 # like fs.stat, fs.readdir, fs.readFile can be called from 'streamlined'
 # Javascript code.  
 #
-if not require('streamline/module')(module, {})
+if not require('streamline/module')(module)
 	return
 
 fs = require 'fs'

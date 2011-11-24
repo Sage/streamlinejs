@@ -18,7 +18,7 @@
 # 
 # On my machine, the parallel version is almost twice faster than the sequential version.
 #
-if not require('streamline/module')(module, {})
+if not require('streamline/module')(module)
 	return
 
 fs = require 'fs'

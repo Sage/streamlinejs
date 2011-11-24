@@ -1,5 +1,5 @@
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 
 var streams = require('streamline/lib/streams/streams');
 var module = QUnit.module;

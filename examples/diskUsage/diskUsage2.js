@@ -10,7 +10,7 @@
  * On my machine, the parallel version is almost twice faster than the sequential version.
  */
 "use strict";
-if (!require('streamline/module')(module, {})) return;
+if (!require('streamline/module')(module)) return;
 
 var fs = require('fs');
 var flows = require('streamline/lib/util/flows');
