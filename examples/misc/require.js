@@ -3,6 +3,5 @@
 //
 // Usage:
 // node require.js
-
 require('streamline');
 require('./require_error_');

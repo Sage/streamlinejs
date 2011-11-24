@@ -100,6 +100,7 @@ asyncTest("collectAll", 4, function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return function(_) {
 			count++;
@@ -121,6 +122,7 @@ asyncTest("collectOne", 4, function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return function(_) {
 			count++;
@@ -142,6 +144,7 @@ asyncTest("collectAll with limit", 1, function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return function(_) {
 			count++;
@@ -167,6 +170,7 @@ asyncTest("contexts", 3, function(_) {
 	}
 
 	var result = flows.spray([
+
 	function(_) {
 		return testContext(_, 3);
 	},
@@ -184,6 +188,7 @@ asyncTest("futures multiplex", 3, function(_) {
 	var result1 = 0;
 	var result2 = 0;
 	var result3 = 0;
+
 	function doIt(future, _) {
 		result1 += future(_);
 		result2 += future(_);

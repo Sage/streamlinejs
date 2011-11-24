@@ -100,6 +100,7 @@ asyncTest("collectAll", 4, fstreamline__.create(function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return fstreamline__.create(function(_) { var __tmp;
 			count++;
@@ -121,6 +122,7 @@ asyncTest("collectOne", 4, fstreamline__.create(function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return fstreamline__.create(function(_) { var __tmp;
 			count++;
@@ -142,6 +144,7 @@ asyncTest("collectAll with limit", 1, fstreamline__.create(function(_) {
 	var total = 0;
 	var peak = 0;
 	var count = 0;
+
 	function doIt(i) {
 		return fstreamline__.create(function(_) { var __tmp;
 			count++;
@@ -167,6 +170,7 @@ asyncTest("contexts", 3, fstreamline__.create(function(_) {var testContext_ = fs
 	}
 
 	var result = fstreamline__.invoke(flows.spray([
+
 	fstreamline__.create(function(_) {
 		return fstreamline__.invoke(null, testContext_, [_, 3], 0);
 	}, 0),
@@ -184,6 +188,7 @@ asyncTest("futures multiplex", 3, fstreamline__.create(function(_) {var doIt_ = 
 	var result1 = 0;
 	var result2 = 0;
 	var result3 = 0;
+
 	function doIt(future, _) { var __tmp;
 		 __tmp = (__tmp = fstreamline__.invoke(null, future, [_], 0), result1 += __tmp);
 		 __tmp = (__tmp = fstreamline__.invoke(null, future, [_], 0), result2 += __tmp);
@@ -201,7 +206,6 @@ asyncTest("futures multiplex", 3, fstreamline__.create(function(_) {var doIt_ = 
 	deepEqual(result3, 12);
 	start();
 }, 0))
-
 }, 0).call(this, function(err) {
   if (err) throw err;
 }));
