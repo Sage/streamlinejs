@@ -43,8 +43,6 @@ Streamline compiler and file loader
   `paths` may be a list of files or a list of directories which
   will be traversed recursively.  
   `options`  is a set of options for the `transform` operation.
-* `compile.installRuntime()
-  Installs the Streamline Runtime into the directory/node_modules/ (default to CWD)
 
 # streamline/lib/compiler/register
  
@@ -409,8 +407,6 @@ Streamline compiler and file loader
   `paths` may be a list of files or a list of directories which
   will be traversed recursively.  
   `options`  is a set of options for the `transform` operation.
-* `compile.installRuntime()
-  Installs the Streamline Runtime into the directory/node_modules/ (default to CWD)
 
 # streamline/lib/compiler/register
  
