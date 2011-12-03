@@ -47,7 +47,7 @@ It may also generate more efficient code (to be confirmed by benchmarks).
 
 The _fibers_ option can be activated by passing `--fibers` to the `node-streamline` command or by 
 setting the `fibers` option when registering streamline 
-(see the `register(options)` function in `streamline/lib/compiler/register`).
+(see the `register(options)` function in `streamline/lib/compiler/register` or the `streamline/module` API).
  
 # On-line demo
 
@@ -70,40 +70,75 @@ Note: if you encounter a permission error when installing on UNIX systems, you s
 If you want to use the _fibers_ option, you must also install the fibers library:
 
 ```sh
-npm install fibers
+npm install fibers [-g]
 ```
-    
+
 # Creating and running streamline modules
 
-To create a module called `myModule`, put your _streamlined_ source in a file called `myModule_.js`.
+The easiest way to write streamline code is to put the following line at the top of your module:
 
-Then you have several options:
+``` javascript
+if (!require('streamline/module')(module)) return;
+```
 
-1. You can _compile_ your module with `node-streamline -c`. This will create a file called `myModule.js` that you can directly run with the `node` command,
-or _require_ from a normal node program.
-2. You can run the module with `node-streamline myModule_` or require it as `require('myModule_')` from a program that you launch with `node-streamline`. 
-If you choose this option, the `myModule.js` file will not be created.
-3. You can run the module with `node-streamline myModule` or require it as `require('myModule')` from a program that you launch with `node-streamline`. 
-If you choose this option, you have to create an empty `myModule.js` file to initiate the process.
-4. You can load source and transform it _on the fly_ with the `transform` API.
+Then you can use the `_` marker anywhere in your module:
 
-Option 1 is ideal for production code, as your transformed module will be loaded standalone. The transformation engine will not be loaded.
+```javascript
+function lineCount(path, _) {
+  return fs.readFile(path, "utf8", _).split('\n').length;
+}
+```
 
-Option 2 is your best option if you do not want to save the transformed code to disk.
+You can run your module with `node-streamline`:
 
-Option 3 is ideal for the development phase if you do not have a build script. 
-The files will only be recompiled if the source has changed (so you won't get the overhead every time you launch your program).
-The transformed source will be available on disk, and will be loaded by the debugger (because you require `myModule`, not `myModule_`).
-Also, this option makes the switch to production really easy: recompile the whole tree and run with `node` rather than with `node-streamline`.
+```sh
+node-streamline myModule
+```
 
-Option 4 is reserved for advanced scenarios where the code is transformed on the fly.
+The code will be automatically transformed and the transformed files will be cached under `~/.streamline`.
 
-There is an alternative to running your application with `node-streamline`: 
-you can call `require('streamline')` from your main script and then run it with `node`. 
-Modules that are required (directly or indirectly) by your main script will be transformed on demand.
+You can also run your module with `node`:
 
-Note: streamline can also transform vanilla Javascript files that don't use CommonJS modules and don't target node. 
-So you can compile them (option 1) and load them directly in the browser from a `<script>` directive.
+```sh
+node myModule
+```
+
+If you run with `node`, streamline will create (and delete) a temporary copy of your source file.
+So you need r/w access to the module's directory. 
+Note that only the main module will be copied, the streamline modules that are _required_ by the main module 
+won't be copied so you don't need r/w access to all directories.
+
+# Coffeescript
+
+Coffeescript is no different. You just need the following line at the top of your module:
+
+```coffeescript
+if not require('streamline/module')(module)
+	return
+```
+
+And then you can run your module with:
+
+```sh
+coffee-streamline myModule
+```
+
+or just, if you have r/w access to the module's directory (see `node` above):
+
+```sh
+coffee myModule
+```
+
+# Compilation setup (old style)
+
+You can also set up your modules to have the streamline source and the transformed Javascript side by side in 
+the same directory. To do this, you must append an underscore to your module's base name: `myModule_.js`.
+
+This was the original setup. It is nice if you want to see the transformed code but it pollutes the directories 
+with extra files and it becomes messy when you start testing with both callback and fibers mode. 
+The callback output is called `myModule.js` and the fibers' output is called `myModule--fibers.js`.
+
+The [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) gives details on this mode.
 
 # Examples
 
@@ -111,9 +146,8 @@ The `examples/diskUsage` directory contains a simple example that traverses dire
 You can run as follows:
 
 ```sh
-node-streamline diskUsage_ (will not regenerate diskUsage.js)
-node-streamline diskUsage (will regenerate diskUsage.js if necessary)
-node diskUsage (assumes that diskUsage.js is there and up-to-date)
+node-streamline diskUsage
+node diskUsage (requires r/w access to the examples directory)
 ```
 
 # Interoperability with standard node.js code
@@ -140,19 +174,22 @@ Note: this works with both transformation options.
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
 
-# Running in other environments
+# Browser-side use
 
-`streamline.js` generates vanilla Javascript code that may be run browser-side too.
+The [streamline compiler](https://github.com/Sage/streamlinejs/wiki/Compilers) generates vanilla Javascript code that may be run browser-side too.
 
-You can also transform the code in the browser with the `transform` API. See the `test/*.js` unit test files for examples.
+You can also transform the code in the browser with the `transform` API. See `examples/streamlineMe` for an example.
 
-You can also use `streamline.js` with CoffeeScript. For example:
+The `lib/require` directory contains a small infrastructure to load streamline and regular JS modules from the browser. 
+It applies the streamline transformation server side and caches the transformed files.
+It also optimizes roundtrips between client and server: 
+the _required_ module and all its dependencies are transfered in one message.
+Also, dependencies that have already been transfered to the browser are not re-transfered 
+when you require additional modules.
 
-```sh
-coffee-streamline diskUsage_.coffee
-```
-
-See the [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) for details.
+Note: the `lib/require` infrastructure does not handle all the subtleties of node's require logic but it handles enough to
+support our applications (and it does it very efficiently).
+It is provided _as is_ and contributions to improve it are welcome.
 
 # Goodies
 
