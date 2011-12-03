@@ -49,6 +49,30 @@ The _fibers_ option can be activated by passing `--fibers` to the `node-streamli
 setting the `fibers` option when registering streamline 
 (see the `register(options)` function in `streamline/lib/compiler/register` or the `streamline/module` API).
  
+# Interoperability with standard node.js code
+
+You can call standard node functions from streamline code. For example the `fs.readFile` function:
+
+```javascript
+function lineCount(path, _) {
+  return fs.readFile(path, "utf8", _).split('\n').length;
+}
+```
+You can also call streamline functions as if they were standard node functions. For example:
+
+```javascript
+lineCount("README.md", function(err, result) {
+  if (err) return console.error("ERROR: " + err.message);
+  console.log("README has " + result + " lines.");
+});
+```
+And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
+Streamline will only transform the functions that have the special `_` parameter. 
+
+Note: this works with both transformation options. 
+Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
+and the asynchronous functions that you create with streamline have the standard node callback signature.
+
 # On-line demo
 
 You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
@@ -129,6 +153,26 @@ or just, if you have r/w access to the module's directory (see `node` above):
 coffee myModule
 ```
 
+# Shell scripts
+
+You can also use streamline to write shell scripts that call asynchronous node APIs. 
+You just need the following line at the top of your script:
+
+```sh
+#!/usr/bin/env node-streamline
+```
+
+For example:
+
+```sh
+#!/usr/bin/env node-streamline
+console.log("waiting 1 second");
+setTimeout(_, 1000);
+console.log("done!");
+```
+
+Note: you must install streamline with the `-g` option if you want this to work from any directory.
+  
 # Compilation setup (old style)
 
 You can also set up your modules to have the streamline source and the transformed Javascript side by side in 
@@ -140,40 +184,6 @@ The callback output is called `myModule.js` and the fibers' output is called `my
 
 The [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) gives details on this mode.
 
-# Examples
-
-The `examples/diskUsage` directory contains a simple example that traverses directories to compute disk usage.
-You can run as follows:
-
-```sh
-node-streamline diskUsage
-node diskUsage (requires r/w access to the examples directory)
-```
-
-# Interoperability with standard node.js code
-
-You can call standard node functions from streamline code. For example the `fs.readFile` function:
-
-```javascript
-function lineCount(path, _) {
-  return fs.readFile(path, "utf8", _).split('\n').length;
-}
-```
-You can also call streamline functions as if they were standard node functions. For example:
-
-```javascript
-lineCount("README.md", function(err, result) {
-  if (err) return console.error("ERROR: " + err.message);
-  console.log("README has " + result + " lines.");
-});
-```
-And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
-Streamline will only transform the functions that have the special `_` parameter. 
-
-Note: this works with both transformation options. 
-Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
-and the asynchronous functions that you create with streamline have the standard node callback signature.
-
 # Browser-side use
 
 The [streamline compiler](https://github.com/Sage/streamlinejs/wiki/Compilers) generates vanilla Javascript code that may be run browser-side too.
@@ -183,13 +193,26 @@ You can also transform the code in the browser with the `transform` API. See `ex
 The `lib/require` directory contains a small infrastructure to load streamline and regular JS modules from the browser. 
 It applies the streamline transformation server side and caches the transformed files.
 It also optimizes roundtrips between client and server: 
-the _required_ module and all its dependencies are transfered in one message.
-Also, dependencies that have already been transfered to the browser are not re-transfered 
+the _required_ module and all its dependencies are transferred in one message.
+Also, dependencies that have already been transferred to the browser are not re-transferred 
 when you require additional modules.
 
 Note: the `lib/require` infrastructure does not handle all the subtleties of node's require logic but it handles enough to
 support our applications (and it does it very efficiently).
 It is provided _as is_ and contributions to improve it are welcome.
+
+# Examples
+
+The `examples/diskUsage` directory contains a simple example that traverses directories to compute disk usage.
+You can run it as follows:
+
+```sh
+node-streamline diskUsage
+node diskUsage # requires r/w access to the examples directory
+```
+
+The `diskUsage2.js` example is a faster variant that parallelizes I/O operations with futures. 
+You'll also find CoffeeScript versions of these examples.
 
 # Goodies
 
@@ -212,6 +235,8 @@ The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
 ## Credits
+
+See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
 Special thanks to Marcel Laverdet who contributed the _fibers_ implementation.
 
