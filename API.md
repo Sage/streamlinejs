@@ -1,4 +1,3 @@
-
 # streamline/lib/callbacks/transform
  
 Streamline's transformation engine
@@ -355,7 +354,7 @@ The `funnel` function can also be used to implement critical sections. Just set 
 ## Miscellaneous
 
 * `flows.nextTick(_)`  
-  `nextTick` function for both browser and server.  
+   `nextTick` function for both browser and server.  
   Aliased to `process.nextTick` on the server side.
 * `result = flows.apply(_, fn, thisObj, args, [index])`  
   Helper to apply `Function.apply` to streamline functions.  
