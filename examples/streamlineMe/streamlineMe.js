@@ -154,11 +154,9 @@ function info(message) {
 	$('#result').removeClass('error').addClass('success').text(message);
 }
 
-window.__streamline = {
-	context: {
-		errorHandler: function(err){
-			error(err.message || err.toString());
-		}
+StreamlineRuntime.globals.context = {
+	errorHandler: function(err){
+		error(err.message || err.toString());
 	}
 }
 
