@@ -230,7 +230,7 @@ The following subdirectories contain various modules that have been written with
 ## Resources
 
 The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).  
-The [wiki](https://github.com/Sage/streamlinejs/wiki) discusses advanced topics like exception handling.
+The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
