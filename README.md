@@ -90,8 +90,8 @@ You can also install it _locally_, without `-g` but then the `node-streamline` a
 commands will not be in your default PATH.
 
 Notes: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
-You may also need to set the NODE_PATH environment variable. 
-On Mac OS X, add the following line to your ~/.bash_profile:
+You may also need to set the `NODE_PATH` environment variable. 
+On Mac OS X, add the following line to your `~/.bash_profile`:
 
 ```sh
 export NODE_PATH=/usr/local/lib/node_modules
