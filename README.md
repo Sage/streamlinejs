@@ -89,7 +89,13 @@ The `-g` option installs it _globally_.
 You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
 commands will not be in your default PATH.
 
-Note: if you encounter a permission error when installing on UNIX systems, you should retry with `sudo`.
+Notes: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
+You may also need to set the NODE_PATH environment variable. 
+On Mac OS X, add the following line to your ~/.bash_profile:
+
+```sh
+export NODE_PATH=/usr/local/lib/node_modules
+```
 
 If you want to use the _fibers_ option, you must also install the fibers library:
 
