@@ -89,12 +89,17 @@ The `-g` option installs it _globally_.
 You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
 commands will not be in your default PATH.
 
-Notes: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
-You may also need to set the `NODE_PATH` environment variable. 
-On Mac OS X, add the following line to your `~/.bash_profile`:
+Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
+
+The global installation option makes `node-streamline` globally accessible but it does not expose the Javascript support
+modules (`runtime.js`, `flows.js`, etc.) globally. 
+If you need these modules anywhere in your development tree, 
+for example because you use streamline in shell scripts (see below), 
+you should `npm link` streamline to the root of your development tree:
 
 ```sh
-export NODE_PATH=/usr/local/lib/node_modules
+cd $myworkdir
+npm link streamline
 ```
 
 If you want to use the _fibers_ option, you must also install the fibers library:
@@ -177,7 +182,8 @@ setTimeout(_, 1000);
 console.log("done!");
 ```
 
-Note: you must install streamline with the `-g` option if you want this to work from any directory.
+Note: you must install streamline with the `-g` option and you must `npm link` it at the top of your
+development tree to make this work smoothly (see installation section above).
   
 # Compilation setup (old style)
 
