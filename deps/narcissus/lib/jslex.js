@@ -458,7 +458,7 @@ Narcissus.lexer = (function() {
         },
 
         newSyntaxError: function (m) {
-            var e = new SyntaxError(m, this.filename, this.lineno);
+            var e = new SyntaxError(this.filename + ":" + this.lineno + ":" + m);
             e.source = this.source;
             e.cursor = this.lookahead
                        ? this.tokens[(this.tokenIndex + this.lookahead) & 3].start
