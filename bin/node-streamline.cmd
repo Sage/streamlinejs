@@ -1,2 +1,2 @@
-dir
-node %~dp0/../lib/compiler/command --win %*
+@echo off
+node %~dp0/../lib/compiler/command --win-js %*
