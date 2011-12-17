@@ -1,10 +1,9 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": { "node": ">=0.4.0" },
   "dependencies": {},
-  "bundledDependencies": ["streamline-runtime"],
   "author": "Bruno Jouhier",
   "directories": {"lib": "./lib", "bin": "./bin" },
   "main": "lib/index.js"
