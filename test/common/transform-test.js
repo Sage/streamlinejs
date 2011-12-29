@@ -1622,3 +1622,14 @@ asyncTest("async comma operator", 2, function() {
 		return a = 4, a++, a = delay(_, 2 * a), delay(_, a + 1);
 	}, 11);
 })
+
+asyncTest("async constructor", 2, function() {
+	evalTest(function f(_) {
+		function Foo(val, _) {
+			delay(_);
+			this.x = val;
+		}
+		Foo.prototype.y = function() { return this.x + 1; }
+		return new Foo(5, _).y();
+	}, 6);
+})
