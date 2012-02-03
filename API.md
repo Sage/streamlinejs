@@ -268,6 +268,40 @@ These are wrappers around node's `net.createConnection`:
   The `options` parameter of the constructor provide options for the stream (`lowMark` and `highMark`). If you want different options for `read` and `write` operations, you can specify them by creating `options.read` and `options.write` sub-objects inside `options`.
 * `stream = client.connect(_)`  
    connects the client and returns a network stream.
+
+## try/finally wrappers and pump
+
+* `streams.using(_, constructor, stream, [options,] fn)`
+  wraps `stream` with an instance of `constructor`;
+  passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
+  `fn` is called inside a try/finally block to guarantee that the stream
+  is closed in all cases.
+* `streams.usingReadable(_, stream, [options,] fn)
+  shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
+* `streams.usingWritable(_, stream, [options,] fn)
+  shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
+* `streams.pump(_, inStream, outStream)
+  Pumps from inStream to outStream
+  does not close the streams at the end.
+# streamline/lib/tools/docTool
+ 
+Documentation tool
+
+Usage:
+
+     node streamline/lib/tools/docTool [path]
+
+Extracts documentation comments from `.js` files and generates `API.md` file 
+under package root.
+
+Top of source file must contain `/// !doc` marker to enable doc extraction.  
+Documentation comments must start with `/// ` (with 1 trailing space).  
+Extraction can be turned off with `/// !nodoc` and turned back on with `/// !doc`.
+
+The tool can also be invoked programatically with:
+
+* `doc = docTool.generate(_, path)`
+  extracts documentation comments from file `path`
 # streamline/lib/tools/docTool
  
 Documentation tool
