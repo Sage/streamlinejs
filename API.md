@@ -271,14 +271,15 @@ These are wrappers around node's `net.createConnection`:
 
 ## try/finally wrappers and pump
 
-* `streams.using(_, constructor, stream, [options,] fn)`
+* result = `streams.using(_, constructor, stream, [options,] fn)`
   wraps `stream` with an instance of `constructor`;
   passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
   `fn` is called inside a try/finally block to guarantee that the stream
   is closed in all cases.
-* `streams.usingReadable(_, stream, [options,] fn)
+  Returns the value returned by `fn`.
+* result = `streams.usingReadable(_, stream, [options,] fn)
   shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
-* `streams.usingWritable(_, stream, [options,] fn)
+* result = `streams.usingWritable(_, stream, [options,] fn)
   shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
 * `streams.pump(_, inStream, outStream)
   Pumps from inStream to outStream
