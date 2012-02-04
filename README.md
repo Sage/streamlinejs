@@ -148,8 +148,7 @@ won't be copied so you don't need r/w access to all directories.
 Coffeescript is no different. You just need the following line at the top of your module:
 
 ```coffeescript
-if not require('streamline/module')(module)
-	return
+return if not require('streamline/module')(module)
 ```
 
 And then you can run your module with:
