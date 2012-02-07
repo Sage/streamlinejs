@@ -78,7 +78,7 @@ Client-side require script
 * `module = require.async(id, _)`  
   _requires_ a module asynchronously.  
   `id` may be a variable or an expression.
-* `require.localize(locale, _)`
+* `require.localize(locale, _)`  
   updates localized resources on all modules
 * `main = require.main`  
   return the main module
@@ -215,7 +215,7 @@ This is a wrapper around node's `http.ClientResponse`
 
 This stream is readable (see Readable Stream above).
 
-* `response = request.response(_)` 
+* `response = request.response(_)`  
    returns the response stream.
 * `status = response.statusCode`  
    returns the HTTP status code.
@@ -275,17 +275,17 @@ These are wrappers around node's `net.createConnection`:
 
 ## try/finally wrappers and pump
 
-* `result = streams.using(_, constructor, stream, [options,] fn)`
+* `result = streams.using(_, constructor, stream, [options,] fn)`  
    wraps `stream` with an instance of `constructor`;
-   passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
-   `fn` is called inside a `try/finally` block to guarantee that the stream is closed in all cases.
+   passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.  
+   `fn` is called inside a `try/finally` block to guarantee that the stream is closed in all cases.  
    Returns the value returned by `fn`.
-* `result = streams.usingReadable(_, stream, [options,] fn)`
+* `result = streams.usingReadable(_, stream, [options,] fn)`  
    shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
-* `result = streams.usingWritable(_, stream, [options,] fn)`
+* `result = streams.usingWritable(_, stream, [options,] fn)`  
    shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
-* `streams.pump(_, inStream, outStream)`
-   Pumps from inStream to outStream.
+* `streams.pump(_, inStream, outStream)`  
+   Pumps from inStream to outStream.  
    Does not close the streams at the end.
 
 # streamline/lib/tools/docTool
