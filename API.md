@@ -215,7 +215,8 @@ This is a wrapper around node's `http.ClientResponse`
 
 This stream is readable (see Readable Stream above).
 
-* `response = request.response(_)` returns the response stream.
+* `response = request.response(_)` 
+   returns the response stream.
 * `status = response.statusCode`  
    returns the HTTP status code.
 * `version = response.httpVersion`  
@@ -257,7 +258,7 @@ This is a wrapper around streams returned by TCP and socket clients:
 These streams are both readable and writable (see Readable Stream and Writable Stream above).
 
 * `stream = new streams.NetStream(stream, [options])`  
-  creates a network stream wrapper.
+   creates a network stream wrapper.
 
 ## TCP and Socket clients
 
@@ -267,25 +268,25 @@ These are wrappers around node's `net.createConnection`:
    returns a TCP connection client.
 * `client = streams.socketClient(path, [options])`  
    returns a socket client.  
-  The `options` parameter of the constructor provide options for the stream (`lowMark` and `highMark`). If you want different options for `read` and `write` operations, you can specify them by creating `options.read` and `options.write` sub-objects inside `options`.
+   The `options` parameter of the constructor provide options for the stream (`lowMark` and `highMark`). 
+   If you want different options for `read` and `write` operations, you can specify them by creating `options.read` and `options.write` sub-objects inside `options`.
 * `stream = client.connect(_)`  
    connects the client and returns a network stream.
 
 ## try/finally wrappers and pump
 
 * `result = streams.using(_, constructor, stream, [options,] fn)`
-  wraps `stream` with an instance of `constructor`;
-  passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
-  `fn` is called inside a `try/finally` block to guarantee that the stream
-  is closed in all cases.
-  Returns the value returned by `fn`.
+   wraps `stream` with an instance of `constructor`;
+   passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
+   `fn` is called inside a `try/finally` block to guarantee that the stream is closed in all cases.
+   Returns the value returned by `fn`.
 * `result = streams.usingReadable(_, stream, [options,] fn)`
-  shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
+   shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
 * `result = streams.usingWritable(_, stream, [options,] fn)`
-  shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
+   shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
 * `streams.pump(_, inStream, outStream)`
-  Pumps from inStream to outStream
-  does not close the streams at the end.
+   Pumps from inStream to outStream.
+   Does not close the streams at the end.
 
 # streamline/lib/tools/docTool
  
