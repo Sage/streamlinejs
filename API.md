@@ -254,7 +254,7 @@ This stream is writable (see Writable Stream above).
 
 This is a wrapper around streams returned by TCP and socket clients:
 
-These streams is both readable and writable (see Readable Stream and Writable Stream above).
+These streams are both readable and writable (see Readable Stream and Writable Stream above).
 
 * `stream = new streams.NetStream(stream, [options])`  
   creates a network stream wrapper.
@@ -273,7 +273,7 @@ These are wrappers around node's `net.createConnection`:
 
 ## try/finally wrappers and pump
 
-* result = `streams.using(_, constructor, stream, [options,] fn)`
+* `result = streams.using(_, constructor, stream, [options,] fn)`
   wraps `stream` with an instance of `constructor`;
   passes the wrapper to `fn(_, wrapped)` and closes the stream after `fn` returns.
   `fn` is called inside a `try/finally` block to guarantee that the stream
@@ -283,7 +283,7 @@ These are wrappers around node's `net.createConnection`:
   shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
 * `result = streams.usingWritable(_, stream, [options,] fn)`
   shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
-* `streams.pump(_, inStream, outStream)
+* `streams.pump(_, inStream, outStream)`
   Pumps from inStream to outStream
   does not close the streams at the end.
 
