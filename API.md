@@ -378,11 +378,13 @@ The following function can be used to iterate through object properties:
 
 The `funnel` function is typically used with the following pattern:
 
-    // somewhere
-    var myFunnel = flows.funnel(10); // create a funnel that only allows 10 concurrent executions.
-    
-    // elsewhere
-    myFunnel(_, function(_) { /* code with at most 10 concurrent executions */ });
+``` javascript
+// somewhere
+var myFunnel = flows.funnel(10); // create a funnel that only allows 10 concurrent executions.
+
+// elsewhere
+myFunnel(_, function(_) { /* code with at most 10 concurrent executions */ });
+```
 
 The `diskUsage2.js` example demonstrates how these calls can be combined to control concurrent execution.
 
