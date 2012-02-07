@@ -281,11 +281,11 @@ These are wrappers around node's `net.createConnection`:
    `fn` is called inside a `try/finally` block to guarantee that the stream is closed in all cases.  
    Returns the value returned by `fn`.
 * `result = streams.usingReadable(_, stream, [options,] fn)`  
-   shortcut for streams.using(_, streams.ReadableStream, stream, options, fn) 
+   shortcut for `streams.using(_, streams.ReadableStream, stream, options, fn)` 
 * `result = streams.usingWritable(_, stream, [options,] fn)`  
-   shortcut for streams.using(_, streams.WritableStream, stream, options, fn) 
+   shortcut for `streams.using(_, streams.WritableStream, stream, options, fn)` 
 * `streams.pump(_, inStream, outStream)`  
-   Pumps from inStream to outStream.  
+   Pumps from `inStream` to `outStream`.  
    Does not close the streams at the end.
 
 # streamline/lib/tools/docTool
