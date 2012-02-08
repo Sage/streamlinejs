@@ -124,94 +124,99 @@ function T(_, fn, code, failFn){
 	}
 }
 
+// safari hack
+var rawStack = new Error().stack ?
+function(raw) {
+	return raw;
+} : function() {
+	return "raw stack unavailable";
+}
+
 module("stacks");
 
-asyncTest("stacks", 20, fstreamline__.create(function(_){
-	strictEqual(T(_, A_, 1, failAsync_), "Error: 1/failAsync:15/A:28");
-	strictEqual(T(_, A_, 1, failSync_), "Error: 1/fail:20/failSync:21/A:28");
-	strictEqual(T(_, A_, 2, failAsync_), "Error: 2/failAsync:15/A:30");
-	strictEqual(T(_, A_, 2, failSync_), "Error: 2/fail:20/failSync:21/A:30");
-	strictEqual(T(_, A_, 3, failAsync_), "Error: 3/failAsync:15/A:33");
-	strictEqual(T(_, A_, 3, failSync_), "Error: 3/fail:20/failSync:21/A:33");
-	strictEqual(T(_, A_, 4, failAsync_), "Error: 4/failAsync:15/A:36");
-	strictEqual(T(_, A_, 4, failSync_), "Error: 4/fail:20/failSync:21/A:36");
-	strictEqual(T(_, A_, 5, failAsync_), "Error: 5/failAsync:15/A:36");
-	strictEqual(T(_, A_, 5, failSync_), "Error: 5/fail:20/failSync:21/A:36");
-	strictEqual(T(_, A_, 6, failAsync_), "Error: 6/failAsync:15/A:40");
-	strictEqual(T(_, A_, 6, failSync_), "Error: 6/fail:20/failSync:21/A:40");
-	strictEqual(T(_, A_, 7, failAsync_), "Error: 7/failAsync:15/B:49/A:42");
-	strictEqual(T(_, A_, 7, failSync_), "Error: 7/fail:20/failSync:21/B:49/A:42");
-	strictEqual(T(_, A_, 8, failAsync_), "Error: 8/failAsync:15/C:58/B:50/A:42");
-	strictEqual(T(_, A_, 8, failSync_), "Error: 8/fail:20/failSync:21/C:58/B:50/A:42");
-	strictEqual(T(_, A_, 9, failAsync_), "Error: 9/failAsync:15/D:63/B:53/A:42");
-	strictEqual(T(_, A_, 9, failSync_), "Error: 9/fail:20/failSync:21/D:63/B:53/A:42");
+asyncTest("stacks", 20, fstreamline__.create(function(_) {
+	strictEqual(T(_, A_, 1, failAsync_), rawStack("Error: 1/failAsync:15") + "/A:28");
+	strictEqual(T(_, A_, 1, failSync_), rawStack("Error: 1/fail:20/failSync:21") + "/A:28");
+	strictEqual(T(_, A_, 2, failAsync_), rawStack("Error: 2/failAsync:15") + "/A:30");
+	strictEqual(T(_, A_, 2, failSync_), rawStack("Error: 2/fail:20/failSync:21") + "/A:30");
+	strictEqual(T(_, A_, 3, failAsync_), rawStack("Error: 3/failAsync:15") + "/A:33");
+	strictEqual(T(_, A_, 3, failSync_), rawStack("Error: 3/fail:20/failSync:21") + "/A:33");
+	strictEqual(T(_, A_, 4, failAsync_), rawStack("Error: 4/failAsync:15") + "/A:36");
+	strictEqual(T(_, A_, 4, failSync_), rawStack("Error: 4/fail:20/failSync:21") + "/A:36");
+	strictEqual(T(_, A_, 5, failAsync_), rawStack("Error: 5/failAsync:15") + "/A:36");
+	strictEqual(T(_, A_, 5, failSync_), rawStack("Error: 5/fail:20/failSync:21") + "/A:36");
+	strictEqual(T(_, A_, 6, failAsync_), rawStack("Error: 6/failAsync:15") + "/A:40");
+	strictEqual(T(_, A_, 6, failSync_), rawStack("Error: 6/fail:20/failSync:21") + "/A:40");
+	strictEqual(T(_, A_, 7, failAsync_), rawStack("Error: 7/failAsync:15") + "/B:49/A:42");
+	strictEqual(T(_, A_, 7, failSync_), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42");
+	strictEqual(T(_, A_, 8, failAsync_), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42");
+	strictEqual(T(_, A_, 8, failSync_), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42");
+	strictEqual(T(_, A_, 9, failAsync_), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42");
+	strictEqual(T(_, A_, 9, failSync_), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42");
 	strictEqual(T(_, A_, 10, failAsync_), "END");
 	strictEqual(T(_, A_, 10, failSync_), "END");
 	start();
 }, 0))
 
-asyncTest("catch", 20, fstreamline__.create(function(_){
-	strictEqual(T(_, E_, 1, failAsync_), "Error: 1/failAsync:15/E:72");
-	strictEqual(T(_, E_, 1, failSync_), "Error: 1/fail:20/failSync:21/E:72");
-	strictEqual(T(_, E_, 2, failAsync_), "Error: 2/failAsync:15/A:30/E:74");
-	strictEqual(T(_, E_, 2, failSync_), "Error: 2/fail:20/failSync:21/A:30/E:74");
+asyncTest("catch", 20, fstreamline__.create(function(_) {
+	strictEqual(T(_, E_, 1, failAsync_), rawStack("Error: 1/failAsync:15") + "/E:72");
+	strictEqual(T(_, E_, 1, failSync_), rawStack("Error: 1/fail:20/failSync:21") + "/E:72");
+	strictEqual(T(_, E_, 2, failAsync_), rawStack("Error: 2/failAsync:15") + "/A:30/E:74");
+	strictEqual(T(_, E_, 2, failSync_), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74");
 	strictEqual(T(_, E_, 3, failAsync_), "OK 3");
 	strictEqual(T(_, E_, 3, failSync_), "OK 3");
-	strictEqual(T(_, E_, 4, failAsync_), "Error: 4/failAsync:15/E:72");
-	strictEqual(T(_, E_, 4, failSync_), "Error: 4/fail:20/failSync:21/E:72");
-	strictEqual(T(_, E_, 5, failAsync_), "Error: 5/failAsync:15/A:36/E:74");
-	strictEqual(T(_, E_, 5, failSync_), "Error: 5/fail:20/failSync:21/A:36/E:74");
+	strictEqual(T(_, E_, 4, failAsync_), rawStack("Error: 4/failAsync:15") + "/E:72");
+	strictEqual(T(_, E_, 4, failSync_), rawStack("Error: 4/fail:20/failSync:21") + "/E:72");
+	strictEqual(T(_, E_, 5, failAsync_), rawStack("Error: 5/failAsync:15") + "/A:36/E:74");
+	strictEqual(T(_, E_, 5, failSync_), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74");
 	strictEqual(T(_, E_, 6, failAsync_), "OK 6");
 	strictEqual(T(_, E_, 6, failSync_), "OK 6");
-	strictEqual(T(_, E_, 7, failAsync_), "Error: 7/failAsync:15/E:72");
-	strictEqual(T(_, E_, 7, failSync_), "Error: 7/fail:20/failSync:21/E:72");
-	strictEqual(T(_, E_, 8, failAsync_), "Error: 8/failAsync:15/C:58/B:50/A:42/E:74");
-	strictEqual(T(_, E_, 8, failSync_), "Error: 8/fail:20/failSync:21/C:58/B:50/A:42/E:74");
+	strictEqual(T(_, E_, 7, failAsync_), rawStack("Error: 7/failAsync:15") + "/E:72");
+	strictEqual(T(_, E_, 7, failSync_), rawStack("Error: 7/fail:20/failSync:21") + "/E:72");
+	strictEqual(T(_, E_, 8, failAsync_), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74");
+	strictEqual(T(_, E_, 8, failSync_), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74");
 	strictEqual(T(_, E_, 9, failAsync_), "OK 9");
 	strictEqual(T(_, E_, 9, failSync_), "OK 9");
-	strictEqual(T(_, E_, 10, failAsync_), "Error: 10/failAsync:15/E:72");
-	strictEqual(T(_, E_, 10, failSync_), "Error: 10/fail:20/failSync:21/E:72");
+	strictEqual(T(_, E_, 10, failAsync_), rawStack("Error: 10/failAsync:15") + "/E:72");
+	strictEqual(T(_, E_, 10, failSync_), rawStack("Error: 10/fail:20/failSync:21") + "/E:72");
 	start();
 }, 0))
 
-asyncTest("futures", 20, fstreamline__.create(function(_){
-	strictEqual(T(_, F_, 1, failAsync_), "Error: 1/failAsync:15/A:28/F:83");
-	strictEqual(T(_, F_, 1, failSync_), "Error: 1/fail:20/failSync:21/A:28/F:83");
-	strictEqual(T(_, F_, 2, failAsync_), "Error: 2/failAsync:15/A:30/F:83");
-	strictEqual(T(_, F_, 2, failSync_), "Error: 2/fail:20/failSync:21/A:30/F:83");
-	strictEqual(T(_, F_, 3, failAsync_), "Error: 3/failAsync:15/A:33/F:83");
-	strictEqual(T(_, F_, 3, failSync_), "Error: 3/fail:20/failSync:21/A:33/F:83");
-	strictEqual(T(_, F_, 4, failAsync_), "Error: 4/failAsync:15/A:36/F:83");
-	strictEqual(T(_, F_, 4, failSync_), "Error: 4/fail:20/failSync:21/A:36/F:83");
-	strictEqual(T(_, F_, 5, failAsync_), "Error: 5/failAsync:15/A:36/F:83");
-	strictEqual(T(_, F_, 5, failSync_), "Error: 5/fail:20/failSync:21/A:36/F:83");
-	strictEqual(T(_, F_, 6, failAsync_), "Error: 6/failAsync:15/A:40/F:83");
-	strictEqual(T(_, F_, 6, failSync_), "Error: 6/fail:20/failSync:21/A:40/F:83");
-	strictEqual(T(_, F_, 7, failAsync_), "Error: 7/failAsync:15/B:49/A:42/F:83");
-	strictEqual(T(_, F_, 7, failSync_), "Error: 7/fail:20/failSync:21/B:49/A:42/F:83");
-	strictEqual(T(_, F_, 8, failAsync_), "Error: 8/failAsync:15/C:58/B:50/A:42/F:83");
-	strictEqual(T(_, F_, 8, failSync_), "Error: 8/fail:20/failSync:21/C:58/B:50/A:42/F:83");
-	strictEqual(T(_, F_, 9, failAsync_), "Error: 9/failAsync:15/D:63/B:53/A:42/F:83");
-	strictEqual(T(_, F_, 9, failSync_), "Error: 9/fail:20/failSync:21/D:63/B:53/A:42/F:83");
+asyncTest("futures", 20, fstreamline__.create(function(_) {
+	strictEqual(T(_, F_, 1, failAsync_), rawStack("Error: 1/failAsync:15") + "/A:28/F:83");
+	strictEqual(T(_, F_, 1, failSync_), rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83");
+	strictEqual(T(_, F_, 2, failAsync_), rawStack("Error: 2/failAsync:15") + "/A:30/F:83");
+	strictEqual(T(_, F_, 2, failSync_), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83");
+	strictEqual(T(_, F_, 3, failAsync_), rawStack("Error: 3/failAsync:15") + "/A:33/F:83");
+	strictEqual(T(_, F_, 3, failSync_), rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83");
+	strictEqual(T(_, F_, 4, failAsync_), rawStack("Error: 4/failAsync:15") + "/A:36/F:83");
+	strictEqual(T(_, F_, 4, failSync_), rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83");
+	strictEqual(T(_, F_, 5, failAsync_), rawStack("Error: 5/failAsync:15") + "/A:36/F:83");
+	strictEqual(T(_, F_, 5, failSync_), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83");
+	strictEqual(T(_, F_, 6, failAsync_), rawStack("Error: 6/failAsync:15") + "/A:40/F:83");
+	strictEqual(T(_, F_, 6, failSync_), rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83");
+	strictEqual(T(_, F_, 7, failAsync_), rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83");
+	strictEqual(T(_, F_, 7, failSync_), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83");
+	strictEqual(T(_, F_, 8, failAsync_), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83");
+	strictEqual(T(_, F_, 8, failSync_), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83");
+	strictEqual(T(_, F_, 9, failAsync_), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83");
+	strictEqual(T(_, F_, 9, failSync_), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83");
 	strictEqual(T(_, F_, 10, failAsync_), "END & END");
 	strictEqual(T(_, F_, 10, failSync_), "END & END");
 	start();
 }, 0))
 
-asyncTest("loop", 8, fstreamline__.create(function(_){
+asyncTest("loop", 8, fstreamline__.create(function(_) {
 	strictEqual(T(_, I_, 4, failAsync_), "0123");
 	strictEqual(T(_, I_, 4, failSync_), "0123");
 	strictEqual(T(_, I_, 5, failAsync_), "01234");
 	strictEqual(T(_, I_, 5, failSync_), "01234");
-	strictEqual(T(_, I_, 6, failAsync_), "Error: 5/failAsync:15/G:88/H:95/I:101");
-	strictEqual(T(_, I_, 6, failSync_), "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
-	strictEqual(T(_, I_, 7, failAsync_), "Error: 5/failAsync:15/G:88/H:95/I:101");
-	strictEqual(T(_, I_, 7, failSync_), "Error: 5/fail:20/failSync:21/G:88/H:95/I:101");
+	strictEqual(T(_, I_, 6, failAsync_), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
+	strictEqual(T(_, I_, 6, failSync_), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
+	strictEqual(T(_, I_, 7, failAsync_), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
+	strictEqual(T(_, I_, 7, failSync_), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
 	start();
 }, 0))
-
-
-
 }, 0).call(this, function(err) {
   if (err) throw err;
 }));
