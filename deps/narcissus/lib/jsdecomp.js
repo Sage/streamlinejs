@@ -300,7 +300,7 @@ Narcissus.decompiler = (function() {
             break;
 
           case DEBUGGER:
-            p += "debugger NYI\n";
+            p += "debugger\n";
             break;
 
           case SEMICOLON:
