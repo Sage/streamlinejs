@@ -2,6 +2,7 @@
 
 var coffee = require('coffee-script');
 var path = require('path');
+var fs = require('fs');
 
 var streamline = require('streamline');
 
@@ -9,7 +10,19 @@ if (process.argv.length >= 3 && process.argv[2][0] != '-') {
 	// coffee-streamline myScript.coffee args
 	// our compile hook is not called if we pass it to coffee-script command line
 	process.argv.shift(); // remove the 'node' arg inserted by the shell
-	require(path.join(process.cwd(), process.argv[1]));
+	var arg = process.argv[1];
+	var p = path.join(process.cwd(), arg);
+	if (!arg.match(/\.(js|coffee)$/)) {
+		var tmp = path.join(process.cwd(), "tmp--" + Math.round(Math.random() * 1e9) + ".coffee");
+		fs.writeFileSync(tmp, "return if not require('streamline/module')(module)\n" + fs.readFileSync(p, "utf8"), "utf8");
+		process.on('exit', function() {
+			try { fs.unlinkSync(tmp); }
+			catch (ex) {}
+		});
+		require(tmp);
+	} else {
+		require(p);
+	}
 }
 else {
 	// coffee-script command line with handle REPL and compiler
