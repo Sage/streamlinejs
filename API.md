@@ -66,6 +66,7 @@ be able to retrieve to format messages.
 * `ctx = globals.context`  
   sets and gets the context
 
+
 # streamline/lib/require/client/require
  
 Client-side require script
