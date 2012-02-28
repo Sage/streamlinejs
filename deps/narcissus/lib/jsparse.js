@@ -117,6 +117,7 @@ Narcissus.parser = (function() {
         },
         pushTarget: function(target) {
             var isDefaultTarget = target.isLoop || target.type === SWITCH;
+            if (isDefaultTarget) target.target = this.defaultTarget;
 
             if (this.currentLabels.isEmpty()) {
                 return isDefaultTarget
@@ -495,8 +496,13 @@ Narcissus.parser = (function() {
 
             if (!n.target)
                 throw t.newSyntaxError("Invalid " + ((tt === BREAK) ? "break" : "continue"));
-            if (!n.target.isLoop && tt === CONTINUE)
-                throw t.newSyntaxError("Invalid continue");
+            //if (!n.target.isLoop && tt === CONTINUE)
+            //    throw t.newSyntaxError("Invalid continue");
+            if (tt === CONTINUE) {
+                for (var ttt = n.target; ttt && !ttt.isLoop; ttt = ttt.target)
+                    ;
+                if (!ttt) throw t.newSyntaxError("Invalid continue");
+            }
 
             break;
 
