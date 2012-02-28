@@ -202,7 +202,7 @@ This stream is writable (see Writable Stream above).
 
 This is a wrapper around node's `http.Server` object:
 
-* `server = new streams.HttpServer(requestListener, [options])`    
+* `server = streams.createHttpServer(requestListener, [options])`    
   creates the wrapper.  
   `requestListener` is called as `requestListener(request, response, _)` 
   where `request` and `response` are wrappers around `http.ServerRequest` and `http.ServerResponse`.
@@ -273,6 +273,18 @@ These are wrappers around node's `net.createConnection`:
    If you want different options for `read` and `write` operations, you can specify them by creating `options.read` and `options.write` sub-objects inside `options`.
 * `stream = client.connect(_)`  
    connects the client and returns a network stream.
+
+## NetServer
+
+This is a wrapper around node's `net.Server` object:
+
+* `server = streams.createNetServer([serverOptions,] connectionListener [, streamOptions])`    
+  creates the wrapper.  
+  `connectionListener` is called as `connectionListener(stream, _)` 
+  where `stream` is a `NetStream` wrapper around the native connection.  
+* `server.listen(_, port, [host])`  
+* `server.listen(_, path)`  
+  (same as `net.Server`)
 
 ## try/finally wrappers and pump
 
