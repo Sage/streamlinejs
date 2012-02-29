@@ -226,8 +226,16 @@ The following subdirectories contain various modules that have been written with
 
 * `lib/util`: utilities for array manipulation, semaphores, etc.
 * `lib/streams`: pull-mode API for node.js streams.
-* `lib/require`: infrastructure to support client-side require.
 * `lib/tools`: small tools (doc generator for API.md file).
+
+# Related Packages
+
+The following packages use streamline.js:
+
+* [streamline-require](https://github.com/Sage/streamline-require): a light and efficient _require_ infrastructure for modules in the browser.
+* [streamline-pdfkit](https://github.com/Sage/streamline-pdfkit): a fork of [pdfkit](https://github.com/devongovett/pdfkit) in which all the sync calls have been eliminated.
+* [streamline-zip](https://github.com/Sage/streamline-zip): a fork of [node-native-zip](https://github.com/janjongboom/node-native-zip) with async deflate.
+
 
 ## Resources
 
