@@ -105,7 +105,7 @@ asyncTest("collectAll", 4, function __11(_) { var total, peak, count, results;
  return function __1(_) { var __frame = { name: "__1", line: 105 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
- return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
+ return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
  return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__11", line: 99 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0;
 
@@ -127,7 +127,7 @@ asyncTest("collectOne", 4, function __12(_) { var total, peak, count, result;
  return function __1(_) { var __frame = { name: "__1", line: 127 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
- return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
+ return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
  return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__12", line: 121 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0;
 
@@ -149,7 +149,7 @@ asyncTest("collectAll with limit", 1, function __13(_) { var total, peak, count,
  return function __1(_) { var __frame = { name: "__1", line: 149 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
- return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { total += __1;
+ return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
  return _(null, (2 * i)); }), i); }); }; }; var __frame = { name: "__13", line: 143 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0;
 
@@ -190,10 +190,10 @@ asyncTest("futures multiplex", 3, function __15(_) { var result1, result2, resul
 
 
  function doIt(future, _) { var __frame = { name: "doIt", line: 192 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() {
- return future(__cb(_, __frame, 1, 13, function ___(__0, __1) { result1 += __1;
- return future(__cb(_, __frame, 2, 13, function ___(__0, __2) { result2 += __2;
+ return future(__cb(_, __frame, 1, 12, function ___(__0, __1) { result1 = (__1 + result1);
+ return future(__cb(_, __frame, 2, 12, function ___(__0, __2) { result2 = (__2 + result2);
  return delay(__cb(_, __frame, 3, 2, function __$doIt() {
- return future(__cb(_, __frame, 4, 13, function ___(__0, __3) { result3 += __3; _(); })); })); })); })); }); }; var __frame = { name: "__15", line: 187 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0;
+ return future(__cb(_, __frame, 4, 12, function ___(__0, __3) { result3 = (__3 + result3); _(); })); })); })); })); }); }; var __frame = { name: "__15", line: 187 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0;
 
 
  f1 = delay(null, 1);

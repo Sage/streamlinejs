@@ -105,7 +105,7 @@ asyncTest("collectAll", 4, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
-			total += delay(_, i);
+			total = delay(_, i) + total;
 			count--;
 			return 2 * i;
 		}
@@ -127,7 +127,7 @@ asyncTest("collectOne", 4, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
-			total += delay(_, i);
+			total = delay(_, i) + total;
 			count--;
 			return 2 * i;
 		}
@@ -149,7 +149,7 @@ asyncTest("collectAll with limit", 1, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
-			total += delay(_, i);
+			total = delay(_, i) + total;
 			count--;
 			return 2 * i;
 		}
@@ -190,10 +190,10 @@ asyncTest("futures multiplex", 3, function(_) {
 	var result3 = 0;
 
 	function doIt(future, _) {
-		result1 += future(_);
-		result2 += future(_);
+		result1 = future(_) + result1;
+		result2 = future(_) + result2;
 		delay(_);
-		result3 += future(_);
+		result3 = future(_) + result3;
 	}
 
 	var f1 = delay(null, 1);
