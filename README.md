@@ -201,16 +201,7 @@ The [streamline compiler](https://github.com/Sage/streamlinejs/wiki/Compilers) g
 
 You can also transform the code in the browser with the `transform` API. See `examples/streamlineMe` for an example.
 
-The `lib/require` directory contains a small infrastructure to load streamline and regular JS modules from the browser. 
-It applies the streamline transformation server side and caches the transformed files.
-It also optimizes roundtrips between client and server: 
-the _required_ module and all its dependencies are transferred in one message.
-Also, dependencies that have already been transferred to the browser are not re-transferred 
-when you require additional modules.
-
-Note: the `lib/require` infrastructure does not handle all the subtleties of node's require logic but it handles enough to
-support our applications (and it does it very efficiently).
-It is provided _as is_ and contributions to improve it are welcome.
+The [streamline-require package](https://github.com/Sage/streamline-require) contains a small infrastructure to load streamline and regular JS modules from the browser. 
 
 # Examples
 
