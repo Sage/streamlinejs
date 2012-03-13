@@ -36,7 +36,7 @@ test("basic", 1, function() {
 			return f1(__cb(_, __frame, 1, 4, function __$f() {
 				f2();
 				_();
-			}));
+			}, true));
 		});
 	});
 });
@@ -56,7 +56,7 @@ test("var return", 1, function() {
 				x = __1;
 				f2();
 				return _(null, x);
-			}));
+			}, true));
 		});
 	});
 });
@@ -97,7 +97,7 @@ test("if", 1, function() {
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}));
+					}, true));
 				} else {
 					__then();
 				}
@@ -129,7 +129,7 @@ test("simplified if", 1, function() {
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}));
+					}, true));
 				} else {
 					__then();
 				}
@@ -163,13 +163,13 @@ test("if else", 1, function() {
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}));
+					}, true));
 				} else {
 					f5();
 					return f6(__cb(_, __frame, 8, 8, function __$f() {
 						f7();
 						__then();
-					}));
+					}, true));
 				}
 			})(function __$f() {
 				f8();
@@ -204,7 +204,7 @@ test("if else 2", 1, function() {
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						return _(null, 1);
-					}));
+					}, true));
 				} else {
 					f5();
 					__then();
@@ -234,7 +234,7 @@ test("each", 1, function() {
 			return each(__cb(_, __frame, 2, 4, function __$f() {
 				f4();
 				_();
-			}), arr, function __1(_, elt) {
+			}, true), arr, function __1(_, elt) {
 				var __frame = {
 					name: "__1",
 					line: 3
@@ -243,7 +243,7 @@ test("each", 1, function() {
 					return f2(__cb(_, __frame, 0, 36, function __$__1() {
 						f3();
 						_();
-					}), elt);
+					}, true), elt);
 				});
 			});
 		});
@@ -276,7 +276,7 @@ test("while", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}));
+						}, true));
 					} else {
 						__break();
 					}
@@ -323,7 +323,7 @@ test("do while", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}));
+						}, true));
 					} else {
 						__break();
 					}
@@ -375,7 +375,7 @@ test("for", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}));
+						}, true));
 					} else {
 						__break();
 					}
@@ -423,7 +423,7 @@ test("for in", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}), k);
+						}, true), k);
 					} else {
 						__break();
 					}
@@ -472,7 +472,7 @@ test("for in (without var)", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}), k);
+						}, true), k);
 					} else {
 						__break();
 					}
@@ -520,11 +520,11 @@ test("switch", 1, function() {
 					return f2(__cb(_, __frame, 4, 8, function __$f() {
 						f3();
 						return __break();
-					}));
+					}, true));
 				case "b":
 				case "c":
 					f4();
-					return f5(__cb(_, __frame, 10, 8, __break));
+					return f5(__cb(_, __frame, 10, 8, __break, true));
 				default:
 					f6();
 					return __break();
@@ -562,7 +562,7 @@ test("nested switch", 1, function() {
 							break;
 						}
 						return __break();
-					}));
+					}, true));
 				default:
 					return __break();
 				}
@@ -588,10 +588,10 @@ test("nested calls", 1, function() {
 						return f2(__cb(_, __frame, 2, 4, function __$f() {
 							f7();
 							_();
-						}), __2, __3);
-					}), f6());
-				}), __1);
-			}));
+						}, true), __2, __3);
+					}, true), f6());
+				}, true), __1);
+			}, true));
 		});
 	});
 })
@@ -622,7 +622,7 @@ test("async while condition", 1, function() {
 						} else {
 							__break();
 						}
-					}));
+					}, true));
 				});
 				do {
 					__loop();
@@ -663,7 +663,7 @@ test("try catch", 1, function() {
 						return f3(__cb(_, __frame, 4, 8, function __$f() {
 							f4();
 							__then();
-						}));
+						}, true));
 					});
 
 				})(function ___(ex, __result) {
@@ -673,7 +673,7 @@ test("try catch", 1, function() {
 							return f6(__cb(_, __frame, 8, 8, function __$f() {
 								f7();
 								__then();
-							}));
+							}, true));
 						} else {
 							_(null, __result);
 						}
@@ -715,7 +715,7 @@ test("try finally", 1, function() {
 						return f3(__cb(_, __frame, 4, 8, function __$f() {
 							f4();
 							_(null, null, true);
-						}));
+						}, true));
 					});
 				})(function ___(__e, __r, __cont) {
 					(function ___(__then) {
@@ -724,7 +724,7 @@ test("try finally", 1, function() {
 							return f6(__cb(_, __frame, 8, 8, function __$f() {
 								f7();
 								__then();
-							}));
+							}, true));
 						});
 					})(function ___() {
 						__tryCatch(_, function ___() {
@@ -775,7 +775,7 @@ test("lazy and", 1, function() {
 					})(function __$f() {
 						return f3(_);
 					});
-				}));
+				}, true));
 			})(__cb(_, __frame, 0, 5, function ___(__0, __2) {
 				return (function __$f(__then) {
 					if (__2) {
@@ -783,7 +783,7 @@ test("lazy and", 1, function() {
 						return f5(__cb(_, __frame, 4, 8, function __$f() {
 							f6();
 							__then();
-						}));
+						}, true));
 					} else {
 						__then();
 					}
@@ -791,7 +791,7 @@ test("lazy and", 1, function() {
 					f7();
 					_();
 				});
-			}));
+			}, true));
 		});
 	})
 })
@@ -842,7 +842,7 @@ test("wrappers", 1, function() {
 			return g(__wrap1(__cb(_, __frame, 1, 11, function ___(__0, __2) {
 				var __1 = (__2 + 5);
 				return _(null, __1);
-			})), arg2);
+			}, true)), arg2);
 		});
 	});
 })
@@ -887,7 +887,7 @@ test("scoping", 1, function() {
 				b3++;
 				c2 = 2;
 				_();
-			}));
+			}, true));
 		});
 	});
 })
@@ -1632,4 +1632,13 @@ asyncTest("async constructor", 2, function() {
 		Foo.prototype.y = function() { return this.x + 1; }
 		return new Foo(5, _).y();
 	}, 6);
+})
+
+asyncTest("fibo false async", 2, function() {
+	evalTest(function f(_) {
+		function fibo(_, n) {
+			return n > 1 ? fibo(_, n - 1) + fibo(_, n - 2) : 1;
+		}
+		return fibo(_, 16);
+	}, 1597);
 })
