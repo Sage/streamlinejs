@@ -92,6 +92,8 @@ All stream wrappers derive from this wrapper.
   creates a wrapper.
 * `emitter = wrapper.emitter`  
    returns the underlying emitter. The emitter stream can be used to attach additional observers.
+* `closed = wrapper.closed`   
+   returns true if the `close` event has been received.
 * `emitter = wrapper.unwrap()`  
    unwraps and returns the underlying emitter.  
    The wrapper should not be used after this call.
