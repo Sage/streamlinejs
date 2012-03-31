@@ -34,8 +34,8 @@ Streamline.js lets you write:
 ```javascript
 function archiveOrders(date, _) {
   var conn = db.connect(_);
-  flows.each(_, conn.query("select * from orders where date < ?",
-                           [date], _), function(_, order) {
+  conn.query("select * from orders where date < ?",
+                           [date], _).forEach_(_, function(_, order) {
     conn.execute("insert into archivedOrders ...",
                  [order.id, ...], _);
     conn.execute("delete from orders where id=?",
