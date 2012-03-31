@@ -1,4 +1,3 @@
-//streamline.options = { "lines" : "preserve" }
 var module = QUnit.module;
 var flows = require("streamline/lib/util/flows");
 

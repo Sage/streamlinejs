@@ -1,4 +1,3 @@
-//streamline.options = { "lines" : "preserve" }
 // WARNING: DO NOT INSERT COMMENTS OR ANYTHING
 // Line numbers matter to this test!
 
