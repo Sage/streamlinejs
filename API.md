@@ -351,9 +351,9 @@ Flows Module
 
 The `streamline/lib/util/flows` module contains some handy utilities for streamline code
 
-## Array utilities
+## Array utilities (obsolete)
 
-The following functions are async equivalents of the ES5 Array methods (`forEach`, `map`, `filter`, ...)
+This API is obsolete. Use `array.forEach_`, `array.map_`, ... instead.
 
 * `flows.each(_, array, fn, [thisObj])`  
   applies `fn` sequentially to the elements of `array`.  
@@ -382,9 +382,9 @@ The following functions are async equivalents of the ES5 Array methods (`forEach
   
   Note: this function _changes_ the original array (and returns it)
 
-## Object utility
+## Object utility (obsolete)
 
-The following function can be used to iterate through object properties:
+This API is obsolete. Use `Object.keys(obj).forEach_` instead.
 
 * `flows.eachKey(_, obj, fn)`  
   calls `fn(_, key, obj[key])` for every `key` in `obj`.
@@ -419,7 +419,4 @@ Utility functions:
   `nextTick` function for both browser and server.  
   Aliased to `process.nextTick` on the server side.
 * `result = flows.apply(_, fn, thisObj, args, [index])`  
-  Helper to apply `Function.apply` to streamline functions.  
-  Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
-  a modified argument list in which the callback has been inserted at `index` 
-  (at the end of the argument list if `index` is not specified).
+  Obsolete. Use `fn.apply_` instead.

@@ -1,6 +1,6 @@
-## streamline.js
+# streamline.js
 
-`streamline.js` is a small tool to simplify asynchronous Javascript programming.
+`streamline.js` is a language tool to simplify asynchronous Javascript programming.
 
 Instead of writing hairy code like:
 
@@ -29,7 +29,82 @@ And streamline is not limited to a subset of Javascript.
 You can use all the flow control features of Javascript in your asynchronous code: conditionals, 
 loops, `try/catch/finally` blocks, anonymous functions, `this`, etc. 
 
-Streamline also provides _futures_, and comes with a small optional library of helper functions (see Goodies section below).
+Streamline also provides _futures_, and additional builtin functions for asynchronous programming.
+
+# Installation
+
+The easiest way to install `streamline.js` is with NPM:
+
+```sh
+npm install streamline -g
+```
+
+The `-g` option installs it _globally_.
+You can also install it _locally_, without `-g` but then the `_node` and `_coffee` 
+commands will not be in your default PATH.
+
+Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
+
+The global installation option makes `_node` globally accessible but it does not expose the Javascript support
+modules (`runtime.js`, `flows.js`, etc.) globally. 
+If you need these modules anywhere in your development tree, 
+for example because you use streamline in shell scripts (see below), 
+you should `npm link` streamline to the root of your development tree:
+
+```sh
+cd $myworkdir
+npm link streamline
+```
+
+If you want to use the _fibers_ option (see below), you must also install the fibers library:
+
+```sh
+npm install fibers [-g]
+```
+
+# Hello World
+
+Streamline modules have `._js` or `._coffee` extensions and you run them with the `_node` or `_coffee` 
+loader.
+
+Javascripters:
+
+``` sh
+echo "console.log('hello ...');" > hello._js
+echo "setTimeout(_, 1000);" >> hello._js
+echo "console.log('... world');" >> hello._js
+_node hello
+```
+
+Coffeescripters:
+
+``` sh
+echo "console.log 'hello ...'" > hello._coffee
+echo "setTimeout _, 1000" >> hello._coffee
+echo "console.log '... world'" >> hello._coffee
+_coffee hello
+```
+
+You can also create standalone shell utilities:
+
+``` sh
+echo "#!/usr/bin/env _node" > hello.sh
+cat hello._js >> hello.sh
+chmod +x hello.sh
+./hello.sh
+```
+
+or:
+
+``` sh
+echo "#!/usr/bin/env _coffee" > hello.sh
+cat hello._coffee >> hello.sh
+chmod +x hello.sh
+./hello.sh
+```
+
+You can also create your own loader and run your program with `node` or `coffee`. 
+See the [loader example](http://sage.github.com/streamlinejs/examples/loader/loader.md)
 
 # Generation options
 
@@ -45,9 +120,9 @@ This option gives superior development experience: line numbers are always prese
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
 It may also generate more efficient code (to be confirmed by benchmarks).
 
-The _fibers_ option can be activated by passing `--fibers` to the `node-streamline` command or by 
+The _fibers_ option can be activated by passing `--fibers` to the `_node` command or by 
 setting the `fibers` option when registering streamline 
-(see the `register(options)` function in `streamline/lib/compiler/register` or the `streamline/module` API).
+(see the `register(options)` function in `streamline/lib/compiler/register`).
  
 # Interoperability with standard node.js code
 
@@ -76,124 +151,6 @@ and the asynchronous functions that you create with streamline have the standard
 # On-line demo
 
 You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
-
-# Installation
-
-The easiest way to install `streamline.js` is with NPM:
-
-```sh
-npm install streamline -g
-```
-
-The `-g` option installs it _globally_.
-You can also install it _locally_, without `-g` but then the `node-streamline` and `coffee-streamline` 
-commands will not be in your default PATH.
-
-Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
-
-The global installation option makes `node-streamline` globally accessible but it does not expose the Javascript support
-modules (`runtime.js`, `flows.js`, etc.) globally. 
-If you need these modules anywhere in your development tree, 
-for example because you use streamline in shell scripts (see below), 
-you should `npm link` streamline to the root of your development tree:
-
-```sh
-cd $myworkdir
-npm link streamline
-```
-
-If you want to use the _fibers_ option, you must also install the fibers library:
-
-```sh
-npm install fibers [-g]
-```
-
-# Creating and running streamline modules
-
-The easiest way to write streamline code is to put the following line at the top of your module:
-
-``` javascript
-if (!require('streamline/module')(module)) return;
-```
-
-Then you can use the `_` marker anywhere in your module:
-
-```javascript
-function lineCount(path, _) {
-  return fs.readFile(path, "utf8", _).split('\n').length;
-}
-```
-
-You can run your module with `node-streamline`:
-
-```sh
-node-streamline myModule
-```
-
-The code will be automatically transformed and the transformed files will be cached under `~/.streamline`.
-
-You can also run your module with `node`:
-
-```sh
-node myModule
-```
-
-If you run with `node`, streamline will create (and delete) a temporary copy of your source file.
-So you need r/w access to the module's directory. 
-Note that only the main module will be copied, the streamline modules that are _required_ by the main module 
-won't be copied so you don't need r/w access to all directories.
-
-# Coffeescript
-
-Coffeescript is no different. You just need the following line at the top of your module:
-
-```coffeescript
-return if not require('streamline/module')(module)
-```
-
-And then you can run your module with:
-
-```sh
-coffee-streamline myModule
-```
-
-or just, if you have r/w access to the module's directory (see `node` above):
-
-```sh
-coffee myModule
-```
-
-# Shell scripts
-
-You can also use streamline to write shell scripts that call asynchronous node APIs. 
-You just need the following line at the top of your script:
-
-```sh
-#!/usr/bin/env node-streamline
-```
-
-For example:
-
-```sh
-#!/usr/bin/env node-streamline
-console.log("waiting 1 second");
-setTimeout(_, 1000);
-console.log("done!");
-```
-
-Note: you must install streamline with the `-g` option and you must `npm link` it at the top of your
-development tree to make this work smoothly (see installation section above).
-  
-# Compilation setup (old style)
-
-You can also set up your modules to have the streamline source and the transformed Javascript side by side in 
-the same directory. To do this, you must append an underscore to your module's base name: `myModule_.js`.
-
-This was the original setup. It is nice if you want to see the transformed code but it pollutes the directories 
-with extra files and it becomes messy when you start testing with both callback and fibers mode. 
-The callback output is called `myModule.js` and the fibers' output is called `myModule--fibers.js`.
-
-The [Compilers wiki page](https://github.com/Sage/streamlinejs/wiki/Compilers) gives details on this mode.
 
 # Browser-side use
 

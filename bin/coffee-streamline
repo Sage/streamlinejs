@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+console.log("obsolete script: use _coffee instead.");
 var coffee = require('coffee-script');
 var path = require('path');
 var fs = require('fs');

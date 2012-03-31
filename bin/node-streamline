@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
+console.log("obsolete script: use _node instead.");
 require("streamline/lib/compiler/command").run();
