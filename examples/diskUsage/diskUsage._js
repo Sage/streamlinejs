@@ -1,5 +1,5 @@
 /*
- * Usage: node-streamline diskUsage [path]
+ * Usage: _node diskUsage [path]
  *
  * Recursively computes the size of directories.
  *
@@ -8,7 +8,6 @@
  * Javascript code.
  */
 "use strict";
-if (!require('streamline/module')(module)) return;
 
 var fs = require('fs');
 

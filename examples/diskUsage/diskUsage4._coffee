@@ -18,8 +18,6 @@
 # 
 # On my machine, the parallel version is almost twice faster than the sequential version.
 #
-if not require('streamline/module')(module)
-	return
 
 fs = require 'fs'
 flows = require 'streamline/lib/util/flows'
