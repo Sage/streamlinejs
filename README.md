@@ -144,7 +144,7 @@ Compiling will give you the fastest startup time because node will directly load
 
 You have three options to use streamline in the browser:
 
-* The first one is to compile the source with `_node -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [flows test example](https://github.com/Sage/streamlinejs/blob/master/examples/common/flows-test.html).
+* The first one is to compile the source with `_node -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [flows test example](https://github.com/Sage/streamlinejs/blob/master/test/common/flows-test.html).
 * You can also transform the code in the browser with the `transform` API. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 * A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
@@ -218,7 +218,7 @@ See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page f
 
 # Asynchronous Array functions
 
-Streamline extends the Array prototypes with asynchronous variants of the ES5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
+Streamline extends the Array prototype with asynchronous variants of the EcmaScript 5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
 
 ``` javascript
 function lineLengths(path, _) {
@@ -263,7 +263,8 @@ The following packages use streamline.js:
 
 # Resources
 
-The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).  
+The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).
+
 The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
