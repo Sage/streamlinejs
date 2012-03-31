@@ -8,15 +8,12 @@ Instead of writing hairy code like:
 function archiveOrders(date, cb) {
   db.connect(function(err, conn) {
     if (err) return cb(err);
-    conn.query("select * from orders where date < ?",
-               [date], function(err, orders) {
+    conn.query("select * from orders where date < ?", [date], function(err, orders) {
       if (err) return cb(err);
       helper.each(orders, function(order, next) {
-        conn.execute("insert into archivedOrders ...",
-                     [order.id, ...], function(err) {
+        conn.execute("insert into archivedOrders ...", [order.id, ...], function(err) {
           if (err) return cb(err);
-          conn.execute("delete from orders where id=?",
-                       [order.id], function(err) {
+          conn.execute("delete from orders where id=?", [order.id], function(err) {
             if (err) return cb(err);
             next();
           });
@@ -34,12 +31,9 @@ Streamline.js lets you write:
 ```javascript
 function archiveOrders(date, _) {
   var conn = db.connect(_);
-  conn.query("select * from orders where date < ?",
-                           [date], _).forEach_(_, function(_, order) {
-    conn.execute("insert into archivedOrders ...",
-                 [order.id, ...], _);
-    conn.execute("delete from orders where id=?",
-                 [order.id], _);
+  conn.query("select * from orders where date < ?", [date], _).forEach_(_, function(_, order) {
+    conn.execute("insert into archivedOrders ...", [order.id, ...], _);
+    conn.execute("delete from orders where id=?", [order.id], _);
   });
   console.log("orders have been archived");
 }
