@@ -11,6 +11,32 @@ Streamline's transformation engine
   * `callback` alternative identifier if `_` is already used.
   * `noHelpers` disables generation of helper functions (`__cb`, etc.)
 
+# streamline built-ins
+ 
+* `array.forEach_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt, i)`.
+* `result = array.map_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt, i)`.
+* `result = array.filter_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `bool = array.every_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `bool = array.some_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `result = array.reduce_(_, array, fn, val)`  
+  `fn` is called as `val = fn(_, val, elt, i, array)`.
+* `result = flows.reduceRight(_, array, fn, val, [thisObj])`  
+  reduces from end to start by applying `fn` to each element.  
+  `fn` is called as `val = fn(_, val, elt, i, array)`.
+* `array = flows.sort(_, array, compare, [beg], [end])`  
+  `compare` is called as `cmp = compare(_, elt1, elt2)`
+  Note: this function _changes_ the original array (and returns it)
+* `result = fn.apply_(_, thisObj, args, [index])`  
+  Helper to apply `Function.apply` to streamline functions.  
+  Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
+  a modified argument list in which the callback has been inserted at `index` 
+  (at the end of the argument list if `index` is not specified).
+
 # streamline/lib/compiler/command
  
 Streamline commmand line analyzer / dispatcher
@@ -51,6 +77,32 @@ Streamline `require` handler registration
 * `register.register(options)`  
   Registers `require` handlers for streamline.  
   `options` is a set of default options passed to the `transform` function.
+
+# streamline built-ins
+ 
+* `array.forEach_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt, i)`.
+* `result = array.map_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt, i)`.
+* `result = array.filter_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `bool = array.every_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `bool = array.some_(_, fn[, thisObj])`  
+  `fn` is called as `fn(_, elt)`.
+* `result = array.reduce_(_, array, fn, val)`  
+  `fn` is called as `val = fn(_, val, elt, i, array)`.
+* `result = flows.reduceRight(_, array, fn, val, [thisObj])`  
+  reduces from end to start by applying `fn` to each element.  
+  `fn` is called as `val = fn(_, val, elt, i, array)`.
+* `array = flows.sort(_, array, compare, [beg], [end])`  
+  `compare` is called as `cmp = compare(_, elt1, elt2)`
+  Note: this function _changes_ the original array (and returns it)
+* `result = fn.apply_(_, thisObj, args, [index])`  
+  Helper to apply `Function.apply` to streamline functions.  
+  Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
+  a modified argument list in which the callback has been inserted at `index` 
+  (at the end of the argument list if `index` is not specified).
 
 # streamline/lib/globals
 
