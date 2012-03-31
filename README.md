@@ -5,18 +5,43 @@
 Instead of writing hairy code like:
 
 ```javascript
-function lineCount(path, callback) {
-  fs.readFile(path, "utf8", function(err, data) {
-    if (err) { callback(err); return; }
-    callback(null, data.split('\n').length);
+function archiveOrders(date, cb) {
+  db.connect(function(err, conn) {
+    if (err) return cb(err);
+    conn.query("select * from orders where date < ?",
+               [date], function(err, orders) {
+      if (err) return cb(err);
+      helper.each(orders, function(order, next) {
+        conn.execute("insert into archivedOrders ...",
+                     [order.id, ...], function(err) {
+          if (err) return cb(err);
+          conn.execute("delete from orders where id=?",
+                       [order.id], function(err) {
+            if (err) return cb(err);
+            next();
+          });
+        });
+      }, function() {
+        console.log("orders have been archived");
+        cb();
+      });
+    });
   });
 }
 ```
 Streamline.js lets you write:
 
 ```javascript
-function lineCount(path, _) {
-  return fs.readFile(path, "utf8", _).split('\n').length;
+function archiveOrders(date, _) {
+  var conn = db.connect(_);
+  flows.each(_, conn.query("select * from orders where date < ?",
+                           [date], _), function(_, order) {
+    conn.execute("insert into archivedOrders ...",
+                 [order.id, ...], _);
+    conn.execute("delete from orders where id=?",
+                 [order.id], _);
+  });
+  console.log("orders have been archived");
 }
 ```
 You just have to follow a simple rule:
@@ -103,8 +128,9 @@ chmod +x hello.sh
 ./hello.sh
 ```
 
-You can also create your own loader and run your program with `node` or `coffee`. 
-See the [loader example](https://github.com/Sage/streamlinejs/blob/master/examples/loader/loader.md)
+Another option is to create your own loader so that you can run your program with the standard
+`node` or `coffee` command.
+See the [loader example](https://github.com/Sage/streamlinejs/blob/master/examples/loader/loader.md).
 
 # Generation options
 
@@ -201,8 +227,8 @@ function lineLengths(path, _) {
 
 Streamline also provides stream wrappers that simplify stream programming:
 
-* a generic ReadableStream wrapper with an asynchronous `stream.read(_[, len])` method.
-* a generic WritableStream wrapper with an asynchronous `stream.write(_, buf[, encoding])` method.
+* a generic `ReadableStream` wrapper with an asynchronous `stream.read(_[, len])` method.
+* a generic `WritableStream` wrapper with an asynchronous `stream.write(_, buf[, encoding])` method.
 * wrappers for HTTP and TCP request and response objects (client and server).
 
 # Examples
