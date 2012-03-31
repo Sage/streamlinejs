@@ -60,7 +60,7 @@ NPM, of course:
 npm install streamline -g
 ```
 
-The `-g` option installs it _globally_.
+The `-g` option installs streamline _globally_.
 You can also install it _locally_, without `-g` but then the `_node` and `_coffee` 
 commands will not be in your default PATH.
 
@@ -102,18 +102,24 @@ $ _coffee hello
 You can also create standalone shell utilities:
 
 ``` sh
-$ echo "#!/usr/bin/env _node" > hello.sh
-$ cat hello._js >> hello.sh
-$ chmod +x hello.sh
+$ cat > hello.sh
+#!/usr/bin/env _node
+console.log('hello ...');
+setTimeout(_, 1000);
+console.log('... world');
+^D
 $ ./hello.sh
 ```
 
 or:
 
 ``` sh
-$ echo "#!/usr/bin/env _coffee" > hello.sh
-$ cat hello._coffee >> hello.sh
-$ chmod +x hello.sh
+$ cat > hello.sh
+#!/usr/bin/env _coffee
+console.log 'hello ...'
+setTimeout _, 1000
+console.log '... world'
+^D
 $ ./hello.sh
 ```
 
@@ -122,7 +128,7 @@ $ ./hello.sh
 You can also set up your code so that it can be run directly with `node` or `coffee.
 You have two options here:
 
-The first one is to compile you source with `_node -c` or `_coffee -c`:
+The first one is to compile your source with `_node -c` or `_coffee -c`:
 
 ``` sh
 $ _node -c .
@@ -132,15 +138,22 @@ This command compiles all the `*._js` and `*._coffee` source files in the curren
 
 The second one is to create your own loader with the `register` API. See the [loader example](https://github.com/Sage/streamlinejs/blob/master/examples/loader/loader.md) for details.
 
-Compiling will give you the fastest startup time because your application will directly load the compiled `*.js` files but the loader API has a cache option which comes close and saves you a compilation pass.
+Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the `register` API has a `cache` option which comes close and the loader saves you a compilation pass.
+
+# Browser-side use
+
+You have three options to use streamline in the browser:
+
+* The first one is to compile the source with `_node -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [flows test example](https://github.com/Sage/streamlinejs/blob/master/examples/common/flows-test.html).
+* You can also transform the code in the browser with the `transform` API. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
+* A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 # Generation options
 
 Streamline gives you the choice between generating regular callback-based asynchronous code, 
 or generating code that takes advantage of the [fibers library](https://github.com/laverdet/node-fibers).
 
-The _callback_ option produces code that does not have any special runtime dependencies. You may even use it 
-to generate asynchronous code for the browser.
+The _callback_ option produces code that does not have any special runtime dependencies. 
 
 The _fibers_ option produces simpler code but requires that you install 
 the fibers library (easy: `npm install fibers`). 
@@ -160,7 +173,7 @@ function lineCount(path, _) {
   return fs.readFile(path, "utf8", _).split('\n').length;
 }
 ```
-You can also call streamline functions as if they were standard node functions. For example, the lineCount function defined above can be called as follows from non-streamlined modules:
+You can also call streamline functions as if they were standard node functions. For example, the `lineCount` function defined above can be called as follows from non-streamlined modules:
 
 ```javascript
 lineCount("README.md", function(err, result) {
@@ -170,23 +183,11 @@ lineCount("README.md", function(err, result) {
 ```
 
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
-Streamline will only transform the functions that have the special `_` parameter. 
+Streamline only transforms the functions that have the special `_` parameter. 
 
 Note: this works with both transformation options. 
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
-
-# On-line demo
-
-You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
-
-# Browser-side use
-
-You have three options to use streamline in the browser:
-
-* The first one is to compile the source with `_node -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [flows test example](https://github.com/Sage/streamlinejs/blob/master/examples/common/flows-test.html).
-* You can also transform the code in the browser with the `transform` API. See the [streamlineMe example] https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
-* A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 # Futures
 
@@ -215,7 +216,7 @@ Futures are very flexible. In the example above, the results are retrieved from 
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
-# Asynchronous built-ins
+# Asynchronous Array functions
 
 Streamline extends the Array prototypes with asynchronous variants of the ES5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
 
@@ -227,7 +228,7 @@ function lineLengths(path, _) {
 }
 ```
 
-# Streams
+# Stream Wrappers
 
 Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams._js) contains:
 
@@ -237,15 +238,19 @@ Streamline also provides _stream wrappers_ that simplify stream programming. The
 
 # Examples
 
-The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples shows an asynchronous directory traversal to compute disk usage.
+The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples shows an asynchronous directory traversal that computes disk usage.
 You can run it as follows:
 
 ```sh
-_node streamlline/examples/diskUsage/diskUsage
+_node streamline/examples/diskUsage/diskUsage
 ```
 
 The `diskUsage2` example is a faster variant that parallelizes I/O operations with futures. 
 You'll also find CoffeeScript versions of these examples.
+
+# On-line demo
+
+You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
 # Related Packages
 
@@ -256,19 +261,19 @@ The following packages use streamline.js:
 * [streamline-zip](https://github.com/Sage/streamline-zip): a fork of [node-native-zip](https://github.com/janjongboom/node-native-zip) with async deflate.
 
 
-## Resources
+# Resources
 
 The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).  
 The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
 
 For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
 
-## Credits
+# Credits
 
 See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
 Special thanks to Marcel Laverdet who contributed the _fibers_ implementation.
 
-## License
+# License
 
 This work is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License).
