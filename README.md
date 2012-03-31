@@ -26,7 +26,8 @@ function archiveOrders(date, cb) {
   });
 }
 ```
-Streamline.js lets you write:
+
+you write:
 
 ```javascript
 function archiveOrders(date, _) {
@@ -38,21 +39,22 @@ function archiveOrders(date, _) {
   console.log("orders have been archived");
 }
 ```
-You just have to follow a simple rule:
+
+and streamline transforms the code and takes care of the callbacks!
+
+No flow control APIs to learn! You just have to follow a simple rule:
 
 > Replace all callbacks by an underscore and write your code as if all functions were synchronous.
 
-Streamline will transform the code and generate the callbacks for you!
+Streamline is not limited to a subset of Javascript. 
+You can use all the features of Javascript in your asynchronous code: conditionals, 
+loops, `try/catch/finally` blocks, anonymous functions, chaining, `this`, etc. 
 
-And streamline is not limited to a subset of Javascript. 
-You can use all the flow control features of Javascript in your asynchronous code: conditionals, 
-loops, `try/catch/finally` blocks, anonymous functions, `this`, etc. 
-
-Streamline also provides _futures_, and additional builtin functions for asynchronous programming.
+Streamline also provides _futures_, and asynchronous variants of the EcmaScript 5 array functions (`forEach`, `map`, etc.).
 
 # Installation
 
-The easiest way to install `streamline.js` is with NPM:
+NPM, of course: 
 
 ```sh
 npm install streamline -g
@@ -63,17 +65,6 @@ You can also install it _locally_, without `-g` but then the `_node` and `_coffe
 commands will not be in your default PATH.
 
 Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
-
-The global installation option makes `_node` globally accessible but it does not expose the Javascript support
-modules (`runtime.js`, `flows.js`, etc.) globally. 
-If you need these modules anywhere in your development tree, 
-for example because you use streamline in shell scripts (see below), 
-you should `npm link` streamline to the root of your development tree:
-
-```sh
-cd $myworkdir
-npm link streamline
-```
 
 If you want to use the _fibers_ option (see below), you must also install the fibers library:
 
@@ -89,42 +80,59 @@ loader.
 Javascripters:
 
 ``` sh
-echo "console.log('hello ...');" > hello._js
-echo "setTimeout(_, 1000);" >> hello._js
-echo "console.log('... world');" >> hello._js
-_node hello
+$ cat > hello._js
+console.log('hello ...');
+setTimeout(_, 1000);
+console.log('... world');
+^D
+$ _node hello
 ```
 
 Coffeescripters:
 
 ``` sh
-echo "console.log 'hello ...'" > hello._coffee
-echo "setTimeout _, 1000" >> hello._coffee
-echo "console.log '... world'" >> hello._coffee
-_coffee hello
+$ cat > hello._coffee
+console.log 'hello ...'
+setTimeout _, 1000
+console.log '... world'
+^D
+$ _coffee hello
 ```
 
 You can also create standalone shell utilities:
 
 ``` sh
-echo "#!/usr/bin/env _node" > hello.sh
-cat hello._js >> hello.sh
-chmod +x hello.sh
-./hello.sh
+$ echo "#!/usr/bin/env _node" > hello.sh
+$ cat hello._js >> hello.sh
+$ chmod +x hello.sh
+$ ./hello.sh
 ```
 
 or:
 
 ``` sh
-echo "#!/usr/bin/env _coffee" > hello.sh
-cat hello._coffee >> hello.sh
-chmod +x hello.sh
-./hello.sh
+$ echo "#!/usr/bin/env _coffee" > hello.sh
+$ cat hello._coffee >> hello.sh
+$ chmod +x hello.sh
+$ ./hello.sh
 ```
 
-Another option is to create your own loader so that you can run your program with the standard
-`node` or `coffee` command.
-See the [loader example](https://github.com/Sage/streamlinejs/blob/master/examples/loader/loader.md).
+# Compiling and writing loaders
+
+You can also set up your code so that it can be run directly with `node` or `coffee.
+You have two options here:
+
+The first one is to compile you source with `_node -c` or `_coffee -c`:
+
+``` sh
+$ _node -c .
+```
+
+This command compiles all the `*._js` and `*._coffee` source files in the current directory and its sub-directories. It generates `*.js` files that you can run directly with `node`.
+
+The second one is to create your own loader with the `register` API. See the [loader example](https://github.com/Sage/streamlinejs/blob/master/examples/loader/loader.md) for details.
+
+Compiling will give you the fastest startup time because your application will directly load the compiled `*.js` files but the loader API has a cache option which comes close and saves you a compilation pass.
 
 # Generation options
 
@@ -138,9 +146,8 @@ The _fibers_ option produces simpler code but requires that you install
 the fibers library (easy: `npm install fibers`). 
 This option gives superior development experience: line numbers are always preserved in the transformed code; 
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
-It may also generate more efficient code (to be confirmed by benchmarks).
 
-The _fibers_ option can be activated by passing `--fibers` to the `_node` command or by 
+The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by 
 setting the `fibers` option when registering streamline 
 (see the `register(options)` function in `streamline/lib/compiler/register`).
  
@@ -153,7 +160,7 @@ function lineCount(path, _) {
   return fs.readFile(path, "utf8", _).split('\n').length;
 }
 ```
-You can also call streamline functions as if they were standard node functions. For example:
+You can also call streamline functions as if they were standard node functions. For example, the lineCount function defined above can be called as follows from non-streamlined modules:
 
 ```javascript
 lineCount("README.md", function(err, result) {
@@ -161,6 +168,7 @@ lineCount("README.md", function(err, result) {
   console.log("README has " + result + " lines.");
 });
 ```
+
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
 Streamline will only transform the functions that have the special `_` parameter. 
 
@@ -170,22 +178,22 @@ and the asynchronous functions that you create with streamline have the standard
 
 # On-line demo
 
-You can test `streamline.js` directly with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html)
+You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
 # Browser-side use
 
-The [streamline compiler](https://github.com/Sage/streamlinejs/wiki/Compilers) generates vanilla Javascript code that may be run browser-side too.
+You have three options to use streamline in the browser:
 
-You can also transform the code in the browser with the `transform` API. See `examples/streamlineMe` for an example.
-
-The [streamline-require package](https://github.com/Sage/streamline-require) contains a small infrastructure to load streamline and regular JS modules from the browser. 
+* The first one is to compile the source with `_node -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [flows test example](https://github.com/Sage/streamlinejs/blob/master/examples/common/flows-test.html).
+* You can also transform the code in the browser with the `transform` API. See the [streamlineMe example] https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
+* A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 # Futures
 
 Streamline provides _futures_, a powerful feature that lets you parallelize I/O operations in a very
 simple manner.
 
-If you omit the callback (or pass a `null` callback) when calling a streamline function, the function will execute synchronously and return a _future_. The _future_ is just a function that you can call later to obtain a result. Here is an example:
+If you omit the callback (or pass a `null` callback) when calling a streamline function, the function will execute synchronously and return a _future_. The _future_ is just an asynchronous function that you can call later to obtain a result. Here is an example:
 
 ```javascript
 function countLines(path, _) {
@@ -196,18 +204,20 @@ function compareLineCounts(path1, path2, _) {
   // parallelize the two countLines operations
   var n1 = countLines(path1);
   var n2 = countLines(path2);
-  // join the results
+  // get the results and diff them
   return n1(_) - n2(_);
 }
 ```
 
-In this example, `countLines` is called synchronously, without `_` parameter. These calls start the `fs.readFile` asynchronous operations and return two _futures_ (`n1` and `n2`). Later, `n1(_)` and `n2(_)` retrieve the results via callbacks that are automatically generated by the streamline transformation engine.
+In this example, `countLines` is called twice without `_` parameter. These calls start the `fs.readFile` asynchronous operations and return immediately two _futures_ (`n1` and `n2`). The `return` statement retrieves the results with `n1(_)` and `n2(_)` calls and computes their difference. 
+
+Futures are very flexible. In the example above, the results are retrieved from the same function, but you can also pass futures to other functions, store them in objects, call them to get the results from a different module, etc. You can also have several readers on the same future. 
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
 # Asynchronous built-ins
 
-Streamline extends the Array prototypes with asynchronous variants of the ES5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. For example:
+Streamline extends the Array prototypes with asynchronous variants of the ES5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
 
 ``` javascript
 function lineLengths(path, _) {
@@ -219,7 +229,7 @@ function lineLengths(path, _) {
 
 # Streams
 
-Streamline also provides stream wrappers that simplify stream programming:
+Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams._js) contains:
 
 * a generic `ReadableStream` wrapper with an asynchronous `stream.read(_[, len])` method.
 * a generic `WritableStream` wrapper with an asynchronous `stream.write(_, buf[, encoding])` method.
@@ -227,7 +237,7 @@ Streamline also provides stream wrappers that simplify stream programming:
 
 # Examples
 
-The `examples/diskUsage` directory contains a simple example that traverses directories to compute disk usage.
+The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples shows an asynchronous directory traversal to compute disk usage.
 You can run it as follows:
 
 ```sh
