@@ -8,12 +8,11 @@ function clean(s) {
 	else return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
 }
 
-function genTest(f1, f2, ninja) {
+function genTest(f1, f2) {
 	var s1 = clean(transform(f1.toString(), {
 		noHelpers: true,
 		lines: "ignore",
 		optimize: true,
-		ninja: ninja
 	}));
 	var s2 = clean(f2.toString());
 	if (s1 !== s2) {
@@ -998,7 +997,7 @@ test("CoffeeScript closure (this, arguments)", 1, function() {
 				return g(_, __this, __arguments);
 			})(_);
 		});
-	}, true);
+	});
 })
 module("streamline evaluation");
 
