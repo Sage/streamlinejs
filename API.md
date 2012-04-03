@@ -401,6 +401,7 @@ myFunnel(_, function(_) { /* code with at most 10 concurrent executions */ });
 The `diskUsage2.js` example demonstrates how these calls can be combined to control concurrent execution.
 
 The `funnel` function can also be used to implement critical sections. Just set funnel's `max` parameter to 1.
+
 The funnel can be closed with `fun.close()`.  
 When a funnel is closed, the operations that are still in the funnel will continue but their callbacks
 won't be called, and no other operation will enter the funnel.
