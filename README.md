@@ -162,7 +162,7 @@ you can step with the debugger through asynchronous calls without having to go t
 
 The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by 
 setting the `fibers` option when registering streamline 
-(see the `register(options)` function in `streamline/lib/compiler/register`).
+(see the `streamline.register(options)` function.
  
 # Interoperability with standard node.js code
 

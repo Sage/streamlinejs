@@ -7,7 +7,7 @@
 /// it gets loaded before the extensions have been registered.
 /// 
 /// The loader module must register the streamline file extensions:
-require('streamline/lib/compiler/register').register({
+require('streamline').register({
 	fibers: false,
 	cache: true,
 	verbose: true,
