@@ -57,13 +57,6 @@ API:
   a modified argument list in which the callback has been inserted at `index` 
   (at the end of the argument list if `index` is not specified).
 
-# streamline/lib/compiler/command
- 
-Streamline commmand line analyzer / dispatcher
-
-* `command.run()`  
-  runs `node-streamline` command line analyzer / dispatcher
-
 # streamline/lib/compiler/compile
  
 Streamline compiler and file loader
@@ -85,18 +78,10 @@ Streamline compiler and file loader
   Used by `require` logic.
 * `compile.compile(_, paths, options)`  
   Compiles streamline source files in `paths`.  
-  Generates a `foo.js` file for each `foo_.js` file found in `paths`.
+  Generates a `foo.js` file for each `foo._js` file found in `paths`.
   `paths` may be a list of files or a list of directories which
   will be traversed recursively.  
   `options`  is a set of options for the `transform` operation.
-
-# streamline/lib/compiler/register
- 
-Streamline `require` handler registration
-
-* `register.register(options)`  
-  Registers `require` handlers for streamline.  
-  `options` is a set of default options passed to the `transform` function.
 
 # streamline/lib/globals
 
@@ -112,6 +97,19 @@ be able to retrieve to format messages.
 * `ctx = globals.context`  
   sets and gets the context
 
+
+# streamline
+ 
+Streamline main API
+ 
+* `compile.compile(_, paths, options)`  
+  Compiles streamline source files in `paths`.  
+  See streamline/lib/compiler/compile doc.  
+* `command.run()`  
+  runs `node-streamline` command line analyzer / dispatcher
+* `register.register(options)`  
+  Registers `require` handlers for streamline.  
+  `options` is a set of default options passed to the `transform` function.
 
 # streamline/lib/streams/server/streams
  
