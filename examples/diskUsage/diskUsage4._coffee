@@ -34,7 +34,7 @@ du = (_, path) ->
 		files = fs.readdir path, _
 		futures = for f in files 
 			du null, path + "/" + f
-		total += flows.reduce _, futures, ((_, val, future) -> val + future _), 0
+		total += futures.reduce_ _, ((_, val, future) -> val + future _), 0
 		console.log path + ": " + total
 	else
 		console.log path + ": odd file"
