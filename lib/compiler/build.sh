@@ -2,7 +2,8 @@ _node -lp -v -f -c builtins._js
 mv builtins.js ../callbacks
 
 _node -lp -v -f --fibers -c builtins._js
-mv builtins.js ../fibers
+cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../fibers/builtins.js
+rm builtins.js
 
 _node -lp -v -f -c compile._js
 
