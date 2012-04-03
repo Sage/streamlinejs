@@ -1,4 +1,8 @@
 #!/usr/bin/env node
 
 console.log("obsolete script: use _node instead.");
-require("streamline/lib/compiler/command").run();
+var path = require("path");
+var fs = require("fs");
+var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+
+require(lib + '/compiler/command').run();
