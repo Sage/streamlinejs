@@ -13,83 +13,230 @@ function delayFail(_, err) {
 
 module("flows");
 
-asyncTest("each", 1, function(_) {
+asyncTest("each", 5, function(_) {
 	var result = 1;
 	flows.each(_, [1, 2, 3, 4], function(_, val) {
 		result = result * delay(_, val);
 	})
 	strictEqual(result, 24);
+	result = 1;
+	[1, 2, 3, 4].forEach_(_, function(_, val) {
+		var v = delay(_, val);
+		result = result * v;
+	})
+	strictEqual(result, 24);
+	result = 1;
+	[1, 2, 3, 4].forEach_(_, 2, function(_, val) {
+		var v = delay(_, val);
+		result = result * v;
+	})
+	strictEqual(result, 24);
+	result = 1;
+	[1, 2, 3, 4].forEach_(_, {
+		parallel: 2
+	}, function(_, val) {
+		var v = delay(_, val);
+		result = result * v;
+	})
+	strictEqual(result, 24);
+	result = 1;
+	[1, 2, 3, 4].forEach_(_, -1, function(_, val) {
+		var v = delay(_, val);
+		result = result * v;
+	})
+	strictEqual(result, 24);
+
 	start();
 })
-asyncTest("map", 1, function(_) {
+asyncTest("map", 5, function(_) {
 	var result = flows.map(_, [1, 2, 3, 4], function(_, val) {
+		return 2 * delay(_, val);
+	});
+	deepEqual(result, [2, 4, 6, 8]);
+	var result = [1, 2, 3, 4].map_(_, function(_, val) {
+		return 2 * delay(_, val);
+	});
+	deepEqual(result, [2, 4, 6, 8]);
+	var result = [1, 2, 3, 4].map_(_, 2, function(_, val) {
+		return 2 * delay(_, val);
+	});
+	deepEqual(result, [2, 4, 6, 8]);
+	var result = [1, 2, 3, 4].map_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return 2 * delay(_, val);
+	});
+	deepEqual(result, [2, 4, 6, 8]);
+	var result = [1, 2, 3, 4].map_(_, -1, function(_, val) {
 		return 2 * delay(_, val);
 	});
 	deepEqual(result, [2, 4, 6, 8]);
 	start();
 })
-asyncTest("filter", 1, function(_) {
+asyncTest("filter", 5, function(_) {
 	var result = flows.filter(_, [1, 2, 3, 4], function(_, val) {
+		return delay(_, val) % 2;
+	});
+	deepEqual(result, [1, 3]);
+	var result = [1, 2, 3, 4].filter_(_, function(_, val) {
+		return delay(_, val) % 2;
+	});
+	deepEqual(result, [1, 3]);
+	var result = [1, 2, 3, 4].filter_(_, 2, function(_, val) {
+		return delay(_, val) % 2;
+	});
+	deepEqual(result, [1, 3]);
+	var result = [1, 2, 3, 4].filter_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return delay(_, val) % 2;
+	});
+	deepEqual(result, [1, 3]);
+	var result = [1, 2, 3, 4].filter_(_, -1, function(_, val) {
 		return delay(_, val) % 2;
 	});
 	deepEqual(result, [1, 3]);
 	start();
 })
-asyncTest("every", 1, function(_) {
+asyncTest("every", 5, function(_) {
 	var result = flows.every(_, [1, 2, 3, 4], function(_, val) {
+		return delay(_, val) < 5;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].every_(_, function(_, val) {
+		return delay(_, val) < 5;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].every_(_, 2, function(_, val) {
+		return delay(_, val) < 5;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].every_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return delay(_, val) < 5;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].every_(_, -1, function(_, val) {
 		return delay(_, val) < 5;
 	});
 	strictEqual(result, true);
 	start();
 });
-asyncTest("every", 1, function(_) {
+asyncTest("every", 5, function(_) {
 	var result = flows.every(_, [1, 2, 3, 4], function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].every_(_, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].every_(_, 2, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].every_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].every_(_, -1, function(_, val) {
 		return delay(_, val) < 3;
 	});
 	strictEqual(result, false);
 	start();
 });
-asyncTest("some", 1, function(_) {
+asyncTest("some", 5, function(_) {
 	var result = flows.some(_, [1, 2, 3, 4], function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].some_(_, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].some_(_, 2, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].some_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return delay(_, val) < 3;
+	});
+	strictEqual(result, true);
+	var result = [1, 2, 3, 4].some_(_, -1, function(_, val) {
 		return delay(_, val) < 3;
 	});
 	strictEqual(result, true);
 	start();
 });
-asyncTest("some", 1, function(_) {
+asyncTest("some", 5, function(_) {
 	var result = flows.some(_, [1, 2, 3, 4], function(_, val) {
+		return delay(_, val) < 0;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].some_(_, function(_, val) {
+		return delay(_, val) < 0;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].some_(_, 2, function(_, val) {
+		return delay(_, val) < 0;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].some_(_, {
+		parallel: 2
+	}, function(_, val) {
+		return delay(_, val) < 0;
+	});
+	strictEqual(result, false);
+	var result = [1, 2, 3, 4].some_(_, -1, function(_, val) {
 		return delay(_, val) < 0;
 	});
 	strictEqual(result, false);
 	start();
 });
-asyncTest("reduce", 1, function(_) {
+asyncTest("reduce", 2, function(_) {
 	var result = flows.reduce(_, [1, 2, 3, 4], function(_, v, val) {
 		return v * delay(_, val);
 	}, 1);
 	strictEqual(result, 24);
-	start();
-});
-asyncTest("reduceRight", 1, function(_) {
-	var result = flows.reduceRight(_, [1, 2, 3, 4], function(_, v, val) {
+	var result = [1, 2, 3, 4].reduce_(_, function(_, v, val) {
 		return v * delay(_, val);
 	}, 1);
 	strictEqual(result, 24);
 	start();
 });
-asyncTest("sort", 3, function(_) {
+asyncTest("reduceRight", 2, function(_) {
+	var result = flows.reduceRight(_, [1, 2, 3, 4], function(_, v, val) {
+		return v * delay(_, val);
+	}, 1);
+	strictEqual(result, 24);
+	var result = [1, 2, 3, 4].reduceRight_(_, function(_, v, val) {
+		return v * delay(_, val);
+	}, 1);
+	strictEqual(result, 24);
+	start();
+});
+asyncTest("sort", 4, function(_) {
 	var array = [1, 2, 3, 4];
 	flows.sort(_, array, function(_, a, b) {
 		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "In order array sort ok");
+	array.sort_(_, function(_, a, b) {
+		return delay(_, a - b);
+	});
+	deepEqual(array, [1, 2, 3, 4], "In order array sort ok");
 	array = [4, 3, 2, 1];
-	flows.sort(_, array, function(_, a, b) {
+	array.sort_(_, function(_, a, b) {
 		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "Reverse array sort ok");
-	array = [1, 4, 2, 3];
-	flows.sort(_, array, function(_, a, b) {
+	array = [3, 1, 2, 4];
+	array.sort_(_, function(_, a, b) {
 		return delay(_, a - b);
 	});
 	deepEqual(array, [1, 2, 3, 4], "Random array sort ok");

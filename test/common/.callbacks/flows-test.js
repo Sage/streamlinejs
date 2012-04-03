@@ -13,87 +13,234 @@ function delayFail(_, err) { var __frame = { name: "delayFail", line: 9 }; retur
 
 module("flows");
 
-asyncTest("each", 1, function __1(_) { var result; var __frame = { name: "__1", line: 16 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+asyncTest("each", 5, function __1(_) { var result; var __frame = { name: "__1", line: 16 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  result = 1;
  return flows.each(__cb(_, __frame, 2, 1, function __$__1() {
 
 
  strictEqual(result, 24);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 18 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 20, function ___(__0, __1) { result = (result * __1); _(); }, true), val); }); }); });});
+ result = 1;
+ return [1,2,3,4,].forEach_(__cb(_, __frame, 7, 1, function __$__1() {
 
-asyncTest("map", 1, function __2(_) { var result; var __frame = { name: "__2", line: 24 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
- return flows.map(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+
+
+ strictEqual(result, 24);
+ result = 1;
+ return [1,2,3,4,].forEach_(__cb(_, __frame, 13, 1, function __$__1() {
+
+
+
+ strictEqual(result, 24);
+ result = 1;
+ return [1,2,3,4,].forEach_(__cb(_, __frame, 19, 1, function __$__1() {
+
+
+
+
+
+ strictEqual(result, 24);
+ result = 1;
+ return [1,2,3,4,].forEach_(__cb(_, __frame, 27, 1, function __$__1() {
+
+
+
+ strictEqual(result, 24);
+
+ start(); _(); }, true), -1, function __5(_, val) { var v; var __frame = { name: "__5", line: 43 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 10, function ___(__0, __1) { v = __1; result = (result * v); _(); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var v; var __frame = { name: "__4", line: 37 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 10, function ___(__0, __1) { v = __1; result = (result * v); _(); }, true), val); }); }); }, true), 2, function __3(_, val) { var v; var __frame = { name: "__3", line: 29 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 10, function ___(__0, __1) { v = __1; result = (result * v); _(); }, true), val); }); }); }, true), function __2(_, val) { var v; var __frame = { name: "__2", line: 23 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 10, function ___(__0, __1) { v = __1; result = (result * v); _(); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 18 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 20, function ___(__0, __1) { result = (result * __1); _(); }, true), val); }); }); });});
+
+asyncTest("map", 5, function __2(_) { var result; var __frame = { name: "__2", line: 51 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
+ return flows.map(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
 
 
  deepEqual(result, [2,4,6,8,]);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 25 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); });});
+ return [1,2,3,4,].map_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
 
-asyncTest("filter", 1, function __3(_) { var result; var __frame = { name: "__3", line: 31 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
- return flows.filter(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+
+ deepEqual(result, [2,4,6,8,]);
+ return [1,2,3,4,].map_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
+
+
+ deepEqual(result, [2,4,6,8,]);
+ return [1,2,3,4,].map_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ deepEqual(result, [2,4,6,8,]);
+ return [1,2,3,4,].map_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ deepEqual(result, [2,4,6,8,]);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 70 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 66 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 60 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 56 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 52 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (2 * __2); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("filter", 5, function __3(_) { var result; var __frame = { name: "__3", line: 76 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
+ return flows.filter(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
 
 
  deepEqual(result, [1,3,]);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 32 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); });});
+ return [1,2,3,4,].filter_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
 
-asyncTest("every", 1, function __4(_) { var result; var __frame = { name: "__4", line: 38 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
- return flows.every(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+
+ deepEqual(result, [1,3,]);
+ return [1,2,3,4,].filter_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
+
+
+ deepEqual(result, [1,3,]);
+ return [1,2,3,4,].filter_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ deepEqual(result, [1,3,]);
+ return [1,2,3,4,].filter_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ deepEqual(result, [1,3,]);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 95 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 91 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 85 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 81 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 77 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 % 2); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("every", 5, function __4(_) { var result; var __frame = { name: "__4", line: 101 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
+ return flows.every(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
 
 
  strictEqual(result, true);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 39 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); });});
-
-asyncTest("every", 1, function __5(_) { var result; var __frame = { name: "__5", line: 45 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() {
- return flows.every(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
-
-
- strictEqual(result, false);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 46 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); });});
-
-asyncTest("some", 1, function __6(_) { var result; var __frame = { name: "__6", line: 52 }; return __func(_, this, arguments, __6, 0, __frame, function __$__6() {
- return flows.some(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+ return [1,2,3,4,].every_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
 
 
  strictEqual(result, true);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 53 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); });});
+ return [1,2,3,4,].every_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
 
-asyncTest("some", 1, function __7(_) { var result; var __frame = { name: "__7", line: 59 }; return __func(_, this, arguments, __7, 0, __frame, function __$__7() {
- return flows.some(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+
+ strictEqual(result, true);
+ return [1,2,3,4,].every_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ strictEqual(result, true);
+ return [1,2,3,4,].every_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ strictEqual(result, true);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 120 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 116 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 110 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 106 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 102 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 5); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("every", 5, function __5(_) { var result; var __frame = { name: "__5", line: 126 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() {
+ return flows.every(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
 
 
  strictEqual(result, false);
- start(); _(); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 60 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); });});
+ return [1,2,3,4,].every_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
 
-asyncTest("reduce", 1, function __8(_) { var result; var __frame = { name: "__8", line: 66 }; return __func(_, this, arguments, __8, 0, __frame, function __$__8() {
- return flows.reduce(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+
+ strictEqual(result, false);
+ return [1,2,3,4,].every_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].every_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].every_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ strictEqual(result, false);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 145 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 141 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 135 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 131 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 127 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("some", 5, function __6(_) { var result; var __frame = { name: "__6", line: 151 }; return __func(_, this, arguments, __6, 0, __frame, function __$__6() {
+ return flows.some(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
+
+
+ strictEqual(result, true);
+ return [1,2,3,4,].some_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
+
+
+ strictEqual(result, true);
+ return [1,2,3,4,].some_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
+
+
+ strictEqual(result, true);
+ return [1,2,3,4,].some_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ strictEqual(result, true);
+ return [1,2,3,4,].some_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ strictEqual(result, true);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 170 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 166 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 160 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 156 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 152 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 3); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("some", 5, function __7(_) { var result; var __frame = { name: "__7", line: 176 }; return __func(_, this, arguments, __7, 0, __frame, function __$__7() {
+ return flows.some(__cb(_, __frame, 1, 14, function ___(__0, __6) { result = __6;
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].some_(__cb(_, __frame, 5, 14, function ___(__0, __7) { result = __7;
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].some_(__cb(_, __frame, 9, 14, function ___(__0, __8) { result = __8;
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].some_(__cb(_, __frame, 13, 14, function ___(__0, __9) { result = __9;
+
+
+
+
+ strictEqual(result, false);
+ return [1,2,3,4,].some_(__cb(_, __frame, 19, 14, function ___(__0, __10) { result = __10;
+
+
+ strictEqual(result, false);
+ start(); _(); }, true), -1, function __5(_, val) { var __frame = { name: "__5", line: 195 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); }, true), { parallel: 2 }, function __4(_, val) { var __frame = { name: "__4", line: 191 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); }, true), 2, function __3(_, val) { var __frame = { name: "__3", line: 185 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); }, true), function __2(_, val) { var __frame = { name: "__2", line: 181 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); }, true), [1,2,3,4,], function __1(_, val) { var __frame = { name: "__1", line: 177 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, function ___(__0, __2) { var __1 = (__2 < 0); return _(null, __1); }, true), val); }); }); });});
+
+asyncTest("reduce", 2, function __8(_) { var result; var __frame = { name: "__8", line: 201 }; return __func(_, this, arguments, __8, 0, __frame, function __$__8() {
+ return flows.reduce(__cb(_, __frame, 1, 14, function ___(__0, __3) { result = __3;
 
 
  strictEqual(result, 24);
- start(); _(); }, true), [1,2,3,4,], function __1(_, v, val) { var __frame = { name: "__1", line: 67 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); });});
-
-asyncTest("reduceRight", 1, function __9(_) { var result; var __frame = { name: "__9", line: 73 }; return __func(_, this, arguments, __9, 0, __frame, function __$__9() {
- return flows.reduceRight(__cb(_, __frame, 1, 14, function ___(__0, __2) { result = __2;
+ return [1,2,3,4,].reduce_(__cb(_, __frame, 5, 14, function ___(__0, __4) { result = __4;
 
 
  strictEqual(result, 24);
- start(); _(); }, true), [1,2,3,4,], function __1(_, v, val) { var __frame = { name: "__1", line: 74 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); });});
+ start(); _(); }, true), function __2(_, v, val) { var __frame = { name: "__2", line: 206 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); }, true), [1,2,3,4,], function __1(_, v, val) { var __frame = { name: "__1", line: 202 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); });});
 
-asyncTest("sort", 3, function __10(_) { var array; var __frame = { name: "__10", line: 80 }; return __func(_, this, arguments, __10, 0, __frame, function __$__10() {
+asyncTest("reduceRight", 2, function __9(_) { var result; var __frame = { name: "__9", line: 212 }; return __func(_, this, arguments, __9, 0, __frame, function __$__9() {
+ return flows.reduceRight(__cb(_, __frame, 1, 14, function ___(__0, __3) { result = __3;
+
+
+ strictEqual(result, 24);
+ return [1,2,3,4,].reduceRight_(__cb(_, __frame, 5, 14, function ___(__0, __4) { result = __4;
+
+
+ strictEqual(result, 24);
+ start(); _(); }, true), function __2(_, v, val) { var __frame = { name: "__2", line: 217 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); }, true), [1,2,3,4,], function __1(_, v, val) { var __frame = { name: "__1", line: 213 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 13, function ___(__0, __2) { var __1 = (v * __2); return _(null, __1); }, true), val); }); }, 1); });});
+
+asyncTest("sort", 4, function __10(_) { var array; var __frame = { name: "__10", line: 223 }; return __func(_, this, arguments, __10, 0, __frame, function __$__10() {
  array = [1,2,3,4,];
  return flows.sort(__cb(_, __frame, 2, 1, function __$__10() {
 
 
  deepEqual(array, [1,2,3,4,], "In order array sort ok");
+ return array.sort_(__cb(_, __frame, 6, 1, function __$__10() {
+
+
+ deepEqual(array, [1,2,3,4,], "In order array sort ok");
  array = [4,3,2,1,];
- return flows.sort(__cb(_, __frame, 7, 1, function __$__10() {
+ return array.sort_(__cb(_, __frame, 11, 1, function __$__10() {
 
 
  deepEqual(array, [1,2,3,4,], "Reverse array sort ok");
- array = [1,4,2,3,];
- return flows.sort(__cb(_, __frame, 12, 1, function __$__10() {
+ array = [3,1,2,4,];
+ return array.sort_(__cb(_, __frame, 16, 1, function __$__10() {
 
 
  deepEqual(array, [1,2,3,4,], "Random array sort ok");
- start(); _(); }, true), array, function __3(_, a, b) { var __frame = { name: "__3", line: 92 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); }, true), array, function __2(_, a, b) { var __frame = { name: "__2", line: 87 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); }, true), array, function __1(_, a, b) { var __frame = { name: "__1", line: 82 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); });});
+ start(); _(); }, true), function __4(_, a, b) { var __frame = { name: "__4", line: 239 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); }, true), function __3(_, a, b) { var __frame = { name: "__3", line: 234 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); }, true), function __2(_, a, b) { var __frame = { name: "__2", line: 229 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); }, true), array, function __1(_, a, b) { var __frame = { name: "__1", line: 225 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return delay(__cb(_, __frame, 1, 9, _, true), (a - b)); }); }); });});
 
 asyncTest("collectAll", 4, function __11(_) { var total, peak, count, results;
 
@@ -101,12 +248,12 @@ asyncTest("collectAll", 4, function __11(_) { var total, peak, count, results;
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 104 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 251 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
- return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__11", line: 98 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__11", line: 245 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0;
 
 
 
@@ -123,12 +270,12 @@ asyncTest("collectOne", 4, function __12(_) { var total, peak, count, result;
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 126 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 273 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
- return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__12", line: 120 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__12", line: 267 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0;
 
 
 
@@ -145,12 +292,12 @@ asyncTest("collectAll with limit", 1, function __13(_) { var total, peak, count,
 
 
  function doIt(i) {
- return function __1(_) { var __frame = { name: "__1", line: 148 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
+ return function __1(_) { var __frame = { name: "__1", line: 295 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
  count++;
  peak = Math.max(count, peak);
  return delay(__cb(_, __frame, 3, 11, function ___(__0, __1) { total = (__1 + total);
  count--;
- return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__13", line: 142 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0;
+ return _(null, (2 * i)); }, true), i); }); }; }; var __frame = { name: "__13", line: 289 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0;
 
 
 
@@ -159,13 +306,13 @@ asyncTest("collectAll with limit", 1, function __13(_) { var total, peak, count,
  start(); _(); }, true)); });});
 
 asyncTest("contexts", 3, function __14(_) { var result;
- function testContext(_, x) { var y; var __frame = { name: "testContext", line: 162 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() {
+ function testContext(_, x) { var y; var __frame = { name: "testContext", line: 309 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() {
  flows.setContext({
  val: x });
 
  return delay(__cb(_, __frame, 4, 10, function ___(__0, __1) { y = __1;
  strictEqual(y, (2 * flows.getContext().val));
- return _(null, (y + 1)); }, true), (2 * x)); }); }; var __frame = { name: "__14", line: 161 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() {
+ return _(null, (y + 1)); }, true), (2 * x)); }); }; var __frame = { name: "__14", line: 308 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() {
 
 
 
@@ -178,7 +325,7 @@ asyncTest("contexts", 3, function __14(_) { var result;
 
 
 
- return flows.spray([function __1(_) { var __frame = { name: "__1", line: 173 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _, true), 3); }); },function __2(_) { var __frame = { name: "__2", line: 177 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _, true), 5); }); },]).collectAll(__cb(_, __frame, 20, 14, function ___(__0, __3) { result = __3;
+ return flows.spray([function __1(_) { var __frame = { name: "__1", line: 320 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { return testContext(__cb(_, __frame, 1, 9, _, true), 3); }); },function __2(_) { var __frame = { name: "__2", line: 324 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { return testContext(__cb(_, __frame, 1, 9, _, true), 5); }); },]).collectAll(__cb(_, __frame, 20, 14, function ___(__0, __3) { result = __3;
  deepEqual(result, [7,11,]);
  start(); _(); }, true)); });});
 
@@ -188,11 +335,11 @@ asyncTest("futures multiplex", 3, function __15(_) { var result1, result2, resul
 
 
 
- function doIt(future, _) { var __frame = { name: "doIt", line: 191 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() {
+ function doIt(future, _) { var __frame = { name: "doIt", line: 338 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() {
  return future(__cb(_, __frame, 1, 12, function ___(__0, __1) { result1 = (__1 + result1);
  return future(__cb(_, __frame, 2, 12, function ___(__0, __2) { result2 = (__2 + result2);
  return delay(__cb(_, __frame, 3, 2, function __$doIt() {
- return future(__cb(_, __frame, 4, 12, function ___(__0, __3) { result3 = (__3 + result3); _(); }, true)); }, true)); }, true)); }, true)); }); }; var __frame = { name: "__15", line: 186 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0;
+ return future(__cb(_, __frame, 4, 12, function ___(__0, __3) { result3 = (__3 + result3); _(); }, true)); }, true)); }, true)); }, true)); }); }; var __frame = { name: "__15", line: 333 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0;
 
 
  f1 = delay(null, 1);

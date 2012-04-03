@@ -13,15 +13,35 @@ Streamline's transformation engine
 
 # streamline built-ins
  
-* `array.forEach_(_, fn[, thisObj])`  
+## Asychronous versions of ES5 Array functions.  
+
+Common Rules: 
+
+These variants are postfixed by an underscore.  
+They take the `_` callback as first parameter.  
+They pass the `_` callback as first arguement to their `fn` callback.  
+They have an optional `options` second parameter which controls the level of 
+parallelism. This `options` parameter may be specified as `{ parallel: par }` 
+where par is an integer, or directly as a `par` integer value.  
+The `par` values are interpreted as follows:
+
+* If absent or equal to 1, execution is sequential.
+* If > 1, at most `par` operations are parallelized.
+* if 0, a default number of operations are parallelized. 
+  This default can be read and set with funnel.defaultSize (4 by default)
+* If < 0 or Infinity, operations are fully parallelized (no limit).
+
+API:
+
+* `array.forEach_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt, i)`.
-* `result = array.map_(_, fn[, thisObj])`  
+* `result = array.map_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt, i)`.
-* `result = array.filter_(_, fn[, thisObj])`  
+* `result = array.filter_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
-* `bool = array.every_(_, fn[, thisObj])`  
+* `bool = array.every_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
-* `bool = array.some_(_, fn[, thisObj])`  
+* `bool = array.some_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
 * `result = array.reduce_(_, array, fn, val)`  
   `fn` is called as `val = fn(_, val, elt, i, array)`.
@@ -80,15 +100,35 @@ Streamline `require` handler registration
 
 # streamline built-ins
  
-* `array.forEach_(_, fn[, thisObj])`  
+## Asychronous versions of ES5 Array functions.  
+
+Common Rules: 
+
+These variants are postfixed by an underscore.  
+They take the `_` callback as first parameter.  
+They pass the `_` callback as first arguement to their `fn` callback.  
+They have an optional `options` second parameter which controls the level of 
+parallelism. This `options` parameter may be specified as `{ parallel: par }` 
+where par is an integer, or directly as a `par` integer value.  
+The `par` values are interpreted as follows:
+
+* If absent or equal to 1, execution is sequential.
+* If > 1, at most `par` operations are parallelized.
+* if 0, a default number of operations are parallelized. 
+  This default can be read and set with funnel.defaultSize (4 by default)
+* If < 0 or Infinity, operations are fully parallelized (no limit).
+
+API:
+
+* `array.forEach_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt, i)`.
-* `result = array.map_(_, fn[, thisObj])`  
+* `result = array.map_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt, i)`.
-* `result = array.filter_(_, fn[, thisObj])`  
+* `result = array.filter_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
-* `bool = array.every_(_, fn[, thisObj])`  
+* `bool = array.every_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
-* `bool = array.some_(_, fn[, thisObj])`  
+* `bool = array.some_(_[, options], fn[, thisObj])`  
   `fn` is called as `fn(_, elt)`.
 * `result = array.reduce_(_, array, fn, val)`  
   `fn` is called as `val = fn(_, val, elt, i, array)`.
@@ -407,6 +447,9 @@ myFunnel(_, function(_) { /* code with at most 10 concurrent executions */ });
 The `diskUsage2.js` example demonstrates how these calls can be combined to control concurrent execution.
 
 The `funnel` function can also be used to implement critical sections. Just set funnel's `max` parameter to 1.
+The funnel can be closed with `fun.close()`.  
+When a funnel is closed, the operations that are still in the funnel will continue but their callbacks
+won't be called, and no other operation will enter the funnel.
 
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures

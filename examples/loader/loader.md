@@ -22,7 +22,6 @@ module
 require('./hello')
 ```
 
-
 ## Running it
 
 ``` sh
