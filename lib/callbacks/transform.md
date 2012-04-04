@@ -1,10 +1,12 @@
 
 # Transformation engine (callback mode)
 
+`var transform = require('streamline/lib/callbacks/transform')`
+
 * `transformed = transform.transform(source, options)`  
   Transforms streamline source.  
   The following `options` may be specified:
-  * `tryCatch` controls exception handling
+  * `sourceName` identifies source (stack traces, transformation errors)
   * `lines` controls line mapping
-  * `callback` alternative identifier if `_` is already used.
-  * `noHelpers` disables generation of helper functions (`__cb`, etc.)
+* `version = transform.version`  
+  current version of the transformation algorithm.
