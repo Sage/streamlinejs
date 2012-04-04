@@ -6,5 +6,5 @@
   "dependencies": {},
   "author": "Bruno Jouhier",
   "directories": {"lib": "./lib", "bin": "./bin" },
-  "main": "lib/index.js"
+  "main": "index.js"
 }
