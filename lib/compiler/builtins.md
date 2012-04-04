@@ -38,8 +38,8 @@ Functions:
 * `result = array.reduceRight_(_, fn, val[, thisObj])`  
   `fn` is called as `val = fn(_, val, elt, i, array)`.
 * `array = array.sort_(_, compare [, beg [, end]])`  
-  `compare` is called as `cmp = compare(_, elt1, elt2)`
-  Note: this function _changes_ the original array (and returns it)
+  `compare` is called as `cmp = compare(_, elt1, elt2)`.  
+  Note: this function _changes_ the original array (and returns it).
 
 ## Function functions  
 

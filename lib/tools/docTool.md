@@ -19,5 +19,5 @@ The tool can also be invoked programatically with:
 
 `var docTool = require('streamline/lib/tools/docTool')`
 
-* `doc = docTool.generate(_, path)`
+* `doc = docTool.generate(_, path)`  
   extracts documentation comments from file `path`
