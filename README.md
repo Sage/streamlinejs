@@ -228,9 +228,11 @@ function lineLengths(path, _) {
 }
 ```
 
+See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
+
 # Stream Wrappers
 
-Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams._js) contains:
+Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams.md) contains:
 
 * a generic `ReadableStream` wrapper with an asynchronous `stream.read(_[, len])` method.
 * a generic `WritableStream` wrapper with an asynchronous `stream.write(_, buf[, encoding])` method.
