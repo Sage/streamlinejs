@@ -1,7 +1,7 @@
 
 # Streamline built-ins
  
-## Array functions.  
+## Array functions  
 
 These functions are asynchronous variants of the EcmaScript 5 Array functions.
 
@@ -41,7 +41,7 @@ Functions:
   `compare` is called as `cmp = compare(_, elt1, elt2)`
   Note: this function _changes_ the original array (and returns it)
 
-## Function functions.  
+## Function functions  
 
 * `result = fn.apply_(_, thisObj, args[, index])`  
   Helper to use `Function.prototype.apply` inside streamlined functions.  

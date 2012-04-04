@@ -15,7 +15,7 @@ For more information on this design,
 see [this blog post](http://bjouhier.wordpress.com/2011/04/25/asynchronous-episode-3-adventures-in-event-land/)
 
 For a simple example of this API in action, 
-see the [google client example](../../../examples/streams/googleClient_.js)
+see the [google client example](../../../examples/streams/googleClient._js)
 
 ## Wrapper
 
@@ -73,7 +73,7 @@ All writable stream wrappers derive from this wrapper.
 ## HttpServerRequest
 
 This is a wrapper around node's `http.ServerRequest`:
-This stream is readable (see ReadableStream above).
+This stream is readable (see `ReadableStream` above).
 
 * `request = new streams.HttpServerRequest(req[, options])`  
    returns a wrapper around `req`, an `http.ServerRequest` object.   
@@ -90,7 +90,7 @@ This stream is readable (see ReadableStream above).
 ## HttpServerResponse
 
 This is a wrapper around node's `http.ServerResponse`.  
-This stream is writable (see WritableStream above).
+This stream is writable (see `WritableStream` above).
 
 * `response = new streams.HttpServerResponse(resp[, options])`  
   returns a wrapper around `resp`, an `http.ServerResponse` object.
@@ -111,7 +111,7 @@ This is a wrapper around node's `http.Server` object:
   creates the wrapper.  
   `requestListener` is called as `requestListener(request, response, _)` 
   where `request` and `response` are wrappers around `http.ServerRequest` and `http.ServerResponse`.  
-  A fresh empty global context is set before every call to `requestListener` (see [`streamline/lib.globals](../globals.md)).
+  A fresh empty global context is set before every call to `requestListener`. See [streamline/lib/globals](../../globals.md).
 * `server.listen(_, port[, host])`
 * `server.listen(_, path)`  
   (same as `http.Server`)
@@ -120,7 +120,7 @@ This is a wrapper around node's `http.Server` object:
 
 This is a wrapper around node's `http.ClientResponse`
 
-This stream is readable (see ReadableStream above).
+This stream is readable (see `ReadableStream` above).
 
 * `response = request.response(_)`  
    returns the response stream.
@@ -141,7 +141,7 @@ This stream is readable (see ReadableStream above).
 
 This is a wrapper around node's `http.ClientRequest`.
 
-This stream is writable (see WritableStream above).
+This stream is writable (see `WritableStream` above).
 
 * `request = streams.httpRequest(options)`  
    creates the wrapper.  
@@ -162,7 +162,7 @@ This stream is writable (see WritableStream above).
 
 This is a wrapper around streams returned by TCP and socket clients:
 
-These streams are both readable and writable (see ReadableStream and WritableStream above).
+These streams are both readable and writable (see `ReadableStream` and `WritableStream` above).
 
 * `stream = new streams.NetStream(stream[, options])`  
    creates a network stream wrapper.
@@ -188,7 +188,7 @@ This is a wrapper around node's `net.Server` object:
   creates the wrapper.  
   `connectionListener` is called as `connectionListener(stream, _)` 
   where `stream` is a `NetStream` wrapper around the native connection.  
-  A fresh empty global context is set before every call to `connectionListener` (see [`streamline/lib.globals](../globals.md)).
+  A fresh empty global context is set before every call to `connectionListener`. See [streamline/lib/globals](../../globals.md).
 * `server.listen(_, port[, host])`  
 * `server.listen(_, path)`  
   (same as `net.Server`)
