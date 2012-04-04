@@ -102,9 +102,6 @@ be able to retrieve to format messages.
  
 Streamline main API
  
-* `compile.compile(_, paths, options)`  
-  Compiles streamline source files in `paths`.  
-  See streamline/lib/compiler/compile doc.  
 * `command.run()`  
   runs `node-streamline` command line analyzer / dispatcher
 * `register.register(options)`  
