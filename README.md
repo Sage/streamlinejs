@@ -216,6 +216,9 @@ Futures are very flexible. In the example above, the results are retrieved from 
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
+The [flows module](https://github.com/Sage/streamlinejs/blob/master/lib/util/flows.md) contains utilities to deal with futures: 
+`flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
+
 # Asynchronous Array functions
 
 Streamline extends the Array prototype with asynchronous variants of the EcmaScript 5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
@@ -227,6 +230,19 @@ function lineLengths(path, _) {
   });
 }
 ```
+
+Parallelizing loops is easy: just pass the number of parallel operations as second argument to the call:
+
+``` javascript
+function lineLengths(path, _) {
+  // 8 computations in parallel.
+  return fs.readFile(path, "utf8", _).map_(_, 8, function(_, line) {
+    return line.length;
+  });
+}
+```
+
+If you don't want to limit the level of parallelism, just pass `-1`. 
 
 See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
 
