@@ -224,9 +224,9 @@ The [flows module](https://github.com/Sage/streamlinejs/blob/master/lib/util/flo
 Streamline extends the Array prototype with asynchronous variants of the EcmaScript 5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
 
 ``` javascript
-function lineLengths(path, _) {
-  return fs.readFile(path, "utf8", _).map_(_, function(_, line) {
-    return line.length;
+function dirLines(dir, _) {
+  return fs.readdir(path, "utf8", _).map_(_, function(_, file) {
+    return fs.readFile(dir + '/' + file, 'utf8', _).split('\n').length;
   });
 }
 ```
@@ -234,15 +234,15 @@ function lineLengths(path, _) {
 Parallelizing loops is easy: just pass the number of parallel operations as second argument to the call:
 
 ``` javascript
-function lineLengths(path, _) {
-  // 8 computations in parallel.
-  return fs.readFile(path, "utf8", _).map_(_, 8, function(_, line) {
-    return line.length;
+function dirLines(dir, _) {
+  // process 8 files in parallel
+  return fs.readdir(path, "utf8", _).map_(_, 8, function(_, file) {
+    return fs.readFile(dir + '/' + file, 'utf8', _).split('\n').length;
   });
 }
 ```
 
-If you don't want to limit the level of parallelism, just pass `-1`. 
+If you don't want to limit the level of parallelism, just pass `-1`.
 
 See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
 
