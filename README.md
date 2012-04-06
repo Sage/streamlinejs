@@ -225,7 +225,7 @@ Streamline extends the Array prototype with asynchronous variants of the EcmaScr
 
 ``` javascript
 function dirLines(dir, _) {
-  return fs.readdir(path, "utf8", _).map_(_, function(_, file) {
+  return fs.readdir(dir, "utf8", _).map_(_, function(_, file) {
     return fs.readFile(dir + '/' + file, 'utf8', _).split('\n').length;
   });
 }
@@ -236,7 +236,7 @@ Parallelizing loops is easy: just pass the number of parallel operations as seco
 ``` javascript
 function dirLines(dir, _) {
   // process 8 files in parallel
-  return fs.readdir(path, "utf8", _).map_(_, 8, function(_, file) {
+  return fs.readdir(dir, "utf8", _).map_(_, 8, function(_, file) {
     return fs.readFile(dir + '/' + file, 'utf8', _).split('\n').length;
   });
 }
