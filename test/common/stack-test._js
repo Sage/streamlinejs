@@ -2,7 +2,7 @@
 // Line numbers matter to this test!
 
 var module = QUnit.module;
-var flows = require("streamline/lib/util/flows");
+
 
 
 function nextTick(cb){

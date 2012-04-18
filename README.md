@@ -263,8 +263,7 @@ try {
   setTimeout(_, 1000); // n1 fails, exception is memorized
   return n1(_) - n2(_); // exception is thrown by n1(_) expression.
 } catch (ex) {
-  // execution will be caught here
-  console.error(ex.stack);
+  console.error(ex.stack); // exception caught here
 }
 ```
 
