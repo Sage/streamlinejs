@@ -246,6 +246,28 @@ If you don't want to limit the level of parallelism, just pass `-1`.
 
 See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
 
+# Exception Handling
+
+Streamline lets you do your exception handling with the usual `try/catch` construct. The `finally` clause is also supported.
+
+Streamline overrides the `ex.stack` getter to give you the stack of streamline calls rather than the last callback stack. You can still get the native callback stack trace with `ex.rawStack`.
+
+Exception handling also works with futures.
+If a future throws an exception before you try to read its result, the exception will be memorized by the future and you will get it at the point where your try to read the result. 
+For example:
+
+``` javascript
+try {
+  var n1 = countLines(badPath);
+  var n2 = countLines(goodPath);
+  setTimeout(_, 1000); // n1 fails, exception is memorized
+  return n1(_) - n2(_); // exception is thrown by n1(_) expression.
+} catch (ex) {
+  // execution will be caught here
+  console.error(ex.stack);
+}
+```
+
 # Stream Wrappers
 
 Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams.md) contains:
