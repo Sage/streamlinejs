@@ -37,11 +37,17 @@ In this case you should dispatch asynchronously (pass an `_`) and declare all of
 
 ### Why do the built-in streamline functions (`array.forEach_`, `map_`, etc.) have `_` as first parameter rather than last?
 
-Because it makes it easier to deal with optional parameters.
+Because it makes it easier to deal with optional parameters. 
+
+It also make it easier to check that the `_` is passed to every async call. You don't have to look at the end of the paramter list. 
+
+The standard node convention is to have the callback as last parameter. 
+You should follow this convention if you design libraries for a general node audience. 
+But you may choose to pass the callback as first parameter if you design private APIs or if you target a more restricted audience of streamline programmers.
 
 ### Can a streamline function take optional parameters?
 
-Yes but you have to be careful with the special `arguments` variable. You cannot pass it blindly to another call with `apply`. You have to use the `flows.apply` helper function. See its documentation.
+Yes but you have to be careful with the special `arguments` variable. You cannot pass it blindly to another call with `apply`. You have to use the streamline `apply_` built-in function instead. See its documentation.
 
 ### It does not work and I'm not even getting an exception. What's going on?
 
@@ -103,6 +109,20 @@ function readFile(path, enc, _) {
 	else return fs.readFile(path, _);
 }
 ```
+
+### My flow control is completely broken. I am completely lost. Help!
+
+Check your file extensions. 
+
+If you put streamline code in a `.js` or `.coffee` file it won't get transformed 
+and your code will go wild: callbacks will be executed multiple times, etc.
+
+### Can I use the streamline extensions for files that don't contain any async code (yet).
+
+This won't hurt. Streamline only transforms functions that have the special `_` parameter. 
+So, files that don't contain async code won't be impacted by the transformation.
+
+The only drawback is a slower application startup because more files get transformed but you can avoid that with the --cache option.
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 

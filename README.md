@@ -291,6 +291,12 @@ You'll also find CoffeeScript versions of these examples.
 
 You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
+# Troubleshooting
+
+Read the [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md).
+
+If you don't find your answer in the FAQ, post to the [mailing list](http://groups.google.com/group/streamlinejs), or file an issue in [GitHub's issue tracking](https://github.com/Sage/streamlinejs/issues).
+
 # Related Packages
 
 The following packages use streamline.js:
@@ -306,7 +312,7 @@ The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/AP
 
 The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
 
-For support and discussion, please join the [streamline.js Google Group](http://groups.google.com/group/streamlinejs).
+For support and discussion, please join the [streamline.js mailing list](http://groups.google.com/group/streamlinejs).
 
 # Credits
 
