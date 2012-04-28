@@ -39,11 +39,11 @@ In this case you should dispatch asynchronously (pass an `_`) and declare all of
 
 Because it makes it easier to deal with optional parameters. 
 
-It also make it easier to check that the `_` is passed to every async call. You don't have to look at the end of the paramter list. 
+It also make it easier to check that the `_` is passed to every async call. You don't have to look at the end of the parameter list. 
 
 The standard node convention is to have the callback as last parameter. 
 You should follow this convention if you design libraries for a general node audience. 
-But you may choose to pass the callback as first parameter if you design private APIs or if you target a more restricted audience of streamline programmers.
+But you may choose to pass the callback as first parameter if you design private APIs or if you target a more restricted audience of streamliners.
 
 ### Can a streamline function take optional parameters?
 
@@ -122,7 +122,7 @@ and your code will go wild: callbacks will be executed multiple times, etc.
 This won't hurt. Streamline only transforms functions that have the special `_` parameter. 
 So, files that don't contain async code won't be impacted by the transformation.
 
-The only drawback is a slower application startup because more files get transformed but you can avoid that with the --cache option.
+The only drawback is a slower application startup because more files get transformed but you can avoid that with the `--cache` option.
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 
