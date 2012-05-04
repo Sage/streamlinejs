@@ -51,7 +51,7 @@ Yes but you have to be careful with the special `arguments` variable. You cannot
 
 ### It does not work and I'm not even getting an exception. What's going on?
 
-You probably called a buggy asynchronous functions and you did not pass `_`. For example:
+You probably called a buggy asynchronous function and you did not pass `_`. For example:
 
 ``` javascript
 function buggy(_) { undefined.toString(); }
