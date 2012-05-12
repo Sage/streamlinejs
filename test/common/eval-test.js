@@ -1,5 +1,7 @@
 var module = QUnit.module;
 
+// shared by callbacks and generators
+// for now, generators test html hacks it through the require-stubs.html file
 var transform = require('streamline/lib/callbacks/transform').transform;
 
 module("streamline evaluation");
