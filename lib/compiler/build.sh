@@ -14,5 +14,7 @@ _node -lp -v -f -c compile._js
 # compile test files for client too
 pushd ../../test/common > /dev/null
 _node -lp -v -f -c .
-mv flows-test.js stack-test.js .callbacks
+mv eval-test.js flows-test.js stack-test.js callbacks
+_node --generators -v -f -c .
+mv eval-test.js flows-test.js stack-test.js generators
 popd > /dev/null

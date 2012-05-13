@@ -1,57 +1,47 @@
 var module = QUnit.module;
 
-// shared by callbacks and generators
-// for now, generators test html hacks it through the require-stubs.html file
-var transform = require('streamline/lib/callbacks/transform').transform;
-
 module("streamline evaluation");
 
 function evalTest(f, val) {
-	var str = transform(f.toString(), { noExtraScope: true });
-	(function() {
-		eval(str);
-		f(function(err, result) {
-			var str = err ? "ERR: " + err : result;
-			strictEqual(str, val);
-			start();
-		})
-	})();
+	f(function(err, result) {
+		var str = err ? "ERR: " + err : result;
+		strictEqual(str, val);
+		start();
+	})
 }
 
 function delay(_, val) {
-	setTimeout(function() {
-		_(null, val);
-	}, 0);
+	setTimeout(_, 0);
+	return val;
 }
 
 function delayFail(_, err) {
-	setTimeout(function() {
-		_(err);
-	}, 0);
+	setTimeout(_, 0);
+	throw err;
 }
 
 function throwError(message) {
 	throw new Error(message);
 }
 
-asyncTest("eval return", 1, function() {
+asyncTest("eval return", 1, function(_) {
 	evalTest(function f(_) {
 		return delay(_, 5);
 	}, 5);
 })
-asyncTest("eval if true", 1, function() {
+asyncTest("eval if true", 1, function(_) {
 	evalTest(function f(_) {
 		if (true) return delay(_, 3);
 		return 4;
 	}, 3);
 })
-asyncTest("eval if false", 1, function() {
+asyncTest("eval if false", 1, function(_) {
 	evalTest(function f(_) {
 		if (false) return delay(_, 3);
 		return 4;
 	}, 4);
 })
-asyncTest("eval while", 1, function() {
+asyncTest("eval while", 1, function(_) {
 	evalTest(function f(_) {
 		var i = 1,
 			result = 1;
@@ -62,7 +52,7 @@ asyncTest("eval while", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("eval for", 1, function() {
+asyncTest("eval for", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		for (var i = 1; i < 5; i++) {
@@ -71,7 +61,7 @@ asyncTest("eval for", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("eval for in", 1, function() {
+asyncTest("eval for in", 1, function(_) {
 	evalTest(function f(_) {
 		var foo = {
 			a: 1,
@@ -86,7 +76,7 @@ asyncTest("eval for in", 1, function() {
 		return result;
 	}, 30);
 })
-asyncTest("fully async for in", 1, function() {
+asyncTest("fully async for in", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		for (var i = delay(_, 2); i < delay(_, 5); i = delay(_, i) + 1) {
@@ -95,7 +85,7 @@ asyncTest("fully async for in", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("break in loop", 1, function() {
+asyncTest("break in loop", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		for (var i = 1; i < 10; i++) {
@@ -105,7 +95,7 @@ asyncTest("break in loop", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("continue", 1, function() {
+asyncTest("continue", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		for (var i = 1; i < 10; i++) {
@@ -115,7 +105,7 @@ asyncTest("continue", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("break in while", 1, function() {
+asyncTest("break in while", 1, function(_) {
 	evalTest(function f(_) {
 		var i = 1,
 			result = 1;
@@ -127,7 +117,7 @@ asyncTest("break in while", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("continue in while", 1, function() {
+asyncTest("continue in while", 1, function(_) {
 	evalTest(function f(_) {
 		var i = 1,
 			result = 1;
@@ -139,7 +129,7 @@ asyncTest("continue in while", 1, function() {
 		return result;
 	}, 24);
 })
-asyncTest("for (;;)", 1, function() {
+asyncTest("for (;;)", 1, function(_) {
 	evalTest(function f(_) {
 		var i = 0;
 		for (;;) {
@@ -147,19 +137,19 @@ asyncTest("for (;;)", 1, function() {
 		}
 	}, 10);
 })
-asyncTest("eval lazy", 1, function() {
+asyncTest("eval lazy", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		return delay(_, delay(_, result + 8) < 5) && true ? 2 : 4
 	}, 4);
 })
-asyncTest("eval lazy full async", 1, function() {
+asyncTest("eval lazy full async", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
 		return delay(_, delay(_, result + 8) < 5) && true ? delay(_, 2) : delay(_, 4)
 	}, 4);
 })
-asyncTest("try catch 1", 1, function() {
+asyncTest("try catch 1", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			return delay(_, "ok");
@@ -168,7 +158,7 @@ asyncTest("try catch 1", 1, function() {
 		}
 	}, "ok");
 })
-asyncTest("try catch 2", 1, function() {
+asyncTest("try catch 2", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			throw delay(_, "thrown");
@@ -177,7 +167,7 @@ asyncTest("try catch 2", 1, function() {
 		}
 	}, "caught thrown");
 })
-asyncTest("try catch 3", 1, function() {
+asyncTest("try catch 3", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			throw delay(_, "thrown");
@@ -186,7 +176,7 @@ asyncTest("try catch 3", 1, function() {
 		}
 	}, "caught thrown");
 })
-asyncTest("try catch 5", 1, function() {
+asyncTest("try catch 5", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			delayFail(_, "delay fail");
@@ -195,7 +185,7 @@ asyncTest("try catch 5", 1, function() {
 		}
 	}, "caught delay fail");
 })
-asyncTest("try catch 6", 1, function() {
+asyncTest("try catch 6", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			throwError("direct")
@@ -205,7 +195,7 @@ asyncTest("try catch 6", 1, function() {
 		}
 	}, "caught direct");
 })
-asyncTest("try catch 7", 1, function() {
+asyncTest("try catch 7", 1, function(_) {
 	evalTest(function f(_) {
 		try {
 			var message = delay(_, "indirect");
@@ -216,7 +206,7 @@ asyncTest("try catch 7", 1, function() {
 		}
 	}, "caught indirect");
 })
-asyncTest("try finally 1", 1, function() {
+asyncTest("try finally 1", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -228,7 +218,7 @@ asyncTest("try finally 1", 1, function() {
 		return x;
 	}, "try finally end");
 })
-asyncTest("try finally 2", 1, function() {
+asyncTest("try finally 2", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -241,7 +231,7 @@ asyncTest("try finally 2", 1, function() {
 		return x;
 	}, "try");
 })
-asyncTest("try finally 3", 1, function() {
+asyncTest("try finally 3", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -254,7 +244,7 @@ asyncTest("try finally 3", 1, function() {
 		return x;
 	}, "ERR: bad try");
 })
-asyncTest("try finally 4", 1, function() {
+asyncTest("try finally 4", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -267,7 +257,7 @@ asyncTest("try finally 4", 1, function() {
 		return x;
 	}, "ERR: Error: except");
 })
-asyncTest("try finally 5", 1, function() {
+asyncTest("try finally 5", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -285,7 +275,7 @@ asyncTest("try finally 5", 1, function() {
 		}
 	}, "try finally/except");
 })
-asyncTest("try catch finally 1", 1, function() {
+asyncTest("try catch finally 1", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -306,7 +296,7 @@ asyncTest("try catch finally 1", 1, function() {
 		}
 	}, "try catch except finally/except");
 })
-asyncTest("try catch finally 2", 1, function() {
+asyncTest("try catch finally 2", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -327,7 +317,7 @@ asyncTest("try catch finally 2", 1, function() {
 		}
 	}, "try catch except finally/except");
 })
-asyncTest("nested try/catch 1", 1, function() {
+asyncTest("nested try/catch 1", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -342,7 +332,7 @@ asyncTest("nested try/catch 1", 1, function() {
 		}
 	}, "try outer catch except");
 })
-asyncTest("nested try/catch 2", 1, function() {
+asyncTest("nested try/catch 2", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -357,7 +347,7 @@ asyncTest("nested try/catch 2", 1, function() {
 		}
 	}, "try outer catch except");
 })
-asyncTest("nested try/catch 3", 1, function() {
+asyncTest("nested try/catch 3", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -372,7 +362,7 @@ asyncTest("nested try/catch 3", 1, function() {
 		}
 	}, "try outer catch except");
 })
-asyncTest("nested try/finally 1", 1, function() {
+asyncTest("nested try/finally 1", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -387,7 +377,7 @@ asyncTest("nested try/finally 1", 1, function() {
 		}
 	}, "try inner finally outer catch except");
 })
-asyncTest("nested try/finally 2", 1, function() {
+asyncTest("nested try/finally 2", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -402,7 +392,7 @@ asyncTest("nested try/finally 2", 1, function() {
 		}
 	}, "try inner finally outer catch except");
 })
-asyncTest("nested try/finally 3", 1, function() {
+asyncTest("nested try/finally 3", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "";
 		try {
@@ -417,7 +407,7 @@ asyncTest("nested try/finally 3", 1, function() {
 		}
 	}, "try inner finally outer catch except");
 })
-asyncTest("and ok", 1, function() {
+asyncTest("and ok", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "<<";
 		if (delay(_, true) && delay(_, true)) x += "T1";
@@ -434,7 +424,7 @@ asyncTest("and ok", 1, function() {
 		return x;
 	}, "<<T1F2F3F4F5>>");
 })
-asyncTest("or ok", 1, function() {
+asyncTest("or ok", 1, function(_) {
 	evalTest(function f(_) {
 		var x = "<<";
 		if (delay(_, true) || delay(_, true)) x += "T1";
@@ -451,7 +441,7 @@ asyncTest("or ok", 1, function() {
 		return x;
 	}, "<<T1T2T3F4T5>>");
 })
-asyncTest("switch with default", 1, function() {
+asyncTest("switch with default", 1, function(_) {
 	evalTest(function f(_) {
 		function g(_, i) {
 			var result = "a"
@@ -474,7 +464,7 @@ asyncTest("switch with default", 1, function() {
 		return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 	}, "ebcdde");
 })
-asyncTest("switch without default", 1, function() {
+asyncTest("switch without default", 1, function(_) {
 	evalTest(function f(_) {
 		function g(_, i) {
 			var result = "a"
@@ -495,7 +485,7 @@ asyncTest("switch without default", 1, function() {
 		return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 	}, "abcdda");
 })
-asyncTest("this", 5, function() {
+asyncTest("this", 5, function(_) {
 	evalTest(function f(_) {
 		function O(x) {
 			this.x = x;
@@ -546,7 +536,7 @@ asyncTest("this", 5, function() {
 		return o.x;
 	}, 7);
 })
-asyncTest("scoping", 1, function() {
+asyncTest("scoping", 1, function(_) {
 	evalTest(function f(_) {
 		function test(_) {
 			var foo = "abc";
@@ -563,7 +553,7 @@ asyncTest("scoping", 1, function() {
 		return test(_)();
 	}, "xyz");
 })
-asyncTest("return undefined", 1, function() {
+asyncTest("return undefined", 1, function(_) {
 	evalTest(function f(_) {
 		function test(_) {
 			delay(_);
@@ -573,7 +563,7 @@ asyncTest("return undefined", 1, function() {
 		return test(_);
 	}, undefined);
 })
-asyncTest("futures test", 1, function() {
+asyncTest("futures test", 1, function(_) {
 	evalTest(function f(_) {
 		function delay2(val, _) {
 			return delay(_, val);
@@ -586,7 +576,7 @@ asyncTest("futures test", 1, function() {
 		return a(_) + b(_) + d(_) + c(_);
 	}, "abdc");
 })
-asyncTest("last case without break", 1, function() {
+asyncTest("last case without break", 1, function(_) {
 	evalTest(function f(_) {
 		switch (true) {
 		case true:
@@ -596,25 +586,27 @@ asyncTest("last case without break", 1, function() {
 	}, 1);
 })
 
-asyncTest("async comma operator", 1, function() {
+asyncTest("async comma operator", 1, function(_) {
 	evalTest(function f(_) {
 		var a;
 		return a = 4, a++, a = delay(_, 2 * a), delay(_, a + 1);
 	}, 11);
 })
 
-asyncTest("async constructor", 1, function() {
+asyncTest("async constructor", 1, function(_) {
 	evalTest(function f(_) {
 		function Foo(val, _) {
 			delay(_);
 			this.x = val;
 		}
-		Foo.prototype.y = function() { return this.x + 1; }
+		Foo.prototype.y = function() {
+			return this.x + 1;
+		}
 		return new Foo(5, _).y();
 	}, 6);
 })
 
-asyncTest("fibo false async", 1, function() {
+asyncTest("fibo false async", 1, function(_) {
 	evalTest(function f(_) {
 		function fibo(_, n) {
 			return n > 1 ? fibo(_, n - 1) + fibo(_, n - 2) : 1;
