@@ -110,11 +110,8 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 1
 
 
  s = ex.stack;
-
-
-
  s = s.split("\n").map(function(l) {
- var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
+ var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
  if (m) {
  return ((m[1] + ":") + m[2]) };
  return l;
@@ -124,9 +121,12 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 1
 
 
 
+function stackEqual(got, expect) {
+ if (((typeof T_ === "function") && T_.gstreamlineFunction)) { got = got.substring(0, 15); expect = expect.substring(0, 15); };
+ strictEqual(got, expect);};
+
 
 var rawStack = (new Error().stack ? function(raw) {
-
  return raw;
 } : function() {
  return "raw stack unavailable";});
@@ -135,84 +135,84 @@ var rawStack = (new Error().stack ? function(raw) {
 module("stacks");
 
 asyncTest("stacks", 20, function __1(_) { var __frame = { name: "__1", line: 137 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
- return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, (rawStack("Error: 1/failAsync:15") + "/A:28"));
- return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/A:28"));
- return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30"));
- return T(__cb(_, __frame, 4, 13, function ___(__0, __4) { strictEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30"));
- return T(__cb(_, __frame, 5, 13, function ___(__0, __5) { strictEqual(__5, (rawStack("Error: 3/failAsync:15") + "/A:33"));
- return T(__cb(_, __frame, 6, 13, function ___(__0, __6) { strictEqual(__6, (rawStack("Error: 3/fail:20/failSync:21") + "/A:33"));
- return T(__cb(_, __frame, 7, 13, function ___(__0, __7) { strictEqual(__7, (rawStack("Error: 4/failAsync:15") + "/A:36"));
- return T(__cb(_, __frame, 8, 13, function ___(__0, __8) { strictEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/A:36"));
- return T(__cb(_, __frame, 9, 13, function ___(__0, __9) { strictEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36"));
- return T(__cb(_, __frame, 10, 13, function ___(__0, __10) { strictEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36"));
- return T(__cb(_, __frame, 11, 13, function ___(__0, __11) { strictEqual(__11, (rawStack("Error: 6/failAsync:15") + "/A:40"));
- return T(__cb(_, __frame, 12, 13, function ___(__0, __12) { strictEqual(__12, (rawStack("Error: 6/fail:20/failSync:21") + "/A:40"));
- return T(__cb(_, __frame, 13, 13, function ___(__0, __13) { strictEqual(__13, (rawStack("Error: 7/failAsync:15") + "/B:49/A:42"));
- return T(__cb(_, __frame, 14, 13, function ___(__0, __14) { strictEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42"));
- return T(__cb(_, __frame, 15, 13, function ___(__0, __15) { strictEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42"));
- return T(__cb(_, __frame, 16, 13, function ___(__0, __16) { strictEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42"));
- return T(__cb(_, __frame, 17, 13, function ___(__0, __17) { strictEqual(__17, (rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42"));
- return T(__cb(_, __frame, 18, 13, function ___(__0, __18) { strictEqual(__18, (rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42"));
- return T(__cb(_, __frame, 19, 13, function ___(__0, __19) { strictEqual(__19, "END");
- return T(__cb(_, __frame, 20, 13, function ___(__0, __20) { strictEqual(__20, "END");
+ return T(__cb(_, __frame, 1, 12, function ___(__0, __1) { stackEqual(__1, (rawStack("Error: 1/failAsync:15") + "/A:28"));
+ return T(__cb(_, __frame, 2, 12, function ___(__0, __2) { stackEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/A:28"));
+ return T(__cb(_, __frame, 3, 12, function ___(__0, __3) { stackEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30"));
+ return T(__cb(_, __frame, 4, 12, function ___(__0, __4) { stackEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30"));
+ return T(__cb(_, __frame, 5, 12, function ___(__0, __5) { stackEqual(__5, (rawStack("Error: 3/failAsync:15") + "/A:33"));
+ return T(__cb(_, __frame, 6, 12, function ___(__0, __6) { stackEqual(__6, (rawStack("Error: 3/fail:20/failSync:21") + "/A:33"));
+ return T(__cb(_, __frame, 7, 12, function ___(__0, __7) { stackEqual(__7, (rawStack("Error: 4/failAsync:15") + "/A:36"));
+ return T(__cb(_, __frame, 8, 12, function ___(__0, __8) { stackEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/A:36"));
+ return T(__cb(_, __frame, 9, 12, function ___(__0, __9) { stackEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36"));
+ return T(__cb(_, __frame, 10, 12, function ___(__0, __10) { stackEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36"));
+ return T(__cb(_, __frame, 11, 12, function ___(__0, __11) { stackEqual(__11, (rawStack("Error: 6/failAsync:15") + "/A:40"));
+ return T(__cb(_, __frame, 12, 12, function ___(__0, __12) { stackEqual(__12, (rawStack("Error: 6/fail:20/failSync:21") + "/A:40"));
+ return T(__cb(_, __frame, 13, 12, function ___(__0, __13) { stackEqual(__13, (rawStack("Error: 7/failAsync:15") + "/B:49/A:42"));
+ return T(__cb(_, __frame, 14, 12, function ___(__0, __14) { stackEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42"));
+ return T(__cb(_, __frame, 15, 12, function ___(__0, __15) { stackEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42"));
+ return T(__cb(_, __frame, 16, 12, function ___(__0, __16) { stackEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42"));
+ return T(__cb(_, __frame, 17, 12, function ___(__0, __17) { stackEqual(__17, (rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42"));
+ return T(__cb(_, __frame, 18, 12, function ___(__0, __18) { stackEqual(__18, (rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42"));
+ return T(__cb(_, __frame, 19, 12, function ___(__0, __19) { stackEqual(__19, "END");
+ return T(__cb(_, __frame, 20, 12, function ___(__0, __20) { stackEqual(__20, "END");
  start(); _(); }, true), A, 10, failSync); }, true), A, 10, failAsync); }, true), A, 9, failSync); }, true), A, 9, failAsync); }, true), A, 8, failSync); }, true), A, 8, failAsync); }, true), A, 7, failSync); }, true), A, 7, failAsync); }, true), A, 6, failSync); }, true), A, 6, failAsync); }, true), A, 5, failSync); }, true), A, 5, failAsync); }, true), A, 4, failSync); }, true), A, 4, failAsync); }, true), A, 3, failSync); }, true), A, 3, failAsync); }, true), A, 2, failSync); }, true), A, 2, failAsync); }, true), A, 1, failSync); }, true), A, 1, failAsync); });});
 
 
 asyncTest("catch", 20, function __2(_) { var __frame = { name: "__2", line: 161 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
- return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, (rawStack("Error: 1/failAsync:15") + "/E:72"));
- return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/E:72"));
- return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30/E:74"));
- return T(__cb(_, __frame, 4, 13, function ___(__0, __4) { strictEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74"));
- return T(__cb(_, __frame, 5, 13, function ___(__0, __5) { strictEqual(__5, "OK 3");
- return T(__cb(_, __frame, 6, 13, function ___(__0, __6) { strictEqual(__6, "OK 3");
- return T(__cb(_, __frame, 7, 13, function ___(__0, __7) { strictEqual(__7, (rawStack("Error: 4/failAsync:15") + "/E:72"));
- return T(__cb(_, __frame, 8, 13, function ___(__0, __8) { strictEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/E:72"));
- return T(__cb(_, __frame, 9, 13, function ___(__0, __9) { strictEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36/E:74"));
- return T(__cb(_, __frame, 10, 13, function ___(__0, __10) { strictEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74"));
- return T(__cb(_, __frame, 11, 13, function ___(__0, __11) { strictEqual(__11, "OK 6");
- return T(__cb(_, __frame, 12, 13, function ___(__0, __12) { strictEqual(__12, "OK 6");
- return T(__cb(_, __frame, 13, 13, function ___(__0, __13) { strictEqual(__13, (rawStack("Error: 7/failAsync:15") + "/E:72"));
- return T(__cb(_, __frame, 14, 13, function ___(__0, __14) { strictEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/E:72"));
- return T(__cb(_, __frame, 15, 13, function ___(__0, __15) { strictEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74"));
- return T(__cb(_, __frame, 16, 13, function ___(__0, __16) { strictEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74"));
- return T(__cb(_, __frame, 17, 13, function ___(__0, __17) { strictEqual(__17, "OK 9");
- return T(__cb(_, __frame, 18, 13, function ___(__0, __18) { strictEqual(__18, "OK 9");
- return T(__cb(_, __frame, 19, 13, function ___(__0, __19) { strictEqual(__19, (rawStack("Error: 10/failAsync:15") + "/E:72"));
- return T(__cb(_, __frame, 20, 13, function ___(__0, __20) { strictEqual(__20, (rawStack("Error: 10/fail:20/failSync:21") + "/E:72"));
+ return T(__cb(_, __frame, 1, 12, function ___(__0, __1) { stackEqual(__1, (rawStack("Error: 1/failAsync:15") + "/E:72"));
+ return T(__cb(_, __frame, 2, 12, function ___(__0, __2) { stackEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/E:72"));
+ return T(__cb(_, __frame, 3, 12, function ___(__0, __3) { stackEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30/E:74"));
+ return T(__cb(_, __frame, 4, 12, function ___(__0, __4) { stackEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74"));
+ return T(__cb(_, __frame, 5, 12, function ___(__0, __5) { stackEqual(__5, "OK 3");
+ return T(__cb(_, __frame, 6, 12, function ___(__0, __6) { stackEqual(__6, "OK 3");
+ return T(__cb(_, __frame, 7, 12, function ___(__0, __7) { stackEqual(__7, (rawStack("Error: 4/failAsync:15") + "/E:72"));
+ return T(__cb(_, __frame, 8, 12, function ___(__0, __8) { stackEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/E:72"));
+ return T(__cb(_, __frame, 9, 12, function ___(__0, __9) { stackEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36/E:74"));
+ return T(__cb(_, __frame, 10, 12, function ___(__0, __10) { stackEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74"));
+ return T(__cb(_, __frame, 11, 12, function ___(__0, __11) { stackEqual(__11, "OK 6");
+ return T(__cb(_, __frame, 12, 12, function ___(__0, __12) { stackEqual(__12, "OK 6");
+ return T(__cb(_, __frame, 13, 12, function ___(__0, __13) { stackEqual(__13, (rawStack("Error: 7/failAsync:15") + "/E:72"));
+ return T(__cb(_, __frame, 14, 12, function ___(__0, __14) { stackEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/E:72"));
+ return T(__cb(_, __frame, 15, 12, function ___(__0, __15) { stackEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74"));
+ return T(__cb(_, __frame, 16, 12, function ___(__0, __16) { stackEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74"));
+ return T(__cb(_, __frame, 17, 12, function ___(__0, __17) { stackEqual(__17, "OK 9");
+ return T(__cb(_, __frame, 18, 12, function ___(__0, __18) { stackEqual(__18, "OK 9");
+ return T(__cb(_, __frame, 19, 12, function ___(__0, __19) { stackEqual(__19, (rawStack("Error: 10/failAsync:15") + "/E:72"));
+ return T(__cb(_, __frame, 20, 12, function ___(__0, __20) { stackEqual(__20, (rawStack("Error: 10/fail:20/failSync:21") + "/E:72"));
  start(); _(); }, true), E, 10, failSync); }, true), E, 10, failAsync); }, true), E, 9, failSync); }, true), E, 9, failAsync); }, true), E, 8, failSync); }, true), E, 8, failAsync); }, true), E, 7, failSync); }, true), E, 7, failAsync); }, true), E, 6, failSync); }, true), E, 6, failAsync); }, true), E, 5, failSync); }, true), E, 5, failAsync); }, true), E, 4, failSync); }, true), E, 4, failAsync); }, true), E, 3, failSync); }, true), E, 3, failAsync); }, true), E, 2, failSync); }, true), E, 2, failAsync); }, true), E, 1, failSync); }, true), E, 1, failAsync); });});
 
 
 asyncTest("futures", 20, function __3(_) { var __frame = { name: "__3", line: 185 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
- return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, (rawStack("Error: 1/failAsync:15") + "/A:28/F:83"));
- return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83"));
- return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30/F:83"));
- return T(__cb(_, __frame, 4, 13, function ___(__0, __4) { strictEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83"));
- return T(__cb(_, __frame, 5, 13, function ___(__0, __5) { strictEqual(__5, (rawStack("Error: 3/failAsync:15") + "/A:33/F:83"));
- return T(__cb(_, __frame, 6, 13, function ___(__0, __6) { strictEqual(__6, (rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83"));
- return T(__cb(_, __frame, 7, 13, function ___(__0, __7) { strictEqual(__7, (rawStack("Error: 4/failAsync:15") + "/A:36/F:83"));
- return T(__cb(_, __frame, 8, 13, function ___(__0, __8) { strictEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83"));
- return T(__cb(_, __frame, 9, 13, function ___(__0, __9) { strictEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36/F:83"));
- return T(__cb(_, __frame, 10, 13, function ___(__0, __10) { strictEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83"));
- return T(__cb(_, __frame, 11, 13, function ___(__0, __11) { strictEqual(__11, (rawStack("Error: 6/failAsync:15") + "/A:40/F:83"));
- return T(__cb(_, __frame, 12, 13, function ___(__0, __12) { strictEqual(__12, (rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83"));
- return T(__cb(_, __frame, 13, 13, function ___(__0, __13) { strictEqual(__13, (rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83"));
- return T(__cb(_, __frame, 14, 13, function ___(__0, __14) { strictEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83"));
- return T(__cb(_, __frame, 15, 13, function ___(__0, __15) { strictEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83"));
- return T(__cb(_, __frame, 16, 13, function ___(__0, __16) { strictEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83"));
- return T(__cb(_, __frame, 17, 13, function ___(__0, __17) { strictEqual(__17, (rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83"));
- return T(__cb(_, __frame, 18, 13, function ___(__0, __18) { strictEqual(__18, (rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83"));
- return T(__cb(_, __frame, 19, 13, function ___(__0, __19) { strictEqual(__19, "END & END");
- return T(__cb(_, __frame, 20, 13, function ___(__0, __20) { strictEqual(__20, "END & END");
+ return T(__cb(_, __frame, 1, 12, function ___(__0, __1) { stackEqual(__1, (rawStack("Error: 1/failAsync:15") + "/A:28/F:83"));
+ return T(__cb(_, __frame, 2, 12, function ___(__0, __2) { stackEqual(__2, (rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83"));
+ return T(__cb(_, __frame, 3, 12, function ___(__0, __3) { stackEqual(__3, (rawStack("Error: 2/failAsync:15") + "/A:30/F:83"));
+ return T(__cb(_, __frame, 4, 12, function ___(__0, __4) { stackEqual(__4, (rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83"));
+ return T(__cb(_, __frame, 5, 12, function ___(__0, __5) { stackEqual(__5, (rawStack("Error: 3/failAsync:15") + "/A:33/F:83"));
+ return T(__cb(_, __frame, 6, 12, function ___(__0, __6) { stackEqual(__6, (rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83"));
+ return T(__cb(_, __frame, 7, 12, function ___(__0, __7) { stackEqual(__7, (rawStack("Error: 4/failAsync:15") + "/A:36/F:83"));
+ return T(__cb(_, __frame, 8, 12, function ___(__0, __8) { stackEqual(__8, (rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83"));
+ return T(__cb(_, __frame, 9, 12, function ___(__0, __9) { stackEqual(__9, (rawStack("Error: 5/failAsync:15") + "/A:36/F:83"));
+ return T(__cb(_, __frame, 10, 12, function ___(__0, __10) { stackEqual(__10, (rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83"));
+ return T(__cb(_, __frame, 11, 12, function ___(__0, __11) { stackEqual(__11, (rawStack("Error: 6/failAsync:15") + "/A:40/F:83"));
+ return T(__cb(_, __frame, 12, 12, function ___(__0, __12) { stackEqual(__12, (rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83"));
+ return T(__cb(_, __frame, 13, 12, function ___(__0, __13) { stackEqual(__13, (rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83"));
+ return T(__cb(_, __frame, 14, 12, function ___(__0, __14) { stackEqual(__14, (rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83"));
+ return T(__cb(_, __frame, 15, 12, function ___(__0, __15) { stackEqual(__15, (rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83"));
+ return T(__cb(_, __frame, 16, 12, function ___(__0, __16) { stackEqual(__16, (rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83"));
+ return T(__cb(_, __frame, 17, 12, function ___(__0, __17) { stackEqual(__17, (rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83"));
+ return T(__cb(_, __frame, 18, 12, function ___(__0, __18) { stackEqual(__18, (rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83"));
+ return T(__cb(_, __frame, 19, 12, function ___(__0, __19) { stackEqual(__19, "END & END");
+ return T(__cb(_, __frame, 20, 12, function ___(__0, __20) { stackEqual(__20, "END & END");
  start(); _(); }, true), F, 10, failSync); }, true), F, 10, failAsync); }, true), F, 9, failSync); }, true), F, 9, failAsync); }, true), F, 8, failSync); }, true), F, 8, failAsync); }, true), F, 7, failSync); }, true), F, 7, failAsync); }, true), F, 6, failSync); }, true), F, 6, failAsync); }, true), F, 5, failSync); }, true), F, 5, failAsync); }, true), F, 4, failSync); }, true), F, 4, failAsync); }, true), F, 3, failSync); }, true), F, 3, failAsync); }, true), F, 2, failSync); }, true), F, 2, failAsync); }, true), F, 1, failSync); }, true), F, 1, failAsync); });});
 
 
 asyncTest("loop", 8, function __4(_) { var __frame = { name: "__4", line: 209 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
- return T(__cb(_, __frame, 1, 13, function ___(__0, __1) { strictEqual(__1, "0123");
- return T(__cb(_, __frame, 2, 13, function ___(__0, __2) { strictEqual(__2, "0123");
- return T(__cb(_, __frame, 3, 13, function ___(__0, __3) { strictEqual(__3, "01234");
- return T(__cb(_, __frame, 4, 13, function ___(__0, __4) { strictEqual(__4, "01234");
- return T(__cb(_, __frame, 5, 13, function ___(__0, __5) { strictEqual(__5, (rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101"));
- return T(__cb(_, __frame, 6, 13, function ___(__0, __6) { strictEqual(__6, (rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101"));
- return T(__cb(_, __frame, 7, 13, function ___(__0, __7) { strictEqual(__7, (rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101"));
- return T(__cb(_, __frame, 8, 13, function ___(__0, __8) { strictEqual(__8, (rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101"));
+ return T(__cb(_, __frame, 1, 12, function ___(__0, __1) { stackEqual(__1, "0123");
+ return T(__cb(_, __frame, 2, 12, function ___(__0, __2) { stackEqual(__2, "0123");
+ return T(__cb(_, __frame, 3, 12, function ___(__0, __3) { stackEqual(__3, "01234");
+ return T(__cb(_, __frame, 4, 12, function ___(__0, __4) { stackEqual(__4, "01234");
+ return T(__cb(_, __frame, 5, 12, function ___(__0, __5) { stackEqual(__5, (rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101"));
+ return T(__cb(_, __frame, 6, 12, function ___(__0, __6) { stackEqual(__6, (rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101"));
+ return T(__cb(_, __frame, 7, 12, function ___(__0, __7) { stackEqual(__7, (rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101"));
+ return T(__cb(_, __frame, 8, 12, function ___(__0, __8) { stackEqual(__8, (rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101"));
  start(); _(); }, true), I, 7, failSync); }, true), I, 7, failAsync); }, true), I, 6, failSync); }, true), I, 6, failAsync); }, true), I, 5, failSync); }, true), I, 5, failAsync); }, true), I, 4, failSync); }, true), I, 4, failAsync); });});

@@ -110,11 +110,8 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		//console.log(ex.rawStack);
-		//console.log(ex.stack);
-		//console.log(s);
 		s = s.split('\n').map(function(l){
-			var m = /^\s+at (\w+)\s\(.*:(\d+)\:.*\)/.exec(l);
+			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
@@ -124,9 +121,12 @@ function T(_, fn, code, failFn){
 	}
 ;yield;}
 
+function stackEqual(got, expect) {
+	if (typeof T_ === 'function' && T_.gstreamlineFunction) { got = got.substring(0, 15); expect = expect.substring(0, 15); }
+	strictEqual(got, expect);
+}
 // safari hack
-var rawStack = new Error().stack ?
-function(raw) {
+var rawStack = new Error().stack ? function(raw) {
 	return raw;
 } : function() {
 	return "raw stack unavailable";
@@ -135,86 +135,86 @@ function(raw) {
 module("stacks");
 
 asyncTest("stacks", 20, fstreamline__.create(function(_) {
-	strictEqual((yield T(_, A_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/A:28");
-	strictEqual((yield T(_, A_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/A:28");
-	strictEqual((yield T(_, A_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30");
-	strictEqual((yield T(_, A_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30");
-	strictEqual((yield T(_, A_, 3, failAsync_)), rawStack("Error: 3/failAsync:15") + "/A:33");
-	strictEqual((yield T(_, A_, 3, failSync_)), rawStack("Error: 3/fail:20/failSync:21") + "/A:33");
-	strictEqual((yield T(_, A_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/A:36");
-	strictEqual((yield T(_, A_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/A:36");
-	strictEqual((yield T(_, A_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36");
-	strictEqual((yield T(_, A_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36");
-	strictEqual((yield T(_, A_, 6, failAsync_)), rawStack("Error: 6/failAsync:15") + "/A:40");
-	strictEqual((yield T(_, A_, 6, failSync_)), rawStack("Error: 6/fail:20/failSync:21") + "/A:40");
-	strictEqual((yield T(_, A_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/B:49/A:42");
-	strictEqual((yield T(_, A_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42");
-	strictEqual((yield T(_, A_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42");
-	strictEqual((yield T(_, A_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42");
-	strictEqual((yield T(_, A_, 9, failAsync_)), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42");
-	strictEqual((yield T(_, A_, 9, failSync_)), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42");
-	strictEqual((yield T(_, A_, 10, failAsync_)), "END");
-	strictEqual((yield T(_, A_, 10, failSync_)), "END");
+	stackEqual((yield T(_, A_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/A:28");
+	stackEqual((yield T(_, A_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/A:28");
+	stackEqual((yield T(_, A_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30");
+	stackEqual((yield T(_, A_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30");
+	stackEqual((yield T(_, A_, 3, failAsync_)), rawStack("Error: 3/failAsync:15") + "/A:33");
+	stackEqual((yield T(_, A_, 3, failSync_)), rawStack("Error: 3/fail:20/failSync:21") + "/A:33");
+	stackEqual((yield T(_, A_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/A:36");
+	stackEqual((yield T(_, A_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/A:36");
+	stackEqual((yield T(_, A_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36");
+	stackEqual((yield T(_, A_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36");
+	stackEqual((yield T(_, A_, 6, failAsync_)), rawStack("Error: 6/failAsync:15") + "/A:40");
+	stackEqual((yield T(_, A_, 6, failSync_)), rawStack("Error: 6/fail:20/failSync:21") + "/A:40");
+	stackEqual((yield T(_, A_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/B:49/A:42");
+	stackEqual((yield T(_, A_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42");
+	stackEqual((yield T(_, A_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42");
+	stackEqual((yield T(_, A_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42");
+	stackEqual((yield T(_, A_, 9, failAsync_)), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42");
+	stackEqual((yield T(_, A_, 9, failSync_)), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42");
+	stackEqual((yield T(_, A_, 10, failAsync_)), "END");
+	stackEqual((yield T(_, A_, 10, failSync_)), "END");
 	start();
 ;yield;}, 0));
 
 asyncTest("catch", 20, fstreamline__.create(function(_) {
-	strictEqual((yield T(_, E_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/E:72");
-	strictEqual((yield T(_, E_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/E:72");
-	strictEqual((yield T(_, E_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30/E:74");
-	strictEqual((yield T(_, E_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74");
-	strictEqual((yield T(_, E_, 3, failAsync_)), "OK 3");
-	strictEqual((yield T(_, E_, 3, failSync_)), "OK 3");
-	strictEqual((yield T(_, E_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/E:72");
-	strictEqual((yield T(_, E_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/E:72");
-	strictEqual((yield T(_, E_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36/E:74");
-	strictEqual((yield T(_, E_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74");
-	strictEqual((yield T(_, E_, 6, failAsync_)), "OK 6");
-	strictEqual((yield T(_, E_, 6, failSync_)), "OK 6");
-	strictEqual((yield T(_, E_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/E:72");
-	strictEqual((yield T(_, E_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/E:72");
-	strictEqual((yield T(_, E_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74");
-	strictEqual((yield T(_, E_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74");
-	strictEqual((yield T(_, E_, 9, failAsync_)), "OK 9");
-	strictEqual((yield T(_, E_, 9, failSync_)), "OK 9");
-	strictEqual((yield T(_, E_, 10, failAsync_)), rawStack("Error: 10/failAsync:15") + "/E:72");
-	strictEqual((yield T(_, E_, 10, failSync_)), rawStack("Error: 10/fail:20/failSync:21") + "/E:72");
+	stackEqual((yield T(_, E_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/E:72");
+	stackEqual((yield T(_, E_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/E:72");
+	stackEqual((yield T(_, E_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30/E:74");
+	stackEqual((yield T(_, E_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74");
+	stackEqual((yield T(_, E_, 3, failAsync_)), "OK 3");
+	stackEqual((yield T(_, E_, 3, failSync_)), "OK 3");
+	stackEqual((yield T(_, E_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/E:72");
+	stackEqual((yield T(_, E_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/E:72");
+	stackEqual((yield T(_, E_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36/E:74");
+	stackEqual((yield T(_, E_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74");
+	stackEqual((yield T(_, E_, 6, failAsync_)), "OK 6");
+	stackEqual((yield T(_, E_, 6, failSync_)), "OK 6");
+	stackEqual((yield T(_, E_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/E:72");
+	stackEqual((yield T(_, E_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/E:72");
+	stackEqual((yield T(_, E_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74");
+	stackEqual((yield T(_, E_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74");
+	stackEqual((yield T(_, E_, 9, failAsync_)), "OK 9");
+	stackEqual((yield T(_, E_, 9, failSync_)), "OK 9");
+	stackEqual((yield T(_, E_, 10, failAsync_)), rawStack("Error: 10/failAsync:15") + "/E:72");
+	stackEqual((yield T(_, E_, 10, failSync_)), rawStack("Error: 10/fail:20/failSync:21") + "/E:72");
 	start();
 ;yield;}, 0));
 
 asyncTest("futures", 20, fstreamline__.create(function(_) {
-	strictEqual((yield T(_, F_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/A:28/F:83");
-	strictEqual((yield T(_, F_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83");
-	strictEqual((yield T(_, F_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30/F:83");
-	strictEqual((yield T(_, F_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83");
-	strictEqual((yield T(_, F_, 3, failAsync_)), rawStack("Error: 3/failAsync:15") + "/A:33/F:83");
-	strictEqual((yield T(_, F_, 3, failSync_)), rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83");
-	strictEqual((yield T(_, F_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/A:36/F:83");
-	strictEqual((yield T(_, F_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83");
-	strictEqual((yield T(_, F_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36/F:83");
-	strictEqual((yield T(_, F_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83");
-	strictEqual((yield T(_, F_, 6, failAsync_)), rawStack("Error: 6/failAsync:15") + "/A:40/F:83");
-	strictEqual((yield T(_, F_, 6, failSync_)), rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83");
-	strictEqual((yield T(_, F_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83");
-	strictEqual((yield T(_, F_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83");
-	strictEqual((yield T(_, F_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83");
-	strictEqual((yield T(_, F_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83");
-	strictEqual((yield T(_, F_, 9, failAsync_)), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83");
-	strictEqual((yield T(_, F_, 9, failSync_)), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83");
-	strictEqual((yield T(_, F_, 10, failAsync_)), "END & END");
-	strictEqual((yield T(_, F_, 10, failSync_)), "END & END");
+	stackEqual((yield T(_, F_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/A:28/F:83");
+	stackEqual((yield T(_, F_, 1, failSync_)), rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83");
+	stackEqual((yield T(_, F_, 2, failAsync_)), rawStack("Error: 2/failAsync:15") + "/A:30/F:83");
+	stackEqual((yield T(_, F_, 2, failSync_)), rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83");
+	stackEqual((yield T(_, F_, 3, failAsync_)), rawStack("Error: 3/failAsync:15") + "/A:33/F:83");
+	stackEqual((yield T(_, F_, 3, failSync_)), rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83");
+	stackEqual((yield T(_, F_, 4, failAsync_)), rawStack("Error: 4/failAsync:15") + "/A:36/F:83");
+	stackEqual((yield T(_, F_, 4, failSync_)), rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83");
+	stackEqual((yield T(_, F_, 5, failAsync_)), rawStack("Error: 5/failAsync:15") + "/A:36/F:83");
+	stackEqual((yield T(_, F_, 5, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83");
+	stackEqual((yield T(_, F_, 6, failAsync_)), rawStack("Error: 6/failAsync:15") + "/A:40/F:83");
+	stackEqual((yield T(_, F_, 6, failSync_)), rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83");
+	stackEqual((yield T(_, F_, 7, failAsync_)), rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83");
+	stackEqual((yield T(_, F_, 7, failSync_)), rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83");
+	stackEqual((yield T(_, F_, 8, failAsync_)), rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83");
+	stackEqual((yield T(_, F_, 8, failSync_)), rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83");
+	stackEqual((yield T(_, F_, 9, failAsync_)), rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83");
+	stackEqual((yield T(_, F_, 9, failSync_)), rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83");
+	stackEqual((yield T(_, F_, 10, failAsync_)), "END & END");
+	stackEqual((yield T(_, F_, 10, failSync_)), "END & END");
 	start();
 ;yield;}, 0));
 
 asyncTest("loop", 8, fstreamline__.create(function(_) {
-	strictEqual((yield T(_, I_, 4, failAsync_)), "0123");
-	strictEqual((yield T(_, I_, 4, failSync_)), "0123");
-	strictEqual((yield T(_, I_, 5, failAsync_)), "01234");
-	strictEqual((yield T(_, I_, 5, failSync_)), "01234");
-	strictEqual((yield T(_, I_, 6, failAsync_)), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
-	strictEqual((yield T(_, I_, 6, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
-	strictEqual((yield T(_, I_, 7, failAsync_)), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
-	strictEqual((yield T(_, I_, 7, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
+	stackEqual((yield T(_, I_, 4, failAsync_)), "0123");
+	stackEqual((yield T(_, I_, 4, failSync_)), "0123");
+	stackEqual((yield T(_, I_, 5, failAsync_)), "01234");
+	stackEqual((yield T(_, I_, 5, failSync_)), "01234");
+	stackEqual((yield T(_, I_, 6, failAsync_)), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
+	stackEqual((yield T(_, I_, 6, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
+	stackEqual((yield T(_, I_, 7, failAsync_)), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
+	stackEqual((yield T(_, I_, 7, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
 	start();
 ;yield;}, 0));
 ;yield;}, 0).call(this, function(err) {
