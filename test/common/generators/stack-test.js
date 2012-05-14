@@ -13,13 +13,13 @@ function nextTick(cb){
 
 function failAsync(_, code){
 	throw new Error(code);
-yield;}
+}
 
 function failSync(_, code){
 	(function fail(dummy){ // dummy to defeat CoffeeScript compat rule
 		throw new Error(code);
 	})(0);
-;yield;yield;}
+;yield;}
 
 var fail;
 
@@ -42,7 +42,7 @@ function A(_, code){
 	(yield B(_, code));
 	(yield fstreamline__.invoke(null, nextTick, [_], 0));
 	yield ( "END");
-yield;}
+}
 
 function B(_, code){
 	if (code == 7) 
@@ -51,17 +51,17 @@ function B(_, code){
 	(yield fstreamline__.invoke(null, nextTick, [_], 0));
 	(yield C(_, code));
 	(yield D(_, code));
-;yield;yield;}
+;yield;}
 
 function C(_, code){
 	if (code == 8) 
 		(yield fstreamline__.invoke(null, fail, [_, code], 0));
-;yield;yield;}
+;yield;}
 
 function D(_, code){
 	if (code == 9) 
 		(yield fstreamline__.invoke(null, fail, [_, code], 0));
-;yield;yield;}
+;yield;}
 
 function E(_, code){
 	try {
@@ -75,32 +75,32 @@ function E(_, code){
 		else 
 			yield ( "OK " + code);
 	}
-;yield;yield;}
+;yield;}
 
 function F(_, code){
 	var f1 = A_(null, code);
 	var f2 = A_(null, code + 1);
 	yield ( (yield fstreamline__.invoke(null, f1, [_], 0)) + " & " + (yield fstreamline__.invoke(null, f2, [_], 0)));
-yield;}
+}
 
 function G(_, code){
 	if (code == 5) 
 		(yield fstreamline__.invoke(null, fail, [_, code], 0));
 	yield ( "" + code);
-yield;}
+}
 
 function H(_, code){
 	if (code % 2 == 0) 
 		(yield fstreamline__.invoke(null, nextTick, [_], 0));
 	yield ( (yield G(_, code)));
-yield;}
+}
 
 function I(_, code){
 	var s = "";
 	for (var i = 0; i < code; i++) 
 		s += (yield H(_, i));
 	yield ( s);
-yield;}
+}
 
 function T(_, fn, code, failFn){
 	fail = failFn;
@@ -122,7 +122,7 @@ function T(_, fn, code, failFn){
 		var end = s.indexOf('/T:');
 		yield ( end < 0 ? s + "-- end frame missing" : s.substring(0, end));
 	}
-;yield;yield;}
+;yield;}
 
 // safari hack
 var rawStack = new Error().stack ?
@@ -156,7 +156,7 @@ asyncTest("stacks", 20, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, A_, 10, failAsync_)), "END");
 	strictEqual((yield T(_, A_, 10, failSync_)), "END");
 	start();
-;yield;yield;}, 0));
+;yield;}, 0));
 
 asyncTest("catch", 20, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, E_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/E:72");
@@ -180,7 +180,7 @@ asyncTest("catch", 20, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, E_, 10, failAsync_)), rawStack("Error: 10/failAsync:15") + "/E:72");
 	strictEqual((yield T(_, E_, 10, failSync_)), rawStack("Error: 10/fail:20/failSync:21") + "/E:72");
 	start();
-;yield;yield;}, 0));
+;yield;}, 0));
 
 asyncTest("futures", 20, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, F_, 1, failAsync_)), rawStack("Error: 1/failAsync:15") + "/A:28/F:83");
@@ -204,7 +204,7 @@ asyncTest("futures", 20, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, F_, 10, failAsync_)), "END & END");
 	strictEqual((yield T(_, F_, 10, failSync_)), "END & END");
 	start();
-;yield;yield;}, 0));
+;yield;}, 0));
 
 asyncTest("loop", 8, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, I_, 4, failAsync_)), "0123");
@@ -216,7 +216,7 @@ asyncTest("loop", 8, fstreamline__.create(function(_) {
 	strictEqual((yield T(_, I_, 7, failAsync_)), rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101");
 	strictEqual((yield T(_, I_, 7, failSync_)), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
 	start();
-;yield;yield;}, 0));
-;yield;yield;}, 0).call(this, function(err) {
+;yield;}, 0));
+;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));

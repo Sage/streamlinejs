@@ -13,12 +13,12 @@ function evalTest(f, val) {
 function delay(_, val) {
 	(yield fstreamline__.invoke(null, setTimeout, [_, 0], 0));
 	yield ( val);
-yield;}
+}
 
 function delayFail(_, err) {
 	(yield fstreamline__.invoke(null, setTimeout, [_, 0], 0));
 	throw err;
-yield;}
+}
 
 function throwError(message) {
 	throw new Error(message);
@@ -27,20 +27,20 @@ function throwError(message) {
 asyncTest("eval return", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		yield ( (yield delay(_, 5)));
-	yield;}, 0), 5);
-;yield;yield;}, 0));
+	}, 0), 5);
+;yield;}, 0));
 asyncTest("eval if true", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		if (true) yield ( (yield delay(_, 3)));
 		yield ( 4);
-	yield;}, 0), 3);
-;yield;yield;}, 0));
+	}, 0), 3);
+;yield;}, 0));
 asyncTest("eval if false", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		if (false) yield ( (yield delay(_, 3)));
 		yield ( 4);
-	yield;}, 0), 4);
-;yield;yield;}, 0));
+	}, 0), 4);
+;yield;}, 0));
 asyncTest("eval while", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var i = 1,
@@ -50,8 +50,8 @@ asyncTest("eval while", 1, fstreamline__.create(function(_) {
 			i++;
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("eval for", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
@@ -59,8 +59,8 @@ asyncTest("eval for", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, i)) * (yield delay(_, result));
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("eval for in", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var foo = {
@@ -74,8 +74,8 @@ asyncTest("eval for in", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, foo[(yield delay(_, k))])) * (yield delay(_, result));
 		}
 		yield ( result);
-	yield;}, 0), 30);
-;yield;yield;}, 0));
+	}, 0), 30);
+;yield;}, 0));
 asyncTest("fully async for in", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
@@ -83,8 +83,8 @@ asyncTest("fully async for in", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, result)) * (yield delay(_, i));
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("break in loop", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
@@ -93,8 +93,8 @@ asyncTest("break in loop", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, result)) * (yield delay(_, i));
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("continue", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
@@ -103,8 +103,8 @@ asyncTest("continue", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, result)) * (yield delay(_, i));
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("break in while", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var i = 1,
@@ -115,8 +115,8 @@ asyncTest("break in while", 1, fstreamline__.create(function(_) {
 			i++;
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("continue in while", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var i = 1,
@@ -127,28 +127,28 @@ asyncTest("continue in while", 1, fstreamline__.create(function(_) {
 			result = (yield delay(_, result)) * (yield delay(_, i));
 		}
 		yield ( result);
-	yield;}, 0), 24);
-;yield;yield;}, 0));
+	}, 0), 24);
+;yield;}, 0));
 asyncTest("for (;;)", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var i = 0;
 		for (;;) {
 			if ((yield delay(_, ++i)) === 10) yield ( i);
 		}
-	;yield;yield;}, 0), 10);
-;yield;yield;}, 0));
+	;yield;}, 0), 10);
+;yield;}, 0));
 asyncTest("eval lazy", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
 		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? 2 : 4)
-	yield;}, 0), 4);
-;yield;yield;}, 0));
+	}, 0), 4);
+;yield;}, 0));
 asyncTest("eval lazy full async", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
 		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? (yield delay(_, 2)) : (yield delay(_, 4)))
-	yield;}, 0), 4);
-;yield;yield;}, 0));
+	}, 0), 4);
+;yield;}, 0));
 asyncTest("try catch 1", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -156,8 +156,8 @@ asyncTest("try catch 1", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "err")));
 		}
-	;yield;yield;}, 0), "ok");
-;yield;yield;}, 0));
+	;yield;}, 0), "ok");
+;yield;}, 0));
 asyncTest("try catch 2", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -165,8 +165,8 @@ asyncTest("try catch 2", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex);
 		}
-	;yield;yield;}, 0), "caught thrown");
-;yield;yield;}, 0));
+	;yield;}, 0), "caught thrown");
+;yield;}, 0));
 asyncTest("try catch 3", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -174,8 +174,8 @@ asyncTest("try catch 3", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex);
 		}
-	;yield;yield;}, 0), "caught thrown");
-;yield;yield;}, 0));
+	;yield;}, 0), "caught thrown");
+;yield;}, 0));
 asyncTest("try catch 5", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -183,8 +183,8 @@ asyncTest("try catch 5", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex);
 		}
-	;yield;yield;}, 0), "caught delay fail");
-;yield;yield;}, 0));
+	;yield;}, 0), "caught delay fail");
+;yield;}, 0));
 asyncTest("try catch 6", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -193,8 +193,8 @@ asyncTest("try catch 6", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex.message);
 		}
-	;yield;yield;}, 0), "caught direct");
-;yield;yield;}, 0));
+	;yield;}, 0), "caught direct");
+;yield;}, 0));
 asyncTest("try catch 7", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
@@ -204,8 +204,8 @@ asyncTest("try catch 7", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex.message);
 		}
-	;yield;yield;}, 0), "caught indirect");
-;yield;yield;}, 0));
+	;yield;}, 0), "caught indirect");
+;yield;}, 0));
 asyncTest("try finally 1", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -216,8 +216,8 @@ asyncTest("try finally 1", 1, fstreamline__.create(function(_) {
 		}} while (false); if (result__) yield result__[0]; }
 		x += " end";
 		yield ( x);
-	yield;}, 0), "try finally end");
-;yield;yield;}, 0));
+	}, 0), "try finally end");
+;yield;}, 0));
 asyncTest("try finally 2", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -229,8 +229,8 @@ asyncTest("try finally 2", 1, fstreamline__.create(function(_) {
 		}} while (false); if (result__) yield result__[0]; }
 		x += " end";
 		yield ( x);
-	yield;}, 0), "try");
-;yield;yield;}, 0));
+	}, 0), "try");
+;yield;}, 0));
 asyncTest("try finally 3", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -242,8 +242,8 @@ asyncTest("try finally 3", 1, fstreamline__.create(function(_) {
 		}} while (false); if (result__) yield result__[0]; }
 		x += " end";
 		yield ( x);
-	yield;}, 0), "ERR: bad try");
-;yield;yield;}, 0));
+	}, 0), "ERR: bad try");
+;yield;}, 0));
 asyncTest("try finally 4", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -255,8 +255,8 @@ asyncTest("try finally 4", 1, fstreamline__.create(function(_) {
 		}} while (false); if (result__) yield result__[0]; }
 		x += " end";
 		yield ( x);
-	yield;}, 0), "ERR: Error: except");
-;yield;yield;}, 0));
+	}, 0), "ERR: Error: except");
+;yield;}, 0));
 asyncTest("try finally 5", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -273,8 +273,8 @@ asyncTest("try finally 5", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + "/" + ex.message);
 		}
-	;yield;yield;}, 0), "try finally/except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try finally/except");
+;yield;}, 0));
 asyncTest("try catch finally 1", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -294,8 +294,8 @@ asyncTest("try catch finally 1", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + "/" + ex.message);
 		}
-	;yield;yield;}, 0), "try catch except finally/except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try catch except finally/except");
+;yield;}, 0));
 asyncTest("try catch finally 2", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -315,8 +315,8 @@ asyncTest("try catch finally 2", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + "/" + ex.message);
 		}
-	;yield;yield;}, 0), "try catch except finally/except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try catch except finally/except");
+;yield;}, 0));
 asyncTest("nested try/catch 1", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -330,8 +330,8 @@ asyncTest("nested try/catch 1", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try outer catch except");
+;yield;}, 0));
 asyncTest("nested try/catch 2", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -345,8 +345,8 @@ asyncTest("nested try/catch 2", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try outer catch except");
+;yield;}, 0));
 asyncTest("nested try/catch 3", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -360,8 +360,8 @@ asyncTest("nested try/catch 3", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try outer catch except");
+;yield;}, 0));
 asyncTest("nested try/finally 1", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -375,8 +375,8 @@ asyncTest("nested try/finally 1", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try inner finally outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try inner finally outer catch except");
+;yield;}, 0));
 asyncTest("nested try/finally 2", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -390,8 +390,8 @@ asyncTest("nested try/finally 2", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try inner finally outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try inner finally outer catch except");
+;yield;}, 0));
 asyncTest("nested try/finally 3", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "";
@@ -405,8 +405,8 @@ asyncTest("nested try/finally 3", 1, fstreamline__.create(function(_) {
 		} catch (ex) {
 			yield ( x + " outer catch" + ex.message);
 		}
-	;yield;yield;}, 0), "try inner finally outer catch except");
-;yield;yield;}, 0));
+	;yield;}, 0), "try inner finally outer catch except");
+;yield;}, 0));
 asyncTest("and ok", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "<<";
@@ -422,8 +422,8 @@ asyncTest("and ok", 1, fstreamline__.create(function(_) {
 		else x += "F5";
 		x += ">>";
 		yield ( x);
-	yield;}, 0), "<<T1F2F3F4F5>>");
-;yield;yield;}, 0));
+	}, 0), "<<T1F2F3F4F5>>");
+;yield;}, 0));
 asyncTest("or ok", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var x = "<<";
@@ -439,8 +439,8 @@ asyncTest("or ok", 1, fstreamline__.create(function(_) {
 		else x += "F5";
 		x += ">>";
 		yield ( x);
-	yield;}, 0), "<<T1T2T3F4T5>>");
-;yield;yield;}, 0));
+	}, 0), "<<T1T2T3F4T5>>");
+;yield;}, 0));
 asyncTest("switch with default", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var g_ = fstreamline__.create(g, 0);
 		function g(_, i) {
@@ -459,11 +459,11 @@ asyncTest("switch with default", 1, fstreamline__.create(function(_) {
 				result = (yield delay(_, "e"));
 			}
 			yield ( result);
-		yield;}
+		}
 
 		yield ( (yield g(_, 0)) + (yield g(_, 1)) + (yield g(_, 2)) + (yield g(_, 3)) + (yield g(_, 4)) + (yield g(_, 5)));
-	yield;}, 0), "ebcdde");
-;yield;yield;}, 0));
+	}, 0), "ebcdde");
+;yield;}, 0));
 asyncTest("switch without default", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var g_ = fstreamline__.create(g, 0);
 		function g(_, i) {
@@ -480,11 +480,11 @@ asyncTest("switch without default", 1, fstreamline__.create(function(_) {
 				break;
 			}
 			yield ( result);
-		yield;}
+		}
 
 		yield ( (yield g(_, 0)) + (yield g(_, 1)) + (yield g(_, 2)) + (yield g(_, 3)) + (yield g(_, 4)) + (yield g(_, 5)));
-	yield;}, 0), "abcdda");
-;yield;yield;}, 0));
+	}, 0), "abcdda");
+;yield;}, 0));
 asyncTest("this", 5, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var delay2_ = fstreamline__.create(delay2, 1);
 		function O(x) {
@@ -495,7 +495,7 @@ asyncTest("this", 5, fstreamline__.create(function(_) {
 			var self = this;
 			this.x = (yield delay(_, this.x + 1));
 			strictEqual(this, self);
-		;yield;yield;}, 0);
+		;yield;}, 0);
 		O.prototype.test2 = fstreamline__.create(function(_) {
 			var self = this;
 			try {
@@ -504,7 +504,7 @@ asyncTest("this", 5, fstreamline__.create(function(_) {
 			} catch (ex) {
 				ok(false);
 			}
-		;yield;yield;}, 0);
+		;yield;}, 0);
 		O.prototype.test3 = fstreamline__.create(function(_) {
 			var self = this;
 			try {
@@ -515,11 +515,11 @@ asyncTest("this", 5, fstreamline__.create(function(_) {
 				strictEqual(this, self);
 				this.x = (yield delay(_, this.x + 1));
 			}
-		;yield;yield;}, 0);
+		;yield;}, 0);
 
 		function delay2(val, _) {
 			yield ( (yield delay(_, val)));
-		yield;}
+		}
 
 		O.prototype.test4 = fstreamline__.create(function(_) {
 			var self = this;
@@ -527,15 +527,15 @@ asyncTest("this", 5, fstreamline__.create(function(_) {
 			var v2 = delay2_(1);
 			this.x = (yield fstreamline__.invoke(null, v1, [_], 0)) + (yield fstreamline__.invoke(null, v2, [_], 0));
 			strictEqual(this, self);
-		;yield;yield;}, 0);
+		;yield;}, 0);
 		var o = new O(1);
 		(yield fstreamline__.invoke(o, "test1", [_], 0));
 		(yield fstreamline__.invoke(o, "test2", [_], 0));
 		(yield fstreamline__.invoke(o, "test3", [_], 0));
 		(yield fstreamline__.invoke(o, "test4", [_], 0));
 		yield ( o.x);
-	yield;}, 0), 7);
-;yield;yield;}, 0));
+	}, 0), 7);
+;yield;}, 0));
 asyncTest("scoping", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var test_ = fstreamline__.create(test, 0);
 		function test(_) {
@@ -548,34 +548,34 @@ asyncTest("scoping", 1, fstreamline__.create(function(_) {
 			(yield delay(_));
 			var foo = "xyz";
 			yield ( bar);
-		yield;}
+		}
 
 		yield ( (yield test(_))());
-	yield;}, 0), "xyz");
-;yield;yield;}, 0));
+	}, 0), "xyz");
+;yield;}, 0));
 asyncTest("return undefined", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var test_ = fstreamline__.create(test, 0);
 		function test(_) {
 			(yield delay(_));
 			yield;
-		yield;}
+		}
 
 		yield ( (yield test(_)));
-	yield;}, 0), undefined);
-;yield;yield;}, 0));
+	}, 0), undefined);
+;yield;}, 0));
 asyncTest("futures test", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var delay2_ = fstreamline__.create(delay2, 1);
 		function delay2(val, _) {
 			yield ( (yield delay(_, val)));
-		yield;}
+		}
 
 		var a = delay2_('a');
 		var b = delay2_('b');
 		var c = delay2_('c');
 		var d = delay2_('d');
 		yield ( (yield fstreamline__.invoke(null, a, [_], 0)) + (yield fstreamline__.invoke(null, b, [_], 0)) + (yield fstreamline__.invoke(null, d, [_], 0)) + (yield fstreamline__.invoke(null, c, [_], 0)));
-	yield;}, 0), "abdc");
-;yield;yield;}, 0));
+	}, 0), "abdc");
+;yield;}, 0));
 asyncTest("last case without break", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		switch (true) {
@@ -583,37 +583,37 @@ asyncTest("last case without break", 1, fstreamline__.create(function(_) {
 			(yield delay(_));
 		}
 		yield ( 1);
-	yield;}, 0), 1);
-;yield;yield;}, 0));
+	}, 0), 1);
+;yield;}, 0));
 
 asyncTest("async comma operator", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var a;
 		yield ( a = 4, a++, a = (yield delay(_, 2 * a)), (yield delay(_, a + 1)));
-	yield;}, 0), 11);
-;yield;yield;}, 0));
+	}, 0), 11);
+;yield;}, 0));
 
 asyncTest("async constructor", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var Foo_ = fstreamline__.create(Foo, 1);
 		function Foo(val, _) {
 			(yield delay(_));
 			this.x = val;
-		;yield;yield;}
+		;yield;}
 		Foo_.prototype.y = function() {
 			return this.x + 1;
 		};
 		yield ( (yield  fstreamline__.construct(Foo_,1)(5, _)).y());
-	yield;}, 0), 6);
-;yield;yield;}, 0));
+	}, 0), 6);
+;yield;}, 0));
 
 asyncTest("fibo false async", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var fibo_ = fstreamline__.create(fibo, 0);
 		function fibo(_, n) {
 			yield ( n > 1 ? (yield fibo(_, n - 1)) + (yield fibo(_, n - 2)) : 1);
-		yield;}
+		}
 		yield ( (yield fibo(_, 16)));
-	yield;}, 0), 1597);
-;yield;yield;}, 0));
-;yield;yield;}, 0).call(this, function(err) {
+	}, 0), 1597);
+;yield;}, 0));
+;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));
