@@ -122,7 +122,7 @@ function T(_, fn, code, failFn) { var s, end; var __frame = { name: "T", line: 1
 
 
 function stackEqual(got, expect) {
- if (((typeof T_ === "function") && T_.gstreamlineFunction)) { got = got.substring(0, 15); expect = expect.substring(0, 15); };
+ if (((typeof T_ === "function") && T_.gstreamlineFunction)) { got = got.substring(0, 25); expect = expect.substring(0, 25); };
  strictEqual(got, expect);};
 
 
