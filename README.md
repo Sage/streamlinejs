@@ -151,18 +151,25 @@ You have three options to use streamline in the browser:
 # Generation options
 
 Streamline gives you the choice between generating regular callback-based asynchronous code, 
-or generating code that takes advantage of the [fibers library](https://github.com/laverdet/node-fibers).
+generating code that takes advantage of the [fibers library](https://github.com/laverdet/node-fibers), 
+or generating code for [JavaScript generators](https://developer.mozilla.org/en/New_in_JavaScript_1.7#Generators).
 
 The _callback_ option produces code that does not have any special runtime dependencies. 
 
 The _fibers_ option produces simpler code but requires that you install 
 the fibers library (easy: `npm install fibers`). 
-This option gives superior development experience: line numbers are always preserved in the transformed code; 
+This option gives superior development experience: line numbers and comments are preserved in the transformed code; 
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
 
 The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by 
 setting the `fibers` option when registering streamline 
 (see the `streamline.register(options)` function.
+
+The _generators_ option is more experimental (but rather solid as it passes all unit tests). 
+It produces code that is similar to the _fibers_ option, although slightly more complex. 
+Like the _fibers_ option, it preserves line numbers and comments. 
+This option does _not_ yet work in node.js because V8 does not currently support generators but it works in Firefox and in [luvmonkey](https://github.com/creationix/luvmonkey). 
+It should work, with minor tweaks, in future versions of V8 that may implement [Harmony generators](http://wiki.ecmascript.org/doku.php?id=harmony:generators).
  
 # Interoperability with standard node.js code
 
@@ -185,7 +192,7 @@ lineCount("README.md", function(err, result) {
 And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
 Streamline only transforms the functions that have the special `_` parameter. 
 
-Note: this works with both transformation options. 
+Note: this works with all transformation options. 
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
 
@@ -290,6 +297,8 @@ You'll also find CoffeeScript versions of these examples.
 # On-line demo
 
 You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
+
+If you are curious, you can also play with the [generators demo - Firefox only](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
 # Troubleshooting
 
