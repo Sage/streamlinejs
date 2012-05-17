@@ -298,7 +298,7 @@ You'll also find CoffeeScript versions of these examples.
 
 You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
-If you are curious, you can also play with the [generators demo - Firefox only](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
+If you are curious, you can also play with the [generators demo - Firefox only](http://sage.github.com/streamlinejs/examples/streamlineMe/yieldMe.html).
 
 # Troubleshooting
 
