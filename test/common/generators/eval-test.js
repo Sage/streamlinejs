@@ -68,7 +68,7 @@ asyncTest("eval for in", 1, fstreamline__.create(function(_) {
 			b: 2,
 			c: 3,
 			d: 5
-		}
+		};
 		var result = 1;
 		for (var k in foo) {
 			result = (yield delay(_, foo[(yield delay(_, k))])) * (yield delay(_, result));
@@ -444,7 +444,7 @@ asyncTest("or ok", 1, fstreamline__.create(function(_) {
 asyncTest("switch with default", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var g_ = fstreamline__.create(g, 0);
 		function g(_, i) {
-			var result = "a"
+			var result = "a";
 			switch ((yield delay(_, i))) {
 			case 1:
 				result = (yield delay(_, "b"));
@@ -467,7 +467,7 @@ asyncTest("switch with default", 1, fstreamline__.create(function(_) {
 asyncTest("switch without default", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {var g_ = fstreamline__.create(g, 0);
 		function g(_, i) {
-			var result = "a"
+			var result = "a";
 			switch ((yield delay(_, i))) {
 			case 1:
 				result = "b";

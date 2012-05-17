@@ -104,7 +104,7 @@ function I(_, code){
 
 function T(_, fn, code, failFn){
 	fail = failFn;
-	var s = "{"
+	var s = "{";
 	try {
 		yield ( (yield fstreamline__.invoke(null, fn, [_, code], 0)));
 	} 
@@ -130,7 +130,7 @@ var rawStack = new Error().stack ? function(raw) {
 	return raw;
 } : function() {
 	return "raw stack unavailable";
-}
+};
 
 module("stacks");
 
