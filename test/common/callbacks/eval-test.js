@@ -447,166 +447,169 @@ asyncTest("switch with default", 1, function __36(_) { var __frame = { name: "__
  result = "a";
  return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
  case 1: return delay(__cb(_, __frame, 4, 13, function ___(__0, __2) {
- result = __2; return __break(); }, true), "b"); case 2: return delay(__cb(_, __frame, 7, 11, _, true), "c");
+ result = __2; return __break(); }, true), "b"); case 2:
 
- case 3: 
+ return delay(__cb(_, __frame, 7, 11, _, true), "c");
+ case 3:
+ 
  case 4: return delay(__cb(_, __frame, 10, 13, function ___(__0, __4) {
  result = __4; return __break(); }, true), "d"); default:
- return delay(__cb(_, __frame, 13, 13, function ___(__0, __5) { result = __5;
- return __break(); }, true), "e"); }; })(function __$g() { return _(null, result); });
 
- }, true), i);
- }); }; var __frame = { name: "f", line: 445 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+ return delay(__cb(_, __frame, 13, 13, function ___(__0, __5) {
+ result = __5; return __break(); }, true), "e"); }; })(function __$g() {
 
- return g(__cb(_, __frame, 19, 9, function ___(__0, __2) { return g(__cb(_, __frame, 19, 19, function ___(__0, __3) { return g(__cb(_, __frame, 19, 29, function ___(__0, __4) { return g(__cb(_, __frame, 19, 39, function ___(__0, __5) { return g(__cb(_, __frame, 19, 49, function ___(__0, __6) { return g(__cb(_, __frame, 19, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4);
+ return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 445 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
- }, true), 3); }, true), 2); }, true), 1); }, true), 0); }); }, "ebcdde"); _(); });});asyncTest("switch without default", 1, function __37(_) { var __frame = { name: "__37", line: 467 }; return __func(_, this, arguments, __37, 0, __frame, function __$__37() {
- evalTest(function f(_) { function g(_, i) { var result; var __frame = {
+ return g(__cb(_, __frame, 19, 9, function ___(__0, __2) { return g(__cb(_, __frame, 19, 19, function ___(__0, __3) { return g(__cb(_, __frame, 19, 29, function ___(__0, __4) { return g(__cb(_, __frame, 19, 39, function ___(__0, __5) { return g(__cb(_, __frame, 19, 49, function ___(__0, __6) { return g(__cb(_, __frame, 19, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
+ }, "ebcdde"); _(); });});
 
- name: "g", line: 469 }; return __func(_, this, arguments, g, 0, __frame, function __$g() { result = "a"; return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) {
- return (function __$g(__break) {
- switch (__1) { case 1: result = "b"; return __break(); case 2: return _(null, "c"); case 3:
- 
- case 4: result = "d"; return __break();
- default: return __break();
- }; })(function __$g() { return _(null, result);
-
- }); }, true), i);
- }); };
- var __frame = { name: "f", line: 468 };
- return __func(_, this, arguments, f, 0, __frame, function __$f() { return g(__cb(_, __frame, 17, 9, function ___(__0, __2) {
- return g(__cb(_, __frame, 17, 19, function ___(__0, __3) { return g(__cb(_, __frame, 17, 29, function ___(__0, __4) { return g(__cb(_, __frame, 17, 39, function ___(__0, __5) { return g(__cb(_, __frame, 17, 49, function ___(__0, __6) { return g(__cb(_, __frame, 17, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4);
-
-
- }, true), 3); }, true), 2); }, true), 1); }, true), 0); }); }, "abcdda"); _(); });});asyncTest("this", 5, function __38(_) {
-
-
- var __frame = { name: "__38", line: 488 }; return __func(_, this, arguments, __38, 0, __frame, function __$__38() { evalTest(function f(_) { var o; function O(x) { this.x = x; }; function delay2(val, _) { var __frame = { name: "delay2", line: 520 };
- return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() { return delay(__cb(_, __frame, 1, 10, _, true), val); }); };
-
- var __frame = { name: "f", line: 489 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { O.prototype.test1 = function O_prototype_test1__1(_) {
- var self, __this = this; var __frame = {
- name: "O_prototype_test1__1",
- line: 494 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- return __func(_, this, arguments, O_prototype_test1__1, 0, __frame, function __$O_prototype_test1__1() { self = __this; return delay(__cb(_, __frame, 2, 12, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); _();
- }, true), (__this.x + 1)); }); }; O.prototype.test2 = function O_prototype_test2__2(_) { var self, __this = this; var __frame = { name: "O_prototype_test2__2", line: 499 }; return __func(_, this, arguments, O_prototype_test2__2, 0, __frame, function __$O_prototype_test2__2() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test2__2() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test2__2() { if (ex) { ok(false); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); }; O.prototype.test3 = function O_prototype_test3__3(_) { var self, __this = this; var __frame = { name: "O_prototype_test3__3", line: 508 }; return __func(_, this, arguments, O_prototype_test3__3, 0, __frame, function __$O_prototype_test3__3() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test3__3() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __2) { __this.x = __2; throwError("test3"); ok(false); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test3__3() { if (ex) { strictEqual(__this, self); return delay(__cb(_, __frame, 8, 13, function ___(__0, __1) { __this.x = __1; __then(); }, true), (__this.x + 1)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); }; O.prototype.test4 = function O_prototype_test4__4(_) { var self, v1, v2, __this = this; var __frame = { name: "O_prototype_test4__4", line: 524 }; return __func(_, this, arguments, O_prototype_test4__4, 0, __frame, function __$O_prototype_test4__4() { self = __this; v1 = delay2((__this.x + 1)); v2 = delay2(1); return v1(__cb(_, __frame, 4, 12, function ___(__0, __1) { return v2(__cb(_, __frame, 4, 20, function ___(__0, __2) { __this.x = (__1 + __2); strictEqual(__this, self); _(); }, true)); }, true)); }); }; o = new O(1);
-
-
- return o.test1(__cb(_, __frame, 43, 2, function __$f() { return o.test2(__cb(_, __frame, 44, 2, function __$f() { return o.test3(__cb(_, __frame, 45, 2, function __$f() { return o.test4(__cb(_, __frame, 46, 2, function __$f() { return _(null, o.x); }, true)); }, true)); }, true));
-
- }, true));
- });
- }, 7); _(); });
-});asyncTest("scoping", 1, function __39(_) { var __frame = { name: "__39", line: 539 };
-
- return __func(_, this, arguments, __39, 0, __frame, function __$__39() {
+asyncTest("switch without default", 1, function __37(_) { var __frame = { name: "__37", line: 467 }; return __func(_, this, arguments, __37, 0, __frame, function __$__37() {
  evalTest(function f(_) {
- function test(_) {
- var foo;
+ function g(_, i) { var result; var __frame = { name: "g", line: 469 }; return __func(_, this, arguments, g, 0, __frame, function __$g() {
+ result = "a";
+ return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
+ case 1: result = "b";
+ return __break();
+
+ case 2: return _(null, "c");
+ case 3:
+ 
+ case 4: result = "d";
+ return __break(); default: return __break(); }; })(function __$g() {
+
+
+ return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 468 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+
+
+ return g(__cb(_, __frame, 17, 9, function ___(__0, __2) { return g(__cb(_, __frame, 17, 19, function ___(__0, __3) { return g(__cb(_, __frame, 17, 29, function ___(__0, __4) { return g(__cb(_, __frame, 17, 39, function ___(__0, __5) { return g(__cb(_, __frame, 17, 49, function ___(__0, __6) { return g(__cb(_, __frame, 17, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
+ }, "abcdda"); _(); });});
+
+asyncTest("this", 5, function __38(_) { var __frame = { name: "__38", line: 488 }; return __func(_, this, arguments, __38, 0, __frame, function __$__38() {
+ evalTest(function f(_) { var o;
+ function O(x) {
+ this.x = x; };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function delay2(val, _) { var __frame = { name: "delay2", line: 520 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
+ return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 489 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { O.prototype.test1 = function O_prototype_test1__1(_) { var self, __this = this; var __frame = { name: "O_prototype_test1__1", line: 494 }; return __func(_, this, arguments, O_prototype_test1__1, 0, __frame, function __$O_prototype_test1__1() { self = __this; return delay(__cb(_, __frame, 2, 12, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); _(); }, true), (__this.x + 1)); }); }; O.prototype.test2 = function O_prototype_test2__2(_) { var self, __this = this; var __frame = { name: "O_prototype_test2__2", line: 499 }; return __func(_, this, arguments, O_prototype_test2__2, 0, __frame, function __$O_prototype_test2__2() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test2__2() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test2__2() { if (ex) { ok(false); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); }; O.prototype.test3 = function O_prototype_test3__3(_) { var self, __this = this; var __frame = { name: "O_prototype_test3__3", line: 508 }; return __func(_, this, arguments, O_prototype_test3__3, 0, __frame, function __$O_prototype_test3__3() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test3__3() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __2) { __this.x = __2; throwError("test3"); ok(false); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test3__3() { if (ex) { strictEqual(__this, self); return delay(__cb(_, __frame, 8, 13, function ___(__0, __1) { __this.x = __1; __then(); }, true), (__this.x + 1)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); };
+
+
+ O.prototype.test4 = function O_prototype_test4__4(_) { var self, v1, v2, __this = this; var __frame = { name: "O_prototype_test4__4", line: 524 }; return __func(_, this, arguments, O_prototype_test4__4, 0, __frame, function __$O_prototype_test4__4() { self = __this;
+
+ v1 = delay2((__this.x + 1));
+ v2 = delay2(1);
+ return v1(__cb(_, __frame, 4, 12, function ___(__0, __1) { return v2(__cb(_, __frame, 4, 20, function ___(__0, __2) { __this.x = (__1 + __2);
+ strictEqual(__this, self); _(); }, true)); }, true)); }); };
+
+ o = new O(1);
+ return o.test1(__cb(_, __frame, 43, 2, function __$f() {
+ return o.test2(__cb(_, __frame, 44, 2, function __$f() {
+ return o.test3(__cb(_, __frame, 45, 2, function __$f() {
+ return o.test4(__cb(_, __frame, 46, 2, function __$f() {
+ return _(null, o.x); }, true)); }, true)); }, true)); }, true)); });
+ }, 7); _(); });});
+
+asyncTest("scoping", 1, function __39(_) { var __frame = { name: "__39", line: 539 }; return __func(_, this, arguments, __39, 0, __frame, function __$__39() {
+ evalTest(function f(_) {
+ function test(_) { var foo;
+
+
  function bar() {
- return foo; }; var __frame = { name: "test", line: 541 };
- return __func(_, this, arguments, test, 0, __frame, function __$test() { foo = "abc"; return delay(__cb(_, __frame, 7, 3, function __$test() { foo = "xyz";
-
- return _(null, bar); }, true)); }); }; var __frame = { name: "f",
- line: 540
- }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+ return foo; }; var __frame = { name: "test", line: 541 }; return __func(_, this, arguments, test, 0, __frame, function __$test() { foo = "abc";
 
 
- return test(__cb(_, __frame, 13, 9, function ___(__0, __2) {
- var __1 = __2(); return _(null, __1); }, true)); }); }, "xyz"); _(); });});
+ return delay(__cb(_, __frame, 7, 3, function __$test() {
+ foo = "xyz";
+ return _(null, bar); }, true)); }); }; var __frame = { name: "f", line: 540 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
-asyncTest("return undefined", 1, function __40(_) {
- var __frame = {
- name: "__40", line: 556 }; return __func(_, this, arguments, __40, 0, __frame, function __$__40() { evalTest(function f(_) { function test(_) { var __frame = { name: "test", line: 558
+ return test(__cb(_, __frame, 13, 9, function ___(__0, __2) { var __1 = __2(); return _(null, __1); }, true)); });
+ }, "xyz"); _(); });});
 
-
- }; return __func(_, this, arguments, test, 0, __frame, function __$test() { return delay(__cb(_, __frame, 1, 3, function __$test() { return _(null); }, true));
- }); }; var __frame = { name: "f",
-
- line: 557 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return test(__cb(_, __frame, 6, 9, _, true)); }); }, undefined);
- _();
- });});asyncTest("futures test", 1, function __41(_) { var __frame = { name: "__41", line: 566
- }; return __func(_, this, arguments, __41, 0, __frame, function __$__41() { evalTest(function f(_) { var a, b, c, d; function delay2(val, _) { var __frame = { name: "delay2", line: 568 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
+asyncTest("return undefined", 1, function __40(_) { var __frame = { name: "__40", line: 556 }; return __func(_, this, arguments, __40, 0, __frame, function __$__40() {
+ evalTest(function f(_) {
+ function test(_) { var __frame = { name: "test", line: 558 }; return __func(_, this, arguments, test, 0, __frame, function __$test() {
+ return delay(__cb(_, __frame, 1, 3, function __$test() { return _(null); }, true)); }); }; var __frame = { name: "f", line: 557 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
 
- return delay(__cb(_, __frame, 1, 10, _, true), val); });
- }; var __frame = { name: "f", line: 567
+ return test(__cb(_, __frame, 6, 9, _, true)); });
+ }, undefined); _(); });});
 
- }; return __func(_, this, arguments, f, 0, __frame, function __$f() { a = delay2("a"); b = delay2("b"); c = delay2("c"); d = delay2("d");
- return a(__cb(_, __frame, 9, 9, function ___(__0, __2) { return b(__cb(_, __frame, 9, 16, function ___(__0, __3) {
- return d(__cb(_, __frame, 9, 23, function ___(__0, __4) { return c(__cb(_, __frame, 9, 30, function ___(__0, __5) { var __1 = (((__2 + __3) + __4) + __5); return _(null, __1); }, true)); }, true));
- }, true)); }, true)); }); }, "abdc"); _(); });});asyncTest("last case without break", 1, function __42(_) {
+asyncTest("futures test", 1, function __41(_) { var __frame = { name: "__41", line: 566 }; return __func(_, this, arguments, __41, 0, __frame, function __$__41() {
+ evalTest(function f(_) { var a, b, c, d;
+ function delay2(val, _) { var __frame = { name: "delay2", line: 568 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
+ return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 567 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
- var __frame = {
- name: "__42",
- line: 579
- };
- return __func(_, this, arguments, __42, 0, __frame, function __$__42() { evalTest(function f(_) { var __frame = { name: "f", line: 580 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__break) { switch (true) { case true: return delay(__cb(_, __frame, 3, 3, __break, true));
+ a = delay2("a");
+ b = delay2("b");
+ c = delay2("c");
+ d = delay2("d");
+ return a(__cb(_, __frame, 9, 9, function ___(__0, __2) { return b(__cb(_, __frame, 9, 16, function ___(__0, __3) { return d(__cb(_, __frame, 9, 23, function ___(__0, __4) { return c(__cb(_, __frame, 9, 30, function ___(__0, __5) { var __1 = (((__2 + __3) + __4) + __5); return _(null, __1); }, true)); }, true)); }, true)); }, true)); });
+ }, "abdc"); _(); });});
+
+asyncTest("last case without break", 1, function __42(_) { var __frame = { name: "__42", line: 579 }; return __func(_, this, arguments, __42, 0, __frame, function __$__42() {
+ evalTest(function f(_) { var __frame = { name: "f", line: 580 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__break) {
+ switch (true) {
+ case true: return delay(__cb(_, __frame, 3, 3, __break, true));
  default: return __break(); }; })(function __$f() {
 
- return _(null, 1); }); }); }, 1); _(); });
-});asyncTest("async comma operator", 1, function __43(_) { var __frame = { name: "__43", line: 589 }; return __func(_, this, arguments, __43, 0, __frame, function __$__43() {
+ return _(null, 1); }); });
+ }, 1); _(); });});
+
+
+asyncTest("async comma operator", 1, function __43(_) { var __frame = { name: "__43", line: 589 }; return __func(_, this, arguments, __43, 0, __frame, function __$__43() {
+ evalTest(function f(_) { var a; var __frame = { name: "f", line: 590 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(_) {
+
+ a = 4; a++; return delay(__cb(_, __frame, 2, 25, function ___(__0, __1) { a = __1; return delay(__cb(_, __frame, 2, 42, _, true), (a + 1)); }, true), (2 * a)); })(__cb(_, __frame, -589, 21, _, true)); });
+ }, 11); _(); });});
+
+
+asyncTest("async constructor", 1, function __44(_) { var __frame = { name: "__44", line: 596 }; return __func(_, this, arguments, __44, 0, __frame, function __$__44() {
  evalTest(function f(_) {
- var a; var __frame = {
- name: "f", line: 590 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(_) { a = 4; a++; return delay(__cb(_, __frame, 2, 25, function ___(__0, __1) {
+ function Foo(val, _) { var __this = this; var __frame = { name: "Foo", line: 598 }; return __func(_, this, arguments, Foo, 1, __frame, function __$Foo() {
+ return delay(__cb(_, __frame, 1, 3, function __$Foo() {
+ __this.x = val; _(); }, true)); }); }; var __frame = { name: "f", line: 597 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
- a = __1; return delay(__cb(_, __frame, 2, 42, _, true), (a + 1)); }, true), (2 * a));
- })(__cb(_, __frame, -589, 21, _, true)); }); }, 11); _();
+ Foo.prototype.y = function() {
+ return (this.x + 1); };
 
-
- });});asyncTest("async constructor", 1, function __44(_) { var __frame = { name: "__44", line: 596
- }; return __func(_, this, arguments, __44, 0, __frame, function __$__44() { evalTest(function f(_) { function Foo(val, _) { var __this = this; var __frame = { name: "Foo", line: 598
-
- }; return __func(_, this, arguments, Foo, 1, __frame, function __$Foo() { return delay(__cb(_, __frame, 1, 3, function __$Foo() { __this.x = val; _(); }, true)); }); };
- var __frame = { name: "f", line: 597 };
+ return __construct(Foo, 1)(5, __cb(_, __frame, NaN, NaN, function ___(__0, __2) { var __1 = __2.y(); return _(null, __1); }, true)); });
+ }, 6); _(); });});
 
 
- return __func(_, this, arguments, f, 0, __frame, function __$f() { Foo.prototype.y = function() { return (this.x + 1); }; return __construct(Foo, 1)(5, __cb(_, __frame, NaN, NaN, function ___(__0, __2) { var __1 = __2.y();
- return _(null, __1);
- }, true)); }); }, 6); _(); });});asyncTest("fibo false async", 1, function __45(_) {
- var __frame = {
- name: "__45", line: 609 }; return __func(_, this, arguments, __45, 0, __frame, function __$__45() { evalTest(function f(_) { function fibo(_, n) { var __frame = { name: "fibo", line: 611 };
+asyncTest("fibo false async", 1, function __45(_) { var __frame = { name: "__45", line: 609 }; return __func(_, this, arguments, __45, 0, __frame, function __$__45() {
+ evalTest(function f(_) {
+ function fibo(_, n) { var __frame = { name: "fibo", line: 611 }; return __func(_, this, arguments, fibo, 0, __frame, function __$fibo() { return (function __$fibo(_) {
+ var __1 = (n > 1); return (function __$fibo(__then) { if (__1) { return fibo(__cb(_, __frame, 1, 18, function ___(__0, __3) { return fibo(__cb(_, __frame, 1, 35, function ___(__0, __4) { var __2 = (__3 + __4); return _(null, __2); }, true), (n - 2)); }, true), (n - 1)); } else { __then(); } ; })(function __$fibo() { return _(null, 1); }); })(__cb(_, __frame, -610, 21, _, true)); }); }; var __frame = { name: "f", line: 610 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
- return __func(_, this, arguments, fibo, 0, __frame, function __$fibo() {
- return (function __$fibo(_) { var __1 = (n > 1);
-
- return (function __$fibo(__then) { if (__1) { return fibo(__cb(_, __frame, 1, 18, function ___(__0, __3) { return fibo(__cb(_, __frame, 1, 35, function ___(__0, __4) { var __2 = (__3 + __4);
- return _(null, __2); }, true), (n - 2)); }, true), (n - 1)); }
-
-
- else { __then(); } ; })(function __$fibo() { return _(null, 1);
- });
- })(__cb(_, __frame, -610, 21, _, true)); }); }; var __frame = { name: "f", line: 610 };
- return __func(_, this, arguments, f, 0, __frame, function __$f() { return fibo(__cb(_, __frame, 4, 9, _, true), 16); }); }, 1597); _(); });});
+ return fibo(__cb(_, __frame, 4, 9, _, true), 16); });
+ }, 1597); _(); });});

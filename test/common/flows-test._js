@@ -13,7 +13,21 @@ function delayFail(_, err) {
 
 module("flows");
 
-asyncTest("each", 5, function(_) {
+function sparse() {
+	var a = [];
+	a[3] = 33;
+	a[4] = 44;
+	a[9] = 99;
+	return a;
+}
+
+function dump(a) {
+	return a.reduce(function(s, v) {
+		return s + '/' + v;
+	}, '');
+}
+
+asyncTest("each", 7, function(_) {
 	var result = 1;
 	flows.each(_, [1, 2, 3, 4], function(_, val) {
 		result = result * delay(_, val);
@@ -45,10 +59,21 @@ asyncTest("each", 5, function(_) {
 		result = result * v;
 	})
 	strictEqual(result, 24);
-
+	result = '';
+	sparse().forEach_(_, function(_, val, i) {
+		var v = delay(_, val);
+		result = result + '/' + i + ':' + v;
+	})
+	strictEqual(result, '/3:33/4:44/9:99');
+	result = '';
+	sparse().forEach_(_, -1, function(_, val, i) {
+		var v = delay(_, val);
+		result = result + '/' + i + ':' + v;
+	})
+	strictEqual(result, '/3:33/4:44/9:99');
 	start();
 })
-asyncTest("map", 5, function(_) {
+asyncTest("map", 9, function(_) {
 	var result = flows.map(_, [1, 2, 3, 4], function(_, val) {
 		return 2 * delay(_, val);
 	});
@@ -71,9 +96,21 @@ asyncTest("map", 5, function(_) {
 		return 2 * delay(_, val);
 	});
 	deepEqual(result, [2, 4, 6, 8]);
+	result = sparse().map_(_, function(_, val, i) {
+		var v = delay(_, val);
+		return i + ':' + v;
+	});
+	strictEqual(result.length, 10);
+	strictEqual(dump(result), '/3:33/4:44/9:99');
+	result = sparse().map_(_, -1, function(_, val, i) {
+		var v = delay(_, val);
+		return i + ':' + v;
+	});
+	strictEqual(result.length, 10);
+	strictEqual(dump(result), '/3:33/4:44/9:99');
 	start();
 })
-asyncTest("filter", 5, function(_) {
+asyncTest("filter", 9, function(_) {
 	var result = flows.filter(_, [1, 2, 3, 4], function(_, val) {
 		return delay(_, val) % 2;
 	});
@@ -96,9 +133,19 @@ asyncTest("filter", 5, function(_) {
 		return delay(_, val) % 2;
 	});
 	deepEqual(result, [1, 3]);
+	result = sparse().filter_(_, function(_, val, i) {
+		return delay(_, val) % 2;
+	});
+	strictEqual(result.length, 2);
+	deepEqual(result, [33, 99]);
+	result = sparse().filter_(_, -1, function(_, val, i) {
+		return delay(_, val) % 2;
+	});
+	strictEqual(result.length, 2);
+	deepEqual(result, [33, 99]);
 	start();
 })
-asyncTest("every", 5, function(_) {
+asyncTest("every true", 7, function(_) {
 	var result = flows.every(_, [1, 2, 3, 4], function(_, val) {
 		return delay(_, val) < 5;
 	});
@@ -121,9 +168,17 @@ asyncTest("every", 5, function(_) {
 		return delay(_, val) < 5;
 	});
 	strictEqual(result, true);
+	result = sparse().every_(_, function(_, val, i) {
+		return delay(_, val) > 30;
+	});
+	strictEqual(result, true);
+	result = sparse().every_(_, -1, function(_, val, i) {
+		return delay(_, val) > 30;
+	});
+	strictEqual(result, true);
 	start();
 });
-asyncTest("every", 5, function(_) {
+asyncTest("every false", 7, function(_) {
 	var result = flows.every(_, [1, 2, 3, 4], function(_, val) {
 		return delay(_, val) < 3;
 	});
@@ -146,9 +201,17 @@ asyncTest("every", 5, function(_) {
 		return delay(_, val) < 3;
 	});
 	strictEqual(result, false);
+	result = sparse().every_(_, function(_, val, i) {
+		return delay(_, val) > 40;
+	});
+	strictEqual(result, false);
+	result = sparse().every_(_, -1, function(_, val, i) {
+		return delay(_, val) > 40;
+	});
+	strictEqual(result, false);
 	start();
 });
-asyncTest("some", 5, function(_) {
+asyncTest("some true", 7, function(_) {
 	var result = flows.some(_, [1, 2, 3, 4], function(_, val) {
 		return delay(_, val) < 3;
 	});
@@ -171,9 +234,17 @@ asyncTest("some", 5, function(_) {
 		return delay(_, val) < 3;
 	});
 	strictEqual(result, true);
+	result = sparse().some_(_, function(_, val, i) {
+		return delay(_, val) > 30;
+	});
+	strictEqual(result, true);
+	result = sparse().some_(_, -1, function(_, val, i) {
+		return delay(_, val) > 30;
+	});
+	strictEqual(result, true);
 	start();
 });
-asyncTest("some", 5, function(_) {
+asyncTest("some false", 7, function(_) {
 	var result = flows.some(_, [1, 2, 3, 4], function(_, val) {
 		return delay(_, val) < 0;
 	});
@@ -196,9 +267,17 @@ asyncTest("some", 5, function(_) {
 		return delay(_, val) < 0;
 	});
 	strictEqual(result, false);
+	result = sparse().some_(_, function(_, val, i) {
+		return !(delay(_, val) > 20);
+	});
+	strictEqual(result, false);
+	result = sparse().some_(_, -1, function(_, val, i) {
+		return !(delay(_, val) > 20);
+	});
+	strictEqual(result, false);
 	start();
 });
-asyncTest("reduce", 2, function(_) {
+asyncTest("reduce", 3, function(_) {
 	var result = flows.reduce(_, [1, 2, 3, 4], function(_, v, val) {
 		return v * delay(_, val);
 	}, 1);
@@ -207,9 +286,13 @@ asyncTest("reduce", 2, function(_) {
 		return v * delay(_, val);
 	}, 1);
 	strictEqual(result, 24);
+	var result = sparse().reduce_(_, function(_, v, val) {
+		return v + '/' + delay(_, val);
+	}, '');
+	strictEqual(result, '/33/44/99');
 	start();
 });
-asyncTest("reduceRight", 2, function(_) {
+asyncTest("reduceRight", 3, function(_) {
 	var result = flows.reduceRight(_, [1, 2, 3, 4], function(_, v, val) {
 		return v * delay(_, val);
 	}, 1);
@@ -218,6 +301,10 @@ asyncTest("reduceRight", 2, function(_) {
 		return v * delay(_, val);
 	}, 1);
 	strictEqual(result, 24);
+	var result = sparse().reduceRight_(_, function(_, v, val) {
+		return v + '/' + delay(_, val);
+	}, '');
+	strictEqual(result, '/99/44/33');
 	start();
 });
 asyncTest("sort", 4, function(_) {
