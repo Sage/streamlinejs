@@ -567,7 +567,7 @@ Narcissus.parser = (function() {
           case VAR:
           case CONST:
             n = Variables(t, x);
-            n.subjectToASI = true;
+            n.eligibleForASI = true;
             break;
 
           case LET:
@@ -575,7 +575,7 @@ Narcissus.parser = (function() {
                 n = LetBlock(t, x, true);
             else
                 n = Variables(t, x);
-            n.subjectToASI = true;
+            n.eligibleForASI = true;
             break;
 
           case DEBUGGER:
