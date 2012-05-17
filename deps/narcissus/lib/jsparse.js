@@ -567,6 +567,7 @@ Narcissus.parser = (function() {
           case VAR:
           case CONST:
             n = Variables(t, x);
+            n.subjectToASI = true;
             break;
 
           case LET:
@@ -574,6 +575,7 @@ Narcissus.parser = (function() {
                 n = LetBlock(t, x, true);
             else
                 n = Variables(t, x);
+            n.subjectToASI = true;
             break;
 
           case DEBUGGER:
@@ -798,6 +800,7 @@ Narcissus.parser = (function() {
             }
         } while (t.match(COMMA));
 
+        n.end = t.token.end;
         return n;
     }
 

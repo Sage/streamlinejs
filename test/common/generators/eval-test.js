@@ -140,13 +140,13 @@ asyncTest("for (;;)", 1, fstreamline__.create(function(_) {
 asyncTest("eval lazy", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
-		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? 2 : 4)
+		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? 2 : 4);
 	}, 0), 4);
 ;yield;}, 0));
 asyncTest("eval lazy full async", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		var result = 1;
-		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? (yield delay(_, 2)) : (yield delay(_, 4)))
+		yield ( (yield delay(_, (yield delay(_, result + 8)) < 5)) && true ? (yield delay(_, 2)) : (yield delay(_, 4)));
 	}, 0), 4);
 ;yield;}, 0));
 asyncTest("try catch 1", 1, fstreamline__.create(function(_) {
@@ -189,7 +189,7 @@ asyncTest("try catch 6", 1, fstreamline__.create(function(_) {
 	evalTest(fstreamline__.create(function f(_) {
 		try {
 			throwError("direct");
-			yield ( (yield delay(_, "ok")))
+			yield ( (yield delay(_, "ok")));
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex.message);
 		}
@@ -200,7 +200,7 @@ asyncTest("try catch 7", 1, fstreamline__.create(function(_) {
 		try {
 			var message = (yield delay(_, "indirect"));
 			throwError(message);
-			yield ( (yield delay(_, "ok")))
+			yield ( (yield delay(_, "ok")));
 		} catch (ex) {
 			yield ( (yield delay(_, "caught ")) + ex.message);
 		}

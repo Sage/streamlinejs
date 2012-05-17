@@ -341,7 +341,7 @@ asyncTest("collectAll", 4, fstreamline__.create(function(_) {
 			total = (yield delay(_, i)) + total;
 			count--;
 			yield ( 2 * i);
-		}, 0)
+		}, 0);
 	}
 
 	var results = (yield fstreamline__.invoke(flows.spray([doIt(1), doIt(2), doIt(3)]), "collectAll", [_], 0));
@@ -363,7 +363,7 @@ asyncTest("collectOne", 4, fstreamline__.create(function(_) {
 			total = (yield delay(_, i)) + total;
 			count--;
 			yield ( 2 * i);
-		}, 0)
+		}, 0);
 	}
 
 	var result = (yield fstreamline__.invoke(flows.spray([doIt(1), doIt(2), doIt(3)]), "collectOne", [_], 0));
@@ -385,7 +385,7 @@ asyncTest("collectAll with limit", 1, fstreamline__.create(function(_) {
 			total = (yield delay(_, i)) + total;
 			count--;
 			yield ( 2 * i);
-		}, 0)
+		}, 0);
 	}
 
 	var results = (yield fstreamline__.invoke(flows.spray([doIt(1), doIt(2), doIt(3)], 2), "collectAll", [_], 0));
