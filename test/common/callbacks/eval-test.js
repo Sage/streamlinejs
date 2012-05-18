@@ -3,492 +3,492 @@
 module("streamline evaluation");
 
 function evalTest(f, val) {
- f(function(err, result) {
- var str = (err ? ("ERR: " + err) : result);
- strictEqual(str, val);
- start(); });};
+  f(function(err, result) {
+    var str = (err ? ("ERR: " + err) : result);
+    strictEqual(str, val);
+    start(); });};
 
 
 
 function delay(_, val) { var __frame = { name: "delay", line: 13 }; return __func(_, this, arguments, delay, 0, __frame, function __$delay() {
- return setTimeout(__cb(_, __frame, 1, 1, function __$delay() {
- return _(null, val); }, true), 0); });};
+    return setTimeout(__cb(_, __frame, 1, 1, function __$delay() {
+      return _(null, val); }, true), 0); });};
 
 
 function delayFail(_, err) { var __frame = { name: "delayFail", line: 18 }; return __func(_, this, arguments, delayFail, 0, __frame, function __$delayFail() {
- return setTimeout(__cb(_, __frame, 1, 1, function __$delayFail() {
- return _(err); }, true), 0); });};
+    return setTimeout(__cb(_, __frame, 1, 1, function __$delayFail() {
+      return _(err); }, true), 0); });};
 
 
 function throwError(message) {
- throw new Error(message);};
+  throw new Error(message);};
 
 
 asyncTest("eval return", 1, function __1(_) { var __frame = { name: "__1", line: 27 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
- evalTest(function f(_) { var __frame = { name: "f", line: 28 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- return delay(__cb(_, __frame, 1, 9, _, true), 5); });
- }, 5); _(); });});
+    evalTest(function f(_) { var __frame = { name: "f", line: 28 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        return delay(__cb(_, __frame, 1, 9, _, true), 5); });
+    }, 5); _(); });});
 
 asyncTest("eval if true", 1, function __2(_) { var __frame = { name: "__2", line: 32 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() {
- evalTest(function f(_) { var __frame = { name: "f", line: 33 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__then) {
- if (true) { return delay(__cb(_, __frame, 1, 19, _, true), 3); } else { __then(); } ; })(function __$f() {
- return _(null, 4); }); });
- }, 3); _(); });});
+    evalTest(function f(_) { var __frame = { name: "f", line: 33 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__then) {
+          if (true) { return delay(__cb(_, __frame, 1, 19, _, true), 3); } else { __then(); } ; })(function __$f() {
+          return _(null, 4); }); });
+    }, 3); _(); });});
 
 asyncTest("eval if false", 1, function __3(_) { var __frame = { name: "__3", line: 38 }; return __func(_, this, arguments, __3, 0, __frame, function __$__3() {
- evalTest(function f(_) { var __frame = { name: "f", line: 39 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__then) {
- if (false) { return delay(__cb(_, __frame, 1, 20, _, true), 3); } else { __then(); } ; })(function __$f() {
- return _(null, 4); }); });
- }, 4); _(); });});
+    evalTest(function f(_) { var __frame = { name: "f", line: 39 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__then) {
+          if (false) { return delay(__cb(_, __frame, 1, 20, _, true), 3); } else { __then(); } ; })(function __$f() {
+          return _(null, 4); }); });
+    }, 4); _(); });});
 
 asyncTest("eval while", 1, function __4(_) { var __frame = { name: "__4", line: 44 }; return __func(_, this, arguments, __4, 0, __frame, function __$__4() {
- evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 45 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- i = 1;
- result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
- var __2 = (i < 5); if (__2) {
- return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { result = __1;
- i++; while (__more) { __loop(); }; __more = true; }, true), (i * result)); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 45 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        i = 1;
+        result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
+            var __2 = (i < 5); if (__2) {
+              return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { result = __1;
+                i++; while (__more) { __loop(); }; __more = true; }, true), (i * result)); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("eval for", 1, function __5(_) { var __frame = { name: "__5", line: 55 }; return __func(_, this, arguments, __5, 0, __frame, function __$__5() {
- evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 56 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1;
- i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 5); if (__3) {
- return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 3, 26, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), result); }, true), i); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 56 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1;
+        i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 5); if (__3) {
+              return delay(__cb(_, __frame, 3, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 3, 26, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), result); }, true), i); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("eval for in", 1, function __6(_) { var __frame = { name: "__6", line: 64 }; return __func(_, this, arguments, __6, 0, __frame, function __$__6() {
- evalTest(function f(_) { var foo, result, k; var __frame = { name: "f", line: 65 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- foo = {
- a: 1,
- b: 2,
- c: 3,
- d: 5 };
+    evalTest(function f(_) { var foo, result, k; var __frame = { name: "f", line: 65 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        foo = {
+          a: 1,
+          b: 2,
+          c: 3,
+          d: 5 };
 
- result = 1;
- var __1 = __forIn(foo); var __2 = 0; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; var __6 = (__2 < __1.length); if (__6) { k = __1[__2++];
- return delay(__cb(_, __frame, 9, 25, function ___(__0, __3) { return delay(__cb(_, __frame, 9, 12, function ___(__0, __4) { return delay(__cb(_, __frame, 9, 41, function ___(__0, __5) { result = (__4 * __5); while (__more) { __loop(); }; __more = true; }, true), result); }, true), foo[__3]); }, true), k); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+        result = 1;
+        var __1 = __forIn(foo); var __2 = 0; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; var __6 = (__2 < __1.length); if (__6) { k = __1[__2++];
+              return delay(__cb(_, __frame, 9, 25, function ___(__0, __3) { return delay(__cb(_, __frame, 9, 12, function ___(__0, __4) { return delay(__cb(_, __frame, 9, 41, function ___(__0, __5) { result = (__4 * __5); while (__more) { __loop(); }; __more = true; }, true), result); }, true), foo[__3]); }, true), k); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 30); _(); });});
+          return _(null, result); }); });
+    }, 30); _(); });});
 
 asyncTest("fully async for in", 1, function __7(_) { var __frame = { name: "__7", line: 79 }; return __func(_, this, arguments, __7, 0, __frame, function __$__7() {
- evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 80 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1;
- return delay(__cb(_, __frame, 2, 15, function ___(__0, __1) { i = __1; var __6 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; return (function __$f(__then) { if (__6) { return (function __$f(_) { return delay(__cb(_, __frame, 2, 49, function ___(__0, __1) { i = (__1 + 1); _(); }, true), i); })(__cb(_, __frame, -79, 21, __then, true)); } else { __6 = true; __then(); } ; })(function __$f() { return (function __$f(_) { return delay(__cb(_, __frame, 2, 32, function ___(__0, __2) { var __1 = (i < __2); return _(null, __1); }, true), 5); })(__cb(_, __frame, -79, 21, function ___(__0, __5) { if (__5) {
- return delay(__cb(_, __frame, 3, 12, function ___(__0, __2) { return delay(__cb(_, __frame, 3, 31, function ___(__0, __3) { result = (__2 * __3); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }, true)); }); }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 80 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1;
+        return delay(__cb(_, __frame, 2, 15, function ___(__0, __1) { i = __1; var __6 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; return (function __$f(__then) { if (__6) { return (function __$f(_) { return delay(__cb(_, __frame, 2, 49, function ___(__0, __1) { i = (__1 + 1); _(); }, true), i); })(__cb(_, __frame, -79, 21, __then, true)); } else { __6 = true; __then(); } ; })(function __$f() { return (function __$f(_) { return delay(__cb(_, __frame, 2, 32, function ___(__0, __2) { var __1 = (i < __2); return _(null, __1); }, true), 5); })(__cb(_, __frame, -79, 21, function ___(__0, __5) { if (__5) {
+                    return delay(__cb(_, __frame, 3, 12, function ___(__0, __2) { return delay(__cb(_, __frame, 3, 31, function ___(__0, __3) { result = (__2 * __3); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }, true)); }); }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); }, true), 2); });
- }, 24); _(); });});
+            return _(null, result); }); }, true), 2); });
+    }, 24); _(); });});
 
 asyncTest("break in loop", 1, function __8(_) { var __frame = { name: "__8", line: 88 }; return __func(_, this, arguments, __8, 0, __frame, function __$__8() {
- evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 89 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1;
- i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 10); if (__3) {
- if ((i == 5)) { return __break(); } ;
- return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 4, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 89 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1;
+        i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 10); if (__3) {
+              if ((i == 5)) { return __break(); } ;
+              return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 4, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("continue", 1, function __9(_) { var __frame = { name: "__9", line: 98 }; return __func(_, this, arguments, __9, 0, __frame, function __$__9() {
- evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 99 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1;
- i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 10); if (__3) {
- if ((i >= 5)) { while (__more) { __loop(); }; __more = true; return; } ;
- return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 4, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var result, i; var __frame = { name: "f", line: 99 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1;
+        i = 1; var __4 = false; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; if (__4) { i++; } else { __4 = true; } ; var __3 = (i < 10); if (__3) {
+              if ((i >= 5)) { while (__more) { __loop(); }; __more = true; return; } ;
+              return delay(__cb(_, __frame, 4, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 4, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("break in while", 1, function __10(_) { var __frame = { name: "__10", line: 108 }; return __func(_, this, arguments, __10, 0, __frame, function __$__10() {
- evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 109 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- i = 1;
- result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
- var __3 = (i < 10); if (__3) {
- if ((i == 5)) { return __break(); } ;
- return delay(__cb(_, __frame, 5, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 5, 31, function ___(__0, __2) { result = (__1 * __2);
- i++; while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 109 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        i = 1;
+        result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
+            var __3 = (i < 10); if (__3) {
+              if ((i == 5)) { return __break(); } ;
+              return delay(__cb(_, __frame, 5, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 5, 31, function ___(__0, __2) { result = (__1 * __2);
+                  i++; while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("continue in while", 1, function __11(_) { var __frame = { name: "__11", line: 120 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() {
- evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 121 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- i = 1;
- result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
- var __3 = (i < 10); if (__3) {
- i++;
- if ((i >= 5)) { while (__more) { __loop(); }; __more = true; return; } ;
- return delay(__cb(_, __frame, 6, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 6, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
+    evalTest(function f(_) { var i, result; var __frame = { name: "f", line: 121 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        i = 1;
+        result = 1; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false;
+            var __3 = (i < 10); if (__3) {
+              i++;
+              if ((i >= 5)) { while (__more) { __loop(); }; __more = true; return; } ;
+              return delay(__cb(_, __frame, 6, 12, function ___(__0, __1) { return delay(__cb(_, __frame, 6, 31, function ___(__0, __2) { result = (__1 * __2); while (__more) { __loop(); }; __more = true; }, true), i); }, true), result); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(function __$f() {
 
- return _(null, result); }); });
- }, 24); _(); });});
+          return _(null, result); }); });
+    }, 24); _(); });});
 
 asyncTest("for (;;)", 1, function __12(_) { var __frame = { name: "__12", line: 132 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() {
- evalTest(function f(_) { var i; var __frame = { name: "f", line: 133 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- i = 0; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; var __3 = 1; if (__3) {
+    evalTest(function f(_) { var i; var __frame = { name: "f", line: 133 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        i = 0; return (function ___(__break) { var __more; var __loop = __cb(_, __frame, 0, 0, function __$f() { __more = false; var __3 = 1; if (__3) {
 
- return delay(__cb(_, __frame, 3, 7, function ___(__0, __2) { var __1 = (__2 === 10); return (function __$f(__then) { if (__1) { return _(null, i); } else { __then(); } ; })(function __$f() { while (__more) { __loop(); }; __more = true; }); }, true), ++i); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(_); });
+              return delay(__cb(_, __frame, 3, 7, function ___(__0, __2) { var __1 = (__2 === 10); return (function __$f(__then) { if (__1) { return _(null, i); } else { __then(); } ; })(function __$f() { while (__more) { __loop(); }; __more = true; }); }, true), ++i); } else { __break(); } ; }); do { __loop(); } while (__more); __more = true; })(_); });
 
- }, 10); _(); });});
+    }, 10); _(); });});
 
 asyncTest("eval lazy", 1, function __13(_) { var __frame = { name: "__13", line: 140 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() {
- evalTest(function f(_) { var result; var __frame = { name: "f", line: 141 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1; return (function __$f(_) { return (function __$f(_) {
- return delay(__cb(_, __frame, 2, 18, function ___(__0, __3) { return delay(__cb(_, __frame, 2, 9, function ___(__0, __2) { var __4 = !__2; return (function __$f(__then) { if (__4) { var __5 = __2; return _(null, __5); } else { __then(); } ; })(function __$f() { return _(null, true); }); }, true), (__3 < 5)); }, true), (result + 8)); })(__cb(_, __frame, -140, 21, function ___(__0, __1) { var __3 = __1; return (function __$f(__then) { if (__3) { return _(null, 2); } else { __then(); } ; })(function __$f() { return _(null, 4); }); }, true)); })(__cb(_, __frame, -140, 21, _, true)); });
- }, 4); _(); });});
+    evalTest(function f(_) { var result; var __frame = { name: "f", line: 141 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1; return (function __$f(_) { return (function __$f(_) {
+            return delay(__cb(_, __frame, 2, 18, function ___(__0, __3) { return delay(__cb(_, __frame, 2, 9, function ___(__0, __2) { var __4 = !__2; return (function __$f(__then) { if (__4) { var __5 = __2; return _(null, __5); } else { __then(); } ; })(function __$f() { return _(null, true); }); }, true), (__3 < 5)); }, true), (result + 8)); })(__cb(_, __frame, -140, 21, function ___(__0, __1) { var __3 = __1; return (function __$f(__then) { if (__3) { return _(null, 2); } else { __then(); } ; })(function __$f() { return _(null, 4); }); }, true)); })(__cb(_, __frame, -140, 21, _, true)); });
+    }, 4); _(); });});
 
 asyncTest("eval lazy full async", 1, function __14(_) { var __frame = { name: "__14", line: 146 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() {
- evalTest(function f(_) { var result; var __frame = { name: "f", line: 147 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- result = 1; return (function __$f(_) { return (function __$f(_) {
- return delay(__cb(_, __frame, 2, 18, function ___(__0, __3) { return delay(__cb(_, __frame, 2, 9, function ___(__0, __2) { var __4 = !__2; return (function __$f(__then) { if (__4) { var __5 = __2; return _(null, __5); } else { __then(); } ; })(function __$f() { return _(null, true); }); }, true), (__3 < 5)); }, true), (result + 8)); })(__cb(_, __frame, -146, 21, function ___(__0, __1) { var __3 = __1; return (function __$f(__then) { if (__3) { return delay(__cb(_, __frame, 2, 54, _, true), 2); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 68, _, true), 4); }); }, true)); })(__cb(_, __frame, -146, 21, _, true)); });
- }, 4); _(); });});
+    evalTest(function f(_) { var result; var __frame = { name: "f", line: 147 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        result = 1; return (function __$f(_) { return (function __$f(_) {
+            return delay(__cb(_, __frame, 2, 18, function ___(__0, __3) { return delay(__cb(_, __frame, 2, 9, function ___(__0, __2) { var __4 = !__2; return (function __$f(__then) { if (__4) { var __5 = __2; return _(null, __5); } else { __then(); } ; })(function __$f() { return _(null, true); }); }, true), (__3 < 5)); }, true), (result + 8)); })(__cb(_, __frame, -146, 21, function ___(__0, __1) { var __3 = __1; return (function __$f(__then) { if (__3) { return delay(__cb(_, __frame, 2, 54, _, true), 2); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 68, _, true), 4); }); }, true)); })(__cb(_, __frame, -146, 21, _, true)); });
+    }, 4); _(); });});
 
 asyncTest("try catch 1", 1, function __15(_) { var __frame = { name: "__15", line: 152 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() {
- evalTest(function f(_) { var __frame = { name: "f", line: 153 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 153 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 2, 10, _, true), "ok"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              return delay(__cb(_, __frame, 2, 10, _, true), "ok"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 4, 10, _, true), "err"); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 4, 10, _, true), "err"); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "ok"); _(); });});
+    }, "ok"); _(); });});
 
 asyncTest("try catch 2", 1, function __16(_) { var __frame = { name: "__16", line: 161 }; return __func(_, this, arguments, __16, 0, __frame, function __$__16() {
- evalTest(function f(_) { var __frame = { name: "f", line: 162 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 162 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 2, 9, function ___(__0, __3) { return _(__3); }, true), "thrown"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              return delay(__cb(_, __frame, 2, 9, function ___(__0, __3) { return _(__3); }, true), "thrown"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "caught thrown"); _(); });});
+    }, "caught thrown"); _(); });});
 
 asyncTest("try catch 3", 1, function __17(_) { var __frame = { name: "__17", line: 170 }; return __func(_, this, arguments, __17, 0, __frame, function __$__17() {
- evalTest(function f(_) { var __frame = { name: "f", line: 171 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 171 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 2, 9, function ___(__0, __3) { return _(__3); }, true), "thrown"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              return delay(__cb(_, __frame, 2, 9, function ___(__0, __3) { return _(__3); }, true), "thrown"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "caught thrown"); _(); });});
+    }, "caught thrown"); _(); });});
 
 asyncTest("try catch 5", 1, function __18(_) { var __frame = { name: "__18", line: 179 }; return __func(_, this, arguments, __18, 0, __frame, function __$__18() {
- evalTest(function f(_) { var __frame = { name: "f", line: 180 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 180 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delayFail(__cb(_, __frame, 2, 3, __then, true), "delay fail"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              return delayFail(__cb(_, __frame, 2, 3, __then, true), "delay fail"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 4, 10, function ___(__0, __2) { var __1 = (__2 + ex); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "caught delay fail"); _(); });});
+    }, "caught delay fail"); _(); });});
 
 asyncTest("try catch 6", 1, function __19(_) { var __frame = { name: "__19", line: 188 }; return __func(_, this, arguments, __19, 0, __frame, function __$__19() {
- evalTest(function f(_) { var __frame = { name: "f", line: 189 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 189 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- throwError("direct");
- return delay(__cb(_, __frame, 3, 10, _, true), "ok"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              throwError("direct");
+              return delay(__cb(_, __frame, 3, 10, _, true), "ok"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 5, 10, function ___(__0, __2) { var __1 = (__2 + ex.message); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 5, 10, function ___(__0, __2) { var __1 = (__2 + ex.message); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "caught direct"); _(); });});
+    }, "caught direct"); _(); });});
 
 asyncTest("try catch 7", 1, function __20(_) { var __frame = { name: "__20", line: 198 }; return __func(_, this, arguments, __20, 0, __frame, function __$__20() {
- evalTest(function f(_) { var message; var __frame = { name: "f", line: 199 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var message; var __frame = { name: "f", line: 199 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 2, 17, function ___(__0, __3) { message = __3;
- throwError(message);
- return delay(__cb(_, __frame, 4, 10, _, true), "ok"); }, true), "indirect"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+              return delay(__cb(_, __frame, 2, 17, function ___(__0, __3) { message = __3;
+                throwError(message);
+                return delay(__cb(_, __frame, 4, 10, _, true), "ok"); }, true), "indirect"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 6, 10, function ___(__0, __2) { var __1 = (__2 + ex.message); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return delay(__cb(_, __frame, 6, 10, function ___(__0, __2) { var __1 = (__2 + ex.message); return _(null, __1); }, true), "caught "); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "caught indirect"); _(); });});
+    }, "caught indirect"); _(); });});
 
 asyncTest("try finally 1", 1, function __21(_) { var __frame = { name: "__21", line: 209 }; return __func(_, this, arguments, __21, 0, __frame, function __$__21() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 210 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 210 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+              return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 5, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                return delay(__cb(_, __frame, 5, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); });
- }, "try finally end"); _(); });});
+            x += " end";
+            return _(null, x); }); }); });
+    }, "try finally end"); _(); });});
 
 asyncTest("try finally 2", 1, function __22(_) { var __frame = { name: "__22", line: 221 }; return __func(_, this, arguments, __22, 0, __frame, function __$__22() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 222 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 222 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
- return _(null, x); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+              return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
+                return _(null, x); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); });
- }, "try"); _(); });});
+            x += " end";
+            return _(null, x); }); }); });
+    }, "try"); _(); });});
 
 asyncTest("try finally 3", 1, function __23(_) { var __frame = { name: "__23", line: 234 }; return __func(_, this, arguments, __23, 0, __frame, function __$__23() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 235 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 235 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
- return _("bad try"); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+              return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
+                return _("bad try"); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); });
- }, "ERR: bad try"); _(); });});
+            x += " end";
+            return _(null, x); }); }); });
+    }, "ERR: bad try"); _(); });});
 
 asyncTest("try finally 4", 1, function __24(_) { var __frame = { name: "__24", line: 247 }; return __func(_, this, arguments, __24, 0, __frame, function __$__24() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 248 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 248 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
- throwError("except"); _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+              return delay(__cb(_, __frame, 3, 8, function ___(__0, __1) { x += __1;
+                throwError("except"); _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                return delay(__cb(_, __frame, 6, 8, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); });
- }, "ERR: Error: except"); _(); });});
+            x += " end";
+            return _(null, x); }); }); });
+    }, "ERR: Error: except"); _(); });});
 
 asyncTest("try finally 5", 1, function __25(_) { var __frame = { name: "__25", line: 260 }; return __func(_, this, arguments, __25, 0, __frame, function __$__25() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 261 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 261 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1;
- throwError("except");
- x += " unreached"; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1;
+                      throwError("except");
+                      x += " unreached"; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 8, 9, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 8, 9, function ___(__0, __2) { x += __2; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  x += " end";
+                  return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try finally/except"); _(); });});
+    }, "try finally/except"); _(); });});
 
 asyncTest("try catch finally 1", 1, function __26(_) { var __frame = { name: "__26", line: 278 }; return __func(_, this, arguments, __26, 0, __frame, function __$__26() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 279 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 279 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2;
- return _(new Error("except")); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                          return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2;
+                            return _(new Error("except")); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
 
- return delay(__cb(_, __frame, 8, 9, function ___(__0, __1) { x += __1;
- return _(ex); }, true), (" catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() { _(null, null, true); }); }); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                            return delay(__cb(_, __frame, 8, 9, function ___(__0, __1) { x += __1;
+                              return _(ex); }, true), (" catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() { _(null, null, true); }); }); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 11, 9, function ___(__0, __3) { x += __3; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 11, 9, function ___(__0, __3) { x += __3; __then(); }, true), " finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  x += " end";
+                  return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try catch except finally/except"); _(); });});
+    }, "try catch except finally/except"); _(); });});
 
 asyncTest("try catch finally 2", 1, function __27(_) { var __frame = { name: "__27", line: 299 }; return __func(_, this, arguments, __27, 0, __frame, function __$__27() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 300 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 300 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1;
- throwError("except");
- x += " unreached"; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                          return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1;
+                            throwError("except");
+                            x += " unreached"; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- x += (" catch " + ex.message);
- return _(ex); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() { _(null, null, true); }); }); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                            x += (" catch " + ex.message);
+                            return _(ex); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() { _(null, null, true); }); }); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- x += " finally"; __then(); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      x += " finally"; __then(); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- x += " end";
- return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  x += " end";
+                  return _(null, x); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + "/") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try catch except finally/except"); _(); });});
+    }, "try catch except finally/except"); _(); });});
 
 asyncTest("nested try/catch 1", 1, function __28(_) { var __frame = { name: "__28", line: 320 }; return __func(_, this, arguments, __28, 0, __frame, function __$__28() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 321 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 321 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 6, 9, function ___(__0, __1) { x += __1; __then(); }, true), (" inner catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 6, 9, function ___(__0, __1) { x += __1; __then(); }, true), (" inner catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try outer catch except"); _(); });});
+    }, "try outer catch except"); _(); });});
 
 asyncTest("nested try/catch 2", 1, function __29(_) { var __frame = { name: "__29", line: 335 }; return __func(_, this, arguments, __29, 0, __frame, function __$__29() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 336 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 336 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- x += (" inner catch " + ex.message); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      x += (" inner catch " + ex.message); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try outer catch except"); _(); });});
+    }, "try outer catch except"); _(); });});
 
 asyncTest("nested try/catch 3", 1, function __30(_) { var __frame = { name: "__30", line: 350 }; return __func(_, this, arguments, __30, 0, __frame, function __$__30() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 351 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 351 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __2) { x += __2; __then(); }, true), "try"); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return delay(__cb(_, __frame, 6, 9, function ___(__0, __1) { x += __1; __then(); }, true), (" inner catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 6, 9, function ___(__0, __1) { x += __1; __then(); }, true), (" inner catch " + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try outer catch except"); _(); });});
+    }, "try outer catch except"); _(); });});
 
 asyncTest("nested try/finally 1", 1, function __31(_) { var __frame = { name: "__31", line: 365 }; return __func(_, this, arguments, __31, 0, __frame, function __$__31() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 366 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 366 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 6, 9, function ___(__0, __2) { x += __2; __then(); }, true), " inner finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 6, 9, function ___(__0, __2) { x += __2; __then(); }, true), " inner finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try inner finally outer catch except"); _(); });});
+    }, "try inner finally outer catch except"); _(); });});
 
 asyncTest("nested try/finally 2", 1, function __32(_) { var __frame = { name: "__32", line: 380 }; return __func(_, this, arguments, __32, 0, __frame, function __$__32() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 381 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 381 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- x += " inner finally"; __then(); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      x += " inner finally"; __then(); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  throwError(" except"); __then(); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try inner finally outer catch except"); _(); });});
+    }, "try inner finally outer catch except"); _(); });});
 
 asyncTest("nested try/finally 3", 1, function __33(_) { var __frame = { name: "__33", line: 395 }; return __func(_, this, arguments, __33, 0, __frame, function __$__33() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 396 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 396 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = ""; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
 
 
- return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
+                    return delay(__cb(_, __frame, 4, 9, function ___(__0, __1) { x += __1; _(null, null, true); }, true), "try"); }); })(function ___(__e, __r, __cont) { (function ___(__then) { __tryCatch(_, function __$f() {
 
- return delay(__cb(_, __frame, 6, 9, function ___(__0, __2) { x += __2; __then(); }, true), " inner finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
+                      return delay(__cb(_, __frame, 6, 9, function ___(__0, __2) { x += __2; __then(); }, true), " inner finally"); }); })(function ___() { __tryCatch(_, function ___() { if (__cont) { __then(); } else { _(__e, __r); }; }); }); }); })(function ___() { __tryCatch(_, function __$f() {
 
- return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+                  return _(new Error(" except")); }); }); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
 
- return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+                return _(null, ((x + " outer catch") + ex.message)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
- }, "try inner finally outer catch except"); _(); });});
+    }, "try inner finally outer catch except"); _(); });});
 
 asyncTest("and ok", 1, function __34(_) { var __frame = { name: "__34", line: 410 }; return __func(_, this, arguments, __34, 0, __frame, function __$__34() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 411 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = "<<"; return (function __$f(_) {
- return delay(__cb(_, __frame, 2, 6, function ___(__0, __1) { var __2 = !__1; return (function __$f(__then) { if (__2) { var __3 = __1; return _(null, __3); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 24, _, true), true); }); }, true), true); })(__cb(_, __frame, -410, 21, function ___(__0, __6) { return (function __$f(__then) { if (__6) { x += "T1"; __then(); } else {
- x += "F1"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 4, 6, function ___(__0, __2) { var __3 = !__2; return (function __$f(__then) { if (__3) { var __4 = __2; return _(null, __4); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 4, 24, _, true), false); }); }, true), true); })(__cb(_, __frame, -410, 21, function ___(__0, __7) { return (function __$f(__then) { if (__7) { x += "T2"; __then(); } else {
- x += "F2"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 6, 6, function ___(__0, __3) { var __4 = !__3; return (function __$f(__then) { if (__4) { var __5 = __3; return _(null, __5); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 6, 25, _, true), true); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __8) { return (function __$f(__then) { if (__8) { x += "T3"; __then(); } else {
- x += "F3"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 8, 6, function ___(__0, __4) { var __5 = !__4; return (function __$f(__then) { if (__5) { var __6 = __4; return _(null, __6); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 8, 25, _, true), false); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __9) { return (function __$f(__then) { if (__9) { x += "T4"; __then(); } else {
- x += "F4"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 10, 6, function ___(__0, __5) { var __6 = !__5; return (function __$f(__then) { if (__6) { var __7 = __5; return _(null, __7); } else { __then(); } ; })(function __$f() { return delayFail(__cb(_, __frame, 10, 25, _, true), "bad"); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __10) { return (function __$f(__then) { if (__10) { x += "T5"; __then(); } else {
- x += "F5"; __then(); } ; })(function __$f() {
- x += ">>";
- return _(null, x); }); }, true)); }); }, true)); }); }, true)); }); }, true)); }); }, true)); });
- }, "<<T1F2F3F4F5>>"); _(); });});
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 411 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = "<<"; return (function __$f(_) {
+          return delay(__cb(_, __frame, 2, 6, function ___(__0, __1) { var __2 = !__1; return (function __$f(__then) { if (__2) { var __3 = __1; return _(null, __3); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 24, _, true), true); }); }, true), true); })(__cb(_, __frame, -410, 21, function ___(__0, __6) { return (function __$f(__then) { if (__6) { x += "T1"; __then(); } else {
+              x += "F1"; __then(); } ; })(function __$f() { return (function __$f(_) {
+              return delay(__cb(_, __frame, 4, 6, function ___(__0, __2) { var __3 = !__2; return (function __$f(__then) { if (__3) { var __4 = __2; return _(null, __4); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 4, 24, _, true), false); }); }, true), true); })(__cb(_, __frame, -410, 21, function ___(__0, __7) { return (function __$f(__then) { if (__7) { x += "T2"; __then(); } else {
+                  x += "F2"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                  return delay(__cb(_, __frame, 6, 6, function ___(__0, __3) { var __4 = !__3; return (function __$f(__then) { if (__4) { var __5 = __3; return _(null, __5); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 6, 25, _, true), true); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __8) { return (function __$f(__then) { if (__8) { x += "T3"; __then(); } else {
+                      x += "F3"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                      return delay(__cb(_, __frame, 8, 6, function ___(__0, __4) { var __5 = !__4; return (function __$f(__then) { if (__5) { var __6 = __4; return _(null, __6); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 8, 25, _, true), false); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __9) { return (function __$f(__then) { if (__9) { x += "T4"; __then(); } else {
+                          x += "F4"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                          return delay(__cb(_, __frame, 10, 6, function ___(__0, __5) { var __6 = !__5; return (function __$f(__then) { if (__6) { var __7 = __5; return _(null, __7); } else { __then(); } ; })(function __$f() { return delayFail(__cb(_, __frame, 10, 25, _, true), "bad"); }); }, true), false); })(__cb(_, __frame, -410, 21, function ___(__0, __10) { return (function __$f(__then) { if (__10) { x += "T5"; __then(); } else {
+                              x += "F5"; __then(); } ; })(function __$f() {
+                            x += ">>";
+                            return _(null, x); }); }, true)); }); }, true)); }); }, true)); }); }, true)); }); }, true)); });
+    }, "<<T1F2F3F4F5>>"); _(); });});
 
 asyncTest("or ok", 1, function __35(_) { var __frame = { name: "__35", line: 427 }; return __func(_, this, arguments, __35, 0, __frame, function __$__35() {
- evalTest(function f(_) { var x; var __frame = { name: "f", line: 428 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
- x = "<<"; return (function __$f(_) {
- return delay(__cb(_, __frame, 2, 6, function ___(__0, __1) { var __2 = __1; return (function __$f(__then) { if (__2) { var __3 = __1; return _(null, __3); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 24, _, true), true); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __6) { return (function __$f(__then) { if (__6) { x += "T1"; __then(); } else {
- x += "F1"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 4, 6, function ___(__0, __2) { var __3 = __2; return (function __$f(__then) { if (__3) { var __4 = __2; return _(null, __4); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 4, 24, _, true), false); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __7) { return (function __$f(__then) { if (__7) { x += "T2"; __then(); } else {
- x += "F2"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 6, 6, function ___(__0, __3) { var __4 = __3; return (function __$f(__then) { if (__4) { var __5 = __3; return _(null, __5); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 6, 25, _, true), true); }); }, true), false); })(__cb(_, __frame, -427, 21, function ___(__0, __8) { return (function __$f(__then) { if (__8) { x += "T3"; __then(); } else {
- x += "F3"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 8, 6, function ___(__0, __4) { var __5 = __4; return (function __$f(__then) { if (__5) { var __6 = __4; return _(null, __6); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 8, 25, _, true), false); }); }, true), false); })(__cb(_, __frame, -427, 21, function ___(__0, __9) { return (function __$f(__then) { if (__9) { x += "T4"; __then(); } else {
- x += "F4"; __then(); } ; })(function __$f() { return (function __$f(_) {
- return delay(__cb(_, __frame, 10, 6, function ___(__0, __5) { var __6 = __5; return (function __$f(__then) { if (__6) { var __7 = __5; return _(null, __7); } else { __then(); } ; })(function __$f() { return delayFail(__cb(_, __frame, 10, 24, _, true), "bad"); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __10) { return (function __$f(__then) { if (__10) { x += "T5"; __then(); } else {
- x += "F5"; __then(); } ; })(function __$f() {
- x += ">>";
- return _(null, x); }); }, true)); }); }, true)); }); }, true)); }); }, true)); }); }, true)); });
- }, "<<T1T2T3F4T5>>"); _(); });});
+    evalTest(function f(_) { var x; var __frame = { name: "f", line: 428 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        x = "<<"; return (function __$f(_) {
+          return delay(__cb(_, __frame, 2, 6, function ___(__0, __1) { var __2 = __1; return (function __$f(__then) { if (__2) { var __3 = __1; return _(null, __3); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 2, 24, _, true), true); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __6) { return (function __$f(__then) { if (__6) { x += "T1"; __then(); } else {
+              x += "F1"; __then(); } ; })(function __$f() { return (function __$f(_) {
+              return delay(__cb(_, __frame, 4, 6, function ___(__0, __2) { var __3 = __2; return (function __$f(__then) { if (__3) { var __4 = __2; return _(null, __4); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 4, 24, _, true), false); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __7) { return (function __$f(__then) { if (__7) { x += "T2"; __then(); } else {
+                  x += "F2"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                  return delay(__cb(_, __frame, 6, 6, function ___(__0, __3) { var __4 = __3; return (function __$f(__then) { if (__4) { var __5 = __3; return _(null, __5); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 6, 25, _, true), true); }); }, true), false); })(__cb(_, __frame, -427, 21, function ___(__0, __8) { return (function __$f(__then) { if (__8) { x += "T3"; __then(); } else {
+                      x += "F3"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                      return delay(__cb(_, __frame, 8, 6, function ___(__0, __4) { var __5 = __4; return (function __$f(__then) { if (__5) { var __6 = __4; return _(null, __6); } else { __then(); } ; })(function __$f() { return delay(__cb(_, __frame, 8, 25, _, true), false); }); }, true), false); })(__cb(_, __frame, -427, 21, function ___(__0, __9) { return (function __$f(__then) { if (__9) { x += "T4"; __then(); } else {
+                          x += "F4"; __then(); } ; })(function __$f() { return (function __$f(_) {
+                          return delay(__cb(_, __frame, 10, 6, function ___(__0, __5) { var __6 = __5; return (function __$f(__then) { if (__6) { var __7 = __5; return _(null, __7); } else { __then(); } ; })(function __$f() { return delayFail(__cb(_, __frame, 10, 24, _, true), "bad"); }); }, true), true); })(__cb(_, __frame, -427, 21, function ___(__0, __10) { return (function __$f(__then) { if (__10) { x += "T5"; __then(); } else {
+                              x += "F5"; __then(); } ; })(function __$f() {
+                            x += ">>";
+                            return _(null, x); }); }, true)); }); }, true)); }); }, true)); }); }, true)); }); }, true)); });
+    }, "<<T1T2T3F4T5>>"); _(); });});
 
 asyncTest("switch with default", 1, function __36(_) { var __frame = { name: "__36", line: 444 }; return __func(_, this, arguments, __36, 0, __frame, function __$__36() {
- evalTest(function f(_) {
- function g(_, i) { var result; var __frame = { name: "g", line: 446 }; return __func(_, this, arguments, g, 0, __frame, function __$g() {
- result = "a";
- return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
- case 1: return delay(__cb(_, __frame, 4, 13, function ___(__0, __2) {
- result = __2; return __break(); }, true), "b"); case 2:
+    evalTest(function f(_) {
+      function g(_, i) { var result; var __frame = { name: "g", line: 446 }; return __func(_, this, arguments, g, 0, __frame, function __$g() {
+          result = "a";
+          return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
+              case 1: return delay(__cb(_, __frame, 4, 13, function ___(__0, __2) {
+                  result = __2; return __break(); }, true), "b"); case 2:
 
- return delay(__cb(_, __frame, 7, 11, _, true), "c");
- case 3:
- 
- case 4: return delay(__cb(_, __frame, 10, 13, function ___(__0, __4) {
- result = __4; return __break(); }, true), "d"); default:
+                return delay(__cb(_, __frame, 7, 11, _, true), "c");
+              case 3:
+              
+              case 4: return delay(__cb(_, __frame, 10, 13, function ___(__0, __4) {
+                  result = __4; return __break(); }, true), "d"); default:
 
- return delay(__cb(_, __frame, 13, 13, function ___(__0, __5) {
- result = __5; return __break(); }, true), "e"); }; })(function __$g() {
+                return delay(__cb(_, __frame, 13, 13, function ___(__0, __5) {
+                  result = __5; return __break(); }, true), "e"); }; })(function __$g() {
 
- return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 445 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+              return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 445 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
- return g(__cb(_, __frame, 19, 9, function ___(__0, __2) { return g(__cb(_, __frame, 19, 19, function ___(__0, __3) { return g(__cb(_, __frame, 19, 29, function ___(__0, __4) { return g(__cb(_, __frame, 19, 39, function ___(__0, __5) { return g(__cb(_, __frame, 19, 49, function ___(__0, __6) { return g(__cb(_, __frame, 19, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
- }, "ebcdde"); _(); });});
+        return g(__cb(_, __frame, 19, 9, function ___(__0, __2) { return g(__cb(_, __frame, 19, 19, function ___(__0, __3) { return g(__cb(_, __frame, 19, 29, function ___(__0, __4) { return g(__cb(_, __frame, 19, 39, function ___(__0, __5) { return g(__cb(_, __frame, 19, 49, function ___(__0, __6) { return g(__cb(_, __frame, 19, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
+    }, "ebcdde"); _(); });});
 
 asyncTest("switch without default", 1, function __37(_) { var __frame = { name: "__37", line: 467 }; return __func(_, this, arguments, __37, 0, __frame, function __$__37() {
- evalTest(function f(_) {
- function g(_, i) { var result; var __frame = { name: "g", line: 469 }; return __func(_, this, arguments, g, 0, __frame, function __$g() {
- result = "a";
- return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
- case 1: result = "b";
- return __break();
+    evalTest(function f(_) {
+      function g(_, i) { var result; var __frame = { name: "g", line: 469 }; return __func(_, this, arguments, g, 0, __frame, function __$g() {
+          result = "a";
+          return delay(__cb(_, __frame, 2, 11, function ___(__0, __1) { return (function __$g(__break) { switch (__1) {
+              case 1: result = "b";
+                return __break();
 
- case 2: return _(null, "c");
- case 3:
- 
- case 4: result = "d";
- return __break(); default: return __break(); }; })(function __$g() {
-
-
- return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 468 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+              case 2: return _(null, "c");
+              case 3:
+              
+              case 4: result = "d";
+                return __break(); default: return __break(); }; })(function __$g() {
 
 
- return g(__cb(_, __frame, 17, 9, function ___(__0, __2) { return g(__cb(_, __frame, 17, 19, function ___(__0, __3) { return g(__cb(_, __frame, 17, 29, function ___(__0, __4) { return g(__cb(_, __frame, 17, 39, function ___(__0, __5) { return g(__cb(_, __frame, 17, 49, function ___(__0, __6) { return g(__cb(_, __frame, 17, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
- }, "abcdda"); _(); });});
+              return _(null, result); }); }, true), i); }); }; var __frame = { name: "f", line: 468 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+
+
+        return g(__cb(_, __frame, 17, 9, function ___(__0, __2) { return g(__cb(_, __frame, 17, 19, function ___(__0, __3) { return g(__cb(_, __frame, 17, 29, function ___(__0, __4) { return g(__cb(_, __frame, 17, 39, function ___(__0, __5) { return g(__cb(_, __frame, 17, 49, function ___(__0, __6) { return g(__cb(_, __frame, 17, 59, function ___(__0, __7) { var __1 = (((((__2 + __3) + __4) + __5) + __6) + __7); return _(null, __1); }, true), 5); }, true), 4); }, true), 3); }, true), 2); }, true), 1); }, true), 0); });
+    }, "abcdda"); _(); });});
 
 asyncTest("this", 5, function __38(_) { var __frame = { name: "__38", line: 488 }; return __func(_, this, arguments, __38, 0, __frame, function __$__38() {
- evalTest(function f(_) { var o;
- function O(x) {
- this.x = x; };
+    evalTest(function f(_) { var o;
+      function O(x) {
+        this.x = x; };
 
 
 
@@ -517,99 +517,99 @@ asyncTest("this", 5, function __38(_) { var __frame = { name: "__38", line: 488 
 
 
 
- function delay2(val, _) { var __frame = { name: "delay2", line: 520 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
- return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 489 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { O.prototype.test1 = function O_prototype_test1__1(_) { var self, __this = this; var __frame = { name: "O_prototype_test1__1", line: 494 }; return __func(_, this, arguments, O_prototype_test1__1, 0, __frame, function __$O_prototype_test1__1() { self = __this; return delay(__cb(_, __frame, 2, 12, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); _(); }, true), (__this.x + 1)); }); }; O.prototype.test2 = function O_prototype_test2__2(_) { var self, __this = this; var __frame = { name: "O_prototype_test2__2", line: 499 }; return __func(_, this, arguments, O_prototype_test2__2, 0, __frame, function __$O_prototype_test2__2() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test2__2() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test2__2() { if (ex) { ok(false); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); }; O.prototype.test3 = function O_prototype_test3__3(_) { var self, __this = this; var __frame = { name: "O_prototype_test3__3", line: 508 }; return __func(_, this, arguments, O_prototype_test3__3, 0, __frame, function __$O_prototype_test3__3() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test3__3() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __2) { __this.x = __2; throwError("test3"); ok(false); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test3__3() { if (ex) { strictEqual(__this, self); return delay(__cb(_, __frame, 8, 13, function ___(__0, __1) { __this.x = __1; __then(); }, true), (__this.x + 1)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); };
+      function delay2(val, _) { var __frame = { name: "delay2", line: 520 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
+          return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 489 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { O.prototype.test1 = function O_prototype_test1__1(_) { var self, __this = this; var __frame = { name: "O_prototype_test1__1", line: 494 }; return __func(_, this, arguments, O_prototype_test1__1, 0, __frame, function __$O_prototype_test1__1() { self = __this; return delay(__cb(_, __frame, 2, 12, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); _(); }, true), (__this.x + 1)); }); }; O.prototype.test2 = function O_prototype_test2__2(_) { var self, __this = this; var __frame = { name: "O_prototype_test2__2", line: 499 }; return __func(_, this, arguments, O_prototype_test2__2, 0, __frame, function __$O_prototype_test2__2() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test2__2() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __1) { __this.x = __1; strictEqual(__this, self); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test2__2() { if (ex) { ok(false); __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); }; O.prototype.test3 = function O_prototype_test3__3(_) { var self, __this = this; var __frame = { name: "O_prototype_test3__3", line: 508 }; return __func(_, this, arguments, O_prototype_test3__3, 0, __frame, function __$O_prototype_test3__3() { self = __this; return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$O_prototype_test3__3() { return delay(__cb(_, __frame, 3, 13, function ___(__0, __2) { __this.x = __2; throwError("test3"); ok(false); __then(); }, true), (__this.x + 1)); }); })(function ___(ex, __result) { __tryCatch(_, function __$O_prototype_test3__3() { if (ex) { strictEqual(__this, self); return delay(__cb(_, __frame, 8, 13, function ___(__0, __1) { __this.x = __1; __then(); }, true), (__this.x + 1)); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); }); };
 
 
- O.prototype.test4 = function O_prototype_test4__4(_) { var self, v1, v2, __this = this; var __frame = { name: "O_prototype_test4__4", line: 524 }; return __func(_, this, arguments, O_prototype_test4__4, 0, __frame, function __$O_prototype_test4__4() { self = __this;
+        O.prototype.test4 = function O_prototype_test4__4(_) { var self, v1, v2, __this = this; var __frame = { name: "O_prototype_test4__4", line: 524 }; return __func(_, this, arguments, O_prototype_test4__4, 0, __frame, function __$O_prototype_test4__4() { self = __this;
 
- v1 = delay2((__this.x + 1));
- v2 = delay2(1);
- return v1(__cb(_, __frame, 4, 12, function ___(__0, __1) { return v2(__cb(_, __frame, 4, 20, function ___(__0, __2) { __this.x = (__1 + __2);
- strictEqual(__this, self); _(); }, true)); }, true)); }); };
+            v1 = delay2((__this.x + 1));
+            v2 = delay2(1);
+            return v1(__cb(_, __frame, 4, 12, function ___(__0, __1) { return v2(__cb(_, __frame, 4, 20, function ___(__0, __2) { __this.x = (__1 + __2);
+                strictEqual(__this, self); _(); }, true)); }, true)); }); };
 
- o = new O(1);
- return o.test1(__cb(_, __frame, 43, 2, function __$f() {
- return o.test2(__cb(_, __frame, 44, 2, function __$f() {
- return o.test3(__cb(_, __frame, 45, 2, function __$f() {
- return o.test4(__cb(_, __frame, 46, 2, function __$f() {
- return _(null, o.x); }, true)); }, true)); }, true)); }, true)); });
- }, 7); _(); });});
+        o = new O(1);
+        return o.test1(__cb(_, __frame, 43, 2, function __$f() {
+          return o.test2(__cb(_, __frame, 44, 2, function __$f() {
+            return o.test3(__cb(_, __frame, 45, 2, function __$f() {
+              return o.test4(__cb(_, __frame, 46, 2, function __$f() {
+                return _(null, o.x); }, true)); }, true)); }, true)); }, true)); });
+    }, 7); _(); });});
 
 asyncTest("scoping", 1, function __39(_) { var __frame = { name: "__39", line: 539 }; return __func(_, this, arguments, __39, 0, __frame, function __$__39() {
- evalTest(function f(_) {
- function test(_) { var foo;
+    evalTest(function f(_) {
+      function test(_) { var foo;
 
 
- function bar() {
- return foo; }; var __frame = { name: "test", line: 541 }; return __func(_, this, arguments, test, 0, __frame, function __$test() { foo = "abc";
+        function bar() {
+          return foo; }; var __frame = { name: "test", line: 541 }; return __func(_, this, arguments, test, 0, __frame, function __$test() { foo = "abc";
 
 
- return delay(__cb(_, __frame, 7, 3, function __$test() {
- foo = "xyz";
- return _(null, bar); }, true)); }); }; var __frame = { name: "f", line: 540 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+          return delay(__cb(_, __frame, 7, 3, function __$test() {
+            foo = "xyz";
+            return _(null, bar); }, true)); }); }; var __frame = { name: "f", line: 540 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
- return test(__cb(_, __frame, 13, 9, function ___(__0, __2) { var __1 = __2(); return _(null, __1); }, true)); });
- }, "xyz"); _(); });});
+        return test(__cb(_, __frame, 13, 9, function ___(__0, __2) { var __1 = __2(); return _(null, __1); }, true)); });
+    }, "xyz"); _(); });});
 
 asyncTest("return undefined", 1, function __40(_) { var __frame = { name: "__40", line: 556 }; return __func(_, this, arguments, __40, 0, __frame, function __$__40() {
- evalTest(function f(_) {
- function test(_) { var __frame = { name: "test", line: 558 }; return __func(_, this, arguments, test, 0, __frame, function __$test() {
- return delay(__cb(_, __frame, 1, 3, function __$test() { return _(null); }, true)); }); }; var __frame = { name: "f", line: 557 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+    evalTest(function f(_) {
+      function test(_) { var __frame = { name: "test", line: 558 }; return __func(_, this, arguments, test, 0, __frame, function __$test() {
+          return delay(__cb(_, __frame, 1, 3, function __$test() { return _(null); }, true)); }); }; var __frame = { name: "f", line: 557 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
 
- return test(__cb(_, __frame, 6, 9, _, true)); });
- }, undefined); _(); });});
+        return test(__cb(_, __frame, 6, 9, _, true)); });
+    }, undefined); _(); });});
 
 asyncTest("futures test", 1, function __41(_) { var __frame = { name: "__41", line: 566 }; return __func(_, this, arguments, __41, 0, __frame, function __$__41() {
- evalTest(function f(_) { var a, b, c, d;
- function delay2(val, _) { var __frame = { name: "delay2", line: 568 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
- return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 567 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+    evalTest(function f(_) { var a, b, c, d;
+      function delay2(val, _) { var __frame = { name: "delay2", line: 568 }; return __func(_, this, arguments, delay2, 1, __frame, function __$delay2() {
+          return delay(__cb(_, __frame, 1, 10, _, true), val); }); }; var __frame = { name: "f", line: 567 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
 
- a = delay2("a");
- b = delay2("b");
- c = delay2("c");
- d = delay2("d");
- return a(__cb(_, __frame, 9, 9, function ___(__0, __2) { return b(__cb(_, __frame, 9, 16, function ___(__0, __3) { return d(__cb(_, __frame, 9, 23, function ___(__0, __4) { return c(__cb(_, __frame, 9, 30, function ___(__0, __5) { var __1 = (((__2 + __3) + __4) + __5); return _(null, __1); }, true)); }, true)); }, true)); }, true)); });
- }, "abdc"); _(); });});
+        a = delay2("a");
+        b = delay2("b");
+        c = delay2("c");
+        d = delay2("d");
+        return a(__cb(_, __frame, 9, 9, function ___(__0, __2) { return b(__cb(_, __frame, 9, 16, function ___(__0, __3) { return d(__cb(_, __frame, 9, 23, function ___(__0, __4) { return c(__cb(_, __frame, 9, 30, function ___(__0, __5) { var __1 = (((__2 + __3) + __4) + __5); return _(null, __1); }, true)); }, true)); }, true)); }, true)); });
+    }, "abdc"); _(); });});
 
 asyncTest("last case without break", 1, function __42(_) { var __frame = { name: "__42", line: 579 }; return __func(_, this, arguments, __42, 0, __frame, function __$__42() {
- evalTest(function f(_) { var __frame = { name: "f", line: 580 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__break) {
- switch (true) {
- case true: return delay(__cb(_, __frame, 3, 3, __break, true));
- default: return __break(); }; })(function __$f() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 580 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__break) {
+          switch (true) {
+          case true: return delay(__cb(_, __frame, 3, 3, __break, true));
+            default: return __break(); }; })(function __$f() {
 
- return _(null, 1); }); });
- }, 1); _(); });});
+          return _(null, 1); }); });
+    }, 1); _(); });});
 
 
 asyncTest("async comma operator", 1, function __43(_) { var __frame = { name: "__43", line: 589 }; return __func(_, this, arguments, __43, 0, __frame, function __$__43() {
- evalTest(function f(_) { var a; var __frame = { name: "f", line: 590 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(_) {
+    evalTest(function f(_) { var a; var __frame = { name: "f", line: 590 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(_) {
 
- a = 4; a++; return delay(__cb(_, __frame, 2, 25, function ___(__0, __1) { a = __1; return delay(__cb(_, __frame, 2, 42, _, true), (a + 1)); }, true), (2 * a)); })(__cb(_, __frame, -589, 21, _, true)); });
- }, 11); _(); });});
+          a = 4; a++; return delay(__cb(_, __frame, 2, 25, function ___(__0, __1) { a = __1; return delay(__cb(_, __frame, 2, 42, _, true), (a + 1)); }, true), (2 * a)); })(__cb(_, __frame, -589, 21, _, true)); });
+    }, 11); _(); });});
 
 
 asyncTest("async constructor", 1, function __44(_) { var __frame = { name: "__44", line: 596 }; return __func(_, this, arguments, __44, 0, __frame, function __$__44() {
- evalTest(function f(_) {
- function Foo(val, _) { var __this = this; var __frame = { name: "Foo", line: 598 }; return __func(_, this, arguments, Foo, 1, __frame, function __$Foo() {
- return delay(__cb(_, __frame, 1, 3, function __$Foo() {
- __this.x = val; _(); }, true)); }); }; var __frame = { name: "f", line: 597 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+    evalTest(function f(_) {
+      function Foo(val, _) { var __this = this; var __frame = { name: "Foo", line: 598 }; return __func(_, this, arguments, Foo, 1, __frame, function __$Foo() {
+          return delay(__cb(_, __frame, 1, 3, function __$Foo() {
+            __this.x = val; _(); }, true)); }); }; var __frame = { name: "f", line: 597 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
- Foo.prototype.y = function() {
- return (this.x + 1); };
+        Foo.prototype.y = function() {
+          return (this.x + 1); };
 
- return __construct(Foo, 1)(5, __cb(_, __frame, NaN, NaN, function ___(__0, __2) { var __1 = __2.y(); return _(null, __1); }, true)); });
- }, 6); _(); });});
+        return __construct(Foo, 1)(5, __cb(_, __frame, NaN, NaN, function ___(__0, __2) { var __1 = __2.y(); return _(null, __1); }, true)); });
+    }, 6); _(); });});
 
 
 asyncTest("fibo false async", 1, function __45(_) { var __frame = { name: "__45", line: 609 }; return __func(_, this, arguments, __45, 0, __frame, function __$__45() {
- evalTest(function f(_) {
- function fibo(_, n) { var __frame = { name: "fibo", line: 611 }; return __func(_, this, arguments, fibo, 0, __frame, function __$fibo() { return (function __$fibo(_) {
- var __1 = (n > 1); return (function __$fibo(__then) { if (__1) { return fibo(__cb(_, __frame, 1, 18, function ___(__0, __3) { return fibo(__cb(_, __frame, 1, 35, function ___(__0, __4) { var __2 = (__3 + __4); return _(null, __2); }, true), (n - 2)); }, true), (n - 1)); } else { __then(); } ; })(function __$fibo() { return _(null, 1); }); })(__cb(_, __frame, -610, 21, _, true)); }); }; var __frame = { name: "f", line: 610 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+    evalTest(function f(_) {
+      function fibo(_, n) { var __frame = { name: "fibo", line: 611 }; return __func(_, this, arguments, fibo, 0, __frame, function __$fibo() { return (function __$fibo(_) {
+            var __1 = (n > 1); return (function __$fibo(__then) { if (__1) { return fibo(__cb(_, __frame, 1, 18, function ___(__0, __3) { return fibo(__cb(_, __frame, 1, 35, function ___(__0, __4) { var __2 = (__3 + __4); return _(null, __2); }, true), (n - 2)); }, true), (n - 1)); } else { __then(); } ; })(function __$fibo() { return _(null, 1); }); })(__cb(_, __frame, -610, 21, _, true)); }); }; var __frame = { name: "f", line: 610 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
 
- return fibo(__cb(_, __frame, 4, 9, _, true), 16); });
- }, 1597); _(); });});
+        return fibo(__cb(_, __frame, 4, 9, _, true), 16); });
+    }, 1597); _(); });});
