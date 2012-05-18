@@ -167,7 +167,7 @@ function _transform() {
 	try {
 		var codeOut = Streamline.transform(codeIn, {
 			noHelpers: !_complete,
-			lines: _complete ? "mark" : "ignore"
+			lines: _complete ? "preserve" : "ignore"
 		});
 		$('#codeOut').val(codeOut);
 		info("ready")
