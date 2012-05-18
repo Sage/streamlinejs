@@ -294,9 +294,9 @@ _node streamline/examples/diskUsage/diskUsage
 The `diskUsage2` example is a faster variant that parallelizes I/O operations with futures. 
 You'll also find CoffeeScript versions of these examples.
 
-# On-line demo
+# Online demo
 
-You can see how streamline transforms the code by playing with the [on-line demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
+You can see how streamline transforms the code by playing with the [online demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
 If you are curious, you can also play with the [generators demo - Firefox only](http://sage.github.com/streamlinejs/examples/streamlineMe/yieldMe.html).
 
