@@ -10,6 +10,7 @@ cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../generators/builtins.js
 rm builtins.js
 
 _node -lp -v -f -c compile._js
+_node -lp -v -f -c ../streams/client/streams._js
 
 # compile test files for client too
 pushd ../../test/common > /dev/null
