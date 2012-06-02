@@ -614,6 +614,31 @@ asyncTest("fibo false async", 1, fstreamline__.create(function(_) {
 		yield ( (yield fibo(_, 16)));
 	}, 0), 1597);
 ;yield;}, 0));
+
+asyncTest("coffeescript wrapper 1", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		yield ( (yield (function() {
+			yield ( (yield delay(_, "cs1")));
+		})()));
+	}, 0), "cs1");
+;yield;}, 0));
+
+asyncTest("coffeescript wrapper 2", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		yield ( (yield (function() {
+			yield ( (yield delay(_, "cs2")));
+		}).call(this)));
+	}, 0), "cs2");
+;yield;}, 0));
+
+asyncTest("coffeescript wrapper 3", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		yield ( (yield (function() {
+			yield ( (yield delay(_, "cs3")));
+		}).apply(this, arguments)));
+	}, 0), "cs3");
+;yield;}, 0));
+
 ;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));

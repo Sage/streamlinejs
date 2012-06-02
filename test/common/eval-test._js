@@ -614,3 +614,27 @@ asyncTest("fibo false async", 1, function(_) {
 		return fibo(_, 16);
 	}, 1597);
 })
+
+asyncTest("coffeescript wrapper 1", 1, function(_) {
+	evalTest(function f(_) {
+		return (function() {
+			return delay(_, "cs1");
+		})();
+	}, "cs1");
+})
+
+asyncTest("coffeescript wrapper 2", 1, function(_) {
+	evalTest(function f(_) {
+		return (function() {
+			return delay(_, "cs2");
+		}).call(this);
+	}, "cs2");
+})
+
+asyncTest("coffeescript wrapper 3", 1, function(_) {
+	evalTest(function f(_) {
+		return (function() {
+			return delay(_, "cs3");
+		}).apply(this, arguments);
+	}, "cs3");
+})

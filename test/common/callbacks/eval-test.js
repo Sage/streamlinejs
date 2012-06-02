@@ -613,3 +613,27 @@ asyncTest("fibo false async", 1, function __45(_) { var __frame = { name: "__45"
 
         return fibo(__cb(_, __frame, 4, 9, _, true), 16); });
     }, 1597); _(); });});
+
+
+asyncTest("coffeescript wrapper 1", 1, function __46(_) { var __frame = { name: "__46", line: 618 }; return __func(_, this, arguments, __46, 0, __frame, function __$__46() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 619 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+
+
+        return (function __1(_) { return delay(__cb(_, __frame, 1, 10, _, true), "cs1"); })(__cb(_, __frame, 3, 9, _, true)); });
+    }, "cs1"); _(); });});
+
+
+asyncTest("coffeescript wrapper 2", 1, function __47(_) { var __frame = { name: "__47", line: 626 }; return __func(_, this, arguments, __47, 0, __frame, function __$__47() {
+    evalTest(function f(_) { var __this = this; var __frame = { name: "f", line: 627 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+
+
+        return (function __1(_) { return delay(__cb(_, __frame, 1, 10, _, true), "cs2"); })(__cb(_, __frame, 3, 9, _, true)); });
+    }, "cs2"); _(); });});
+
+
+asyncTest("coffeescript wrapper 3", 1, function __48(_) { var __frame = { name: "__48", line: 634 }; return __func(_, this, arguments, __48, 0, __frame, function __$__48() {
+    evalTest(function f(_) { var __this = this, __arguments = arguments; var __frame = { name: "f", line: 635 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+
+
+        return (function __1(_) { return delay(__cb(_, __frame, 1, 10, _, true), "cs3"); })(__cb(_, __frame, 3, 9, _, true)); });
+    }, "cs3"); _(); });});
