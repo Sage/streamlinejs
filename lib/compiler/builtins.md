@@ -47,4 +47,4 @@ Functions:
   Helper to use `Function.prototype.apply` inside streamlined functions.  
   Equivalent to `result = fn.apply(thisObj, argsWith_)` where `argsWith_` is 
   a modified `args` in which the callback has been inserted at `index` 
-  (at the end of the argument list if `index` is omitted).
+  (at the end of the argument list if `index` is omitted or negative).
