@@ -154,7 +154,7 @@ function info(message) {
 	$('#result').removeClass('error').addClass('success').text(message);
 }
 
-StreamlineRuntime.globals.context = {
+Streamline.globals.context = {
 	errorHandler: function(err){
 		error(err.message || err.toString());
 	}
