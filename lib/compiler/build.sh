@@ -1,3 +1,4 @@
+pushd `dirname $0` > /dev/null
 ../../bin/_node -lp -v -f -c builtins._js
 mv builtins.js ../callbacks
 
@@ -18,4 +19,5 @@ pushd ../../test/common > /dev/null
 mv eval-test.js flows-test.js stack-test.js callbacks
 ../../bin/_node --generators -v -f -c .
 mv eval-test.js flows-test.js stack-test.js generators
+popd > /dev/null
 popd > /dev/null
