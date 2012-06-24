@@ -124,6 +124,12 @@ So, files that don't contain async code won't be impacted by the transformation.
 
 The only drawback is a slower application startup because more files get transformed but you can avoid that with the `--cache` option.
 
+### Can I use streamline.js with the _express_ middleware
+
+Yes! Take a look at [express-streamline](https://github.com/aseemk/express-streamline).
+
+And read just below about dealing with events!
+
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 
 If you are dealing with stream events, you should try streamline's stream API. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you (`pause/resume` on readable streams, `drain` on writable streams). For example:
