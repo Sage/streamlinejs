@@ -68,21 +68,21 @@ f(_); // throws the exception
 console.log("after f(_)"); // you won't see this one
 ```
 
-### I'm calling `path.exists(fname, _)` and it does not work. What am I doing wrong?
+### I'm calling `fs.exists(fname, _)` and it does not work. What am I doing wrong?
 
 Streamline is designed to work with functions that take standard node callbacks, i.e. callbacks that have the standard `cb(err[, result])` signature.
 
-Unfortunately some libraries use a different callback signature, and node itself has a few exceptions, the most notable one being `path.exists` which does not have any `err` parameter in its callback.
+Unfortunately some libraries use a different callback signature, and node itself has a few exceptions, the most notable one being `fs.exists` which does not have any `err` parameter in its callback.
 
 The workaround is to write a small wrapper that re-aligns the callback parameters on the standard:
 
 ``` javascript
 function exists(fname, cb) { 
-  path.exists(fname, function(result) { cb(null, result); });
+  fs.exists(fname, function(result) { cb(null, result); });
 }
 
 console.log(__filename + ': ' + exists(__filename, _)); // works
-console.log(__filename + ': ' + path.exists(__filename, _)); // does not work
+console.log(__filename + ': ' + fs.exists(__filename, _)); // does not work
 ```
 
 ### I'm calling an async function without `_` and I'm not getting a future back. What's wrong?
