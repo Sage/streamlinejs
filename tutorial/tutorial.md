@@ -271,6 +271,49 @@ function search(_, q) {
 }
 ```
 
+We can also go further and parallelize the directory traversal. This could be done with futures but there is a simple way to do it: pass the number of parallel operations as second argument to the `forEach_` call:
+
+```javascript
+	function doDir(_, dir) {
+		fs.readdir(dir, _).forEach_(_, 4, function(_, file) {
+			var stat = fs.stat(dir + '/' + file, _);
+			...
+		});
+	}
+```
+
+We could pass -1 instead of 4 to execute all iterations in parallel. But then we would quickly run out of file descriptors when traversing large trees. The best way to do it would be to pass -1 and use the `flows.funnel` function to limit concurrency in the low level function. Here is the modified function:
+
+```javascript
+var fs = require('fs'),
+	flows = require('streamline/lib/util/flows');
+
+function fileSearch(_, q) {
+	var t0 = new Date();
+	var results = '';
+	// don't opeh more than 20 files concurrently
+	var funnel = flows.funnel(20);
+
+	function doDir(_, dir) {
+		fs.readdir(dir, _).forEach_(_, -1, function(_, file) {
+			var stat = fs.stat(dir + '/' + file, _);
+			if (stat.isFile()) {
+				// limit the number of open files 
+				funnel(_, function(_) {
+					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
+						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
+					});
+				});
+			} else if (stat.isDirectory()) {
+				doDir(_, dir + '/' + file);
+			}
+		});
+	}
+	doDir(_, __dirname);
+	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+}
+```
+
 ## Wrapping up
 
 In this tutorial we have done the following:
