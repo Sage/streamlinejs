@@ -282,7 +282,7 @@ We can also go further and parallelize the directory traversal. This could be do
 	}
 ```
 
-We could pass -1 instead of 4 to execute all iterations in parallel. But then we would quickly run out of file descriptors when traversing large trees. The best way to do it would be to pass -1 and use the `flows.funnel` function to limit concurrency in the low level function. Here is the modified function:
+We could pass -1 instead of 4 to execute all iterations in parallel. But then we would have a risk of running out of file descriptors when traversing large trees. The best way to do it then would be to pass -1 and use the `flows.funnel` function to limit concurrency in the low level function. Here is the modified function:
 
 ```javascript
 var fs = require('fs'),
@@ -291,14 +291,14 @@ var fs = require('fs'),
 function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
-	// don't opeh more than 20 files concurrently
+	// allocate a funnel for 20 concurrent executions
 	var funnel = flows.funnel(20);
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, -1, function(_, file) {
 			var stat = fs.stat(dir + '/' + file, _);
 			if (stat.isFile()) {
-				// limit the number of open files 
+				// use the funnel to limit the number of open files 
 				funnel(_, function(_) {
 					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
 						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
@@ -311,6 +311,21 @@ function fileSearch(_, q) {
 	}
 	doDir(_, __dirname);
 	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+}
+```
+
+The `funnel` acts like a semaphore. It limits the number of concurrent entries in the inner function to 20. 
+
+With this implementation, each call to fileSearch opens 20 files at most but we could run out of file descriptors when lots of requests are handled concurrently. The fix is simple though: move the funnel declation one level up, just after the declaration of flows:
+
+```javascript
+var fs = require('fs'),
+	flows = require('streamline/lib/util/flows');
+// allocate a funnel for 20 concurrent executions
+var funnel = flows.funnel(20);
+
+function fileSearch(_, q) {
+	// same as above, without the funnel declaration
 }
 ```
 

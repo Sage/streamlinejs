@@ -56,18 +56,18 @@ function googleSearch(_, q) {
 
 var fs = require('fs'),
 	flows = require('streamline/lib/util/flows');
+// allocate a funnel for 20 concurrent executions
+var funnel = flows.funnel(20);
 
 function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
-	// don't opeh more than 20 files concurrently
-	var funnel = flows.funnel(20);
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, -1, function(_, file) {
 			var stat = fs.stat(dir + '/' + file, _);
 			if (stat.isFile()) {
-				// limit the number of open files 
+				// use the funnel to limit the number of open files 
 				funnel(_, function(_) {
 					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
 						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
