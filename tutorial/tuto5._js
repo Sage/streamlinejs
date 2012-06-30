@@ -25,7 +25,6 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
-	// pass it to Google
 	try {
 		return '<h2>Web</h2>' + googleSearch(_, q) + '<hr/><h2>Files</h2>' + fileSearch(_, q);
 	} catch (ex) {
