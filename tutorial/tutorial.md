@@ -282,7 +282,7 @@ We can also go further and parallelize the directory traversal. This could be do
 	}
 ```
 
-We could pass -1 instead of 4 to execute all iterations in parallel. But then we would have a risk of running out of file descriptors when traversing large trees. The best way to do it then would be to pass -1 and use the `flows.funnel` function to limit concurrency in the low level function. Here is the modified function:
+We could pass -1 instead of 4 to execute all iterations in parallel. But then we would have a risk of running out of file descriptors when traversing large trees. The best way to do it then is to pass -1 and use the `flows.funnel` function to limit concurrency in the low level function. Here is the modified function:
 
 ```javascript
 var fs = require('fs'),
@@ -316,7 +316,7 @@ function fileSearch(_, q) {
 
 The `funnel` acts like a semaphore. It limits the number of concurrent entries in the inner function to 20. 
 
-With this implementation, each call to fileSearch opens 20 files at most but we could run out of file descriptors when lots of requests are handled concurrently. The fix is simple though: move the funnel declation one level up, just after the declaration of flows:
+With this implementation, each call to `fileSearch` opens 20 files at most but we could still run out of file descriptors when lots of requests are handled concurrently. The fix is simple though: move the `funnel` declation one level up, just after the declaration of `flows`:
 
 ```javascript
 var fs = require('fs'),
