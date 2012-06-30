@@ -25,9 +25,11 @@ console.log('Server running at http://127.0.0.1:1337/');
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
+		// start the 3 futures
 		var googleFuture = googleSearch(null, q);
 		var fileFuture = fileSearch(null, q);
-		var mongoFuture = mongoSearch(null, q)
+		var mongoFuture = mongoSearch(null, q);
+		// join the results
 		return '<h2>Web</h2>' + googleFuture(_) //
 		+ '<hr/><h2>Files</h2>' + fileFuture(_) //
 		+ '<hr/><h2>Mongo</h2>' + mongoFuture(_);

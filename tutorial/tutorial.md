@@ -19,7 +19,7 @@ streams.createHttpServer(function(request, response, _) {
 console.log('Server running at http://127.0.0.1:1337/');
 ```
 
-Save this source as `tuto1._js` and start it with:
+To run it, save this source as `tuto1._js` and start it with:
 
 ```javascript
 _node tuto1
@@ -32,8 +32,8 @@ This is very close to the original version. Just a few differences:
 * the server is created with streamline's `streams.createHttpServer` rather than with node's `http.createServer` call. 
 * the server callback takes an additional `_` parameter. This parameter is streamline's _callback stub_. This is the magic token that you will pass to all asynchronous calls that expect a node.js callback.
 * the `request` and `response` parameters are streamline wrappers around node's request and response streams. These wrappers don't make a difference for now but they will make it easier to read and write from these streams later.
-* `listen` is called with an `_` argument. This is because `listen` is an asynchronous call. The streamline version prints the `'Server running ...'` message after receiving the `listening` event, while the original node version prints the message without waiting for the `listening` event. This is a really minor difference though, and streamline makes it easy to avoid the wait if you don't care: just call `listen` as a _future_ by passing `null` instead of `_`. If you're discovering streamline.js don't worry about all this now. I'll talk more about futures at the end of this tutorial.
-* the source file extension is `._js` instead of `.js` and you run it with `_node` rather than `node`. This is because streamline.js extends the JavaScript language and the code needs to be transformed before being passed the JavaScript engine (note: `_node` has a `--cache` option which speeds up load time by shortcircuiting the transformation when files don't change).
+* `listen` is called with an `_` argument. This is because `listen` is an asynchronous call. The streamline version prints the `'Server running ...'` message after receiving the `listening` event, while the original node version prints the message without waiting for the `listening` event. This is a really minor difference though, and streamline makes it easy to avoid the wait if you don't care: just call `listen` as a _future_ by passing `null` instead of `_`. If you're discovering _streamline.js_ don't worry about all this now. I'll talk more about futures at the end of this tutorial.
+* the source file extension is `._js` instead of `.js` and you run it with `_node` rather than `node`. This is because _streamline.js_ extends the JavaScript language and the code needs to be transformed before being passed the JavaScript engine (note: `_node` has a `--cache` option which speeds up load time by shortcircuiting the transformation when files don't change).
 
 ## [Setting up a simple search form](tuto2._js)
 
@@ -75,7 +75,7 @@ We are going to implement the `search` function next. For now we are just return
 
 ## [Calling Google](tuto3._js)
 
-Now we are going to implement the `search function by passing our search string to Google. Here is the code:
+Now we are going to implement the `search` function by passing our search string to Google. Here is the code:
 
 ```javascript
 function search(_, q) {
@@ -96,13 +96,13 @@ function search(_, q) {
 }
 ```
 
-`streams.httpRequest` is a small wrapper around node's `http.request` call. It allows us to obtain the response with a simple `response(_)` asynchronous call, and to read from this response with a simple asynchronous `readAll` call (there is also an asynchronous `read` call which allows you to read one chunk at a time, or to read a given length). Notice how the calls can be naturally chained to obtain the response data.
+`streams.httpRequest` is a small wrapper around node's `http.request` call. It allows us to obtain the response with a simple `response(_)` asynchronous call, and to read from this response with a simple asynchronous `readAll(_)` call (there is also an asynchronous `read` call which allows you to read one chunk at a time, or to read up to a given length). Notice how the calls can be naturally chained to obtain the response data.
 
 In this example we do not need to post any data to the remote URL. But this would not be difficult either. Just a matter of calling asynchronous `write(_, data)` methods before calling the `end()` method.
 
 ## [Dealing with errors](tuto4._js)
 
-If our search function fails, an exception will be propagated. If we don't do anything special, the exception will bubble up to the request dispatcher created by `streams.createHttpServer(...)`. This dispatcher will catch it and generate a 500 response with the error message.
+If our `search` function fails, an exception will be propagated. If we don't do anything special, the exception will bubble up to the request dispatcher created by `streams.createHttpServer(...)`. This dispatcher will catch it and generate a 500 response with the error message.
 
 This is probably a bit rude to our users. But we can do a better job by trapping the error and including the error message into our HTML page. all we need is a `try/catch` inside our `search` function:
 
@@ -169,7 +169,7 @@ function fileSearch(_, q) {
 }
 ```
 
-The `forEach_` function is streamline's asynchronous variant of the standard EcmaScript 5 `forEach` array function. It is needed because the body of the loop contains asynchronous calls. And steamline will give you an error if you use the synchronous `forEach` with an asynchronous loop body. You will also find asynchronous variants of the other standard ES5 array functions: `map`, `some`, `every`, `filter`, `reduce` and `reduceRight`.
+The `forEach_` function is streamline's asynchronous variant of the standard EcmaScript 5 `forEach` array function. It is needed here because the body of the loop contains asynchronous calls. And steamline will give you an error if you use the synchronous `forEach` with an asynchronous loop body. You will also find asynchronous variants of the other standard ES5 array functions: `map`, `some`, `every`, `filter`, `reduce` and `reduceRight`.
 
 Otherwise, there is not much to say about `fileSearch`. It uses a simple recursive directory traversal logic. 
 
@@ -177,7 +177,7 @@ Otherwise, there is not much to say about `fileSearch`. It uses a simple recursi
 
 Now, we are going to extend our search to a mongodb database.
 
-To run this you need to install MongoDB and start the mongod deamon. You also need to install the node MongoDB driver:
+To run this you need to install MongoDB and start the mongod daemon. You also need to install the node MongoDB driver:
 
 ```sh
 npm install mongodb
@@ -202,6 +202,8 @@ function search(_, q) {
 Here comes `mongoSearch`:
 
 ``` javascript
+var mongodb = require('mongodb');
+
 function mongoSearch(_, q) {
 	var t0 = new Date();
 	var db = new mongodb.Db('tutorial', new mongodb.Server("127.0.0.1", 27017, {}));
@@ -239,7 +241,7 @@ var MOVIES = [{
 }];
 ```
 
-The `mongoSearch` function should be rather straightforwards. The `try/finally` is rather interesting: it guarantees that the database will be closed regardless of whether the `try` block completes successfully or throws an exception.
+The `mongoSearch` function is rather straightforwards once you know the mongodb API. The `try/finally` is rather interesting: it guarantees that the database will be closed regardless of whether the `try` block completes successfully or throws an exception.
 
 ## [Parallelizing](tuto7._js)
 
@@ -254,9 +256,11 @@ function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	// pass it to Google
 	try {
+		// start the 3 futures
 		var googleFuture = googleSearch(null, q);
 		var fileFuture = fileSearch(null, q);
-		var mongoFuture = mongoSearch(null, q)
+		var mongoFuture = mongoSearch(null, q);
+		// join the results
 		return '<h2>Web</h2>' + googleFuture(_) //
 		+ '<hr/><h2>Files</h2>' + fileFuture(_) //
 		+ '<hr/><h2>Mongo</h2>' + mongoFuture(_);
@@ -278,7 +282,7 @@ In this tutorial we have done the following:
 * [Search inside MongoDB](tuto6._js) 
 * [Parallelize the 3 search operations](tuto7._js)
 
-This should give you a flavor of what streamline.js programming looks like. Don't forget to read the [README](../README.md) and the [FAQ](../FAQ.md).
+This should give you a flavor of what _streamline.js_ programming looks like. Don't forget to read the [README](../README.md) and the [FAQ](../FAQ.md).
 
 
 
