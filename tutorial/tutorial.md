@@ -292,14 +292,14 @@ function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
 	// allocate a funnel for 20 concurrent executions
-	var funnel = flows.funnel(20);
+	var filesFunnel = flows.funnel(20);
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, -1, function(_, file) {
 			var stat = fs.stat(dir + '/' + file, _);
 			if (stat.isFile()) {
 				// use the funnel to limit the number of open files 
-				funnel(_, function(_) {
+				filesFunnel(_, function(_) {
 					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
 						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
 					});
@@ -314,20 +314,54 @@ function fileSearch(_, q) {
 }
 ```
 
-The `funnel` acts like a semaphore. It limits the number of concurrent entries in the inner function to 20. 
+The `filesFunnel` function acts like a semaphore. It limits the number of concurrent entries in its inner function to 20. 
 
-With this implementation, each call to `fileSearch` opens 20 files at most but we could still run out of file descriptors when lots of requests are handled concurrently. The fix is simple though: move the `funnel` declation one level up, just after the declaration of `flows`:
+With this implementation, each call to `fileSearch` opens 20 files at most but we could still run out of file descriptors when lots of requests are handled concurrently. The fix is simple though: move the `filesFunnel` declation one level up, just after the declaration of `flows`. We also bump the limit to 100 because this is now a global funnel:
 
 ```javascript
 var fs = require('fs'),
 	flows = require('streamline/lib/util/flows');
-// allocate a funnel for 20 concurrent executions
-var funnel = flows.funnel(20);
+// allocate a funnel for 100 concurrent open files
+var filesFunnel = flows.funnel(100);
 
 function fileSearch(_, q) {
-	// same as above, without the funnel declaration
+	// same as above, without the filesFunnel declaration
 }
 ```
+
+## Fixing race conditions
+
+And, last but not least, there is a concurrency bug in the code that initializes the MongoDB database! Let's fix it.
+
+ The problme is in the code that initializes the database:
+
+ ```javascript
+ 		if (coln.count(_) === 0) coln.insert(MOVIES, _);
+ ```
+
+The problem is that the code yields everywhere we have an `_` in the code. So this code can get interrupted between the `coln.count(_)` call and the `coln.insert(MOVIES, _)` call. And we can get into the unfortunate situation where two requests or more will get a count of 0, which would result in multiple insertions of the `MOVIES` list.
+
+This is easy to fix, though. All we need is a little funnel to restrict the critical section to a single execution:
+
+```javascript
+var mongodb = require('mongodb'),
+	mongoFunnel = flows.funnel(1);
+
+function mongoSearch(_, q) {
+	...
+	db.open(_);
+	try {
+		var coln = db.collection('movies', _);
+		mongoFunnel(_, function(_) {
+			if (coln.count(_) === 0) coln.insert(MOVIES, _);
+		});
+		var re = new RegExp(".*" + q + ".*");
+		return ...
+	} finally {
+		db.close();
+	}
+}
+``
 
 ## Wrapping up
 
@@ -339,7 +373,7 @@ In this tutorial we have done the following:
 * [Handle errors](tuto4._js) 
 * [Search a tree of files](tuto5._js) 
 * [Search inside MongoDB](tuto6._js) 
-* [Parallelize the 3 search operations](tuto7._js)
+* [Parallelize and fix race conditions](tuto7._js)
 
 This should give you a flavor of what _streamline.js_ programming looks like. Don't forget to read the [README](../README.md) and the [FAQ](../FAQ.md).
 

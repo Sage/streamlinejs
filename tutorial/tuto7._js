@@ -56,8 +56,8 @@ function googleSearch(_, q) {
 
 var fs = require('fs'),
 	flows = require('streamline/lib/util/flows');
-// allocate a funnel for 20 concurrent executions
-var funnel = flows.funnel(20);
+// allocate a funnel for 100 concurrent open files
+var filesFunnel = flows.funnel(100);
 
 function fileSearch(_, q) {
 	var t0 = new Date();
@@ -68,7 +68,7 @@ function fileSearch(_, q) {
 			var stat = fs.stat(dir + '/' + file, _);
 			if (stat.isFile()) {
 				// use the funnel to limit the number of open files 
-				funnel(_, function(_) {
+				filesFunnel(_, function(_) {
 					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
 						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
 					});
@@ -82,7 +82,8 @@ function fileSearch(_, q) {
 	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
 }
 
-var mongodb = require('mongodb');
+var mongodb = require('mongodb'),
+	mongoFunnel = flows.funnel(1);
 
 function mongoSearch(_, q) {
 	var t0 = new Date();
@@ -90,7 +91,9 @@ function mongoSearch(_, q) {
 	db.open(_);
 	try {
 		var coln = db.collection('movies', _);
-		if (coln.count(_) === 0) coln.insert(MOVIES, _);
+		mongoFunnel(_, function(_) {
+			if (coln.count(_) === 0) coln.insert(MOVIES, _);
+		});
 		var re = new RegExp(".*" + q + ".*");
 		return coln.find({
 			$or: [{
