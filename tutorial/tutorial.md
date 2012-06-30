@@ -1,6 +1,6 @@
 <blockquote>
 Simple things should be simple. Complex things should be possible.
-<em>Alan Kay</em>
+<br/>_Alan Kay_
 </blockquote>
 
 ## [Hello world!](tuto1._js)
