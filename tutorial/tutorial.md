@@ -126,7 +126,8 @@ function search(_, q) {
 	} catch (ex) {
 		return 'an error occured. Retry or contact the site admin: ' + ex.message;
 	}
-}```
+}
+```
 
 ## [Searching through files](tuto5._js)
 
