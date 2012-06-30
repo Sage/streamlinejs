@@ -17,13 +17,12 @@ streams.createHttpServer(function(request, response, _) {
 
 }).listen(_, 1337);
 console.log('Server running at http://127.0.0.1:1337/');
-
 ```
 
-Save this source as `hello1._js` and start it with:
+Save this source as `tuto1._js` and start it with:
 
 ```javascript
-_node hello1
+_node tuto1
 ```
 
 Now, point your browser to http://127.0.0.1:1337/. You should get a `"hello world"` message.
@@ -87,9 +86,11 @@ function search(_, q) {
 		proxy: process.env.http_proxy
 	}).end().response(_).checkStatus(200).readAll(_);
 	// parse JSON response
-	var results = JSON.parse(json).responseData.results;
+	var parsed = JSON.parse(json);
+	// Google may refuse our request. Return the message then.
+	if (!parsed.responseData) return "GOOGLE ERROR: " + parsed.responseDetails;
 	// format result in HTML
-	return '<ul>' + results.map(function(entry) {
+	return '<ul>' + parsed.responseData.results.map(function(entry) {
 		return '<li><a href="' + entry.url + '">' + entry.titleNoFormatting + '</a></li>';
 	}).join('') + '</ul>';
 }
@@ -125,10 +126,11 @@ Now, we are going to extend our search to also search the text in local files. O
 ```javascript
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
+	// pass it to Google
 	try {
 		return '<h2>Web</h2>' + googleSearch(_, q) + '<hr/><h2>Files</h2>' + fileSearch(_, q);
 	} catch (ex) {
-		return 'an error occured. Retry or contact the site admin: ' + ex.message;
+		return 'an error occured. Retry or contact the site admin: ' + ex.stack;
 	}
 }
 
@@ -137,7 +139,9 @@ function googleSearch(_, q) {
 }
 
 function fileSearch(_, q) {
+	var t0 = new Date();
 	var results = '';
+
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, function(_, file) {
 			var stat = fs.stat(dir + '/' + file, _);
@@ -146,12 +150,12 @@ function fileSearch(_, q) {
 					if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
-				searchDir(_, dir + '/' + file);
+				doDir(_, dir + '/' + file);
 			}
 		});
 	}
 	doDir(_, __dirname);
-	return results;
+	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
 }
 ```
 
@@ -185,6 +189,7 @@ Here comes `mongoSearch`:
 
 ``` javascript
 function mongoSearch(_, q) {
+	var t0 = new Date();
 	var db = new mongodb.Db('tutorial', new mongodb.Server("127.0.0.1", 27017, {}));
 	db.open(_);
 	try {
@@ -198,14 +203,12 @@ function mongoSearch(_, q) {
 				director: re
 			}]
 		}, _).toArray(_).map(function(movie) {
-			console.log("movie:" + JSON.stringify(movie));
 			return movie.title + ': ' + movie.director;
-		}).join('<br/>');
+		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';;
 	} finally {
 		db.close();
 	}
-}
-```
+}```
 
 where `MOVIES` is our little movies database:
 
