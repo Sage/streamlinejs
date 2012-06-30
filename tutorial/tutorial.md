@@ -1,14 +1,9 @@
-node.js for the rest of us
-
 <blockquote>
 Simple things should be simple. Complex things should be possible.
 <em>Alan Kay</em>
 </blockquote>
 
-I published streamline.js almost 18 months ago but never took the time to write a tutorial. This is long overdue.
-
-
-## Hello world!
+## [Hello world!](tuto1._js)
 
 Let us start with streamline's version of node's hello world:
 
