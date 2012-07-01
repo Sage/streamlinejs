@@ -18,21 +18,17 @@ streams.createHttpServer(function(request, response, _) {
 	});
 	response.write(_, begPage.replace('{q}', query.q || ''));
 	response.write(_, search(_, query.q));
-	response.end(endPage.replace('{ms}', new Date() - t0));
+	response.write(_, endPage.replace('{ms}', new Date() - t0));
+	response.end();
 }).listen(_, 1337);
 console.log('Server running at http://127.0.0.1:1337/');
 
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
-		// start the 3 futures
-		var googleFuture = googleSearch(null, q);
-		var fileFuture = fileSearch(null, q);
-		var mongoFuture = mongoSearch(null, q);
-		// join the results
-		return '<h2>Web</h2>' + googleFuture(_) //
-		+ '<hr/><h2>Files</h2>' + fileFuture(_) //
-		+ '<hr/><h2>Mongo</h2>' + mongoFuture(_);
+		return '<h2>Web</h2>' + googleSearch(_, q) //
+		+ '<hr/><h2>Files</h2>' + fileSearch(_, q) //
+		+ '<hr/><h2>Mongo</h2>' + mongoSearch(_, q);
 	} catch (ex) {
 		return 'an error occured. Retry or contact the site admin: ' + ex.stack;
 	}
@@ -54,24 +50,18 @@ function googleSearch(_, q) {
 	}).join('') + '</ul>' + '<br/>completed in ' + (new Date() - t0) + ' ms';
 }
 
-var fs = require('fs'),
-	flows = require('streamline/lib/util/flows');
-// allocate a funnel for 100 concurrent open files
-var filesFunnel = flows.funnel(100);
+var fs = require('fs');
 
 function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
 
 	function doDir(_, dir) {
-		fs.readdir(dir, _).forEach_(_, -1, function(_, file) {
+		fs.readdir(dir, _).forEach_(_, function(_, file) {
 			var stat = fs.stat(dir + '/' + file, _);
 			if (stat.isFile()) {
-				// use the funnel to limit the number of open files 
-				filesFunnel(_, function(_) {
-					fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
-						if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
-					});
+				fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
+					if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
 				doDir(_, dir + '/' + file);
@@ -82,32 +72,8 @@ function fileSearch(_, q) {
 	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
 }
 
-var mongodb = require('mongodb'),
-	mongoFunnel = flows.funnel(1);
 
-function mongoSearch(_, q) {
-	var t0 = new Date();
-	var db = new mongodb.Db('tutorial', new mongodb.Server("127.0.0.1", 27017, {}));
-	db.open(_);
-	try {
-		var coln = db.collection('movies', _);
-		mongoFunnel(_, function(_) {
-			if (coln.count(_) === 0) coln.insert(MOVIES, _);
-		});
-		var re = new RegExp(".*" + q + ".*");
-		return coln.find({
-			$or: [{
-				title: re
-			}, {
-				director: re
-			}]
-		}, _).toArray(_).map(function(movie) {
-			return movie.title + ': ' + movie.director;
-		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';;
-	} finally {
-		db.close();
-	}
-}
+var mongodb = require('mongodb');
 
 var MOVIES = [{
 	title: 'To be or not to be',
@@ -122,3 +88,25 @@ var MOVIES = [{
 	title: 'Barry Lyndon',
 	director: 'Stanley Kubrick'
 }];
+
+function mongoSearch(_, q) {
+	var t0 = new Date();
+	var db = new mongodb.Db('tutorial', new mongodb.Server("127.0.0.1", 27017, {}));
+	db.open(_);
+	try {
+		var coln = db.collection('movies', _);
+		if (coln.count(_) === 0) coln.insert(MOVIES, _);
+		var re = new RegExp(".*" + q + ".*");
+		return coln.find({
+			$or: [{
+				title: re
+			}, {
+				director: re
+			}]
+		}, _).toArray(_).map(function(movie) {
+			return movie.title + ': ' + movie.director;
+		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+	} finally {
+		db.close();
+	}
+}

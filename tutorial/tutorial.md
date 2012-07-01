@@ -3,7 +3,7 @@ Simple things should be simple. Complex things should be possible.
 <br/><em>Alan Kay</em>
 </blockquote>
 
-## [Hello world!](tuto1._js)
+## [Hello world!](tuto1-hello._js)
 
 Let us start with streamline's version of node's hello world:
 
@@ -35,7 +35,7 @@ This code is very close to the original version. Just a few differences:
 * `listen` is called with an `_` argument. This is because `listen` is an asynchronous call. The streamline version prints the `'Server running ...'` message after receiving the `listening` event, while the original node version prints the message without waiting for the `listening` event. This is a really minor difference though, and streamline makes it easy to avoid the wait if you don't care: just call `listen` as a _future_ by passing `null` instead of `_`. If you're discovering _streamline.js_ don't worry about all this now. I'll talk more about futures at the end of this tutorial.
 * The source file extension is `._js` instead of `.js` and you run it with `_node` rather than `node`. This is because _streamline.js_ extends the JavaScript language and the code needs to be transformed before being passed the JavaScript engine (note: `_node` has a `--cache` option which speeds up load time by shortcircuiting the transformation when files don't change).
 
-## [Setting up a simple search form](tuto2._js)
+## [Setting up a simple search form](tuto2-form._js)
 
 Now, we are going to be a bit more ambitious and turn our page into a simple search form:
 
@@ -60,7 +60,8 @@ streams.createHttpServer(function(request, response, _) {
 	});
 	response.write(_, begPage.replace('{q}', query.q || ''));
 	response.write(_, search(_, query.q));
-	response.end(endPage.replace('{ms}', new Date() - t0));
+	response.write(_, endPage.replace('{ms}', new Date() - t0));
+	response.end();
 }).listen(_, 1337);
 console.log('Server running at http://127.0.0.1:1337/');
 
@@ -69,11 +70,11 @@ function search(_, q) {
 }
 ```
 
-Nothing difficult here. We are using node's `url` and `querystring` helper modules to parse the URL and its query string component. We are now writing the response in 3 chunks. The first 2 are written with the asynchronous `write` method of the wrapped response stream.
+Nothing difficult here. We are using node's `url` and `querystring` helper modules to parse the URL and its query string component. We are now writing the response in 3 chunks with the asynchronous `write` method of the wrapped response stream.
 
 We are going to implement the `search` function next. For now we are just returning a `NIY` message. Note that we pass `_` as first parameter to our `search` function. We need this parameter because `search` will be an asynchronous function.
 
-## [Calling Google](tuto3._js)
+## [Calling Google](tuto3-google._js)
 
 Now we are going to implement the `search` function by passing our search string to Google. Here is the code:
 
@@ -100,7 +101,7 @@ function search(_, q) {
 
 In this example we do not need to post any data to the remote URL. But this would not be difficult either. It would just be a matter of calling asynchronous `write(_, data)` methods before calling the `end()` method.
 
-## [Dealing with errors](tuto4._js)
+## [Dealing with errors](tuto4-catch._js)
 
 If our `search` function fails, an exception will be propagated. If we don't do anything special, the exception will bubble up to the request dispatcher created by `streams.createHttpServer(...)`. This dispatcher will catch it and generate a 500 response with the error message.
 
@@ -129,7 +130,7 @@ function search(_, q) {
 }
 ```
 
-## [Searching through files](tuto5._js)
+## [Searching through files](tuto5-files._js)
 
 Now, we are going to extend our search to also search the text in local files. Our `search` function becomes:
 
@@ -174,7 +175,7 @@ The `forEach_` function is streamline's asynchronous variant of the standard Ecm
 
 Otherwise, there is not much to say about `fileSearch`. It uses a simple recursive directory traversal logic. 
 
-## [Searching in MongoDB](tuto6._js)
+## [Searching in MongoDB](tuto6-mongo._js)
 
 Now, we are going to extend our search to a MongoDB database.
 
@@ -244,7 +245,7 @@ var MOVIES = [{
 
 The `mongoSearch` function is rather straightforwards once you know the mongodb API. The `try/finally` is rather interesting: it guarantees that the database will be closed regardless of whether the `try` block completes successfully or throws an exception.
 
-## [Parallelizing](tuto7._js)
+## [Parallelizing](tuto7-parallel._js)
 
 So far so good. But the code that we have written executes completely sequentially. So we only start the directory search after having obtained the response from Google and we only start the Mongo search after having completed the directory search. This is very inefficient. We should run these 3 independent search operations in parallel.
 
@@ -367,13 +368,13 @@ function mongoSearch(_, q) {
 
 In this tutorial we have done the following:
 
-* [Create a simple web server](tuto1._js)
-* [Set up a little search form](tuto2._js)
-* [Call a Google API to handle the search](tuto3._js) 
-* [Handle errors](tuto4._js) 
-* [Search a tree of files](tuto5._js) 
-* [Search inside MongoDB](tuto6._js) 
-* [Parallelize and fix race conditions](tuto7._js)
+* [Create a simple web server](tuto1-hello._js)
+* [Set up a little search form](tuto2-form._js)
+* [Call a Google API to handle the search](tuto3-google._js) 
+* [Handle errors](tuto4-catch._js) 
+* [Search a tree of files](tuto5-files._js) 
+* [Search inside MongoDB](tuto6-mongo._js) 
+* [Parallelize and fix race conditions](tuto7-parallel._js)
 
 This should give you a flavor of what _streamline.js_ programming looks like. Don't forget to read the [README](../README.md) and the [FAQ](../FAQ.md).
 

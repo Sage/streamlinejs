@@ -18,7 +18,8 @@ streams.createHttpServer(function(request, response, _) {
 	});
 	response.write(_, begPage.replace('{q}', query.q || ''));
 	response.write(_, search(_, query.q));
-	response.end(endPage.replace('{ms}', new Date() - t0));
+	response.write(_, endPage.replace('{ms}', new Date() - t0));
+	response.end();
 }).listen(_, 1337);
 console.log('Server running at http://127.0.0.1:1337/');
 
