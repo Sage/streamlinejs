@@ -284,15 +284,9 @@ Streamline also provides _stream wrappers_ that simplify stream programming. The
 
 # Examples
 
-The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples shows an asynchronous directory traversal that computes disk usage.
-You can run it as follows:
+The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) shows streamline.js in action on a simple _search aggregator_ application.
 
-```sh
-_node streamline/examples/diskUsage/diskUsage
-```
-
-The `diskUsage2` example is a faster variant that parallelizes I/O operations with futures. 
-You'll also find CoffeeScript versions of these examples.
+The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples show an asynchronous directory traversal that computes disk usage.
 
 # Online demo
 
@@ -317,9 +311,9 @@ The following packages use streamline.js:
 
 # Resources
 
-The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).
+The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) and [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md) are must-reads for starters.
 
-The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
+The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).
 
 For support and discussion, please join the [streamline.js mailing list](http://groups.google.com/group/streamlinejs).
 
