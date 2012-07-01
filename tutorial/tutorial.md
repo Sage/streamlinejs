@@ -158,13 +158,14 @@ function fileSearch(_, q) {
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, function(_, file) {
-			var stat = fs.stat(dir + '/' + file, _);
+			var f = dir + '/' + file;
+			var stat = fs.stat(f, _);
 			if (stat.isFile()) {
-				fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
-					if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
+				fs.readFile(f, 'utf8', _).split('\n').forEach(function(line, i) {
+					if (line.indexOf(q) >= 0) results += '<br/>' + f + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
-				doDir(_, dir + '/' + file);
+				doDir(_, f);
 			}
 		});
 	}
