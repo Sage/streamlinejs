@@ -14,7 +14,7 @@ streams.createHttpServer(function(request, response, _) {
 	var query = qs.parse(url.parse(request.url).query),
 		t0 = new Date();
 	response.writeHead(200, {
-		'Content-Type': 'text/html'
+		'Content-Type': 'text/html; charset=utf8'
 	});
 	response.write(_, begPage.replace('{q}', query.q || ''));
 	response.write(_, search(_, query.q));

@@ -15,7 +15,7 @@ streams.createHttpServer(function(request, response, _) {
 	var query = qs.parse(url.parse(request.url).query),
 		t0 = new Date();
 	response.writeHead(200, {
-		'Content-Type': 'text/html'
+		'Content-Type': 'text/html; charset=utf8'
 	});
 	response.write(_, begPage.replace('{q}', query.q || ''));
 	response.write(_, search(_, query.q));
@@ -55,13 +55,14 @@ function fileSearch(_, q) {
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, function(_, file) {
-			var stat = fs.stat(dir + '/' + file, _);
+			var f = dir + '/' + file;
+			var stat = fs.stat(f, _);
 			if (stat.isFile()) {
-				fs.readFile(dir + '/' + file, 'utf8', _).split('\n').forEach(function(line, i) {
-					if (line.indexOf(q) >= 0) results += '<br/>' + dir + '/' + file + ':' + i + ':' + line;
+				fs.readFile(f, 'utf8', _).split('\n').forEach(function(line, i) {
+					if (line.indexOf(q) >= 0) results += '<br/>' + f + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
-				doDir(_, dir + '/' + file);
+				doDir(_, f);
 			}
 		});
 	}
