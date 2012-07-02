@@ -299,6 +299,7 @@ Narcissus.lexer = (function() {
                     throw this.newSyntaxError("Unterminated string literal");
                 if (ch === '\\') {
                     hasEscapes = true;
+                    if (input[this.cursor] === '\n') this.lineno++; // fix for escaped newline
                     if (++this.cursor == input.length)
                         throw this.newSyntaxError("Unterminated string literal");
                 }
