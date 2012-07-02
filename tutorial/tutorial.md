@@ -259,7 +259,6 @@ So, to parallelize, we just need a small change to our `search` function:
 ```javascript
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
-	// pass it to Google
 	try {
 		// start the 3 futures
 		var googleFuture = googleSearch(null, q);
