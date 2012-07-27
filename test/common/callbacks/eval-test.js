@@ -637,3 +637,13 @@ asyncTest("coffeescript wrapper 3", 1, function __48(_) { var __frame = { name: 
 
         return (function __1(_) { return delay(__cb(_, __frame, 1, 10, _, true), "cs3"); })(__cb(_, __frame, 3, 9, _, true)); });
     }, "cs3"); _(); });});
+
+
+asyncTest("sync try/catch in async", 1, function __49(_) { var __frame = { name: "__49", line: 642 }; return __func(_, this, arguments, __49, 0, __frame, function __$__49() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 643 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function ___(__then) { (function ___(_) { __tryCatch(_, function __$f() {
+
+              return _(new Error("catch me")); }); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) {
+
+                return _(null, "got it"); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
+
+    }, "got it"); _(); });});

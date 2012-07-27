@@ -638,3 +638,13 @@ asyncTest("coffeescript wrapper 3", 1, function(_) {
 		}).apply(this, arguments);
 	}, "cs3");
 })
+
+asyncTest("sync try/catch in async", 1, function(_) {
+	evalTest(function f(_) {
+		try {
+			throw new Error("catch me");
+		} catch (ex) {
+			return "got it";
+		}
+	}, "got it");
+})
