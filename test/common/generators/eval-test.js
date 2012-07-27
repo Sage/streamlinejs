@@ -639,6 +639,16 @@ asyncTest("coffeescript wrapper 3", 1, fstreamline__.create(function(_) {
 	}, 0), "cs3");
 ;yield;}, 0));
 
+asyncTest("sync try/catch in async", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		try {
+			throw new Error("catch me");
+		} catch (ex) {
+			yield ( "got it");
+		}
+	;yield;}, 0), "got it");
+;yield;}, 0));
+
 ;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));
