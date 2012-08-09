@@ -648,3 +648,11 @@ asyncTest("sync try/catch in async", 1, function(_) {
 		}
 	}, "got it");
 })
+
+asyncTest("sync try/catch inside conditional", 1, function(_) {
+	evalTest(function f(_) {
+		if (true) {
+			try {} catch (ex) {}
+		}
+	}, undefined);
+})
