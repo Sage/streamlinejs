@@ -649,6 +649,13 @@ asyncTest("sync try/catch in async", 1, fstreamline__.create(function(_) {
 	;yield;}, 0), "got it");
 ;yield;}, 0));
 
+asyncTest("sync try/catch inside conditional", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		if (true) {
+			try {} catch (ex) {}
+		}
+	;yield;}, 0), undefined);
+;yield;}, 0));
 ;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));

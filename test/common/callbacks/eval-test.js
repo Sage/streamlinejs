@@ -647,3 +647,10 @@ asyncTest("sync try/catch in async", 1, function __49(_) { var __frame = { name:
                 return _(null, "got it"); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, _); }); });
 
     }, "got it"); _(); });});
+
+asyncTest("sync try/catch inside conditional", 1, function __50(_) { var __frame = { name: "__50", line: 652 }; return __func(_, this, arguments, __50, 0, __frame, function __$__50() {
+    evalTest(function f(_) { var __frame = { name: "f", line: 653 }; return __func(_, this, arguments, f, 0, __frame, function __$f() { return (function __$f(__then) {
+          if (true) { return (function ___(__then) { (function ___(_) { __tryCatch(_, __then); })(function ___(ex, __result) { __tryCatch(_, function __$f() { if (ex) { __then(); } else { _(null, __result); } ; }); }); })(function ___() { __tryCatch(_, __then); }); } else { __then(); } ; })(_); });
+
+
+    }, undefined); _(); });});
