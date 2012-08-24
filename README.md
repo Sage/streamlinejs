@@ -125,7 +125,7 @@ $ ./hello.sh
 
 # Compiling and writing loaders
 
-You can also set up your code so that it can be run directly with `node` or `coffee.
+You can also set up your code so that it can be run directly with `node` or `coffee`.
 You have two options here:
 
 The first one is to compile your source with `_node -c` or `_coffee -c`:
