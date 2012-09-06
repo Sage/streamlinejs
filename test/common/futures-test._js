@@ -95,7 +95,7 @@ function join(ms1, ms2, val1, step1, ms3, ms4, val2, step2, _) {
 asyncTest("join returns before timeout", 3, function(_) {
 	var step1 = {}, step2= {};
 	var f = join(10, 20, 'a', step1, 20, 20, 'b', step2);
-	equals(f(_, { timeout: 50, return: 'c' }), 'ab', "no timeout ok");
+	equals(f(_, { timeout: 60, return: 'c' }), 'ab', "no timeout ok");
 	equals(step1.i, 3, "step1 ok");
 	equals(step2.i, 3, "step2 ok");
 	start();
