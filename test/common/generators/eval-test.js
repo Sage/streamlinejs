@@ -656,6 +656,28 @@ asyncTest("sync try/catch inside conditional", 1, fstreamline__.create(function(
 		}
 	;yield;}, 0), undefined);
 ;yield;}, 0));
+
+asyncTest("labelled break", 1, fstreamline__.create(function(_) {
+	evalTest(fstreamline__.create(function f(_) {
+		var result = '';
+		outer:
+		for (var i = 1; i < 10; i++) {
+			inner:
+			for (var j = 5; j < 10; j++) {
+				result = (yield delay(_, result)) + '!';
+				if (i == 1 && j == 7) break;
+				if (i == 2 && j == 7) break inner;
+				if (i == 3 && j == 7) continue inner;
+				if (i == 4 && j == 7) continue outer;
+				if (i == 5 && j == 7) break outer;
+				result = (yield delay(_, result)) + (yield delay(_, i)) + (yield delay(_, j)) + '-';
+			}
+			result += (yield delay(_, '/'));
+		}
+		yield ( result);
+	}, 0), '!15-!16-!/!25-!26-!/!35-!36-!!38-!39-/!45-!46-!!55-!56-!');
+;yield;}, 0));
+
 ;yield;}, 0).call(this, function(err) {
   if (err) throw err;
 }));
