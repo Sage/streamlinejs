@@ -10,6 +10,10 @@ rm builtins.js
 cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../generators/builtins.js
 rm builtins.js
 
+../../bin/_node -lp -v -f --spoon -c builtins._js
+cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../spoon/builtins.js
+rm builtins.js
+
 ../../bin/_node -lp -v -f -c compile._js
 ../../bin/_node -lp -v -f -c ../streams/client/streams._js
 
@@ -19,5 +23,6 @@ pushd ../../test/common > /dev/null
 mv eval-test.js flows-test.js stack-test.js futures-test.js callbacks
 ../../bin/_node --generators -v -f -c .
 mv eval-test.js flows-test.js stack-test.js futures-test.js generators
+../../bin/_node --spoon -v -f -c spoon
 popd > /dev/null
 popd > /dev/null
