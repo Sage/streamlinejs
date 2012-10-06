@@ -1,5 +1,4 @@
 "use strict";
-"use strict";
 ~~~streamline();
 var fs = require('fs')
 var flows = require('streamline/lib/util/flows')

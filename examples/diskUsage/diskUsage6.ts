@@ -6,8 +6,6 @@
  *
  * Demonstrates the use of futures with TypeScript.
  */
-"use strict";
-
 ///<reference path='../../typescript/streamline-node.d.ts'/>
 ///<reference path='../../typescript/streamline-main.d.ts'/>
 "use strict";
