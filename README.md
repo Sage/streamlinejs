@@ -218,7 +218,7 @@ and the asynchronous functions that you create with streamline have the standard
 
 # TypeScript support (experimental)
 
-You can enable streamline in a TypeScript files by adding the following lines in your file:
+You can enable streamline in a TypeScript source file by adding the following lines at the top of the file:
 
 ``` typescript
 ///<reference path='../streamline/typescript/streamline-node.d.ts'/>
@@ -226,7 +226,7 @@ You can enable streamline in a TypeScript files by adding the following lines in
 ~~~streamline();
 ```
 
-Note: you may need to adjust the relative paths to the `.d.ts` files. Also, you should reference `streamline-module` rather than `streamline-main` if you module is not a _main_ module.
+Note: you may need to adjust the relative paths to the `.d.ts` files. Also, you should reference `streamline-module` rather than `streamline-main` if your module is not a _main_ module.
 
 Then you can use streamline in your code. For example:
 
@@ -238,11 +238,11 @@ function lineCount(path: string, _: async) {
 
 The streamline definition file defines an `async` type that you should use to qualify `_` parameters.
 
-You can then compile the code with `tsc` and run it with `_node`. If you try to run it with `node` instead, you will get an error about an undefined `streamline` functions.
+You can then compile the code with `tsc` and run it with `_node`. If you try to run it with `node` instead, you will get an error about an undefined `streamline` function (to remind you that it needs to be run with `_node`).
 
 There are a few gotchas on the type checking side:
 
-You need to adapt definition files to change the asynchronous function definitions into their synchronous equivalent. For example:
+You need to adapt definition files to turn the asynchronous function definitions into their synchronous equivalent. For example:
 
 ```    
 export function readFile(filename: string, callback: (err: Error, data: any) => void ): NodeBuffer;
