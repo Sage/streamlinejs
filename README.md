@@ -99,6 +99,26 @@ console.log '... world'
 $ _coffee hello
 ```
 
+Typescripters:
+
+``` sh
+$ cat > hello.ts
+///<reference path='../streamline/typescript/streamline-node.d.ts'/>
+///<reference path='../streamline/typescript/streamline-main.d.ts'/>
+~~~streamline();
+
+function foo(_: async) {
+  console.log('hello ...');
+  setTimeout(_, 1000);
+  console.log('... world');
+}
+
+foo(_);
+^D
+$ tsc hello.ts
+$ _node hello
+```
+
 You can also create standalone shell utilities:
 
 ``` sh
@@ -195,6 +215,48 @@ Streamline only transforms the functions that have the special `_` parameter.
 Note: this works with all transformation options. 
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
+
+# TypeScript support (experimental)
+
+You can enable streamline in a TypeScript files by adding the following lines in your file:
+
+``` typescript
+///<reference path='../streamline/typescript/streamline-node.d.ts'/>
+///<reference path='../streamline/typescript/streamline-main.d.ts'/>
+~~~streamline();
+```
+
+Note: you may need to adjust the relative paths to the `.d.ts` files. Also, you should reference `streamline-module` rather than `streamline-main` if you module is not a _main_ module.
+
+Then you can use streamline in your code. For example:
+
+```javascript
+function lineCount(path: string, _: async) {
+  return fs.readFile(path, "utf8", _).split('\n').length;
+}
+```
+
+The streamline definition file defines an `async` type that you should use to qualify `_` parameters.
+
+You can then compile the code with `tsc` and run it with `_node`. If you try to run it with `node` instead, you will get an error about an undefined `streamline` functions.
+
+There are a few gotchas on the type checking side:
+
+You need to adapt definition files to change the asynchronous function definitions into their synchronous equivalent. For example:
+
+```    
+export function readFile(filename: string, callback: (err: Error, data: any) => void ): NodeBuffer;
+```
+
+becomes:
+
+```    
+export function readFile(filename: string, _: async): NodeBuffer;
+```
+
+The `streamline-node.d.ts` file is already setup but you may need to setup similar definition variants for other APIs (CAUTION: this file has not been thoroughly reviewed yet!)
+
+Also, the `streamline-module.d.ts` file defines a `future` function that lets you wrap futures and keep tsc happy.
 
 # Futures
 
