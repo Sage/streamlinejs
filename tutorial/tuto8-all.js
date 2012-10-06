@@ -47,13 +47,12 @@ function googleSearch(_, q) {
 }
 var fs = require('fs');
 var flows = require('streamline/lib/util/flows');
-
 var filesFunnel = flows.funnel(100);
 function fileSearch(_, q) {
     var t0 = new Date().getTime();
     var results = '';
     function doDir(_, dir) {
-        fs.readdir(dir, _).forEach_(_, -1, function (_, file) {
+        array_(fs.readdir(dir, _)).forEach_(_, -1, function (_, file) {
             var f = dir + '/' + file;
             var stat = fs.stat(f, _);
             if(stat.isFile()) {

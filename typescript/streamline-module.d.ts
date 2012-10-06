@@ -13,8 +13,9 @@ declare function future_(f: any) : future;
 // fake call to trigger streamline source transform
 declare function streamline() : void;
 
-interface Array_ {
+interface Array_ extends Array {
 	forEach_(_: async, fn: (_: async, elt: _element, i: number) => any) : void;	
+	forEach_(_: async, par: number, fn: (_: async, elt: _element, i: number) => any) : void;	
 	map_(_: async, fn: (_: async, elt: _element, i: number) => void) : any[];	
 	filter_(_: async, fn: (_: async, _element: any, i: number) => bool) : _element[];	
 	every_(_: async, fn: (_: async, val: _element, elt: any, i: number) => bool) : bool;	

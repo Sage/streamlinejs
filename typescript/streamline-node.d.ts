@@ -772,7 +772,7 @@ declare module "fs" {
     export function writeSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): void;
     export function read(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number, callback?: (err: Error, bytesRead: number, buffer: NodeBuffer) => void): void;
     export function readSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): any[];
-    export function readFile(filename: string, encoding: string, callback: async) :  NodeBuffer;
+    export function readFile(filename: string, encoding: string, callback: async) :  string;
     export function readFile(filename: string, callback: async) :  NodeBuffer;
     export function readFileSync(filename: string): NodeBuffer;
     export function readFileSync(filename: string, encoding: string): String;
