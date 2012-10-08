@@ -45,14 +45,14 @@ function googleSearch(_, q) {
         return '<li><a href="' + entry.url + '">' + entry.titleNoFormatting + '</a></li>';
     }).join('') + '</ul>' + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';
 }
-var fs = require('fs');
+var fs = require('fs')
 var flows = require('streamline/lib/util/flows');
 var filesFunnel = flows.funnel(100);
 function fileSearch(_, q) {
     var t0 = new Date().getTime();
     var results = '';
     function doDir(_, dir) {
-        array_(fs.readdir(dir, _)).forEach_(_, -1, function (_, file) {
+        fs.readdir(dir, _).forEach_(_, -1, function (_, file) {
             var f = dir + '/' + file;
             var stat = fs.stat(f, _);
             if(stat.isFile()) {

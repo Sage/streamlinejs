@@ -736,9 +736,9 @@ declare module "fs" {
     export function fchmodSync(fd: string, mode: string): void;
     export function lchmod(path: string, mode: string, callback?: Function): void;
     export function lchmodSync(path: string, mode: string): void;
-    export function stat(path: string, callback?: (err: Error, stats: Stats) =>any): Stats;
-    export function lstat(path: string, callback?: (err: Error, stats: Stats) =>any): Stats;
-    export function fstat(fd: string, callback?: (err: Error, stats: Stats) =>any): Stats;
+    export function stat(path: string, callback: (err: Error, stats: Stats) =>any): void; // BRJOU 
+    export function lstat(path: string, callback: (err: Error, stats: Stats) =>any): void;
+    export function fstat(fd: string, callback: (err: Error, stats: Stats) =>any): void;
     export function statSync(path: string): Stats;
     export function lstatSync(path: string): Stats;
     export function fstatSync(fd: string): Stats;
@@ -772,7 +772,7 @@ declare module "fs" {
     export function writeSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): void;
     export function read(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number, callback?: (err: Error, bytesRead: number, buffer: NodeBuffer) => void): void;
     export function readSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): any[];
-    export function readFile(filename: string, encoding: string, callback: (err: Error, data: NodeBuffer) => void ): void;
+    export function readFile(filename: string, encoding: string, callback: (err: Error, data: string) => void ): void; // BRJOU
     export function readFile(filename: string, callback: (err: Error, data: NodeBuffer) => void ): void;
     export function readFileSync(filename: string): NodeBuffer;
     export function readFileSync(filename: string, encoding: string): String;

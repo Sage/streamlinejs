@@ -62,7 +62,7 @@ function googleSearch(_: async, q: string) {
 }
 
 // TypeScript bug: I get a stack overflow if I convert next line to import
-var fs = require('fs');
+import fs = module('fs');
 var flows = require('streamline/lib/util/flows');
 // allocate a funnel for 100 concurrent open files
 var filesFunnel = flows.funnel(100);
@@ -71,8 +71,8 @@ function fileSearch(_: async, q: string) {
 	var t0 = new Date().getTime();
 	var results = '';
 
-	function doDir(_, dir) {
-		array_(fs.readdir(dir, _)).forEach_(_, -1, function(_, file) {
+	function doDir(_: async, dir: string) {
+		fs.readdir(dir, _).forEach_(_, -1, function(_: async, file: string) {
 			var f = dir + '/' + file;
 			var stat = fs.stat(f, _);
 			if (stat.isFile()) {

@@ -736,9 +736,9 @@ declare module "fs" {
     export function fchmodSync(fd: string, mode: string): void;
     export function lchmod(path: string, mode: string, callback?: async) : any;
     export function lchmodSync(path: string, mode: string): void;
-    export function stat(path: string, callback?: (err: Error, stats: Stats) =>any): Stats;
-    export function lstat(path: string, callback?: (err: Error, stats: Stats) =>any): Stats;
-    export function fstat(fd: string, callback?: (err: Error, stats: Stats) =>any): Stats;
+    export function stat(path: string, callback?: async) :  Stats; // BRJOU 
+    export function lstat(path: string, callback?: async) :  Stats;
+    export function fstat(fd: string, callback?: async) :  Stats;
     export function statSync(path: string): Stats;
     export function lstatSync(path: string): Stats;
     export function fstatSync(fd: string): Stats;
@@ -746,9 +746,9 @@ declare module "fs" {
     export function linkSync(srcpath: string, dstpath: string): void;
     export function symlink(srcpath: string, dstpath: string, type?: string, callback?: async) : any;
     export function symlinkSync(srcpath: string, dstpath: string, type?: string): void;
-    export function readlink(path: string, callback?: (err: Error, linkString: string) =>any): void;
-    export function realpath(path: string, callback?: (err: Error, resolvedPath: string) =>any): void;
-    export function realpath(path: string, cache: string, callback: (err: Error, resolvedPath: string) =>any): void;
+    export function readlink(path: string, callback?: async) :  string;
+    export function realpath(path: string, callback?: async) :  string;
+    export function realpath(path: string, cache: string, callback?: async) :  string;
     export function realpathSync(path: string, cache?: string): void;
     export function unlink(path: string, callback?: async) : any;
     export function unlinkSync(path: string): void;
@@ -760,7 +760,7 @@ declare module "fs" {
     export function readdirSync(path: string): string[];
     export function close(fd: string, callback?: async) : any;
     export function closeSync(fd: string): void;
-    export function open(path: string, flags: string, mode?: string, callback?: (err: Error, fd: string) =>any): void;
+    export function open(path: string, flags: string, mode?: string, callback?: async) :  string;
     export function openSync(path: string, flags: string, mode?: string): void;
     export function utimes(path: string, atime: number, mtime: number, callback?: async) : any;
     export function utimesSync(path: string, atime: number, mtime: number): void;
@@ -772,8 +772,8 @@ declare module "fs" {
     export function writeSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): void;
     export function read(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number, callback?: (err: Error, bytesRead: number, buffer: NodeBuffer) => void): void;
     export function readSync(fd: string, buffer: NodeBuffer, offset: number, length: number, position: number): any[];
-    export function readFile(filename: string, encoding: string, callback: async) :  string;
-    export function readFile(filename: string, callback: async) :  NodeBuffer;
+    export function readFile(filename: string, encoding: string, callback?: async) :  string; // BRJOU
+    export function readFile(filename: string, callback?: async) :  NodeBuffer;
     export function readFileSync(filename: string): NodeBuffer;
     export function readFileSync(filename: string, encoding: string): String;
     export function writeFile(filename: string, data: any, encoding?: string, callback?: async) : any;
@@ -968,7 +968,7 @@ declare module "crypto" {
         setPrivateKey(public_key: string, encoding?: string): void;
     }
     export function getDiffieHellman(group_name: string): DiffieHellman;
-    export function pbkdf2(password: string, salt: string, iterations: number, keylen: number, callback: (err: Error, derivedKey: string) => any): void;
+    export function pbkdf2(password: string, salt: string, iterations: number, keylen: number, callback?: async) :  string;
     export function randomBytes(size: number, callback?: (err: Error, buf: NodeBuffer) =>void );
 }
 

@@ -13,7 +13,7 @@ declare function future_(f: any) : future;
 // fake call to trigger streamline source transform
 declare function streamline() : void;
 
-interface Array_ extends Array {
+interface Array {
 	forEach_(_: async, fn: (_: async, elt: _element, i: number) => any) : void;	
 	forEach_(_: async, par: number, fn: (_: async, elt: _element, i: number) => any) : void;	
 	map_(_: async, fn: (_: async, elt: _element, i: number) => void) : any[];	
@@ -26,8 +26,6 @@ interface Array_ extends Array {
 }
 
 // TODO: apply_
-
-declare function array_(a: any[]) : Array_;
 
 declare module "streamline/lib/util/flows" {
 	export function funnel(max: number) : (_: async, body: (_: async) => any) => any;

@@ -256,10 +256,7 @@ export function readFile(filename: string, _: async): NodeBuffer;
 
 The `streamline-node.d.ts` file is already setup but you may need to setup similar definition variants for other APIs (CAUTION: this file has not been thoroughly reviewed yet!)
 
-Also, the `streamline-module.d.ts` defines two useful wrappers::
-
-1. a `future_` function to wrap futures.
-2. an `array_` function to wrap arrays.
+Also, the `streamline-module.d.ts` defines a `future_` wrapper to handle type conversions on calls that return futures.
 
 # Futures
 
