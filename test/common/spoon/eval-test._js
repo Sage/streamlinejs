@@ -52,7 +52,6 @@ asyncTest("eval while", 1, function(_) {
 		return result;
 	}, 24);
 })
-/* fails with undefined __$ixxx var
 asyncTest("eval for", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
@@ -61,8 +60,7 @@ asyncTest("eval for", 1, function(_) {
 		}
 		return result;
 	}, 24);
-})*/
-/* fails with reference to __$fnxxxx defined in inner scope
+})
 asyncTest("eval for in", 1, function(_) {
 	evalTest(function f(_) {
 		var foo = {
@@ -78,6 +76,7 @@ asyncTest("eval for in", 1, function(_) {
 		return result;
 	}, 30);
 })
+
 asyncTest("fully async for in", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
@@ -132,7 +131,7 @@ asyncTest("continue in while", 1, function(_) {
 	}, 24);
 })
 
-asyncTest("for (;;)", 1, function(_) {
+/*asyncTest("for (;;)", 1, function(_) {
 	evalTest(function f(_) {
 		var i = 0;
 		for (;;) {
@@ -140,7 +139,7 @@ asyncTest("for (;;)", 1, function(_) {
 		}
 	}, 10);
 })
-
+*/
 asyncTest("eval lazy", 1, function(_) {
 	evalTest(function f(_) {
 		var result = 1;
@@ -153,7 +152,7 @@ asyncTest("eval lazy full async", 1, function(_) {
 		return delay(_, delay(_, result + 8) < 5) && true ? delay(_, 2) : delay(_, 4)
 	}, 4);
 })
-*/
+
 asyncTest("try catch 1", 1, function(_) {
 	evalTest(function f(_) {
 		try {
@@ -575,7 +574,7 @@ asyncTest("return undefined", 1, function(_) {
 		return test(_);
 	}, undefined);
 })
-/*
+
 asyncTest("futures test", 1, function(_) {
 	evalTest(function f(_) {
 		function delay2(val, _) {
@@ -589,7 +588,7 @@ asyncTest("futures test", 1, function(_) {
 		return a(_) + b(_) + d(_) + c(_);
 	}, "abdc");
 })
-
+/*
 asyncTest("last case without break", 1, function(_) {
 	evalTest(function f(_) {
 		switch (true) {
@@ -599,14 +598,14 @@ asyncTest("last case without break", 1, function(_) {
 		return 1;
 	}, 1);
 })
-
+*/
 asyncTest("async comma operator", 1, function(_) {
 	evalTest(function f(_) {
 		var a;
 		return a = 4, a++, a = delay(_, 2 * a), delay(_, a + 1);
 	}, 11);
 })
-
+/*
 // NEXT TEST FAILS BECAUSE OF STREAMLINE
 asyncTest("async constructor", 1, function(_) {
 	evalTest(function f(_) {
@@ -620,7 +619,7 @@ asyncTest("async constructor", 1, function(_) {
 		return new Foo(5, _).y();
 	}, 6);
 })
-
+*/
 asyncTest("fibo false async", 1, function(_) {
 	evalTest(function f(_) {
 		function fibo(_, n) {
@@ -629,7 +628,7 @@ asyncTest("fibo false async", 1, function(_) {
 		return fibo(_, 16);
 	}, 1597);
 })
-*/
+
 
 asyncTest("coffeescript wrapper 1", 1, function(_) {
 	evalTest(function f(_) {

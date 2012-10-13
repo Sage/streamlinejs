@@ -8,14 +8,14 @@ module("streamline evaluation");
 
 function evalTest(f, val) {
     f(function(err, result) {
-        var __$i159;
+        var __$i267;
         var str;
         if (err) {
-            __$i159 = "ERR: " + err;
+            __$i267 = "ERR: " + err;
         } else {
-            __$i159 = result;
+            __$i267 = result;
         };
-        str = __$i159;
+        str = __$i267;
         strictEqual(str, val);
         start();
     });
@@ -25,26 +25,32 @@ function delay(__$callback, val) {
     if (!__$callback) {
         return __$rt.future.call(this, delay, arguments, 0);
     }
-    function __$fn148(__$e, __$r) {
+    var __$r266;
+    function __$fn266(__$e, __$r) {
         if (__$e) {
             return __$callback.call(this, __$e);
+        } else {
+            __$r266 = __$r
         };
         return __$callback.call(this, null, val);
     };
-    return setTimeout(__$fn148, 0);
+    return setTimeout(__$fn266, 0);
 };
 
 function delayFail(__$callback, err) {
     if (!__$callback) {
         return __$rt.future.call(this, delayFail, arguments, 0);
     }
-    function __$fn149(__$e, __$r) {
+    var __$r267;
+    function __$fn267(__$e, __$r) {
         if (__$e) {
             return __$callback.call(this, __$e);
+        } else {
+            __$r267 = __$r
         };
         throw err;
     };
-    return setTimeout(__$fn149, 0);
+    return setTimeout(__$fn267, 0);
 };
 
 function throwError(message) {
@@ -59,13 +65,16 @@ asyncTest("eval return", 1, function __$anon1(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn150(__$e, __$r) {
+        var __$r268;
+        function __$fn268(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r268 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return __$callback.call(this, null, __$r268);
         };
-        return delay(__$fn150, 5);
+        return delay(__$fn268, 5);
     }, 5);
     return __$callback.call(this, null);
 });
@@ -78,14 +87,17 @@ asyncTest("eval if true", 1, function __$anon2(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn151(__$e, __$r) {
+        var __$r269;
+        function __$fn269(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r269 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return __$callback.call(this, null, __$r269);
         };
         if (true) {
-            return delay(__$fn151, 3);
+            return delay(__$fn269, 3);
         } else {
             return __$callback.call(this, null, 4);
         };
@@ -101,14 +113,17 @@ asyncTest("eval if false", 1, function __$anon3(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn152(__$e, __$r) {
+        var __$r270;
+        function __$fn270(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r270 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return __$callback.call(this, null, __$r270);
         };
         if (false) {
-            return delay(__$fn152, 3);
+            return delay(__$fn270, 3);
         } else {
             return __$callback.call(this, null, 4);
         };
@@ -124,36 +139,42 @@ asyncTest("eval while", 1, function __$anon4(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn154(__$e, __$r) {
+        var __$r272;
+        function __$fn272(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r272 = __$r
             };
             while (true) {
                 if (!(i < 5)) {
                     break;
                 } else {
-                    return delay(__$fn153, i * result);
+                    return delay(__$fn271, i * result);
                 };
             };
             return __$callback.call(this, null, result);
         };
-        function __$fn153(__$e, __$r) {
+        var __$r271;
+        function __$fn271(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r271 = __$r
             };
-            result = __$r;
+            result = __$r271;
             i++;
-            return __$fn154.call(this);
+            return __$fn272.call(this);
         };
         var i, result;
         i = 1;
         result = 1;
-        return __$fn154.call(this);
+        return __$fn272.call(this);
     }, 24);
     return __$callback.call(this, null);
 });
 
-asyncTest("try catch 1", 1, function __$anon5(__$callback) {
+asyncTest("eval for", 1, function __$anon5(__$callback) {
     if (!__$callback) {
         return __$rt.future.call(this, __$anon5, arguments, 0);
     }
@@ -161,28 +182,52 @@ asyncTest("try catch 1", 1, function __$anon5(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn156(__$e, __$r) {
+        var __$r274;
+        function __$fn274(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r274 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            while (true) {
+                if (!(i < 5)) {
+                    break;
+                } else {
+                    return delay(__$fn273, i);
+                };
+            };
+            return __$callback.call(this, null, result);
         };
-        function __$fn155(__$e, __$r) {
+        var __$r273;
+        function __$fn273(__$e, __$r) {
+            var __$r275;
+            function __$fn275(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r275 = __$r
+                };
+                result = __$r273 * __$r275;
+                i++;
+                return __$fn274.call(this);
+            };
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r273 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return delay(__$fn275, result);
         };
-        try {
-            return delay(__$fn155, "ok");
-        } catch (ex) {
-            return delay(__$fn156, "err");
-        };
-    }, "ok");
+        var i;
+        var result;
+        result = 1;
+        i = 1;
+        return __$fn274.call(this);
+    }, 24);
     return __$callback.call(this, null);
 });
 
-asyncTest("and ok", 1, function __$anon6(__$callback) {
+asyncTest("eval for in", 1, function __$anon6(__$callback) {
     if (!__$callback) {
         return __$rt.future.call(this, __$anon6, arguments, 0);
     }
@@ -190,165 +235,75 @@ asyncTest("and ok", 1, function __$anon6(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        var __$i341;
-        var __$i318;
-        var __$i295;
-        var __$i272;
-        var __$i249;
-        function __$fn157(__$e, __$r) {
-            function __$fn159(__$e, __$r) {
-                function __$fn160(__$e, __$r) {
-                    function __$fn162(__$e, __$r) {
-                        function __$fn163(__$e, __$r) {
-                            function __$fn165(__$e, __$r) {
-                                function __$fn166(__$e, __$r) {
-                                    function __$fn168(__$e, __$r) {
-                                        function __$fn169(__$e, __$r) {
-                                            function __$fn171(__$e, __$r) {
-                                                if (__$e) {
-                                                    return __$callback.call(this, __$e);
-                                                };
-                                                if (__$i341) {
-                                                    x += "T5";
-                                                } else {
-                                                    x += "F5";
-                                                };
-                                                x += ">>";
-                                                return __$callback.call(this, null, x);
-                                            };
-                                            function __$fn170(__$e, __$r) {
-                                                if (__$e) {
-                                                    return __$callback.call(this, __$e);
-                                                };
-                                                __$i341 = __$r;
-                                                return __$fn171.call(this);
-                                            };
-                                            if (__$e) {
-                                                return __$callback.call(this, __$e);
-                                            };
-                                            if (__$r) {
-                                                return delayFail(__$fn170, "bad");
-                                            } else {
-                                                __$i341 = __$r;
-                                                return __$fn171.call(this);
-                                            };
-                                        };
-                                        if (__$e) {
-                                            return __$callback.call(this, __$e);
-                                        };
-                                        if (__$i318) {
-                                            x += "T4";
-                                        } else {
-                                            x += "F4";
-                                        };
-                                        return delay(__$fn169, false);
-                                    };
-                                    function __$fn167(__$e, __$r) {
-                                        if (__$e) {
-                                            return __$callback.call(this, __$e);
-                                        };
-                                        __$i318 = __$r;
-                                        return __$fn168.call(this);
-                                    };
-                                    if (__$e) {
-                                        return __$callback.call(this, __$e);
-                                    };
-                                    if (__$r) {
-                                        return delay(__$fn167, false);
-                                    } else {
-                                        __$i318 = __$r;
-                                        return __$fn168.call(this);
-                                    };
-                                };
-                                if (__$e) {
-                                    return __$callback.call(this, __$e);
-                                };
-                                if (__$i295) {
-                                    x += "T3";
-                                } else {
-                                    x += "F3";
-                                };
-                                return delay(__$fn166, false);
-                            };
-                            function __$fn164(__$e, __$r) {
-                                if (__$e) {
-                                    return __$callback.call(this, __$e);
-                                };
-                                __$i295 = __$r;
-                                return __$fn165.call(this);
-                            };
-                            if (__$e) {
-                                return __$callback.call(this, __$e);
-                            };
-                            if (__$r) {
-                                return delay(__$fn164, true);
-                            } else {
-                                __$i295 = __$r;
-                                return __$fn165.call(this);
-                            };
-                        };
-                        if (__$e) {
-                            return __$callback.call(this, __$e);
-                        };
-                        if (__$i272) {
-                            x += "T2";
-                        } else {
-                            x += "F2";
-                        };
-                        return delay(__$fn163, false);
-                    };
-                    function __$fn161(__$e, __$r) {
-                        if (__$e) {
-                            return __$callback.call(this, __$e);
-                        };
-                        __$i272 = __$r;
-                        return __$fn162.call(this);
-                    };
+        var __$i388;
+        var __$i390;
+        var __$i373;
+        var __$i374;
+        var __$r277;
+        function __$fn277(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r277 = __$r
+            };
+            while (__$fi374 < __$i374.length) {
+                k = __$i374[__$fi374];
+                __$i388 = delay;
+                __$i390 = foo;
+                return delay(__$fn276, k);
+            };
+            return __$callback.call(this, null, result);
+        };
+        var __$r276;
+        function __$fn276(__$e, __$r) {
+            var __$r278;
+            function __$fn278(__$e, __$r) {
+                var __$r279;
+                function __$fn279(__$e, __$r) {
                     if (__$e) {
                         return __$callback.call(this, __$e);
-                    };
-                    if (__$r) {
-                        return delay(__$fn161, false);
                     } else {
-                        __$i272 = __$r;
-                        return __$fn162.call(this);
+                        __$r279 = __$r
                     };
+                    result = __$r278 * __$r279;
+                    __$fi374++;
+                    return __$fn277.call(this);
                 };
                 if (__$e) {
                     return __$callback.call(this, __$e);
-                };
-                if (__$i249) {
-                    x += "T1";
                 } else {
-                    x += "F1";
+                    __$r278 = __$r
                 };
-                return delay(__$fn160, true);
-            };
-            function __$fn158(__$e, __$r) {
-                if (__$e) {
-                    return __$callback.call(this, __$e);
-                };
-                __$i249 = __$r;
-                return __$fn159.call(this);
+                return delay(__$fn279, result);
             };
             if (__$e) {
                 return __$callback.call(this, __$e);
-            };
-            if (__$r) {
-                return delay(__$fn158, true);
             } else {
-                __$i249 = __$r;
-                return __$fn159.call(this);
+                __$r276 = __$r
             };
+            return __$i388(__$fn278, __$i390[__$r276]);
         };
-        var x;
-        x = "<<";
-        return delay(__$fn157, true);
-    }, "<<T1F2F3F4F5>>");
+        var __$fi374;
+        var k;
+        var result;
+        var foo;
+        foo = {
+            a: 1,
+            b: 2,
+            c: 3,
+            d: 5
+        };
+        result = 1;
+        k;
+        __$i373 = foo;
+        __$i374 = typeof __$i373 === "object" && __$i373 !== null ? Object.keys(__$i373) : {};
+        __$fi374 = 0;
+        return __$fn277.call(this);
+    }, 30);
     return __$callback.call(this, null);
 });
 
-asyncTest("or ok", 1, function __$anon7(__$callback) {
+asyncTest("fully async for in", 1, function __$anon7(__$callback) {
     if (!__$callback) {
         return __$rt.future.call(this, __$anon7, arguments, 0);
     }
@@ -356,165 +311,90 @@ asyncTest("or ok", 1, function __$anon7(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        var __$i463;
-        var __$i440;
-        var __$i417;
-        var __$i394;
-        var __$i371;
-        function __$fn172(__$e, __$r) {
-            function __$fn174(__$e, __$r) {
-                function __$fn175(__$e, __$r) {
-                    function __$fn177(__$e, __$r) {
-                        function __$fn178(__$e, __$r) {
-                            function __$fn180(__$e, __$r) {
-                                function __$fn181(__$e, __$r) {
-                                    function __$fn183(__$e, __$r) {
-                                        function __$fn184(__$e, __$r) {
-                                            function __$fn186(__$e, __$r) {
-                                                if (__$e) {
-                                                    return __$callback.call(this, __$e);
-                                                };
-                                                if (__$i463) {
-                                                    x += "T5";
-                                                } else {
-                                                    x += "F5";
-                                                };
-                                                x += ">>";
-                                                return __$callback.call(this, null, x);
-                                            };
-                                            function __$fn185(__$e, __$r) {
-                                                if (__$e) {
-                                                    return __$callback.call(this, __$e);
-                                                };
-                                                __$i463 = __$r;
-                                                return __$fn186.call(this);
-                                            };
-                                            if (__$e) {
-                                                return __$callback.call(this, __$e);
-                                            };
-                                            if (__$r) {
-                                                __$i463 = __$r;
-                                                return __$fn186.call(this);
-                                            } else {
-                                                return delayFail(__$fn185, "bad");
-                                            };
-                                        };
-                                        if (__$e) {
-                                            return __$callback.call(this, __$e);
-                                        };
-                                        if (__$i440) {
-                                            x += "T4";
-                                        } else {
-                                            x += "F4";
-                                        };
-                                        return delay(__$fn184, true);
-                                    };
-                                    function __$fn182(__$e, __$r) {
-                                        if (__$e) {
-                                            return __$callback.call(this, __$e);
-                                        };
-                                        __$i440 = __$r;
-                                        return __$fn183.call(this);
-                                    };
-                                    if (__$e) {
-                                        return __$callback.call(this, __$e);
-                                    };
-                                    if (__$r) {
-                                        __$i440 = __$r;
-                                        return __$fn183.call(this);
-                                    } else {
-                                        return delay(__$fn182, false);
-                                    };
-                                };
-                                if (__$e) {
-                                    return __$callback.call(this, __$e);
-                                };
-                                if (__$i417) {
-                                    x += "T3";
-                                } else {
-                                    x += "F3";
-                                };
-                                return delay(__$fn181, false);
-                            };
-                            function __$fn179(__$e, __$r) {
-                                if (__$e) {
-                                    return __$callback.call(this, __$e);
-                                };
-                                __$i417 = __$r;
-                                return __$fn180.call(this);
-                            };
+        var __$i422;
+        var __$r280;
+        function __$fn280(__$e, __$r) {
+            var __$r283;
+            function __$fn283(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r283 = __$r
+                };
+                return __$callback.call(this, null, result);
+            };
+            var __$r282;
+            function __$fn282(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r282 = __$r
+                };
+                while (true) {
+                    __$i422 = i;
+                    return delay(__$fn281, 5);
+                };
+                return __$fn283.call(this);
+            };
+            var __$r281;
+            function __$fn281(__$e, __$r) {
+                var __$r284;
+                function __$fn284(__$e, __$r) {
+                    var __$r285;
+                    function __$fn285(__$e, __$r) {
+                        var __$r286;
+                        function __$fn286(__$e, __$r) {
                             if (__$e) {
                                 return __$callback.call(this, __$e);
-                            };
-                            if (__$r) {
-                                __$i417 = __$r;
-                                return __$fn180.call(this);
                             } else {
-                                return delay(__$fn179, true);
+                                __$r286 = __$r
                             };
+                            i = __$r286 + 1;
+                            return __$fn282.call(this);
                         };
                         if (__$e) {
                             return __$callback.call(this, __$e);
-                        };
-                        if (__$i394) {
-                            x += "T2";
                         } else {
-                            x += "F2";
+                            __$r285 = __$r
                         };
-                        return delay(__$fn178, false);
-                    };
-                    function __$fn176(__$e, __$r) {
-                        if (__$e) {
-                            return __$callback.call(this, __$e);
-                        };
-                        __$i394 = __$r;
-                        return __$fn177.call(this);
+                        result = __$r284 * __$r285;
+                        return delay(__$fn286, i);
                     };
                     if (__$e) {
                         return __$callback.call(this, __$e);
-                    };
-                    if (__$r) {
-                        __$i394 = __$r;
-                        return __$fn177.call(this);
                     } else {
-                        return delay(__$fn176, false);
+                        __$r284 = __$r
                     };
+                    return delay(__$fn285, i);
                 };
                 if (__$e) {
                     return __$callback.call(this, __$e);
-                };
-                if (__$i371) {
-                    x += "T1";
                 } else {
-                    x += "F1";
+                    __$r281 = __$r
                 };
-                return delay(__$fn175, true);
-            };
-            function __$fn173(__$e, __$r) {
-                if (__$e) {
-                    return __$callback.call(this, __$e);
+                if (!(__$i422 < __$r281)) {
+                    return __$fn283.call(this);
+                } else {
+                    return delay(__$fn284, result);
                 };
-                __$i371 = __$r;
-                return __$fn174.call(this);
             };
             if (__$e) {
                 return __$callback.call(this, __$e);
-            };
-            if (__$r) {
-                __$i371 = __$r;
-                return __$fn174.call(this);
             } else {
-                return delay(__$fn173, true);
+                __$r280 = __$r
             };
+            i = __$r280;
+            return __$fn282.call(this);
         };
-        var x;
-        x = "<<";
-        return delay(__$fn172, true);
-    }, "<<T1T2T3F4T5>>");
+        var i;
+        var result;
+        result = 1;
+        return delay(__$fn280, 2);
+    }, 24);
     return __$callback.call(this, null);
 });
 
-asyncTest("scoping", 1, function __$anon8(__$callback) {
+asyncTest("break in loop", 1, function __$anon8(__$callback) {
     if (!__$callback) {
         return __$rt.future.call(this, __$anon8, arguments, 0);
     }
@@ -522,19 +402,849 @@ asyncTest("scoping", 1, function __$anon8(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn187(__$e, __$r) {
+        var __$r288;
+        function __$fn288(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r288 = __$r
             };
-            return __$callback.call(this, null, __$r());
+            while (true) {
+                if (!(i < 10)) {
+                    break;
+                } else {
+                    if (i == 5) {
+                        break;
+                    } else {
+                        return delay(__$fn287, result);
+                    };
+                };
+            };
+            return __$callback.call(this, null, result);
+        };
+        var __$r287;
+        function __$fn287(__$e, __$r) {
+            var __$r289;
+            function __$fn289(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r289 = __$r
+                };
+                result = __$r287 * __$r289;
+                i++;
+                return __$fn288.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r287 = __$r
+            };
+            return delay(__$fn289, i);
+        };
+        var i;
+        var result;
+        result = 1;
+        i = 1;
+        return __$fn288.call(this);
+    }, 24);
+    return __$callback.call(this, null);
+});
+
+asyncTest("continue", 1, function __$anon9(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon9, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r292;
+        function __$fn292(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r292 = __$r
+            };
+            while (true) {
+                if (!(i < 10)) {
+                    break;
+                } else {
+                    if (i >= 5) {
+                        i++;
+                        return __$fn291.call(this);
+                    } else {
+                        return delay(__$fn290, result);
+                    };
+                };
+            };
+            return __$callback.call(this, null, result);
+        };
+        var __$r291;
+        function __$fn291(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r291 = __$r
+            };
+            return __$fn292.call(this);
+        };
+        var __$r290;
+        function __$fn290(__$e, __$r) {
+            var __$r293;
+            function __$fn293(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r293 = __$r
+                };
+                result = __$r290 * __$r293;
+                i++;
+                return __$fn291.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r290 = __$r
+            };
+            return delay(__$fn293, i);
+        };
+        var i;
+        var result;
+        result = 1;
+        i = 1;
+        return __$fn292.call(this);
+    }, 24);
+    return __$callback.call(this, null);
+});
+
+asyncTest("break in while", 1, function __$anon10(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon10, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r295;
+        function __$fn295(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r295 = __$r
+            };
+            while (true) {
+                if (!(i < 10)) {
+                    break;
+                } else {
+                    if (i == 5) {
+                        break;
+                    } else {
+                        return delay(__$fn294, result);
+                    };
+                };
+            };
+            return __$callback.call(this, null, result);
+        };
+        var __$r294;
+        function __$fn294(__$e, __$r) {
+            var __$r296;
+            function __$fn296(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r296 = __$r
+                };
+                result = __$r294 * __$r296;
+                i++;
+                return __$fn295.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r294 = __$r
+            };
+            return delay(__$fn296, i);
+        };
+        var i, result;
+        i = 1;
+        result = 1;
+        return __$fn295.call(this);
+    }, 24);
+    return __$callback.call(this, null);
+});
+
+asyncTest("continue in while", 1, function __$anon11(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon11, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r299;
+        function __$fn299(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r299 = __$r
+            };
+            while (true) {
+                if (!(i < 10)) {
+                    break;
+                } else {
+                    i++;
+                    if (i >= 5) {
+                        return __$fn298.call(this);
+                    } else {
+                        return delay(__$fn297, result);
+                    };
+                };
+            };
+            return __$callback.call(this, null, result);
+        };
+        var __$r298;
+        function __$fn298(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r298 = __$r
+            };
+            return __$fn299.call(this);
+        };
+        var __$r297;
+        function __$fn297(__$e, __$r) {
+            var __$r300;
+            function __$fn300(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r300 = __$r
+                };
+                result = __$r297 * __$r300;
+                return __$fn298.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r297 = __$r
+            };
+            return delay(__$fn300, i);
+        };
+        var i, result;
+        i = 1;
+        result = 1;
+        return __$fn299.call(this);
+    }, 24);
+    return __$callback.call(this, null);
+});
+
+asyncTest("eval lazy", 1, function __$anon12(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon12, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$i639;
+        var __$i630;
+        var __$i613;
+        var __$r301;
+        function __$fn301(__$e, __$r) {
+            var __$r302;
+            function __$fn302(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r302 = __$r
+                };
+                if (__$r302) {
+                    __$i630 = true;
+                } else {
+                    __$i630 = __$r302;
+                };
+                if (__$i630) {
+                    __$i639 = 2;
+                } else {
+                    __$i639 = 4;
+                };
+                return __$callback.call(this, null, __$i639);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r301 = __$r
+            };
+            return __$i613(__$fn302, __$r301 < 5);
+        };
+        var result;
+        result = 1;
+        __$i613 = delay;
+        return delay(__$fn301, result + 8);
+    }, 4);
+    return __$callback.call(this, null);
+});
+
+asyncTest("eval lazy full async", 1, function __$anon13(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon13, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$i677;
+        var __$i662;
+        var __$i645;
+        var __$r303;
+        function __$fn303(__$e, __$r) {
+            var __$r304;
+            function __$fn304(__$e, __$r) {
+                var __$r307;
+                function __$fn307(__$e, __$r) {
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r307 = __$r
+                    };
+                    __$i677 = __$r307;
+                    return __$fn306.call(this);
+                };
+                var __$r306;
+                function __$fn306(__$e, __$r) {
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r306 = __$r
+                    };
+                    return __$callback.call(this, null, __$i677);
+                };
+                var __$r305;
+                function __$fn305(__$e, __$r) {
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r305 = __$r
+                    };
+                    __$i677 = __$r305;
+                    return __$fn306.call(this);
+                };
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r304 = __$r
+                };
+                if (__$r304) {
+                    __$i662 = true;
+                } else {
+                    __$i662 = __$r304;
+                };
+                if (__$i662) {
+                    return delay(__$fn305, 2);
+                } else {
+                    return delay(__$fn307, 4);
+                };
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r303 = __$r
+            };
+            return __$i645(__$fn304, __$r303 < 5);
+        };
+        var result;
+        result = 1;
+        __$i645 = delay;
+        return delay(__$fn303, result + 8);
+    }, 4);
+    return __$callback.call(this, null);
+});
+
+asyncTest("try catch 1", 1, function __$anon14(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon14, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r309;
+        function __$fn309(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r309 = __$r
+            };
+            return __$callback.call(this, null, __$r309);
+        };
+        var __$r308;
+        function __$fn308(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r308 = __$r
+            };
+            return __$callback.call(this, null, __$r308);
+        };
+        try {
+            return delay(__$fn308, "ok");
+        } catch (ex) {
+            return delay(__$fn309, "err");
+        };
+    }, "ok");
+    return __$callback.call(this, null);
+});
+
+asyncTest("and ok", 1, function __$anon15(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon15, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$i801;
+        var __$i778;
+        var __$i755;
+        var __$i732;
+        var __$i709;
+        var __$r310;
+        function __$fn310(__$e, __$r) {
+            var __$r312;
+            function __$fn312(__$e, __$r) {
+                var __$r313;
+                function __$fn313(__$e, __$r) {
+                    var __$r315;
+                    function __$fn315(__$e, __$r) {
+                        var __$r316;
+                        function __$fn316(__$e, __$r) {
+                            var __$r318;
+                            function __$fn318(__$e, __$r) {
+                                var __$r319;
+                                function __$fn319(__$e, __$r) {
+                                    var __$r321;
+                                    function __$fn321(__$e, __$r) {
+                                        var __$r322;
+                                        function __$fn322(__$e, __$r) {
+                                            var __$r324;
+                                            function __$fn324(__$e, __$r) {
+                                                if (__$e) {
+                                                    return __$callback.call(this, __$e);
+                                                } else {
+                                                    __$r324 = __$r
+                                                };
+                                                if (__$i801) {
+                                                    x += "T5";
+                                                } else {
+                                                    x += "F5";
+                                                };
+                                                x += ">>";
+                                                return __$callback.call(this, null, x);
+                                            };
+                                            var __$r323;
+                                            function __$fn323(__$e, __$r) {
+                                                if (__$e) {
+                                                    return __$callback.call(this, __$e);
+                                                } else {
+                                                    __$r323 = __$r
+                                                };
+                                                __$i801 = __$r323;
+                                                return __$fn324.call(this);
+                                            };
+                                            if (__$e) {
+                                                return __$callback.call(this, __$e);
+                                            } else {
+                                                __$r322 = __$r
+                                            };
+                                            if (__$r322) {
+                                                return delayFail(__$fn323, "bad");
+                                            } else {
+                                                __$i801 = __$r322;
+                                                return __$fn324.call(this);
+                                            };
+                                        };
+                                        if (__$e) {
+                                            return __$callback.call(this, __$e);
+                                        } else {
+                                            __$r321 = __$r
+                                        };
+                                        if (__$i778) {
+                                            x += "T4";
+                                        } else {
+                                            x += "F4";
+                                        };
+                                        return delay(__$fn322, false);
+                                    };
+                                    var __$r320;
+                                    function __$fn320(__$e, __$r) {
+                                        if (__$e) {
+                                            return __$callback.call(this, __$e);
+                                        } else {
+                                            __$r320 = __$r
+                                        };
+                                        __$i778 = __$r320;
+                                        return __$fn321.call(this);
+                                    };
+                                    if (__$e) {
+                                        return __$callback.call(this, __$e);
+                                    } else {
+                                        __$r319 = __$r
+                                    };
+                                    if (__$r319) {
+                                        return delay(__$fn320, false);
+                                    } else {
+                                        __$i778 = __$r319;
+                                        return __$fn321.call(this);
+                                    };
+                                };
+                                if (__$e) {
+                                    return __$callback.call(this, __$e);
+                                } else {
+                                    __$r318 = __$r
+                                };
+                                if (__$i755) {
+                                    x += "T3";
+                                } else {
+                                    x += "F3";
+                                };
+                                return delay(__$fn319, false);
+                            };
+                            var __$r317;
+                            function __$fn317(__$e, __$r) {
+                                if (__$e) {
+                                    return __$callback.call(this, __$e);
+                                } else {
+                                    __$r317 = __$r
+                                };
+                                __$i755 = __$r317;
+                                return __$fn318.call(this);
+                            };
+                            if (__$e) {
+                                return __$callback.call(this, __$e);
+                            } else {
+                                __$r316 = __$r
+                            };
+                            if (__$r316) {
+                                return delay(__$fn317, true);
+                            } else {
+                                __$i755 = __$r316;
+                                return __$fn318.call(this);
+                            };
+                        };
+                        if (__$e) {
+                            return __$callback.call(this, __$e);
+                        } else {
+                            __$r315 = __$r
+                        };
+                        if (__$i732) {
+                            x += "T2";
+                        } else {
+                            x += "F2";
+                        };
+                        return delay(__$fn316, false);
+                    };
+                    var __$r314;
+                    function __$fn314(__$e, __$r) {
+                        if (__$e) {
+                            return __$callback.call(this, __$e);
+                        } else {
+                            __$r314 = __$r
+                        };
+                        __$i732 = __$r314;
+                        return __$fn315.call(this);
+                    };
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r313 = __$r
+                    };
+                    if (__$r313) {
+                        return delay(__$fn314, false);
+                    } else {
+                        __$i732 = __$r313;
+                        return __$fn315.call(this);
+                    };
+                };
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r312 = __$r
+                };
+                if (__$i709) {
+                    x += "T1";
+                } else {
+                    x += "F1";
+                };
+                return delay(__$fn313, true);
+            };
+            var __$r311;
+            function __$fn311(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r311 = __$r
+                };
+                __$i709 = __$r311;
+                return __$fn312.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r310 = __$r
+            };
+            if (__$r310) {
+                return delay(__$fn311, true);
+            } else {
+                __$i709 = __$r310;
+                return __$fn312.call(this);
+            };
+        };
+        var x;
+        x = "<<";
+        return delay(__$fn310, true);
+    }, "<<T1F2F3F4F5>>");
+    return __$callback.call(this, null);
+});
+
+asyncTest("or ok", 1, function __$anon16(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon16, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$i923;
+        var __$i900;
+        var __$i877;
+        var __$i854;
+        var __$i831;
+        var __$r325;
+        function __$fn325(__$e, __$r) {
+            var __$r327;
+            function __$fn327(__$e, __$r) {
+                var __$r328;
+                function __$fn328(__$e, __$r) {
+                    var __$r330;
+                    function __$fn330(__$e, __$r) {
+                        var __$r331;
+                        function __$fn331(__$e, __$r) {
+                            var __$r333;
+                            function __$fn333(__$e, __$r) {
+                                var __$r334;
+                                function __$fn334(__$e, __$r) {
+                                    var __$r336;
+                                    function __$fn336(__$e, __$r) {
+                                        var __$r337;
+                                        function __$fn337(__$e, __$r) {
+                                            var __$r339;
+                                            function __$fn339(__$e, __$r) {
+                                                if (__$e) {
+                                                    return __$callback.call(this, __$e);
+                                                } else {
+                                                    __$r339 = __$r
+                                                };
+                                                if (__$i923) {
+                                                    x += "T5";
+                                                } else {
+                                                    x += "F5";
+                                                };
+                                                x += ">>";
+                                                return __$callback.call(this, null, x);
+                                            };
+                                            var __$r338;
+                                            function __$fn338(__$e, __$r) {
+                                                if (__$e) {
+                                                    return __$callback.call(this, __$e);
+                                                } else {
+                                                    __$r338 = __$r
+                                                };
+                                                __$i923 = __$r338;
+                                                return __$fn339.call(this);
+                                            };
+                                            if (__$e) {
+                                                return __$callback.call(this, __$e);
+                                            } else {
+                                                __$r337 = __$r
+                                            };
+                                            if (__$r337) {
+                                                __$i923 = __$r337;
+                                                return __$fn339.call(this);
+                                            } else {
+                                                return delayFail(__$fn338, "bad");
+                                            };
+                                        };
+                                        if (__$e) {
+                                            return __$callback.call(this, __$e);
+                                        } else {
+                                            __$r336 = __$r
+                                        };
+                                        if (__$i900) {
+                                            x += "T4";
+                                        } else {
+                                            x += "F4";
+                                        };
+                                        return delay(__$fn337, true);
+                                    };
+                                    var __$r335;
+                                    function __$fn335(__$e, __$r) {
+                                        if (__$e) {
+                                            return __$callback.call(this, __$e);
+                                        } else {
+                                            __$r335 = __$r
+                                        };
+                                        __$i900 = __$r335;
+                                        return __$fn336.call(this);
+                                    };
+                                    if (__$e) {
+                                        return __$callback.call(this, __$e);
+                                    } else {
+                                        __$r334 = __$r
+                                    };
+                                    if (__$r334) {
+                                        __$i900 = __$r334;
+                                        return __$fn336.call(this);
+                                    } else {
+                                        return delay(__$fn335, false);
+                                    };
+                                };
+                                if (__$e) {
+                                    return __$callback.call(this, __$e);
+                                } else {
+                                    __$r333 = __$r
+                                };
+                                if (__$i877) {
+                                    x += "T3";
+                                } else {
+                                    x += "F3";
+                                };
+                                return delay(__$fn334, false);
+                            };
+                            var __$r332;
+                            function __$fn332(__$e, __$r) {
+                                if (__$e) {
+                                    return __$callback.call(this, __$e);
+                                } else {
+                                    __$r332 = __$r
+                                };
+                                __$i877 = __$r332;
+                                return __$fn333.call(this);
+                            };
+                            if (__$e) {
+                                return __$callback.call(this, __$e);
+                            } else {
+                                __$r331 = __$r
+                            };
+                            if (__$r331) {
+                                __$i877 = __$r331;
+                                return __$fn333.call(this);
+                            } else {
+                                return delay(__$fn332, true);
+                            };
+                        };
+                        if (__$e) {
+                            return __$callback.call(this, __$e);
+                        } else {
+                            __$r330 = __$r
+                        };
+                        if (__$i854) {
+                            x += "T2";
+                        } else {
+                            x += "F2";
+                        };
+                        return delay(__$fn331, false);
+                    };
+                    var __$r329;
+                    function __$fn329(__$e, __$r) {
+                        if (__$e) {
+                            return __$callback.call(this, __$e);
+                        } else {
+                            __$r329 = __$r
+                        };
+                        __$i854 = __$r329;
+                        return __$fn330.call(this);
+                    };
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r328 = __$r
+                    };
+                    if (__$r328) {
+                        __$i854 = __$r328;
+                        return __$fn330.call(this);
+                    } else {
+                        return delay(__$fn329, false);
+                    };
+                };
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r327 = __$r
+                };
+                if (__$i831) {
+                    x += "T1";
+                } else {
+                    x += "F1";
+                };
+                return delay(__$fn328, true);
+            };
+            var __$r326;
+            function __$fn326(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r326 = __$r
+                };
+                __$i831 = __$r326;
+                return __$fn327.call(this);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r325 = __$r
+            };
+            if (__$r325) {
+                __$i831 = __$r325;
+                return __$fn327.call(this);
+            } else {
+                return delay(__$fn326, true);
+            };
+        };
+        var x;
+        x = "<<";
+        return delay(__$fn325, true);
+    }, "<<T1T2T3F4T5>>");
+    return __$callback.call(this, null);
+});
+
+asyncTest("scoping", 1, function __$anon17(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon17, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r340;
+        function __$fn340(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r340 = __$r
+            };
+            return __$callback.call(this, null, __$r340());
         };
         function test(__$callback) {
             if (!__$callback) {
                 return __$rt.future.call(this, test, arguments, 0);
             }
-            function __$fn191(__$e, __$r) {
+            var __$r351;
+            function __$fn351(__$e, __$r) {
                 if (__$e) {
                     return __$callback.call(this, __$e);
+                } else {
+                    __$r351 = __$r
                 };
                 foo = "xyz";
                 return __$callback.call(this, null, bar);
@@ -545,107 +1255,298 @@ asyncTest("scoping", 1, function __$anon8(__$callback) {
             function bar() {
                 return foo;
             };
-            return delay(__$fn191);
+            return delay(__$fn351);
         };
-        return test(__$fn187);
+        return test(__$fn340);
     }, "xyz");
     return __$callback.call(this, null);
 });
 
-asyncTest("return undefined", 1, function __$anon9(__$callback) {
+asyncTest("return undefined", 1, function __$anon18(__$callback) {
     if (!__$callback) {
-        return __$rt.future.call(this, __$anon9, arguments, 0);
+        return __$rt.future.call(this, __$anon18, arguments, 0);
     }
     evalTest(function f(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn188(__$e, __$r) {
+        var __$r341;
+        function __$fn341(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r341 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return __$callback.call(this, null, __$r341);
         };
         function test(__$callback) {
             if (!__$callback) {
                 return __$rt.future.call(this, test, arguments, 0);
             }
-            function __$fn192(__$e, __$r) {
+            var __$r352;
+            function __$fn352(__$e, __$r) {
                 if (__$e) {
                     return __$callback.call(this, __$e);
+                } else {
+                    __$r352 = __$r
                 };
                 return __$callback.call(this, null);
             };
-            return delay(__$fn192);
+            return delay(__$fn352);
         };
-        return test(__$fn188);
+        return test(__$fn341);
     }, undefined);
     return __$callback.call(this, null);
 });
 
-asyncTest("coffeescript wrapper 1", 1, function __$anon10(__$callback) {
+asyncTest("futures test", 1, function __$anon19(__$callback) {
     if (!__$callback) {
-        return __$rt.future.call(this, __$anon10, arguments, 0);
+        return __$rt.future.call(this, __$anon19, arguments, 0);
     }
     evalTest(function f(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn189(__$e, __$r) {
-            if (__$e) {
-                return __$callback.call(this, __$e);
-            };
-            return __$callback.call(this, null, __$r);
-        };
-        return function __$anon11(__$callback) {
-            if (!__$callback) {
-                return __$rt.future.call(this, __$anon11, arguments, 0);
-            }
-            function __$fn193(__$e, __$r) {
+        var __$i979;
+        var __$i975;
+        var __$r342;
+        function __$fn342(__$e, __$r) {
+            var __$r343;
+            function __$fn343(__$e, __$r) {
+                var __$r344;
+                function __$fn344(__$e, __$r) {
+                    var __$r345;
+                    function __$fn345(__$e, __$r) {
+                        if (__$e) {
+                            return __$callback.call(this, __$e);
+                        } else {
+                            __$r345 = __$r
+                        };
+                        return __$callback.call(this, null, __$i979 + __$r345);
+                    };
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r344 = __$r
+                    };
+                    __$i979 = __$i975 + __$r344;
+                    return c(__$fn345);
+                };
                 if (__$e) {
                     return __$callback.call(this, __$e);
+                } else {
+                    __$r343 = __$r
                 };
-                return __$callback.call(this, null, __$r);
+                __$i975 = __$r342 + __$r343;
+                return d(__$fn344);
             };
-            return delay(__$fn193, "cs1");
-        }(__$fn189);
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r342 = __$r
+            };
+            return b(__$fn343);
+        };
+        var d;
+        var c;
+        var b;
+        var a;
+        function delay2(val, __$callback) {
+            if (!__$callback) {
+                return __$rt.future.call(this, delay2, arguments, 1);
+            }
+            var __$r353;
+            function __$fn353(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r353 = __$r
+                };
+                return __$callback.call(this, null, __$r353);
+            };
+            return delay(__$fn353, val);
+        };
+        a = delay2("a");
+        b = delay2("b");
+        c = delay2("c");
+        d = delay2("d");
+        return a(__$fn342);
+    }, "abdc");
+    return __$callback.call(this, null);
+});
+
+asyncTest("async comma operator", 1, function __$anon20(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon20, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r346;
+        function __$fn346(__$e, __$r) {
+            var __$r347;
+            function __$fn347(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r347 = __$r
+                };
+                return __$callback.call(this, null, __$r347);
+            };
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r346 = __$r
+            };
+            a = __$r346;
+            return delay(__$fn347, a + 1);
+        };
+        var a;
+        a = 4;
+        a++;
+        return delay(__$fn346, 2 * a);
+    }, 11);
+    return __$callback.call(this, null);
+});
+
+asyncTest("fibo false async", 1, function __$anon21(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon21, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r348;
+        function __$fn348(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r348 = __$r
+            };
+            return __$callback.call(this, null, __$r348);
+        };
+        function fibo(__$callback, n) {
+            if (!__$callback) {
+                return __$rt.future.call(this, fibo, arguments, 0);
+            }
+            var __$i1080;
+            var __$r355;
+            function __$fn355(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r355 = __$r
+                };
+                return __$callback.call(this, null, __$i1080);
+            };
+            var __$r354;
+            function __$fn354(__$e, __$r) {
+                var __$r356;
+                function __$fn356(__$e, __$r) {
+                    if (__$e) {
+                        return __$callback.call(this, __$e);
+                    } else {
+                        __$r356 = __$r
+                    };
+                    __$i1080 = __$r354 + __$r356;
+                    return __$fn355.call(this);
+                };
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r354 = __$r
+                };
+                return fibo(__$fn356, n - 2);
+            };
+            if (n > 1) {
+                return fibo(__$fn354, n - 1);
+            } else {
+                __$i1080 = 1;
+                return __$fn355.call(this);
+            };
+        };
+        return fibo(__$fn348, 16);
+    }, 1597);
+    return __$callback.call(this, null);
+});
+
+asyncTest("coffeescript wrapper 1", 1, function __$anon22(__$callback) {
+    if (!__$callback) {
+        return __$rt.future.call(this, __$anon22, arguments, 0);
+    }
+    evalTest(function f(__$callback) {
+        if (!__$callback) {
+            return __$rt.future.call(this, f, arguments, 0);
+        }
+        var __$r349;
+        function __$fn349(__$e, __$r) {
+            if (__$e) {
+                return __$callback.call(this, __$e);
+            } else {
+                __$r349 = __$r
+            };
+            return __$callback.call(this, null, __$r349);
+        };
+        return function __$anon23(__$callback) {
+            if (!__$callback) {
+                return __$rt.future.call(this, __$anon23, arguments, 0);
+            }
+            var __$r357;
+            function __$fn357(__$e, __$r) {
+                if (__$e) {
+                    return __$callback.call(this, __$e);
+                } else {
+                    __$r357 = __$r
+                };
+                return __$callback.call(this, null, __$r357);
+            };
+            return delay(__$fn357, "cs1");
+        }(__$fn349);
     }, "cs1");
     return __$callback.call(this, null);
 });
 
-asyncTest("coffeescript wrapper 2", 1, function __$anon12(__$callback) {
+asyncTest("coffeescript wrapper 2", 1, function __$anon24(__$callback) {
     if (!__$callback) {
-        return __$rt.future.call(this, __$anon12, arguments, 0);
+        return __$rt.future.call(this, __$anon24, arguments, 0);
     }
     evalTest(function f(__$callback) {
         if (!__$callback) {
             return __$rt.future.call(this, f, arguments, 0);
         }
-        function __$fn190(__$e, __$r) {
+        var __$r350;
+        function __$fn350(__$e, __$r) {
             if (__$e) {
                 return __$callback.call(this, __$e);
+            } else {
+                __$r350 = __$r
             };
-            return __$callback.call(this, null, __$r);
+            return __$callback.call(this, null, __$r350);
         };
-        return function __$anon13(__$callback) {
+        return function __$anon25(__$callback) {
             if (!__$callback) {
-                return __$rt.future.call(this, __$anon13, arguments, 0);
+                return __$rt.future.call(this, __$anon25, arguments, 0);
             }
-            function __$fn194(__$e, __$r) {
+            var __$r358;
+            function __$fn358(__$e, __$r) {
                 if (__$e) {
                     return __$callback.call(this, __$e);
+                } else {
+                    __$r358 = __$r
                 };
-                return __$callback.call(this, null, __$r);
+                return __$callback.call(this, null, __$r358);
             };
-            return delay(__$fn194, "cs2");
-        }.call(this, __$fn190);
+            return delay(__$fn358, "cs2");
+        }.call(this, __$fn350);
     }, "cs2");
     return __$callback.call(this, null);
 });
 
-asyncTest("sync try/catch in async", 1, function __$anon14(__$callback) {
+asyncTest("sync try/catch in async", 1, function __$anon26(__$callback) {
     if (!__$callback) {
-        return __$rt.future.call(this, __$anon14, arguments, 0);
+        return __$rt.future.call(this, __$anon26, arguments, 0);
     }
     evalTest(function f(__$callback) {
         if (!__$callback) {
@@ -660,9 +1561,9 @@ asyncTest("sync try/catch in async", 1, function __$anon14(__$callback) {
     return __$callback.call(this, null);
 });
 
-asyncTest("sync try/catch inside conditional", 1, function __$anon15(__$callback) {
+asyncTest("sync try/catch inside conditional", 1, function __$anon27(__$callback) {
     if (!__$callback) {
-        return __$rt.future.call(this, __$anon15, arguments, 0);
+        return __$rt.future.call(this, __$anon27, arguments, 0);
     }
     evalTest(function f(__$callback) {
         if (!__$callback) {
