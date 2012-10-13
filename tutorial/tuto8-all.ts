@@ -1,4 +1,5 @@
-///<reference path='../typescript/streamline-node.d.ts'/>
+///<reference path='../typescript/node_.d.ts'/>
+///<reference path='../typescript/mongodb_.d.ts'/>
 ///<reference path='../typescript/streamline-main.d.ts'/>
 "use strict";
 
@@ -91,8 +92,8 @@ function fileSearch(_: async, q: string) {
 	return results + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';;
 }
 
-var mongodb = require('mongodb'),
-	mongoFunnel = flows.funnel(1);
+import mongodb = module('mongodb');
+var mongoFunnel = flows.funnel(1);
 
 function mongoSearch(_: async, q: string) {
 	var t0 = new Date().getTime();

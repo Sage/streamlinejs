@@ -74,9 +74,8 @@ function fileSearch(_, q) {
     return results + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';
     ; ;
 }
-var mongodb = require('mongodb');
+var mongodb = require('mongodb')
 var mongoFunnel = flows.funnel(1);
-
 function mongoSearch(_, q) {
     var t0 = new Date().getTime();
     var db = new mongodb.Db('tutorial', new mongodb.Server("127.0.0.1", 27017, {
