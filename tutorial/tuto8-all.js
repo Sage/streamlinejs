@@ -46,7 +46,7 @@ function googleSearch(_, q) {
     }).join('') + '</ul>' + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';
 }
 var fs = require('fs')
-var flows = require('streamline/lib/util/flows');
+var flows = require('streamline/lib/util/flows')
 var filesFunnel = flows.funnel(100);
 function fileSearch(_, q) {
     var t0 = new Date().getTime();
@@ -126,4 +126,3 @@ var MOVIES = [
         director: 'Stanley Kubrick'
     }
 ];
-
