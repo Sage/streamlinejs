@@ -1,3 +1,4 @@
+///<reference path='./streamline-module.d.ts'/>
 /************************************************
 *                                               *
 *               Node.js v0.8.8 API              *
