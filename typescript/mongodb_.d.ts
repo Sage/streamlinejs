@@ -1,3 +1,4 @@
+///<reference path='streamline-module.d.ts'/>
 ///<reference path='node_.d.ts' />
 
 declare module "mongodb" {

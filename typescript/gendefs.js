@@ -10,7 +10,8 @@ function patch(pkg) {
 		return "callback" + opt + ": async) : any;";
 	}).replace(/\.d\.ts/g, "_.d.ts");
 	console.log("creating " + dst);
-	out = "///<reference path='./streamline-module.d.ts'/>\n" + out;
+	out = "///<reference path='streamline-module.d.ts'/>\n" + out;
+	out = out.replace(/\r/g, '');
 	fs.writeFileSync(dst, out, 'utf8');
 }
 

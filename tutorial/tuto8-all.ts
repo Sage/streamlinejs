@@ -105,13 +105,12 @@ function mongoSearch(_: async, q: string) {
 			if (coln.count(_) === 0) coln.insert(MOVIES, _);
 		});
 		var re = new RegExp(".*" + q + ".*");
-		var a : any[]; // HACK to avoid type error - there may be a better way!
 		return coln.find({
-			$or: (a =[{
+			$or: <any[]>[{
 				title: re
 			}, {
 				director: re
-			}])
+			}]
 		}, _).toArray(_).map(function(movie) {
 			return movie.title + ': ' + movie.director;
 		}).join('<br/>') + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';;

@@ -89,16 +89,15 @@ function mongoSearch(_, q) {
             }
         });
         var re = new RegExp(".*" + q + ".*");
-        var a;
         return coln.find({
-            $or: (a = [
+            $or: [
                 {
                     title: re
                 }, 
                 {
                     director: re
                 }
-            ])
+            ]
         }, _).toArray(_).map(function (movie) {
             return movie.title + ': ' + movie.director;
         }).join('<br/>') + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';
