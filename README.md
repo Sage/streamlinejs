@@ -221,7 +221,7 @@ and the asynchronous functions that you create with streamline have the standard
 You can enable streamline in a TypeScript source file by adding the following lines at the top of the file:
 
 ``` typescript
-///<reference path='../streamline/typescript/streamline-node.d.ts'/>
+///<reference path='../streamline/typescript/node_.d.ts'/>
 ///<reference path='../streamline/typescript/streamline-main.d.ts'/>
 ~~~streamline();
 ```
@@ -254,7 +254,7 @@ becomes:
 export function readFile(filename: string, _: async): NodeBuffer;
 ```
 
-The `streamline-node.d.ts` file is already setup but you may need to setup similar definition variants for other APIs (CAUTION: this file has not been thoroughly reviewed yet!)
+The `node_.d.ts` file (note the `_` after `node`) is already setup but you may need to setup similar definition variants for other APIs (CAUTION: this file has not been thoroughly reviewed yet!)
 
 Also, the `streamline-module.d.ts` defines a `future_` wrapper to handle type conversions on calls that return futures.
 
