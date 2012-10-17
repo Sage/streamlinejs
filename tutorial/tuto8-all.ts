@@ -62,7 +62,6 @@ function googleSearch(_: async, q: string) {
 	}).join('') + '</ul>' + '<br/>completed in ' + (new Date().getTime() - t0) + ' ms';
 }
 
-// TypeScript bug: I get a stack overflow if I convert next line to import
 import fs = module('fs');
 import flows = module('streamline/lib/util/flows');
 // allocate a funnel for 100 concurrent open files
