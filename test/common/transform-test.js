@@ -5,7 +5,7 @@ module("streamline generation");
 
 function clean(s) {
 	if (typeof jQuery === "function" && jQuery.browser.mozilla) return new Function(s).toString();
-	else return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
+	else return s.replace(/\s/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
 }
 
 function genTest(f1, f2) {
