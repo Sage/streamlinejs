@@ -372,6 +372,7 @@ Narcissus.decompiler = (function() {
                      + pp(nc[1], d) + ")";
             break;
 
+          case AWAIT:
           case DELETE:
           case VOID:
           case TYPEOF:

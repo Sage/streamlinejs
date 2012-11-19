@@ -1203,6 +1203,7 @@ Narcissus.parser = (function() {
         var n, n2, tt;
 
         switch (tt = t.get(true)) {
+          case AWAIT:
           case DELETE: case VOID: case TYPEOF:
           case NOT: case BITWISE_NOT: case PLUS: case MINUS:
             if (tt === PLUS)
