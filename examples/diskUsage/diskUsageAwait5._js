@@ -9,21 +9,22 @@
  */
 "use strict";
 
-var fs1 = require('fs');
+var rawfs = require('fs'), 
+  rt = require('streamline/lib/callbacks/runtime');
 
 function nodeDeferred(fn) {
   return function() {
-    return require('streamline/lib/callbacks/runtime').deferred(fn, arguments, arguments.length);
+    return rt.deferred(fn, arguments, arguments.length);
   }
 }
 
 var fs = {
-  stat: nodeDeferred(fs1.stat),
-  readdir: nodeDeferred(fs1.readdir),
-  readFile: nodeDeferred(fs1.readFile)
+  stat: nodeDeferred(rawfs.stat),
+  readdir: nodeDeferred(rawfs.readdir),
+  readFile: nodeDeferred(rawfs.readFile)
 }
 
-function du(path) {
+async function du(path) {
   var total = 0;
   var stat = await fs.stat(path);
   if (stat.isFile()) {

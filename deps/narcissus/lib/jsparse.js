@@ -1244,7 +1244,15 @@ Narcissus.parser = (function() {
     function MemberExpression(t, x, allowCallSyntax) {
         var n, n2, name, tt;
 
-        if (t.match(NEW)) {
+        if (t.match(ASYNC)) {
+            if (t.peek() === LEFT_PAREN || t.peek() === FUNCTION) {
+                n = MemberExpression(t, x, allowCallSyntax);
+                n.carriesAsync = true;
+            } else {
+                n = new Node(t, { type: IDENTIFIER });
+            }
+        }
+        else if (t.match(NEW)) {
             n = new Node(t);
             n.push(MemberExpression(t, x, false));
             if (t.match(LEFT_PAREN)) {

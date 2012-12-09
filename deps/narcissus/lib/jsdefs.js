@@ -99,7 +99,7 @@ Narcissus.definitions = (function() {
         "IDENTIFIER", "NUMBER", "STRING", "REGEXP",
 
         // Keywords.
-        "await",
+        "await", "async",
         "break",
         "case", "catch", "const", "continue",
         "debugger", "default", "delete", "do",
