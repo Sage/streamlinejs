@@ -128,6 +128,21 @@ The only drawback is a slower application startup because more files get transfo
 
 Yes! Take a look at [express-streamline](https://github.com/aseemk/express-streamline).
 
+For Express 3, an simple alternative that respects `next()` but requires a wrapper function follows:
+
+``` javascript
+_streamline = function(cb) {
+  return function(req, res, next) {
+    function handler(err, result) {
+      if (err) return next(err);
+    }
+    return cb(handler, req, res, next);
+  }
+}
+
+app.get('/', _streamline(function(_, req, res, next) {return doSomethingAsync(_, res);}));
+```
+
 And read just below about dealing with events!
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
