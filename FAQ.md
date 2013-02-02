@@ -128,7 +128,7 @@ The only drawback is a slower application startup because more files get transfo
 
 Yes! Take a look at [express-streamline](https://github.com/aseemk/express-streamline).
 
-For Express 3, a simple alternative that respects `next()` but requires a wrapper function follows:
+For Express 3, a simple alternative that respects `next()` in route handlers but requires a wrapper function follows:
 
 ``` javascript
 _streamline = function(cb) {
