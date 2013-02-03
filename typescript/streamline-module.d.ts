@@ -70,7 +70,7 @@ declare module "streamline/lib/streams/server/streams" {
 		addTrailers(trailers: any) : HttpServerResponse;
 		statusCode: number;
 	}
-	export interface HttpServer {
+	export interface HttpServer extends Wrapper {
 		listen(_: async, port: number, host?: string);
 		listen(_: async, path: string);
 	}
