@@ -999,4 +999,15 @@ test("CoffeeScript closure (this, arguments)", 1, function() {
 		});
 	});
 })
+test("CoffeeScript fat arrow", 1, function() {
+	genTest(function f() {
+		this.method = function(_) {
+        	return Test.prototype.method.apply(_this, arguments);
+      	};
+	}, function f() {
+		this.method = function() {
+        	return Test.prototype.method.apply(_this, arguments);
+      	};
+	});
+})
 
