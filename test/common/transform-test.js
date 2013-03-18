@@ -4,8 +4,8 @@ var transform = require('streamline/lib/callbacks/transform').transform;
 module("streamline generation");
 
 function clean(s) {
-	if (typeof jQuery === "function" && jQuery.browser.mozilla) return new Function(s).toString();
-	else return s.replace(/\s/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
+	if (typeof jQuery === "function" && jQuery.browser.mozilla) s =  new Function(s).toString();
+	return s.replace(/\s/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
 }
 
 function genTest(f1, f2) {
