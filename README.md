@@ -42,7 +42,7 @@ function archiveOrders(date, _) {
 
 and streamline transforms the code and takes care of the callbacks!
 
-No flow control APIs to learn! You just have to follow a simple rule:
+No control flow APIs to learn! You just have to follow a simple rule:
 
 > Replace all callbacks by an underscore and write your code as if all functions were synchronous.
 
