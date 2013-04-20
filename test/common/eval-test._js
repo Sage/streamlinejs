@@ -656,3 +656,9 @@ asyncTest("sync try/catch inside conditional", 1, function(_) {
 		}
 	}, undefined);
 })
+
+asyncTest("octal literal", 1, function(_) {
+	evalTest(function f(_) {
+		return 010;
+	}, 8);
+})

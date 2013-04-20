@@ -171,6 +171,7 @@ Narcissus.parser = (function() {
             this.type = token.type;
             this.value = token.value;
             this.lineno = token.lineno;
+            if (token.isOctal) this.isOctal = true;
 
             // Start and end are file positions for error handling.
             this.start = token.start;
