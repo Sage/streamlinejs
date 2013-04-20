@@ -239,7 +239,7 @@ Narcissus.lexer = (function() {
                 this.cursor--;
 
                 token.value = parseInt(input.substring(token.start, this.cursor), 8);
-                token.isOctal = true; // mark it to decomp as octal so that strict mode catches it
+                token.value.isOctal = true; // mark it to decomp as octal so that strict mode catches it
             } else {
                 this.cursor--;
                 this.lexExponent();     // 0E1, &c.
