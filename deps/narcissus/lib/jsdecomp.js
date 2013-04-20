@@ -500,7 +500,8 @@ Narcissus.decompiler = (function() {
           case IDENTIFIER:
           case NUMBER:
           case REGEXP:
-            p += n.value;
+            if (n.isOctal) p += "0" + n.value.toString(8);
+            else p += n.value;
             break;
 
           case STRING:

@@ -677,3 +677,9 @@ asyncTest("labelled break", 1, function(_) {
 		return result;
 	}, '!15-!16-!/!25-!26-!/!35-!36-!!38-!39-/!45-!46-!!55-!56-!');
 })
+
+asyncTest("octal literal", 1, function(_) {
+	evalTest(function f(_) {
+		return 010;
+	}, 8);
+})
