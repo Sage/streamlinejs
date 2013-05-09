@@ -1005,7 +1005,7 @@ test("CoffeeScript fat arrow", 1, function() {
         	return Test.prototype.method.apply(_this, arguments);
       	};
 	}, function f() {
-		this.method = function() {
+		this.method = function(_) {
         	return Test.prototype.method.apply(_this, arguments);
       	};
 	});
