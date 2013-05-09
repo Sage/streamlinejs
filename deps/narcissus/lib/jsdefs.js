@@ -182,7 +182,7 @@ Narcissus.definitions = (function() {
     var tokenIds = {};
 
     // Building up a string to be eval'd in different contexts.
-    var consts = "const ";
+    var consts = "var ";
     for (var i = 0, j = tokens.length; i < j; i++) {
         if (i > 0)
             consts += ", ";
