@@ -12,12 +12,12 @@ asyncTest("no timeout", 1, fstreamline__.create(function*(_) {
 	var f = delay_(1, 'a');
 	equals((yield fstreamline__.invoke(null, f, [_], 0)), 'a', "no timeout");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("result before timeout", 1, fstreamline__.create(function*(_) {
 	var f = delay_(1, 'a');
 	equals((yield fstreamline__.invoke(null, f, [_, { timeout: 10, return: 'b' }], 0)), 'a', "got result");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("timeout returns before result", 3, fstreamline__.create(function*(_) {
 	var f = delay_(20, 'a');
 	equals((yield fstreamline__.invoke(null, f, [_, { timeout: 1, return: 'b' }], 0)), 'b', "got timeout");
@@ -28,7 +28,7 @@ asyncTest("timeout returns before result", 3, fstreamline__.create(function*(_) 
 		equals(ex.message, "future cancelled", "cannot reuse cancelled future");
 	}
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("timeout throws before result", 1, fstreamline__.create(function*(_) {
 	var f = delay_(20, 'a');
 	try {
@@ -37,13 +37,13 @@ asyncTest("timeout throws before result", 1, fstreamline__.create(function*(_) {
 		equals(ex.message, 'b', "throws before result");
 	}
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("probe with return", 2, fstreamline__.create(function*(_) {
 	var f = delay_(20, 'a');
 	equal((yield fstreamline__.invoke(null, f, [_, { timeout: 1, return: 'b', probe: true }], 0)), 'b', "probe before result");
 	equal((yield fstreamline__.invoke(null, f, [_, { timeout: 40, return: 'b', probe: true }], 0)), 'a', "probe after result");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("probe with throw", 2, fstreamline__.create(function*(_) {
 	var f = delay_(20, 'a');
 	try {
@@ -53,7 +53,7 @@ asyncTest("probe with throw", 2, fstreamline__.create(function*(_) {
 	}
 	equal((yield fstreamline__.invoke(null, f, [_, { timeout: 40, throw: 'b', probe: true }], 0)), 'a', "probe after result");
 	start();
-;yield undefined;}, 0));
+}, 0));
 
 function* delay2(ms1, ms2, val, step, _) {
 	step.i = 1;
@@ -74,7 +74,7 @@ asyncTest("cancel before first timeout", 4, fstreamline__.create(function*(_) {
 	(yield fstreamline__.invoke(null, setTimeout, [_, 40], 0));
 	equals(step.i, 1, "cancelled ok");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("cancel between first and second timeouts", 4, fstreamline__.create(function*(_) {
 	var step = {};
 	var f = delay2_(20, 20, 'a', step);
@@ -84,7 +84,7 @@ asyncTest("cancel between first and second timeouts", 4, fstreamline__.create(fu
 	(yield fstreamline__.invoke(null, setTimeout, [_, 20], 0));
 	equals(step.i, 2, "cancelled ok");
 	start();
-;yield undefined;}, 0));
+}, 0));
 
 function* join(ms1, ms2, val1, step1, ms3, ms4, val2, step2, _) {
 	var f1 = delay2_(ms1, ms2, val1, step1);
@@ -99,7 +99,7 @@ asyncTest("join returns before timeout", 3, fstreamline__.create(function*(_) {
 	equals(step1.i, 3, "step1 ok");
 	equals(step2.i, 3, "step2 ok");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("join with short timeout", 5, fstreamline__.create(function*(_) {
 	var step1 = {}, step2= {};
 	var f = join_(10, 20, 'a', step1, 20, 20, 'b', step2);
@@ -110,7 +110,7 @@ asyncTest("join with short timeout", 5, fstreamline__.create(function*(_) {
 	equals(step1.i, 2, "step1 cancelled ok");
 	equals(step2.i, 1, "step2 cancelled ok");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("join with intermediate timeout", 5, fstreamline__.create(function*(_) {
 	var step1 = {}, step2= {};
 	var f = join_(10, 20, 'a', step1, 20, 20, 'b', step2);
@@ -121,7 +121,7 @@ asyncTest("join with intermediate timeout", 5, fstreamline__.create(function*(_)
 	equals(step1.i, 3, "step1 cancelled ok");
 	equals(step2.i, 2, "step2 cancelled ok");
 	start();
-;yield undefined;}, 0));
-;yield undefined;}, 0).call(this, function(err) {
+}, 0));
+}, 0).call(this, function(err) {
   if (err) throw err;
 }));

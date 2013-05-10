@@ -31,19 +31,19 @@ asyncTest("each", 7, fstreamline__.create(function*(_) {
 	var result = 1;
 	(yield fstreamline__.invoke(flows, "each", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		result = result * (yield delay(_, val));
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, 24);
 	result = 1;
 	(yield fstreamline__.invoke([1, 2, 3, 4], "forEach_", [_, fstreamline__.create(function*(_, val) {
 		var v = (yield delay(_, val));
 		result = result * v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, 24);
 	result = 1;
 	(yield fstreamline__.invoke([1, 2, 3, 4], "forEach_", [_, 2, fstreamline__.create(function*(_, val) {
 		var v = (yield delay(_, val));
 		result = result * v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, 24);
 	result = 1;
 	(yield fstreamline__.invoke([1, 2, 3, 4], "forEach_", [_, {
@@ -51,28 +51,28 @@ asyncTest("each", 7, fstreamline__.create(function*(_) {
 	}, fstreamline__.create(function*(_, val) {
 		var v = (yield delay(_, val));
 		result = result * v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, 24);
 	result = 1;
 	(yield fstreamline__.invoke([1, 2, 3, 4], "forEach_", [_, -1, fstreamline__.create(function*(_, val) {
 		var v = (yield delay(_, val));
 		result = result * v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, 24);
 	result = '';
 	(yield fstreamline__.invoke(sparse(), "forEach_", [_, fstreamline__.create(function*(_, val, i) {
 		var v = (yield delay(_, val));
 		result = result + '/' + i + ':' + v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, '/3:33/4:44/9:99');
 	result = '';
 	(yield fstreamline__.invoke(sparse(), "forEach_", [_, -1, fstreamline__.create(function*(_, val, i) {
 		var v = (yield delay(_, val));
 		result = result + '/' + i + ':' + v;
-	;yield undefined;}, 0)], 0));
+	}, 0)], 0));
 	strictEqual(result, '/3:33/4:44/9:99');
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("map", 9, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "map", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( 2 * (yield delay(_, val)));
@@ -109,7 +109,7 @@ asyncTest("map", 9, fstreamline__.create(function*(_) {
 	strictEqual(result.length, 10);
 	strictEqual(dump(result), '/3:33/4:44/9:99');
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("filter", 9, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "filter", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( (yield delay(_, val)) % 2);
@@ -144,7 +144,7 @@ asyncTest("filter", 9, fstreamline__.create(function*(_) {
 	strictEqual(result.length, 2);
 	deepEqual(result, [33, 99]);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("every true", 7, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "every", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( (yield delay(_, val)) < 5);
@@ -177,7 +177,7 @@ asyncTest("every true", 7, fstreamline__.create(function*(_) {
 	}, 0)], 0));
 	strictEqual(result, true);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("every false", 7, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "every", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( (yield delay(_, val)) < 3);
@@ -210,7 +210,7 @@ asyncTest("every false", 7, fstreamline__.create(function*(_) {
 	}, 0)], 0));
 	strictEqual(result, false);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("some true", 7, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "some", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( (yield delay(_, val)) < 3);
@@ -243,7 +243,7 @@ asyncTest("some true", 7, fstreamline__.create(function*(_) {
 	}, 0)], 0));
 	strictEqual(result, true);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("some false", 7, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "some", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, val) {
 		yield ( (yield delay(_, val)) < 0);
@@ -276,7 +276,7 @@ asyncTest("some false", 7, fstreamline__.create(function*(_) {
 	}, 0)], 0));
 	strictEqual(result, false);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("reduce", 3, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "reduce", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, v, val) {
 		yield ( v * (yield delay(_, val)));
@@ -291,7 +291,7 @@ asyncTest("reduce", 3, fstreamline__.create(function*(_) {
 	}, 0), ''], 0));
 	strictEqual(result, '/33/44/99');
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("reduceRight", 3, fstreamline__.create(function*(_) {
 	var result = (yield fstreamline__.invoke(flows, "reduceRight", [_, [1, 2, 3, 4], fstreamline__.create(function*(_, v, val) {
 		yield ( v * (yield delay(_, val)));
@@ -306,7 +306,7 @@ asyncTest("reduceRight", 3, fstreamline__.create(function*(_) {
 	}, 0), ''], 0));
 	strictEqual(result, '/99/44/33');
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("sort", 4, fstreamline__.create(function*(_) {
 	var array = [1, 2, 3, 4];
 	(yield fstreamline__.invoke(flows, "sort", [_, array, fstreamline__.create(function*(_, a, b) {
@@ -328,7 +328,7 @@ asyncTest("sort", 4, fstreamline__.create(function*(_) {
 	}, 0)], 0));
 	deepEqual(array, [1, 2, 3, 4], "Random array sort ok");
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("collectAll", 4, fstreamline__.create(function*(_) {
 	var total = 0;
 	var peak = 0;
@@ -350,7 +350,7 @@ asyncTest("collectAll", 4, fstreamline__.create(function*(_) {
 	equal(count, 0);
 	deepEqual(results, [2, 4, 6]);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("collectOne", 4, fstreamline__.create(function*(_) {
 	var total = 0;
 	var peak = 0;
@@ -372,7 +372,7 @@ asyncTest("collectOne", 4, fstreamline__.create(function*(_) {
 	ok(count > 0);
 	ok(result == 2 || result == 4);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("collectAll with limit", 1, fstreamline__.create(function*(_) {
 	var total = 0;
 	var peak = 0;
@@ -391,7 +391,7 @@ asyncTest("collectAll with limit", 1, fstreamline__.create(function*(_) {
 	var results = (yield fstreamline__.invoke(flows.spray([doIt(1), doIt(2), doIt(3)], 2), "collectAll", [_], 0));
 	deepEqual([total, peak, count, results], [6, 2, 0, [2, 4, 6]]);
 	start();
-;yield undefined;}, 0));
+}, 0));
 asyncTest("contexts", 3, fstreamline__.create(function*(_) {var testContext_ = fstreamline__.create(testContext, 0);
 	function* testContext(_, x) {
 		flows.setContext({
@@ -415,7 +415,7 @@ asyncTest("contexts", 3, fstreamline__.create(function*(_) {var testContext_ = f
 	]), "collectAll", [_], 0));
 	deepEqual(result, [7, 11]);
 	start();
-;yield undefined;}, 0));
+}, 0));
 
 asyncTest("futures multiplex", 3, fstreamline__.create(function*(_) {var doIt_ = fstreamline__.create(doIt, 1);
 	var result1 = 0;
@@ -427,7 +427,7 @@ asyncTest("futures multiplex", 3, fstreamline__.create(function*(_) {var doIt_ =
 		result2 = (yield fstreamline__.invoke(null, future, [_], 0)) + result2;
 		(yield delay(_));
 		result3 = (yield fstreamline__.invoke(null, future, [_], 0)) + result3;
-	;yield undefined;}
+	}
 
 	var f1 = delay_(null, 1);
 	var f10 = delay_(null, 10);
@@ -438,7 +438,7 @@ asyncTest("futures multiplex", 3, fstreamline__.create(function*(_) {var doIt_ =
 	deepEqual(result2, 12);
 	deepEqual(result3, 12);
 	start();
-;yield undefined;}, 0));
-;yield undefined;}, 0).call(this, function(err) {
+}, 0));
+}, 0).call(this, function(err) {
   if (err) throw err;
 }));
