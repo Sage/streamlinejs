@@ -657,6 +657,27 @@ asyncTest("sync try/catch inside conditional", 1, function(_) {
 	}, undefined);
 })
 
+asyncTest("labelled break", 1, function(_) {
+	evalTest(function f(_) {
+		var result = '';
+		outer:
+		for (var i = 1; i < 10; i++) {
+			inner:
+			for (var j = 5; j < 10; j++) {
+				result = delay(_, result) + '!'
+				if (i == 1 && j == 7) break;
+				if (i == 2 && j == 7) break inner;
+				if (i == 3 && j == 7) continue inner;
+				if (i == 4 && j == 7) continue outer;
+				if (i == 5 && j == 7) break outer;
+				result = delay(_, result) + delay(_, i) + delay(_, j) + '-';
+			}
+			result += delay(_, '/')
+		}
+		return result;
+	}, '!15-!16-!/!25-!26-!/!35-!36-!!38-!39-/!45-!46-!!55-!56-!');
+})
+
 asyncTest("octal literal", 1, function(_) {
 	evalTest(function f(_) {
 		return 010;

@@ -4,8 +4,8 @@ var transform = require('streamline/lib/callbacks/transform').transform;
 module("streamline generation");
 
 function clean(s) {
-	if (typeof jQuery === "function" && jQuery.browser.mozilla) return new Function(s).toString();
-	else return s.replace(/[\n\t ]/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
+	if (typeof jQuery === "function" && jQuery.browser.mozilla) s =  new Function(s).toString();
+	return s.replace(/\s/g, '').replace(/};/g, '}').replace(/=\(_\|\|__trap\)/g, '=_||__trap').replace(/__frame,-?\d+,-?\d+,/g, '__frame,?,?,');
 }
 
 function genTest(f1, f2) {
@@ -1005,7 +1005,7 @@ test("CoffeeScript fat arrow", 1, function() {
         	return Test.prototype.method.apply(_this, arguments);
       	};
 	}, function f() {
-		this.method = function() {
+		this.method = function(_) {
         	return Test.prototype.method.apply(_this, arguments);
       	};
 	});
