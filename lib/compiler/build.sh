@@ -16,8 +16,8 @@ rm builtins.js
 # compile test files for client too
 pushd ../../test/common > /dev/null
 ../../bin/_node -lp -v -f -c .
-mv eval-test.js flows-test.js stack-test.js futures-test.js callbacks
+mv eval-test.js flows-test.js stack-test.js callbacks
 ../../bin/_node_harmony --generators -v -f -c .
-mv eval-test.js flows-test.js stack-test.js futures-test.js generators
+mv eval-test.js flows-test.js stack-test.js generators
 popd > /dev/null
 popd > /dev/null

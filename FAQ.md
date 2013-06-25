@@ -110,7 +110,7 @@ function readFile(path, enc, _) {
 }
 ```
 
-### My control flow is completely broken. I am completely lost. Help!
+### My flow control is completely broken. I am completely lost. Help!
 
 Check your file extensions. 
 
@@ -126,12 +126,7 @@ The only drawback is a slower application startup because more files get transfo
 
 ### Can I use streamline.js with the _express_ middleware
 
-Yes! 
-
-There are two NPM modules that will help you integrate streamline and express:
-
-* [express-streamline](https://github.com/aseemk/express-streamline)
-* [streamline-express](https://github.com/sethyuan/streamline-express)
+Yes! Take a look at [express-streamline](https://github.com/aseemk/express-streamline).
 
 And read just below about dealing with events!
 

@@ -110,7 +110,7 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 && l.indexOf('exports.invoke') < 0; }).map(function(l){
+		s = s.split('\n').map(function(l){
 			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
@@ -123,7 +123,7 @@ function T(_, fn, code, failFn){
 
 function stackEqual(got, expect) {
 	if (typeof T_ === 'function' && T_.gstreamlineFunction) { got = got.substring(0, 25); expect = expect.substring(0, 25); }
-	strictEqual(got, expect, expect);
+	strictEqual(got, expect);
 }
 // safari hack
 var rawStack = new Error().stack ? function(raw) {

@@ -42,7 +42,7 @@ function archiveOrders(date, _) {
 
 and streamline transforms the code and takes care of the callbacks!
 
-No control flow APIs to learn! You just have to follow a simple rule:
+No flow control APIs to learn! You just have to follow a simple rule:
 
 > Replace all callbacks by an underscore and write your code as if all functions were synchronous.
 
@@ -284,9 +284,15 @@ Streamline also provides _stream wrappers_ that simplify stream programming. The
 
 # Examples
 
-The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) shows streamline.js in action on a simple _search aggregator_ application.
+The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples shows an asynchronous directory traversal that computes disk usage.
+You can run it as follows:
 
-The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples show an asynchronous directory traversal that computes disk usage.
+```sh
+_node streamline/examples/diskUsage/diskUsage
+```
+
+The `diskUsage2` example is a faster variant that parallelizes I/O operations with futures. 
+You'll also find CoffeeScript versions of these examples.
 
 # Online demo
 
@@ -311,9 +317,9 @@ The following packages use streamline.js:
 
 # Resources
 
-The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) and [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md) are must-reads for starters.
-
 The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/API.md).
+
+The [wiki](https://github.com/Sage/streamlinejs/wiki) give more information on advanced topics.
 
 For support and discussion, please join the [streamline.js mailing list](http://groups.google.com/group/streamlinejs).
 
