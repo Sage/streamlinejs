@@ -13,7 +13,6 @@ asyncTest("no timeout", 1, function(_) {
 	equals(f(_), 'a', "no timeout");
 	start();
 });
-/*
 asyncTest("result before timeout", 1, function(_) {
 	var f = delay(1, 'a');
 	equals(f(_, { timeout: 10, return: 'b' }), 'a', "got result");
@@ -123,4 +122,3 @@ asyncTest("join with intermediate timeout", 5, function(_) {
 	equals(step2.i, 2, "step2 cancelled ok");
 	start();
 });
-*/
