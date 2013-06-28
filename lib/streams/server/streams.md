@@ -77,7 +77,8 @@ This stream is readable (see `ReadableStream` above).
 
 * `request = new streams.HttpServerRequest(req[, options])`  
    returns a wrapper around `req`, an `http.ServerRequest` object.   
-   The `options` parameter can be used to pass `lowMark` and `highMark` values.
+   The `options` parameter can be used to pass `lowMark` and `highMark` values, or
+   to control encoding detection (see section below).
 * `method = request.method` 
 * `url = request.url` 
 * `headers = request.headers` 
@@ -122,6 +123,9 @@ This is a wrapper around node's `http.ClientResponse`
 
 This stream is readable (see `ReadableStream` above).
 
+* `response = new HttpClientResponse(resp, options)`  
+  wraps a node response object.  
+  `options.detectEncoding` and be used to control encoding detection (see section below).
 * `response = request.response(_)`  
    returns the response stream.
 * `status = response.statusCode`  
@@ -207,3 +211,17 @@ This is a wrapper around node's `net.Server` object:
 * `streams.pump(_, inStream, outStream)`  
    Pumps from `inStream` to `outStream`.  
    Does not close the streams at the end.
+
+## Encoding detection
+
+The `options.detectEncoding` option controls how the encoding is sent by the
+`HttpServerRequest` and `HttpClientResponse` constructors.  
+This option can take the following values:
+* `strict`: the RFC-2616-7.2.1 rules are applied.
+* `default`: the default algorithm used by streamline v0.4 is used. 
+   This algorithm is more lenient and sets the encoding to `utf8` when text content is detected, even
+   if there is no charset indication.
+* `ignore`: null is always returned and the stream is always handled in binary mode (buffers rather than strings).
+* a function. This is a hook for custom encoding detection. 
+  The function is called as `fn(headers)` and returns the encoding.
+and an  
