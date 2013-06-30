@@ -6,6 +6,10 @@ mv builtins.js ../callbacks
 cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../fibers/builtins.js
 rm builtins.js
 
+../../bin/_node -lp -v -f --fibers --fast -c builtins._js
+cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../fibers-fast/builtins.js
+rm builtins.js
+
 ../../bin/_node_harmony -lp -v -f --generators -c builtins._js
 cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../generators/builtins.js
 rm builtins.js
