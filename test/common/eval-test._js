@@ -1,22 +1,20 @@
-var module = QUnit.module;
-
-module("streamline evaluation");
+QUnit.module(module.id);
 
 function evalTest(f, val) {
-	f(function(err, result) {
+	f(_(function(err, result) {
 		var str = err ? "ERR: " + err : result;
 		strictEqual(str, val);
 		start();
-	})
+	}));
 }
 
 function delay(_, val) {
-	setTimeout(_, 0);
+	setTimeout(~_, 0);
 	return val;
 }
 
 function delayFail(_, err) {
-	setTimeout(_, 0);
+	setTimeout(~_, 0);
 	throw err;
 }
 
@@ -523,8 +521,8 @@ asyncTest("this", 5, function(_) {
 
 		O.prototype.test4 = function(_) {
 			var self = this;
-			var v1 = delay2(this.x + 1);
-			var v2 = delay2(1);
+			var v1 = delay2(this.x + 1, void _);
+			var v2 = delay2(1, void _);
 			this.x = v1(_) + v2(_);
 			strictEqual(this, self);
 		}
@@ -569,10 +567,10 @@ asyncTest("futures test", 1, function(_) {
 			return delay(_, val);
 		}
 
-		var a = delay2('a');
-		var b = delay2('b');
-		var c = delay2('c');
-		var d = delay2('d');
+		var a = delay2('a', void _);
+		var b = delay2('b', void _);
+		var c = delay2('c', void _);
+		var d = delay2('d', void _);
 		return a(_) + b(_) + d(_) + c(_);
 	}, "abdc");
 })
@@ -683,3 +681,10 @@ asyncTest("octal literal", 1, function(_) {
 		return 010;
 	}, 8);
 })
+
+asyncTest("typeof rewriting bug (fibers)", 1, function(_) {
+	evalTest(function f(_) {
+		var hello = "hello";
+		return typeof(hello);
+	}, "string");
+});

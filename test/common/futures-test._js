@@ -1,15 +1,13 @@
-var module = QUnit.module;
+QUnit.module(module.id);
 var flows = require("streamline/lib/util/flows");
 
 function delay(millis, val, _) {
-	setTimeout(_, millis);
+	setTimeout(~_, millis);
 	return val;
 }
 
-module("futures");
-
 asyncTest("no timeout", 1, function(_) {
-	var f = delay(1, 'a');
+	var f = delay(1, 'a', void _);
 	equals(f(_), 'a', "no timeout");
 	start();
 });

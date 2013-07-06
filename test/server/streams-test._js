@@ -1,7 +1,6 @@
 "use strict";
 
 var streams = require('streamline/lib/streams/streams');
-var module = QUnit.module;
 
 var bufSize = 100;
 var bufCount = 3;
@@ -40,16 +39,16 @@ new streams.HttpServer(function(req, res, _) {
 	})
 	for (var i = 0; i < bufCount; i++) {
 		res.write(_, makeBuffer(i));
-		process.nextTick(_);
+		process.nextTick(~_);
 	}
 	res.end();
-}).listen(null, 1337, "127.0.0.1");
+}).listen(void _, 1337, "127.0.0.1");
 //console.error('Server running at http://127.0.0.1:1337/');
 var paused = 0,
 	resumed = 0;
 var doStop = false;
 
-module("node streams test", {
+QUnit.module(module.id, {
 	setup: function() {},
 	teardown: function() {
 		if (doStop) {
@@ -88,7 +87,7 @@ function doTest(_, name, options, fn) {
 }
 
 function dot(_) {
-	process.nextTick(_);
+	process.nextTick(~_);
 	//process.stderr.write(".");
 }
 

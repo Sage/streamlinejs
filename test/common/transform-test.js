@@ -1,7 +1,5 @@
-var module = QUnit.module;
+QUnit.module(module.id);
 var transform = require('streamline/lib/callbacks/transform').transform;
-
-module("streamline generation");
 
 function clean(s) {
 	if (typeof jQuery === "function" && jQuery.browser.mozilla) s =  new Function(s).toString();

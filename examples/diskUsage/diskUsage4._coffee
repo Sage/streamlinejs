@@ -19,7 +19,7 @@
 # On my machine, the parallel version is almost twice faster than the sequential version.
 #
 
-fs = require 'fs'
+fs = require 'streamline-fs'
 flows = require 'streamline/lib/util/flows'
 
 fileFunnel = flows.funnel 20

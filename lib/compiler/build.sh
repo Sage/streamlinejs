@@ -15,6 +15,8 @@ cat builtins.js | sed -e "s/\/\/\/ \!doc//" > ../generators/builtins.js
 rm builtins.js
 
 ../../bin/_node -lp -v -f -c compile._js
+cat compile.js | sed -e "s/\/\/\/ \!doc//" > ../callbacks/compile.js
+rm compile.js
 ../../bin/_node -lp -v -f -c ../streams/client/streams._js
 
 # compile test files for client too
