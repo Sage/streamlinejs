@@ -687,3 +687,14 @@ asyncTest("typeof rewriting bug (fibers)", 1, function __53(_) { var __frame = {
         hello = "hello";
         return _(null, typeof (hello)); });
     }, "string"); _(); });});
+
+
+asyncTest("ASI problems", 1, function __54(_) { var __frame = { name: "__54", line: 692 }; return __func(_, this, arguments, __54, 0, __frame, function __$__54() {
+    evalTest(function f(_) { var s; var __frame = { name: "f", line: 693 }; return __func(_, this, arguments, f, 0, __frame, function __$f() {
+        s = "a";
+        return delay(__cb(_, __frame, 2, 6, function ___(__0, __1) { s = __1;
+          return delay(__cb(_, __frame, 3, 6, function ___(__0, __2) { s = __2;
+            return delay(__cb(_, __frame, 4, 2, function __$f() {
+              return delay(__cb(_, __frame, 5, 2, function __$f() {
+                return _(null, s); }, true), s); }, true), s); }, true), s); }, true), s); });
+    }, "a"); _(); });});

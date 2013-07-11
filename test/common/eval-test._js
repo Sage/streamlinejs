@@ -688,3 +688,16 @@ asyncTest("typeof rewriting bug (fibers)", 1, function(_) {
 		return typeof(hello);
 	}, "string");
 });
+
+asyncTest("ASI problems", 1, function(_) {
+	evalTest(function f(_) {
+		var s = "a";
+		s = delay(_, s)
+		s = delay(_, s)
+		delay(_, s)
+		delay(_, s)
+		return s
+	}, "a");
+})
+
+
