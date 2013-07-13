@@ -49,6 +49,16 @@ But you may choose to pass the callback as first parameter if you design private
 
 Yes but you have to be careful with the special `arguments` variable. You cannot pass it blindly to another call with `apply`. You have to use the streamline `apply_` built-in function instead. See its documentation.
 
+### Can I used _ for other purposes, for example when using the underscore library with streamline
+
+No. `_` should be reserved for streamline.
+
+The preprocessor will give you an error if you use it in invalid contexts. If you want to use underscore with streamline, you should choose another name for underscore. For example you can double the underscore:
+
+``` javascript
+var __ = require('underscore');
+```
+
 ### It does not work and I'm not even getting an exception. What's going on?
 
 You probably called a buggy asynchronous function and you did not pass `_`. For example:
