@@ -1,11 +1,11 @@
 QUnit.module(module.id);
 
 function evalTest(f, val) {
-	f(_(function(err, result) {
+	f(_ >> function(err, result) {
 		var str = err ? "ERR: " + err : result;
 		strictEqual(str, val);
 		start();
-	}));
+	});
 }
 
 function delay(_, val) {
