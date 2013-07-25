@@ -30,20 +30,6 @@ function checkBuffer(buf, start) {
 	return start + buf.length;
 }
 
-new streams.HttpServer(function(req, res, _) {
-	res.writeHead(200, {
-		'Content-Type': 'application/octet-stream'
-	});
-	res.emitter.on("drain", function() {
-		process.stderr.write("*");
-	})
-	for (var i = 0; i < bufCount; i++) {
-		res.write(_, makeBuffer(i));
-		process.nextTick(~_);
-	}
-	res.end();
-}).listen(void _, 1337, "127.0.0.1");
-//console.error('Server running at http://127.0.0.1:1337/');
 var paused = 0,
 	resumed = 0;
 var doStop = false;
@@ -58,6 +44,25 @@ QUnit.module(module.id, {
 			}, 0)
 		}
 	}
+});
+
+asyncTest("start test server", 1, function(_){
+	new streams.HttpServer(function(req, res, _) {
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream'
+		});
+		res.emitter.on("drain", function() {
+			process.stderr.write("*");
+		})
+		for (var i = 0; i < bufCount; i++) {
+			res.write(_, makeBuffer(i));
+			process.nextTick(~_);
+		}
+		res.end();
+	}).listen(_, 1337, "127.0.0.1");
+	ok(true, "server started");
+	//console.error('Server running at http://127.0.0.1:1337/');
+	start();
 });
 
 function addBufferHooks(stream) {
