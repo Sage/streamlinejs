@@ -7,9 +7,16 @@
     "type": "git",
     "url": "git://github.com/Sage/streamlinejs.git"
   },
-  "engines": { "node": ">=0.6.0" },
-  "dependencies": {},
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "dependencies": {
+    "source-map": "~0.1.27"
+  },
   "author": "Bruno Jouhier",
-  "directories": {"lib": "./lib", "bin": "./bin" },
+  "directories": {
+    "lib": "./lib",
+    "bin": "./bin"
+  },
   "main": "index.js"
 }

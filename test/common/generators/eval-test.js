@@ -700,6 +700,45 @@ asyncTest("ASI problems", 1, (function(unstarred__) {  function F(_) {   return 
 	}, 0)), "a");
 }, 0)));
 
+function twoResults(a, b, cb) {
+	setTimeout(function() {
+		cb(null, a, b);
+	}, 0);
+}
+
+function twoResultsSync(a, b, cb) {
+	cb(null, a, b);
+}
+
+asyncTest("multiple results ~_", 1, (function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function*(_) {
+	evalTest((function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function* f(_) {
+		var results = (yield galaxy.invoke(null, twoResults, ['abc', 'def', _], 2));
+		return results;
+	}, 0)), "abc");
+}, 0)));
+
+asyncTest("multiple results [_]", 1, (function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function*(_) {
+	evalTest((function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function* f(_) {
+		var results = (yield galaxy.invoke(null, twoResults, ['abc', 'def', _], { callbackIndex: 2, returnArray: true }));
+		return results.join('-');
+	}, 0)), "abc-def");
+}, 0)));
+
+asyncTest("multiple results with future", 1, (function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function*(_) {
+	evalTest((function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function* f(_) {var wrapper_ = (function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__2 = unstarred__.__starred__2;  F.__starred__2.__unstarred__2 = F;  return F;})(galaxy.unstar(wrapper, 2));
+		function* wrapper(a, b, _) { return (yield galaxy.invoke(null, twoResults, [a, b, _], { callbackIndex: 2, returnArray: true })); }
+		var results = (yield galaxy.invoke(null, wrapper_('abc', 'def', null), [_], 0));
+		return results.join('-');
+	}, 0)), "abc-def");
+}, 0)));
+
+asyncTest("multiple results synchronously", 1, (function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function*(_) {
+	evalTest((function(unstarred__) {  function F(_) {   return unstarred__.apply(this, arguments);  };  F.__starred__0 = unstarred__.__starred__0;  F.__starred__0.__unstarred__0 = F;  return F;})(galaxy.unstar(function* f(_) {
+		var results = (yield galaxy.invoke(null, twoResultsSync, ['abc', 'def', _], { callbackIndex: 2, returnArray: true }));
+		return results.join('-');
+	}, 0)), "abc-def");
+}, 0)));
+
 
 
 }, 0)).call(this, function(err) {
