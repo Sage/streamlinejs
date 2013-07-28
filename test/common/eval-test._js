@@ -706,6 +706,10 @@ function twoResults(a, b, cb) {
 	}, 0);
 }
 
+function twoResultsSync(a, b, cb) {
+	cb(null, a, b);
+}
+
 asyncTest("multiple results ~_", 1, function(_) {
 	evalTest(function f(_) {
 		var results = twoResults('abc', 'def', ~_);
@@ -724,6 +728,13 @@ asyncTest("multiple results with future", 1, function(_) {
 	evalTest(function f(_) {
 		function wrapper(a, b, _) { return twoResults(a, b, [_]); }
 		var results = wrapper('abc', 'def', void _)(_);
+		return results.join('-');
+	}, "abc-def");
+});
+
+asyncTest("multiple results synchronously", 1, function(_) {
+	evalTest(function f(_) {
+		var results = twoResultsSync('abc', 'def', [_]);
 		return results.join('-');
 	}, "abc-def");
 });
