@@ -1,1 +1,0 @@
-../../deps/luvmonkey/bin/luvmonkey test.js

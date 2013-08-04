@@ -230,7 +230,7 @@ But streamline guarantees the ordering in the cases where it really matters: log
 
 ### What about performance? Am I taking a hit?
 
-In callback mode, streamline generates callbacks that are very similar to the ones you would be writing by hand. So you are only paying a small overhead. Usually, the overhead will be small in comparison to the time spent in the async functions that you are calling. For example, you incur a 50% overhead when calling `process.nextTick(_)`, which is the fastest async call in node.js. If you call `setTimeout(_, 0)` the overhead drops to 18%. And on a real (but simple) I/O call like `fs.stat` it goes down to 3 or 4%.
+In callback mode, streamline generates callbacks that are very similar to the ones you would be writing by hand. So you are only paying a small overhead. Usually, the overhead will be small in comparison to the time spent in the async functions that you are calling. For example, you incur a 50% overhead when calling `process.nextTick(~_)`, which is the fastest async call in node.js. If you call `setTimeout(~_, 0)` the overhead drops to 18%. And on a real (but simple) I/O call like `fs.stat` it goes down to 3 or 4%.
 
 The fibers mode has more overhead on I/O calls but it eliminates all the callback overhead in the layers that call low level I/O services. So depending on the thickness of the logic that sits on top of the I/O layers you may get an increase or decrease of performance. The nice thing is that you don't need to choose between callbacks and fibers upfront. You can write your code, compare performance and then choose the best mode for deployment.
 

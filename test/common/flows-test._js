@@ -1,4 +1,4 @@
-var module = QUnit.module;
+QUnit.module(module.id);
 var flows = require("streamline/lib/util/flows");
 
 function delay(_, val) {
@@ -10,8 +10,6 @@ function delayFail(_, err) {
 	flows.nextTick(_);
 	throw err;
 }
-
-module("flows");
 
 function sparse() {
 	var a = [];
@@ -429,10 +427,10 @@ asyncTest("futures multiplex", 3, function(_) {
 		result3 = future(_) + result3;
 	}
 
-	var f1 = delay(null, 1);
-	var f10 = delay(null, 10);
+	var f1 = delay(void _, 1);
+	var f10 = delay(void _, 10);
 
-	flows.collect(_, [doIt(f1), doIt(f10), doIt(f1)]);
+	flows.collect(_, [doIt(f1, void _), doIt(f10, void _), doIt(f1, void _)]);
 
 	deepEqual(result1, 12);
 	deepEqual(result2, 12);

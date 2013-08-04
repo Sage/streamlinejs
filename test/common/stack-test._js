@@ -1,14 +1,14 @@
 // WARNING: DO NOT INSERT COMMENTS OR ANYTHING
 // Line numbers matter to this test!
 
-var module = QUnit.module;
+QUnit.module(module.id);
 
-
-
-function nextTick(cb){
-	setTimeout(function(){
-		cb();
-	}, 0);
+function nextTick(_){
+	(function(cb) {
+		setTimeout(function(){
+			cb();
+		}, 0);
+	})(~_);
 }
 
 function failAsync(_, code){
@@ -78,8 +78,8 @@ function E(_, code){
 }
 
 function F(_, code){
-	var f1 = A(null, code);
-	var f2 = A(null, code + 1);
+	var f1 = A(void _, code);
+	var f2 = A(void _, code + 1);
 	return f1(_) + " & " + f2(_);
 }
 
@@ -132,7 +132,7 @@ var rawStack = new Error().stack ? function(raw) {
 	return "raw stack unavailable";
 }
 
-module("stacks");
+
 
 asyncTest("stacks", 20, function(_) {
 	stackEqual(T(_, A, 1, failAsync), rawStack("Error: 1/failAsync:15") + "/A:28");
