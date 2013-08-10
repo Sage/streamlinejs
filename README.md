@@ -274,6 +274,31 @@ try {
 }
 ```
 
+# Callbacks with multiple results
+
+Some APIs return several results through their callback. For example:
+
+``` javascript
+request(options, function(err, response, body) {
+  // ...
+});
+```
+
+You can get all the results by passing `[_]` instead of `_`:
+
+``` javascript
+var results = request(options, [_]);
+// will be better with destructuring assignment.
+var response = results[0];
+var body = results[1];
+```
+
+Note: if you only need the first result you can pass `_`:
+
+``` javascript
+var response = request(options, _);
+```
+
 # Fast mode
 
 Streamline has a _fast_ mode which produces leaner and faster code at the expense of a few more keystrokes and a bit of extra care when writing the code.
