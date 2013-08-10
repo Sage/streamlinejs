@@ -7,7 +7,7 @@ function delay(millis, val, _) {
 }
 
 asyncTest("no timeout", 1, function(_) {
-	var f = delay(1, 'a', void _);
+	var f = delay(1, 'a', !_);
 	equals(f(_), 'a', "no timeout");
 	start();
 });

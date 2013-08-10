@@ -427,10 +427,10 @@ asyncTest("futures multiplex", 3, function(_) {
 		result3 = future(_) + result3;
 	}
 
-	var f1 = delay(void _, 1);
-	var f10 = delay(void _, 10);
+	var f1 = delay(!_, 1);
+	var f10 = delay(!_, 10);
 
-	flows.collect(_, [doIt(f1, void _), doIt(f10, void _), doIt(f1, void _)]);
+	flows.collect(_, [doIt(f1, !_), doIt(f10, !_), doIt(f1, !_)]);
 
 	deepEqual(result1, 12);
 	deepEqual(result2, 12);

@@ -78,8 +78,8 @@ function E(_, code){
 }
 
 function F(_, code){
-	var f1 = A(void _, code);
-	var f2 = A(void _, code + 1);
+	var f1 = A(!_, code);
+	var f2 = A(!_, code + 1);
 	return f1(_) + " & " + f2(_);
 }
 

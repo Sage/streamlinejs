@@ -521,8 +521,8 @@ asyncTest("this", 5, function(_) {
 
 		O.prototype.test4 = function(_) {
 			var self = this;
-			var v1 = delay2(this.x + 1, void _);
-			var v2 = delay2(1, void _);
+			var v1 = delay2(this.x + 1, !_);
+			var v2 = delay2(1, !_);
 			this.x = v1(_) + v2(_);
 			strictEqual(this, self);
 		}
@@ -567,10 +567,10 @@ asyncTest("futures test", 1, function(_) {
 			return delay(_, val);
 		}
 
-		var a = delay2('a', void _);
-		var b = delay2('b', void _);
-		var c = delay2('c', void _);
-		var d = delay2('d', void _);
+		var a = delay2('a', !_);
+		var b = delay2('b', !_);
+		var c = delay2('c', !_);
+		var d = delay2('d', !_);
 		return a(_) + b(_) + d(_) + c(_);
 	}, "abdc");
 })
@@ -727,7 +727,7 @@ asyncTest("multiple results [_]", 1, function(_) {
 asyncTest("multiple results with future", 1, function(_) {
 	evalTest(function f(_) {
 		function wrapper(a, b, _) { return twoResults(a, b, [_]); }
-		var results = wrapper('abc', 'def', void _)(_);
+		var results = wrapper('abc', 'def', !_)(_);
 		return results.join('-');
 	}, "abc-def");
 });
