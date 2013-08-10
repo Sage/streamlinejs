@@ -274,6 +274,14 @@ try {
 }
 ```
 
+# Fast mode
+
+Streamline has a _fast_ mode which produces leaner and faster code at the expense of a few more keystrokes and a bit of extra care when writing the code.
+
+This mode only applies to _fibers_ and _generators_ modes. It has no impact in _callbacks_ mode.
+
+For details see the [fast mode wiki page](https://github.com/Sage/streamlinejs/wiki/Fast-mode)
+
 # Stream Wrappers
 
 Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams.md) contains:
