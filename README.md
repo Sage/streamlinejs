@@ -161,15 +161,14 @@ the fibers library (easy: `npm install fibers`).
 This option gives superior development experience: line numbers and comments are preserved in the transformed code; 
 you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
 
-The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by 
-setting the `fibers` option when registering streamline 
+The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by setting the `fibers` option when registering streamline 
 (see the `streamline.register(options)` function.
 
-The _generators_ option is more experimental (but rather solid as it passes all unit tests). 
-It produces code that is similar to the _fibers_ option, although slightly more complex. 
-Like the _fibers_ option, it preserves line numbers and comments. 
-This option does _not_ yet work in node.js because V8 does not currently support generators but it works in Firefox and in [luvmonkey](https://github.com/creationix/luvmonkey). 
-It should work, with minor tweaks, in future versions of V8 that may implement [Harmony generators](http://wiki.ecmascript.org/doku.php?id=harmony:generators).
+The _generators_ option produces code for harmony generators. It uses the [galaxy](https://github.com/bjouhier/galaxy) module as runtime. It requires node.js version >= 0.11.4 or an experimental browser (latest Chrome Canary). This options produces code which is similar to what you get with the fibers option, just a bit heavier because of the `yield` keywords.
+
+The _generators_ option can be activated by passing the `--generators` option to the `_node` command or by setting the `ganerators` option when registering streamline. If you run it with a loader you have to pass the `--harmony` option to `node`.
+
+There are also _fast_ variants of the _fibers_ and _generators_ options. See below.
  
 # Interoperability with standard node.js code
 
@@ -309,11 +308,7 @@ For details see the [fast mode wiki page](https://github.com/Sage/streamlinejs/w
 
 # Stream Wrappers
 
-Streamline also provides _stream wrappers_ that simplify stream programming. The [streams module](https://github.com/Sage/streamlinejs/blob/master/lib/streams/server/streams.md) contains:
-
-* a generic `ReadableStream` wrapper with an asynchronous `stream.read(_[, len])` method.
-* a generic `WritableStream` wrapper with an asynchronous `stream.write(_, buf[, encoding])` method.
-* wrappers for HTTP and TCP request and response objects (client and server).
+Streamline also provides _stream wrappers_ that simplify stream programming. These wrappers used to be included in the streamline npm package but they have now been moved to a separate [streamline-streams](https://github.com/Sage/streamline-streams) package.
 
 # Examples
 
@@ -325,8 +320,6 @@ The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUs
 
 You can see how streamline transforms the code by playing with the [online demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
-If you are curious, you can also play with the [generators demo - Firefox only](http://sage.github.com/streamlinejs/examples/streamlineMe/yieldMe.html).
-
 # Troubleshooting
 
 Read the [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md).
@@ -334,6 +327,13 @@ Read the [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md).
 If you don't find your answer in the FAQ, post to the [mailing list](http://groups.google.com/group/streamlinejs), or file an issue in [GitHub's issue tracking](https://github.com/Sage/streamlinejs/issues).
 
 # Related Packages
+
+The following packages contain API wrappers for streamline.js:
+
+* [streamline-fs](https://github.com/Sage/streamline-fs): wrapper for node's `fs` module. It fixes the `fs.exists` call and it wraps the entire API for streamline's fast mode.
+* [streamline-streams](https://github.com/Sage/streamline-streams): wraps node's stream APIs. Provides very simple read and write calls for node streams.
+* [streamline-mongodb](https://github.com/Sage/streamline-mongodb): wrappers for [mongodb](https://github.com/mongodb/node-mongodb-native)'s native node.js driver. You only need this wrapper if you use the _fast_ mode.
+
 
 The following packages use streamline.js:
 
