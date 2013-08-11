@@ -254,12 +254,19 @@ See the documentation of the [builtins module](https://github.com/Sage/streamlin
 
 # Exception Handling
 
-Streamline lets you do your exception handling with the usual `try/catch` construct. The `finally` clause is also supported.
+Streamline lets you do your exception handling with the usual `try/catch` construct. The `finally` clause is also fully supported.
 
-Streamline overrides the `ex.stack` getter to give you the stack of streamline calls rather than the last callback stack. You can still get the native callback stack trace with `ex.rawStack`.
+Streamline overrides the `ex.stack` getter to give you complete comprehensive stacktrace information. In _callbacks_ and _generators_ modes you get two stack traces:
+
+* the _raw_ stack trace of the last callback.
+* the _async_ stack trace of the asynchronous calls that caused the exception.
+
+In _fibers_ mode there is a single stack trace.
+
+Note: you must install the companion [galaxy-stack](https://github.com/bjouhier/galaxy-stack) package to get _async_ stack traces in _generators_ mode.
 
 Exception handling also works with futures.
-If a future throws an exception before you try to read its result, the exception will be memorized by the future and you will get it at the point where your try to read the result. 
+If a future throws an exception before you try to read its result, the exception is memorized by the future and you get it at the point where your try to read the future's result. 
 For example:
 
 ``` javascript
