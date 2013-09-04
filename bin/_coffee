@@ -1,4 +1,6 @@
-#!/usr/bin/env node --harmony
+#!/bin/sh
+':' //; exec "`command -v nodejs || command -v node`" --harmony "$0" "$@"
+// got shebang trick from http://unix.stackexchange.com/questions/65235/universal-node-js-shebang
 
 var path = require("path");
 var fs = require("fs");
