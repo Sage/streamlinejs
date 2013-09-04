@@ -739,4 +739,12 @@ asyncTest("multiple results synchronously", 1, function(_) {
 	}, "abc-def");
 });
 
+asyncTest("this in futures", 2, function(_) {
+	var c = {
+		v: 1,
+		test: function(_) { return this.v; }
+	}
+	strictEqual(c.test(_), 1, "direct call");
+	strictEqual(c.test(!_)(_), 1, "future call");
+});
 
