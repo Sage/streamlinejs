@@ -746,5 +746,15 @@ asyncTest("this in futures", 2, function(_) {
 	}
 	strictEqual(c.test(_), 1, "direct call");
 	strictEqual(c.test(!_)(_), 1, "future call");
+	start();
+});
+
+asyncTest("arity of async functions", 3, function(_) {
+	var f = function(_, a, b, c, d, e, f, g, h, i) { return a + b; };
+	var g = function(_, a) { return f(_, 1, 2)}
+	strictEqual(f.length, 10, "f.length === 10");
+	strictEqual(g.length, 2, "g.length === 2");
+	strictEqual(g(_), 3, "g(_) === 3");
+	start();
 });
 
