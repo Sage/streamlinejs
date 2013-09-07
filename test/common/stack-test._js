@@ -3,13 +3,13 @@
 
 QUnit.module(module.id);
 
-function nextTick(_){
-	(function(cb) {
-		setTimeout(function(){
-			cb();
-		}, 0);
-	})(~_);
-}
+var nextTick = _(function(cb) {
+	setTimeout(function(){
+		cb();
+	}, 0);
+}, 0);
+
+
 
 function failAsync(_, code){
 	throw new Error(code);
