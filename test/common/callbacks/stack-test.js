@@ -3,12 +3,12 @@
 
 
 
-function nextTick(_) { var __frame = { name: "nextTick", line: 6 }; return __func(_, this, arguments, nextTick, 0, __frame, function __$nextTick() {
+var nextTick = function(cb) {
+  setTimeout(function() {
+    cb();
+  }, 0);};
 
 
-
-
-    return (function(cb) { setTimeout(function() { cb(); }, 0); })(__cb(_, __frame, 5, 1, _, true)); });};
 
 
 function failAsync(_, code) { var __frame = { name: "failAsync", line: 14 }; return __func(_, this, arguments, failAsync, 0, __frame, function __$failAsync() {
