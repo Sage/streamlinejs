@@ -758,3 +758,14 @@ asyncTest("arity of async functions", 3, function(_) {
 	start();
 });
 
+asyncTest("futures on _(fn, idx)", 1, function(_) {
+	var f = _(function(i, cb) {
+		setTimeout(function() {
+			cb(null, i + 1);
+		}, 0);
+	}, 1);
+	var fut = f(5, !_);
+	strictEqual(fut(_), 6, "fut(_) === 6");
+	start();
+});
+
