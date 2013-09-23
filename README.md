@@ -200,7 +200,7 @@ and the asynchronous functions that you create with streamline have the standard
 Streamline provides _futures_, a powerful feature that lets you parallelize I/O operations in a very
 simple manner.
 
-If you omit the callback (or pass a `null` callback) when calling a streamline function, the function will execute synchronously and return a _future_. The _future_ is just an asynchronous function that you can call later to obtain a result. Here is an example:
+If you pass `!_` instead of `_` when calling a streamline function, the function will execute synchronously and return a _future_. The _future_ is just an asynchronous function that you can call later to obtain a result. Here is an example:
 
 ```javascript
 function countLines(path, _) {
@@ -209,14 +209,14 @@ function countLines(path, _) {
 
 function compareLineCounts(path1, path2, _) {
   // parallelize the two countLines operations
-  var n1 = countLines(path1);
-  var n2 = countLines(path2);
+  var n1 = countLines(path1, !_);
+  var n2 = countLines(path2, !_);
   // get the results and diff them
   return n1(_) - n2(_);
 }
 ```
 
-In this example, `countLines` is called twice without `_` parameter. These calls start the `fs.readFile` asynchronous operations and return immediately two _futures_ (`n1` and `n2`). The `return` statement retrieves the results with `n1(_)` and `n2(_)` calls and computes their difference. 
+In this example, `countLines` is called twice with `!_`. These calls start the `fs.readFile` asynchronous operations and return immediately two _futures_ (`n1` and `n2`). The `return` statement retrieves the results with `n1(_)` and `n2(_)` calls and computes their difference. 
 
 Futures are very flexible. In the example above, the results are retrieved from the same function, but you can also pass futures to other functions, store them in objects, call them to get the results from a different module, etc. You can also have several readers on the same future. 
 
@@ -271,8 +271,8 @@ For example:
 
 ``` javascript
 try {
-  var n1 = countLines(badPath);
-  var n2 = countLines(goodPath);
+  var n1 = countLines(badPath, !_);
+  var n2 = countLines(goodPath, !_);
   setTimeout(_, 1000); // n1 fails, exception is memorized
   return n1(_) - n2(_); // exception is thrown by n1(_) expression.
 } catch (ex) {
