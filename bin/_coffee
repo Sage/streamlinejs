@@ -1,5 +1,5 @@
 #!/bin/sh
-':' //; exec "`command -v nodejs || command -v node`" --harmony "$0" "$@"
+':' //; exec "`command -v nodejs || command -v node`" `echo "$0" "$@" | awk '{ cmd=$1; sub(/[^ ]* /, "", $0); head=$0; sub(/(^| )[^-].*/, "", head); tail = substr($0, length(head) + 1); print head " " cmd " " tail }'`
 // got shebang trick from http://unix.stackexchange.com/questions/65235/universal-node-js-shebang
 
 var path = require("path");
