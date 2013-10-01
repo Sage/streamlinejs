@@ -1,5 +1,5 @@
 #!/bin/sh
-':' //; exec "`command -v nodejs || command -v node`" `echo "$0" "$@" | awk '{ cmd=$1; sub(/[^ ]* /, "", $0); head=$0; sub(/(^| )[^-].*/, "", head); tail = substr($0, length(head) + 1); print head " " cmd " " tail }'`
+':' //; exec "`command -v nodejs || command -v node`" `echo "$0" "$@" | awk '{gsub(/  /," ",$0); split($0,a," "); nopts=""; args=""; for (i=2;i<=length(a);i++) {if (a[i]=="--nodejs") {nopts = nopts " " a[++i]} else {args = args " " a[i]}}; print nopts " " a[1] args }'`
 // got shebang trick from http://unix.stackexchange.com/questions/65235/universal-node-js-shebang
 
 var path = require("path");
