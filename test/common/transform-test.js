@@ -567,6 +567,76 @@ test("nested switch", 1, function() {
 		});
 	});
 })
+test("switch fall through", 1, function() {
+	genTest(function f(_) {
+		f1();
+		switch (exp) {
+		case 'a':
+			f2(_);
+			f3();
+			break;
+		case 'b':
+			f4(_);
+		case 'c':
+			f5();
+		case 'd':
+			f6();
+			f7(_);
+			break;
+		default:
+			f8();
+			break;
+		}
+		f9();
+	}, function f(_) {
+		var__frame = {
+			name: "f",
+			line: 1
+		}
+		return __func(_, this, arguments, f, 0, __frame, function __$f() {
+			f1();
+			return (function __$f(__break) {
+				switch (exp) {
+				case "a":
+					return f2(__cb(_, __frame, 0, 0, function __$f() {
+						f3();
+						return__break();
+					}, true));
+				case "b":
+					var__1 = true;
+				case "c":
+					var__2 = true;
+				case "d":
+					return (function __$f(__then) {
+						if (__2) {
+							return (function __$f(__then) {
+								if (__1) {
+									return f4(__cb(_, __frame, 0, 0, __then, true));
+								} else {
+									__then();
+								}
+							})(function __$f() {
+								f5();
+								__then();
+							});
+						} else {
+							__then();
+						}
+					})(function __$f() {
+						f6();
+						return f7(__cb(_, __frame, 0, 0, __break, true));
+					});
+				default:
+					f8();
+					return __break();
+				}
+			})(function __$f() {
+				f9();
+				_();
+			});
+		});
+	});
+})
 test("nested calls", 1, function() {
 	genTest(function f(_) {
 		f1();
@@ -1000,12 +1070,12 @@ test("CoffeeScript closure (this, arguments)", 1, function() {
 test("CoffeeScript fat arrow", 1, function() {
 	genTest(function f() {
 		this.method = function(_) {
-        	return Test.prototype.method.apply(_this, arguments);
-      	};
+			return Test.prototype.method.apply(_this, arguments);
+		};
 	}, function f() {
 		this.method = function(_) {
-        	return Test.prototype.method.apply(_this, arguments);
-      	};
+			return Test.prototype.method.apply(_this, arguments);
+		};
 	});
 })
 

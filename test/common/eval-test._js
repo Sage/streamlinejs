@@ -3,7 +3,7 @@ QUnit.module(module.id);
 function evalTest(f, val) {
 	f(_ >> function(err, result) {
 		var str = err ? "ERR: " + err : result;
-		strictEqual(str, val);
+		strictEqual(str, val, val);
 		start();
 	});
 }
@@ -482,6 +482,33 @@ asyncTest("switch without default", 1, function(_) {
 
 		return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5);
 	}, "abcdda");
+})
+asyncTest("switch with fall through", 1, function(_) {
+	evalTest(function f(_) {
+		function g(_, i) {
+			var result = "/"
+			switch (delay(_, i)) {
+			case 1:
+				result += delay(_, "b");
+				break;
+			case 2:
+				result += delay(_, "c");
+			case 3:
+			case 4:
+				result += "d";
+			case 5:
+				result += delay(_, "e");
+				break;
+			case 6:
+				result += delay(_, "f");
+			default:
+				result += delay(_, "g");
+			}
+			return result;
+		}
+
+		return g(_, 0) + g(_, 1) + g(_, 2) + g(_, 3) + g(_, 4) + g(_, 5) + g(_, 6) + g(_, 7);
+	}, "/g/b/cde/de/de/e/fg/g");
 })
 asyncTest("this", 5, function(_) {
 	evalTest(function f(_) {
