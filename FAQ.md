@@ -28,7 +28,7 @@ function(_) { bar(_); }
 function foo(_) { return bar(); }
 ```
 
-Nothing bad will happen. But you have to call `foo` as `foo(_)`. If you call it as `foo()` you'll get a _future_ back, probably not what you want.
+Nothing bad will happen. But you have to call `foo` as `foo(_)`. If you call it as `foo()` you'll get an error (a _future_ in versions <= 0.8).
 
 There will be a bit of overhead so you should avoid declaring sync functions with an `_`.  
 
@@ -61,7 +61,9 @@ var __ = require('underscore');
 
 ### It does not work and I'm not even getting an exception. What's going on?
 
-You probably called a buggy asynchronous function and you did not pass `_`. For example:
+You may run into this problem with versions <= 0.8. The _futures_ syntax has changed in 0.10 and the new syntax avoids this problem. You will now get an error if you forgot to pass `_` or `!_`.
+
+If you are running version <= 0.8 you get this problem if you called a buggy asynchronous function and you did not pass `_`. For example:
 
 ``` javascript
 function buggy(_) { undefined.toString(); }
@@ -95,7 +97,16 @@ console.log(__filename + ': ' + exists(__filename, _)); // works
 console.log(__filename + ': ' + fs.exists(__filename, _)); // does not work
 ```
 
-### I'm calling an async function without `_` and I'm not getting a future back. What's wrong?
+You can also use the `streamline-fs` package (install it with `npm install streamline-fs`):
+
+```
+var fs = require('streamline-fs');
+
+var ok = fs.exists(__filename, _); // works
+```
+
+
+### I'm calling an async function with `!_` and I'm not getting a future back. What's wrong?
 
 You're calling a function which was not written with streamline, for example one of node's `fs` function. The workaround is easy: just wrap it with a streamline function:
 
@@ -119,6 +130,8 @@ function readFile(path, enc, _) {
 	else return fs.readFile(path, _);
 }
 ```
+
+You can also use the `streamline-fs` package (see previous answer). It wraps all the `fs` functions.
 
 ### My control flow is completely broken. I am completely lost. Help!
 
@@ -188,28 +201,13 @@ server.on('eventB', function(arg) {
 });
 ```
 
-If the event handler takes a fixed number of parameters, there is even a lighter solution: just add an `_` parameter to each event handler:
-
-``` javascript
-server.on('eventA', function(arg, _) {
-	// function has an _ parameter, you can use streamline
-}).on('eventB', function(arg, _) {
-	// streamline code
-});
-```
-
-It works because `function(arg, _)` will be called as a _future_ (without `_`). But it is a bit more fragile because errors are not trapped and code would break if the server changes and starts passing more arguments to its event handlers.
-
 ### Are there limitations? Am I limited to a subset of Javascript?
 
-Hardly any. Streamline knows how to transform all Javascript constructs except two:
+Hardly any. 
 
-* labelled `break` and `continue`. 
-* non-empty switch `case` that falls into another `case` without `break` nor `return`.
+There were some limitations in 0.8 (labelled `break` and switch `case` that falls into another `case` without `break`) but these limitations have been lifted in 0.10.
 
-The transformation engine could be improved to handle these constructs too but they are rather hairy and workarounds are easy so they haven't been implemented yet. You'll get a compilation error if you use these constructs.
-
-On the other hand, you can do all sorts of crazy things, like calling async functions from object or array literals, or even writing async constructors. The following will work:
+So you can do all sorts of crazy things, like calling async functions from object or array literals, or even writing async constructors. The following will work:
 
 ``` javascript
 var foo = [f1(_), f2(_), f3(_)].filter_(_, function(_, elt) { return elt.g1(_) || elt.g2(_); });
@@ -220,7 +218,7 @@ var bar = new Bar(_, "zoo");
 
 ### Will I always get the same semantics as in normal (sync) Javascript?
 
-The streamline compiler works by applying patterns. These patterns have been carefully crafted to preserve semantics. The only known case where streamline may diverge is the order of evaluation of subexpressions inside a given statement. 
+The streamline compiler works by applying transformation patterns. These patterns have been carefully crafted to preserve semantics. The only known case where streamline may diverge is the order of evaluation of subexpressions inside a given statement. 
 
 In callbacks mode, streamline evaluates the asynchronous subexpressions before the synchronous ones. So if you have `foo() + bar(_)`, it will evaluate `bar(_)` before `foo()`.  
 
@@ -230,12 +228,10 @@ But streamline guarantees the ordering in the cases where it really matters: log
 
 ### What about performance? Am I taking a hit?
 
-In callback mode, streamline generates callbacks that are very similar to the ones you would be writing by hand. So you are only paying a small overhead. Usually, the overhead will be small in comparison to the time spent in the async functions that you are calling. For example, you incur a 50% overhead when calling `process.nextTick(~_)`, which is the fastest async call in node.js. If you call `setTimeout(~_, 0)` the overhead drops to 18%. And on a real (but simple) I/O call like `fs.stat` it goes down to 3 or 4%.
+In callback mode, streamline generates callbacks that are very similar to the ones you would be writing by hand. So you are only paying a small overhead. Usually, the overhead will be small in comparison to the time spent in the async functions that you are calling. For example, you incur a 50% overhead when calling `process.nextTick(_)`, which is the fastest async call in node.js. If you call `setTimeout(_, 0)` the overhead drops to 18%. And on a real (but simple) I/O call like `fs.stat` it goes down to 3 or 4%.
 
 The fibers mode has more overhead on I/O calls but it eliminates all the callback overhead in the layers that call low level I/O services. So depending on the thickness of the logic that sits on top of the I/O layers you may get an increase or decrease of performance. The nice thing is that you don't need to choose between callbacks and fibers upfront. You can write your code, compare performance and then choose the best mode for deployment.
 
 Some patterns like caching can give surprising results (see https://gist.github.com/2362015). 
 
 There is also room for improvement. In callback mode the small overhead comes from the additional comfort and security that streamline gives you: sync stack traces, global context, trampoline, rigorous exception handling. This could be improved with options that disable these _comfort_ features but it would make the tool more complex.
-
-Future versions of V8 will likely support harmony generators. Streamline could then provide a third transformation mode that takes advantage of this language feature and may benefit from additional V8 optimizations. But all this is still speculative at this stage.

@@ -341,6 +341,11 @@ The following packages contain API wrappers for streamline.js:
 * [streamline-streams](https://github.com/Sage/streamline-streams): wraps node's stream APIs. Provides very simple read and write calls for node streams.
 * [streamline-mongodb](https://github.com/Sage/streamline-mongodb): wrappers for [mongodb](https://github.com/mongodb/node-mongodb-native)'s native node.js driver. You only need this wrapper if you use the _fast_ mode.
 
+There are also some helper packages for [express](http://expressjs.com/):
+
+* [express-streamline](https://github.com/aseemk/express-streamline)
+* [streamline-express](https://github.com/sethyuan/streamline-express)
+
 
 The following packages use streamline.js:
 
