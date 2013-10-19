@@ -33,7 +33,7 @@ du = (_, path) ->
 	else if stat.isDirectory()
 		files = fs.readdir path, _
 		futures = for f in files 
-			du null, path + "/" + f
+			du !_, path + "/" + f
 		total += futures.reduce_ _, ((_, val, future) -> val + future _), 0
 		console.log path + ": " + total
 	else

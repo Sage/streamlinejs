@@ -26,7 +26,7 @@ function du(_, path) {
   } else if (stat.isDirectory()) {
     var files = fs.readdir(path, _);
     total += files.map(function(file) {
-      return du(null, path + "/" + file);
+      return du(!_, path + "/" + file);
     }).reduce_(_, function(_, val, future) {
       return val + future(_);
     }, 0);
