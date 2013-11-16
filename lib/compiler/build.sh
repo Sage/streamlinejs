@@ -24,6 +24,29 @@ rm builtins.js
 
 ../../bin/_node -lp -v -f -c ../streams/client/streams._js
 
+pushd ../util > /dev/null
+
+../../bin/_node -lp -v -f -c flows._js
+mv flows.js ../callbacks
+
+../../bin/_node -lp -v -f --fibers -c flows._js
+cat flows.js | sed -e "s/\/\/\/ \!doc//" > ../fibers/flows.js
+rm flows.js
+
+../../bin/_node -lp -v -f --fibers --fast -c flows._js
+cat flows.js | sed -e "s/\/\/\/ \!doc//" > ../fibers-fast/flows.js
+rm flows.js
+
+../../bin/_node -lp -v -f --generators -c flows._js
+cat flows.js | sed -e "s/\/\/\/ \!doc//" > ../generators/flows.js
+rm flows.js
+
+../../bin/_node -lp -v -f --generators --fast -c flows._js
+cat flows.js | sed -e "s/\/\/\/ \!doc//" > ../generators-fast/flows.js
+rm flows.js
+
+popd > /dev/null
+
 # compile test files for client too
 pushd ../../test/common > /dev/null
 ../../bin/_node -lp -v -f -c .
