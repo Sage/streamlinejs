@@ -12,7 +12,7 @@ Asynchronous Javascript for dummies
   Compiler and file loader
 * [streamline/lib/compiler/compileSync](lib/compiler/compileSync.md)  
   Compiler and file loader
-* [streamline/lib/compiler/flows](lib/compiler/flows.md)  
+* [streamline/lib/util/flows](lib/util/flows.md)  
   Flow control utilities
 * [streamline/lib/globals](lib/globals.md)  
   Container for global context
