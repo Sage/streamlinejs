@@ -734,7 +734,7 @@ test("try catch", 1, function() {
 					});
 
 				})(function ___(ex, __result) {
-					__g.trampoline.queue(function __$f() {
+					__catch(function __$f() {
 						if (ex) {
 							f5();
 							return f6(__cb(_, __frame, 8, 8, function __$f() {
