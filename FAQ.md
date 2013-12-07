@@ -59,6 +59,47 @@ The preprocessor will give you an error if you use it in invalid contexts. If yo
 var __ = require('underscore');
 ```
 
+<a name="no-callback-given-error">
+### I'm getting a "no callback given" error. What does that mean?
+
+It means you've forgotten to pass a callback, and all async functions written with Streamline require one (as of Streamline 0.10).
+
+If you're calling this function from Streamline code as well, you probably just forgot to add a `_` parameter to your call.
+
+``` javascript
+function func(foo, bar, _) {
+    // ...
+}
+
+// will cause this error:
+func(foo, bar);
+
+// fixed:
+func(foo, bar, _);
+```
+
+If you mean to invoke the function asynchronously (i.e. "kick it off"), you can simply pass any regular function as a callback. It's a best practice to pass one anyway for handling errors that arise asynchronously, so that those errors don't get silently ignored or forgotten.
+
+``` javascript
+function handleError(err) {
+    // log it somewhere, or simply throw it to crash the process
+}
+
+console.log('before');
+func(foo, bar, handleError);
+console.log('after');   // will log immediately; won't wait for func() to fully finish
+```
+
+If you mean to get back a Streamline [future](https://github.com/Sage/streamlinejs#futures), you must pass `!_` as the callback.
+
+``` javascript
+var f1 = func(foo1, bar1, !_);
+var f2 = func(foo2, bar2, !_);
+
+var result1 = f1(_);
+var result2 = f2(_);
+```
+
 ### It does not work and I'm not even getting an exception. What's going on?
 
 You may run into this problem with versions <= 0.8. The _futures_ syntax has changed in 0.10 and the new syntax avoids this problem. You will now get an error if you forgot to pass `_` or `!_`.
