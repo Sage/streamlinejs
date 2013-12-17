@@ -72,6 +72,10 @@ If you want to use the _fibers_ option (see below), you must also install the fi
 npm install fibers [-g]
 ```
 
+# Cool demo
+
+http://coolwanglu.github.io/vim.js/web/vim.html (emscripten + streamline.js + @coolwanglu's magic touch).
+
 # Hello World
 
 Streamline modules have `._js` or `._coffee` extensions and you run them with the `_node` or `_coffee` 
