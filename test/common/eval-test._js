@@ -796,3 +796,17 @@ asyncTest("futures on _(fn, idx)", 1, function(_) {
 	start();
 });
 
+asyncTest("do while", 1, function(_) {
+	var i = 0;
+	function read(_) {
+		return delay(_, ++i); 
+	}
+	var s = "";
+	var v = read(_);
+	do {
+		s += v;
+	} while ((v = read(_)) < 5);
+	strictEqual(s, "1234");
+	start();
+});
+
