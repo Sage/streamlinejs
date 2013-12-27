@@ -810,3 +810,14 @@ asyncTest("do while", 1, function(_) {
 	start();
 });
 
+asyncTest("return undefined", 1, function(_) {
+	function read(_) {
+		return delay(_, 1); 
+	}
+	function f(_) {
+		read(_);
+	}
+	strictEqual(f(_), undefined);
+	start();
+});
+

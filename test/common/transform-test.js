@@ -868,7 +868,9 @@ test("empty body", 1, function() {
 			name: "f",
 			line: 1
 		};
-		return __func(_, this, arguments, f, 0, __frame, _);
+		return __func(_, this, arguments, f, 0, __frame, function __$f() {
+			_();
+		});
 	});
 })
 test("only return in body", 1, function() {
@@ -1009,7 +1011,9 @@ test("function forward reference", 1, function() {
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			foo();
-			return g(_);
+			return g(__cb(_, __frame, 1, 1, function __$f() {
+				_();
+			}, true));
 		});
 	});
 })
@@ -1024,7 +1028,7 @@ test("CoffeeScript closure ()", 1, function() {
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function __1(_) {
+			return (function ___closure(_) {
 				return g(_);
 			})(_);
 		});
@@ -1042,7 +1046,7 @@ test("CoffeeScript closure (this)", 1, function() {
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function __1(_) {
+			return (function ___closure(_) {
 				return g(_, __this);
 			})(_);
 		});
@@ -1061,7 +1065,7 @@ test("CoffeeScript closure (this, arguments)", 1, function() {
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function __1(_) {
+			return (function ___closure(_) {
 				return g(_, __this, __arguments);
 			})(_);
 		});
