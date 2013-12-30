@@ -821,3 +821,15 @@ asyncTest("return undefined", 1, function(_) {
 	start();
 });
 
+// enable later
+false && asyncTest("futures on non-streamline APIs", 1, function(_) {
+	function nat(cb) {
+		setImmediate(function() {
+			cb(null, "abc");
+		});
+	}
+	var fut = nat(!_);
+	strictEqual(fut(_), "abc");
+	start();
+});
+
