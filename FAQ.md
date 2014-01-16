@@ -201,26 +201,26 @@ And read just below about dealing with events!
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 
-If you are dealing with stream events, you should try streamline's stream API. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you (`pause/resume` on readable streams, `drain` on writable streams). For example:
+If you are dealing with stream events, you should try the ez-streams package. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you (`pause/resume` on readable streams, `drain` on writable streams). For example:
 
 ``` javascript
-var streams = require('streamline/lib/streams');
+var ez = require('ez-streams');
 
-var inStream = new streams.ReadableStream(nodeInStream);
+var inStream = ez.devices.node.reader(nodeInStream);
 var head = inStream.read(_, 128); // read the first 128 bytes
 var chunk;
 while (chunk = inStream.read(_)) {
   // do something with chunk
 }
 
-var outStream = new streams.WritableStream(nodeOutStream);
+var outStream = ez.devices.node.writer(nodeOutStream);
 outStream.write(_, result);
 ``` 
 
 This module also contains wrappers around node's `Http` and `Net` objects, both client and server.
-See the `streams` documentation for details.
+See the [ez-streams](https://github.com/Sage/ez-streams) documentation for details.
 
-If you are not dealing with stream events, you can take a look at the implementation of the streams module for ideas. Any event API can be turned into a callback API (with a `getEvent(_)` call that you would call in a loop) but this can be totally counterprodutive (events will be serialized). 
+If you are not dealing with stream events, you can take a look at the implementation of the streamline-streams module (ez-streams' low level implementation module) for ideas. Any event API can be turned into a callback API (with a `getEvent(_)` call that you would call in a loop) but this can be totally counterprodutive (events will be serialized). 
 
 If the events are loosely correlated, it is better to let them be dispatched as events. But in this case, you may want to use streamline to handle the logic of each event you subscribed to. This is not too difficult: just put a small anonymous function wrapper inside your event handlers:
 
@@ -241,6 +241,10 @@ server.on('eventB', function(arg) {
     })(handleError);	
 });
 ```
+
+### How can I deal with node.js streams
+
+The easiest way is to use the [ez-streams](https://github.com/Sage/ez-streams) companion package.
 
 ### Are there limitations? Am I limited to a subset of Javascript?
 

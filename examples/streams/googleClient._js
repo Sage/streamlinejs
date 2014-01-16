@@ -5,16 +5,16 @@
  */
 "use strict";
 
-// require the streamline streams wrapper
-var streams = require('streamline/lib/streams/server/streams');
+// require the ez-streams package (you must install it with npm install ez-streams)
+var ez = require('ez-streams');
 
 function google(str, _) {
   // Create the request.
   // The options are the same as for node's http.request call.
   // But the call also accepts a simple URL for the GET case
-  // But streams.requestRequest does not take any callback parameter.
+  // But ez.devices.http.client does not take any callback parameter.
   // Instead, the callback is passed to the response(_) method (a few lines below).
-  var req = streams.httpRequest({
+  var req = ez.devices.http.client({
     url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + str,
     proxy: process.env.http_proxy
   });
