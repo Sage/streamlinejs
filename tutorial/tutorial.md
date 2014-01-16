@@ -5,7 +5,7 @@ Simple things should be simple. Complex things should be possible.
 
 ## Installation
 
-To run this tutorial you need to install streamline.js and its companion ez-streams library, which is the default streaming library for streamline.
+To run this tutorial you need to install streamline.js and its companion [ez-streams](https://github.com/Sage/ez-streams) library, which is the default streaming library for streamline.
 
 ``` sh
 npm install -g streamline
