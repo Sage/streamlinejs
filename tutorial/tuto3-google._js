@@ -1,5 +1,5 @@
 "use strict";
-var streams = require('streamline/lib/streams/server/streams');
+var ez = require('ez-streams');
 var url = require('url');
 var qs = require('querystring');
 
@@ -10,7 +10,7 @@ var begPage = '<html><head><title>My Search</title></head></body>' + //
 '</form><hr/>';
 var endPage = '<hr/>generated in {ms}ms</body></html>';
 
-streams.createHttpServer(function(request, response, _) {
+ez.devices.http.server(function(request, response, _) {
 	var query = qs.parse(url.parse(request.url).query),
 		t0 = new Date();
 	response.writeHead(200, {
@@ -26,7 +26,7 @@ console.log('Server running at http://127.0.0.1:1337/');
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	// pass it to Google
-	var json = streams.httpRequest({
+	var json = ez.devices.http.client({
 		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
 		proxy: process.env.http_proxy
 	}).end().response(_).checkStatus(200).readAll(_);

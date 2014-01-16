@@ -1,7 +1,7 @@
 "use strict";
-var streams = require('streamline/lib/streams/server/streams');
+var ez = require('ez-streams');
 
-streams.createHttpServer(function(request, response, _) {
+ez.devices.http.server(function(request, response, _) {
 	response.writeHead(200, {
 		'Content-Type': 'text/plain; charset=utf8'
 	});

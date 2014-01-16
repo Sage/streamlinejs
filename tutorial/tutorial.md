@@ -3,15 +3,24 @@ Simple things should be simple. Complex things should be possible.
 <br/><em>Alan Kay</em>
 </blockquote>
 
+## Installation
+
+To run this tutorial you need to install streamline.js and its companion ez-streams library, which is the default streaming library for streamline.
+
+``` sh
+npm install -g streamline
+npm install ez-streams
+```
+
 ## [Hello world!](tuto1-hello._js)
 
 Let us start with streamline's version of node's hello world:
 
 ```javascript
 "use strict";
-var streams = require('streamline/lib/streams/server/streams');
+var ez = require('ez-streams');
 
-streams.createHttpServer(function(request, response, _) {
+ez.devices.http.server(function(request, response, _) {
 	response.writeHead(200, {
 		'Content-Type': 'text/plain; charset=utf8'
 	});
@@ -31,10 +40,10 @@ Now, point your browser to http://127.0.0.1:1337/. You should get a `"hello worl
 
 This code is very close to the original version. Just a few differences:
 
-* The server is created with streamline's `streams.createHttpServer` rather than with node's `http.createServer` call.
+* The server is created with streamline's `ez.devices.http.server` rather than with node's `http.createServer` call.
 * The server callback takes an additional `_` parameter. This parameter is streamline's _callback stub_. This is the magic token that we will pass to all asynchronous calls that expect a node.js callback.
 * The `request` and `response` parameters are streamline wrappers around node's request and response streams. These wrappers don't make a difference for now but they will make it easier to read and write from these streams later.
-* `listen` is called with an `_` argument. This is because `listen` is an asynchronous call. The streamline version prints the `'Server running ...'` message after receiving the `listening` event, while the original node version prints the message without waiting for the `listening` event. This is a really minor difference though, and streamline makes it easy to avoid the wait if you don't care: just call `listen` as a _future_ by passing `null` instead of `_`. If you're discovering _streamline.js_ don't worry about all this now. I'll talk more about futures at the end of this tutorial.
+* `listen` is called with an `_` argument. This is because `listen` is an asynchronous call. The streamline version prints the `'Server running ...'` message after receiving the `listening` event, while the original node version prints the message without waiting for the `listening` event. This is a really minor difference though, and streamline makes it easy to avoid the wait if you don't care: just call `listen` as a _future_ by passing `!_` instead of `_`. If you're discovering _streamline.js_ don't worry about all this now. I'll talk more about futures at the end of this tutorial.
 * The source file extension is `._js` instead of `.js` and you run it with `_node` rather than `node`. This is because _streamline.js_ extends the JavaScript language and the code needs to be transformed before being passed the JavaScript engine (note: `_node` has a `--cache` option which speeds up load time by shortcircuiting the transformation when files don't change).
 
 ## [Setting up a simple search form](tuto2-form._js)
@@ -43,7 +52,7 @@ Now, we are going to be a bit more ambitious and turn our page into a simple sea
 
 ```javascript
 "use strict";
-var streams = require('streamline/lib/streams/server/streams');
+var ez = require('ez-streams');
 var url = require('url');
 var qs = require('querystring');
 
@@ -54,7 +63,7 @@ var begPage = '<html><head><title>My Search</title></head></body>' + //
 '</form><hr/>';
 var endPage = '<hr/>generated in {ms}ms</body></html>';
 
-streams.createHttpServer(function(request, response, _) {
+ez.devices.http.server(function(request, response, _) {
 	var query = qs.parse(url.parse(request.url).query),
 		t0 = new Date();
 	response.writeHead(200, {
@@ -84,7 +93,7 @@ Now we are going to implement the `search` function by passing our search string
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	// pass it to Google
-	var json = streams.httpRequest({
+	var json = ez.devices.http.client({
 		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
 		proxy: process.env.http_proxy
 	}).end().response(_).checkStatus(200).readAll(_);
@@ -99,13 +108,13 @@ function search(_, q) {
 }
 ```
 
-`streams.httpRequest` is a small wrapper around node's `http.request` call. It allows us to obtain the response with a simple `response(_)` asynchronous call, and to read from this response with a simple asynchronous `readAll(_)` call (there is also an asynchronous `read` call which would let us read one chunk at a time, or read up to a given length). Notice how the calls can be naturally chained to obtain the response data.
+`ez.devices.http.client` is a small wrapper around node's `http.request` call. It allows us to obtain the response with a simple `response(_)` asynchronous call, and to read from this response with a simple asynchronous `readAll(_)` call (there is also an asynchronous `read` call which would let us read one chunk at a time, or read up to a given length). Notice how the calls can be naturally chained to obtain the response data.
 
 In this example we do not need to post any data to the remote URL. But this would not be difficult either. It would just be a matter of calling asynchronous `write(_, data)` methods before calling the `end()` method.
 
 ## [Dealing with errors](tuto4-catch._js)
 
-If our `search` function fails, an exception will be propagated. If we don't do anything special, the exception will bubble up to the request dispatcher created by `streams.createHttpServer(...)`. This dispatcher will catch it and generate a 500 response with the error message.
+If our `search` function fails, an exception will be propagated. If we don't do anything special, the exception will bubble up to the request dispatcher created by `ez.devices.http.server(...)`. This dispatcher will catch it and generate a 500 response with the error message.
 
 This is probably a bit rude to our users. But we can do a better job by trapping the error and injecting the error message into our HTML page. All we need is a `try/catch` inside our `search` function:
 
@@ -114,7 +123,7 @@ function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	// pass it to Google
 	try {
-		var json = streams.httpRequest({
+		var json = ez.devices.http.client({
 			url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
 			proxy: process.env.http_proxy
 		}).end().response(_).checkStatus(200).readAll(_);
@@ -147,7 +156,7 @@ function search(_, q) {
 }
 
 function googleSearch(_, q) {
-	var json = streams.httpRequest(...
+	var json = ez.devices.http.client(...
 	...
 	return '<ul>' + ...
 }
@@ -252,7 +261,7 @@ The `mongoSearch` function is rather straightforwards once you know the mongodb 
 
 So far so good. But the code that we have written executes completely sequentially. So we only start the directory search after having obtained the response from Google and we only start the Mongo search after having completed the directory search. This is very inefficient. We should run these 3 independent search operations in parallel.
 
-This is where _futures_ come into play. The principle is simple: if you call an asynchronous function with `null` instead of `_`, the function returns a _future_ `f` that you can call later as `f(_)` to obtain the result.
+This is where _futures_ come into play. The principle is simple: if you call an asynchronous function with `!_` instead of `_`, the function returns a _future_ `f` that you can call later as `f(_)` to obtain the result.
 
 So, to parallelize, we just need a small change to our `search` function:
 
@@ -261,9 +270,9 @@ function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
 		// start the 3 futures
-		var googleFuture = googleSearch(null, q);
-		var fileFuture = fileSearch(null, q);
-		var mongoFuture = mongoSearch(null, q);
+		var googleFuture = googleSearch(!_, q);
+		var fileFuture = fileSearch(!_, q);
+		var mongoFuture = mongoSearch(!_, q);
 		// join the results
 		return '<h2>Web</h2>' + googleFuture(_) //
 		+ '<hr/><h2>Files</h2>' + fileFuture(_) //
