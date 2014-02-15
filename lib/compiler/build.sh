@@ -29,10 +29,15 @@ rm builtins.js flows.js
 
 ../../bin/_node -lp -v -f -c ../streams/client/streams._js
 
-# compile test files for client too
+# compile test files for client too (standalone, except flows-test)
 pushd ../../test/common > /dev/null
-../../bin/_node -lp -v -f -c .
-mv eval-test.js flows-test.js stack-test.js futures-test.js callbacks
+../../bin/_node -lp -v -f --standalone -c eval-test._js stack-test._js futures-test._js
+cat eval-test.js | sed -e "s/runtime('[^']*\/node_modules\//runtime('/" > callbacks/eval-test.js
+cat stack-test.js | sed -e "s/runtime('[^']*\/node_modules\//runtime('/" > callbacks/stack-test.js
+cat futures-test.js | sed -e "s/runtime('[^']*\/node_modules\//runtime('/" > callbacks/futures-test.js
+rm eval-test.js stack-test.js futures-test.js
+../../bin/_node -lp -v -f -c flows-test._js
+mv flows-test.js callbacks
 ../../bin/_node --generators -v -f -c .
 mv eval-test.js flows-test.js stack-test.js futures-test.js generators
 popd > /dev/null

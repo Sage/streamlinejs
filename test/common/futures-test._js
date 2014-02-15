@@ -1,5 +1,4 @@
 QUnit.module(module.id);
-var flows = require("streamline/lib/util/flows");
 
 function delay(millis, val, _) {
 	setTimeout(~_, millis);
