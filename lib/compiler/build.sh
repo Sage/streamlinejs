@@ -34,6 +34,6 @@ cd ../..
 TEST=test/common
 bin/_node -lp -v -f --standalone -o $TEST/callbacks/ -c $TEST/{eval,stack,futures}-test._js
 bin/_node -lp -v -f -o $TEST/callbacks/ -c $TEST/flows-test._js
-bin/_node --generators -v -f -o $TEST/generators/ -c $TEST
+bin/_node --generators -v -f -o $TEST/generators/ -c $TEST/*._js
 
 popd > /dev/null
