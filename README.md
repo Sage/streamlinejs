@@ -149,7 +149,7 @@ Compiling will give you the fastest startup time because node will directly load
 You have three options to use streamline in the browser:
 
 * The first one is to compile the source with `_node --standalone -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [eval unit test](https://github.com/Sage/streamlinejs/blob/master/test/common/eval-test.html) for an example.
-* You can also transform the code in the browser with the `transform` API. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
+* You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/transform-all.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 * A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 # Generation options

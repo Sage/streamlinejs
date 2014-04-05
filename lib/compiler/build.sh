@@ -36,4 +36,17 @@ bin/_node -lp -v -f --standalone -o $TEST/callbacks/ -c $TEST/{eval,stack,future
 bin/_node -lp -v -f -o $TEST/callbacks/ -c $TEST/flows-test._js
 bin/_node --generators -v -f -o $TEST/generators/ -c $TEST/*._js
 
+cat lib/callbacks/require-stub.js \
+	deps/narcissus/lib/jsdefs.js \
+	deps/narcissus/lib/jslex.js \
+	deps/narcissus/lib/jsparse.js \
+	deps/narcissus/lib/jsdecomp.js \
+	lib/version.js \
+	lib/util/source-map.js \
+	lib/callbacks/format.js \
+	lib/callbacks/transform.js \
+	lib/util/future.js \
+	lib/callbacks/runtime.js \
+	lib/callbacks/builtins.js > lib/transform-all.js
+	
 popd > /dev/null
