@@ -47,6 +47,6 @@ cat lib/callbacks/require-stub.js \
 	lib/callbacks/transform.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js > lib/transform-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/transform-all.js
 	
 popd > /dev/null
