@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "0.10.8",
+  "version": "0.10.9",
   "homepage": "http://github.com/Sage/streamlinejs",
   "repository": {
     "type": "git",
