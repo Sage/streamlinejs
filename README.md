@@ -106,25 +106,27 @@ $ _coffee hello
 You can also create standalone shell utilities:
 
 ``` sh
-$ cat > hello.sh
+$ cat > hello._js
 #!/usr/bin/env _node
 console.log('hello ...');
 setTimeout(_, 1000);
 console.log('... world');
 ^D
-$ ./hello.sh
+$ chmod +x hello._js
+$ ./hello._js
 ```
 
 or:
 
 ``` sh
-$ cat > hello.sh
+$ cat > hello._coffee
 #!/usr/bin/env _coffee
 console.log 'hello ...'
 setTimeout _, 1000
 console.log '... world'
 ^D
-$ ./hello.sh
+$ chmod +x hello._coffee
+$ ./hello._coffee
 ```
 
 # Compiling and writing loaders
