@@ -821,6 +821,21 @@ asyncTest("return undefined", 1, function(_) {
 	start();
 });
 
+asyncTest("promises", 4, function(_) {
+	var globals = require('streamline/lib/globals');
+	globals.Promise = typeof Promise === "undefined" ? require('es6-promise').Promise : Promise;
+	function test(v, _) {
+		return delay(_, v); 
+	}
+	var p1 = test('a');
+	var p2 = test('b', null);
+	strictEqual(p1 && typeof p1.then, "function");
+	strictEqual(p2 && typeof p2.then, "function");
+	strictEqual(p1.then(_, _), 'a');
+	strictEqual(p2.then(_, _), 'b');
+	start();
+});
+
 // enable later
 false && asyncTest("futures on non-streamline APIs", 1, function(_) {
 	function nat(cb) {
