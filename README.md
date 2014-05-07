@@ -69,12 +69,6 @@ commands will not be in your default PATH.
 
 Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
 
-If you want to use the _fibers_ option (see below), you must also install the fibers library:
-
-```sh
-npm install fibers [-g]
-```
-
 <a name="cool-demos">
 # Cool demo
 
