@@ -1,0 +1,11 @@
+# ignore those pesky files that Mac generates
+.DS_Store
+
+# ignore streamline temp files
+tmp--*
+
+npm-debug.log
+
+# ignore the node inclusion directory
+node_modules/
+*.testlog

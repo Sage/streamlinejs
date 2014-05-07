@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "0.10.9",
+  "version": "0.10.10",
   "homepage": "http://github.com/Sage/streamlinejs",
   "repository": {
     "type": "git",
@@ -12,6 +12,10 @@
   },
   "dependencies": {
     "source-map": "~0.1.27"
+  },
+  "optionalDependencies": {
+    "fibers": "^1.0.1",
+    "galaxy": "^0.1.5"
   },
   "author": "Bruno Jouhier",
   "directories": {
