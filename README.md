@@ -201,6 +201,41 @@ Note: this works with all transformation options.
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
 
+# Interoperability with Promises
+
+Streamline also provides seamless interoperability with Promise libraries, in both directions.
+
+First, you can consume promises from streamline code, by passing two underscores to their `then` method:
+
+```
+function myStreamlineFunction(_) {
+  var result = functionReturningAPromise(args).then(_, _);
+  // do something with result
+}
+```
+
+Note: if the promise fails the error will be propagated as an exception and you can catch it with `try/catch`.
+
+Also, all the APIs that you implement with streamline are _promise-friendly_. If you omit the `_` parameter or if you pass `null` or `undefined` as callback, the function returns a promise. For example
+
+```
+var p = myStreamlineFunction();
+p.then(function(result) {
+  // do something with result
+}, function(err) {
+  // handle error
+});
+```
+
+Promise interoperability is not enabled by default but you can easily enable it:
+
+* If you start your program with `_node` or `_coffee`, just pass the `--promise` option.
+* If you start it with a loader (see above), just set the `promise` option to `true` in your `streamline.register(options)` call.
+
+Streamline will use the JavaScript built-in `Promise` class by default if available (node v11.13 and up). If this built-in class is not available it will try to load the `es6-promise` module instead (you should install it with `npm install es6-promise`).
+
+Note: the loader also gives you the option to pick a different promise library. To do this, set the `promise` option to the name of your promise library, instead of `true`.
+
 # Futures
 
 Streamline provides _futures_, a powerful feature that lets you parallelize I/O operations in a very

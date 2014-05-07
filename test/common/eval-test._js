@@ -824,8 +824,7 @@ asyncTest("return undefined", 1, function(_) {
 var globals = require('streamline/lib/globals');
 var isFast = /-fast$/.test(globals.runtime);
 
-asyncTest("promises", isFast ? 3 : 7, function(_) {
-	globals.Promise = typeof Promise === "undefined" ? require('es6-promise').Promise : Promise;
+if (globals.Promise) asyncTest("promises", isFast ? 3 : 7, function(_) {
 	function test(v, _) {
 		return delay(_, v); 
 	}

@@ -60,11 +60,12 @@ var __ = require('underscore');
 ```
 
 <a name="no-callback-given-error">
-### I'm getting a "no callback given" error. What does that mean?
+### I'm getting a "callback missing" error. What does that mean?
 
-It means you've forgotten to pass a callback, and all async functions written with Streamline require one (as of Streamline 0.10).
+It means that you are calling a function written with streamline.js and that you either forgot to pass a callback or to
+enable streamline's _promise_ option. 
 
-If you're calling this function from Streamline code as well, you probably just forgot to add a `_` parameter to your call.
+If you're calling this function from Streamline code as well and you didn't want promise support, you probably just forgot to add a `_` parameter to your call.
 
 ``` javascript
 function func(foo, bar, _) {
