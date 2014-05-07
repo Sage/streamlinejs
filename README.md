@@ -52,6 +52,7 @@ loops, `try/catch/finally` blocks, anonymous functions, chaining, `this`, etc.
 
 Streamline also provides _futures_, and asynchronous variants of the EcmaScript 5 array functions (`forEach`, `map`, etc.).
 
+<a name="installation">
 # Installation
 
 NPM, of course: 
@@ -72,10 +73,12 @@ If you want to use the _fibers_ option (see below), you must also install the fi
 npm install fibers [-g]
 ```
 
+<a name="cool-demos">
 # Cool demo
 
 http://coolwanglu.github.io/vim.js/web/vim.html (emscripten + streamline.js + @coolwanglu's magic touch).
 
+<a name="hello-world">
 # Hello World
 
 Streamline modules have `._js` or `._coffee` extensions and you run them with the `_node` or `_coffee` 
@@ -129,6 +132,7 @@ $ chmod +x hello._coffee
 $ ./hello._coffee
 ```
 
+<a name="compiling-and-loaders">
 # Compiling and writing loaders
 
 You can also set up your code so that it can be run directly with `node` or `coffee`.
@@ -146,6 +150,7 @@ The second one is to create your own loader with the `register` API. See the [lo
 
 Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the `register` API has a `cache` option which comes close and the loader saves you a compilation pass.
 
+<a name="browser">
 # Browser-side use
 
 You have three options to use streamline in the browser:
@@ -154,6 +159,7 @@ You have three options to use streamline in the browser:
 * You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/transform-all.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 * A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
+<a name="generation-options">
 # Generation options
 
 Streamline gives you the choice between generating regular callback-based asynchronous code, 
@@ -176,6 +182,7 @@ The _generators_ option can be activated by passing the `--generators` option to
 
 There are also _fast_ variants of the _fibers_ and _generators_ options. See below.
  
+<a name="node-compat">
 # Interoperability with standard node.js code
 
 You can call standard node functions from streamline code. For example the `fs.readFile` function:
@@ -201,6 +208,7 @@ Note: this works with all transformation options.
 Even if you use the _fibers_ option, you can seamlessly call standard callback based node APIs 
 and the asynchronous functions that you create with streamline have the standard node callback signature.
 
+<a name="promises">
 # Interoperability with Promises
 
 Streamline also provides seamless interoperability with Promise libraries, in both directions.
@@ -208,40 +216,44 @@ Streamline also provides seamless interoperability with Promise libraries, in bo
 First, you can consume promises from streamline code, by passing two underscores to their `then` method:
 
 ```
-function myStreamlineFunction(_) {
-  var result = functionReturningAPromise(args).then(_, _);
+function myStreamlineFunction(p1, p2, _) {
+  var result = functionReturningAPromise(p1, p2).then(_, _);
   // do something with result
 }
 ```
 
 Note: if the promise fails the error will be propagated as an exception and you can catch it with `try/catch`.
 
-Also, all the APIs that you implement with streamline are _promise-friendly_. If you omit the `_` parameter or if you pass `null` or `undefined` as callback, the function returns a promise. For example
+And you can also consume libraries implemented with streamline as if they had been implemented with promises. All you have to do is omit the `_` parameter when calling streamlined functions and you will get a promise in return.
 
 ```
-var p = myStreamlineFunction();
-p.then(function(result) {
-  // do something with result
-}, function(err) {
-  // handle error
-});
+function callingStreamlineAsPromise(p1, p2) {
+  var p = myStreamlineFunction(p1, p2);
+  p.then(function(result) {
+    // do something with result
+  }, function(err) {
+    // handle error
+  });
+}
 ```
 
-Promise interoperability is not enabled by default but you can easily enable it:
+Note: you can also pass `null` or `undefined` as callback. This is useful when `_` is not the last parameter.
+
+Promise interoperability is **not** enabled by default but you can enable it easily:
 
 * If you start your program with `_node` or `_coffee`, just pass the `--promise` option.
 * If you start it with a loader (see above), just set the `promise` option to `true` in your `streamline.register(options)` call.
 
 Streamline will use the JavaScript built-in `Promise` class by default if available (node v11.13 and up). If this built-in class is not available it will try to load the `es6-promise` module instead (you should install it with `npm install es6-promise`).
 
-Note: the loader also gives you the option to pick a different promise library. To do this, set the `promise` option to the name of your promise library, instead of `true`.
+Note: the loader also gives you the option to pick a promise library of your choice (but reasonably compliant with ES6 specs). To do this, set the `promise` option to the name of your promise library, instead of `true`.
 
+<a name="futures">
 # Futures
 
-Streamline provides _futures_, a powerful feature that lets you parallelize I/O operations in a very
-simple manner.
+Streamline also provides _futures_. Futures are like promises, without all the bells and whistles. They let you parallelize I/O operations in a very simple manner. They are always bundled with streamline and they have a very simple API.
 
-If you pass `!_` instead of `_` when calling a streamline function, the function will execute synchronously and return a _future_. The _future_ is just an asynchronous function that you can call later to obtain a result. Here is an example:
+If you pass `!_` instead of `_` when calling a streamline function, the function returns a _future_. The _future_ is just a regular node.js asynchronous function that you can call later to obtain the result. Here is an example:
 
 ```javascript
 function countLines(path, _) {
@@ -263,9 +275,9 @@ Futures are very flexible. In the example above, the results are retrieved from 
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
-The [flows module](https://github.com/Sage/streamlinejs/blob/master/lib/util/flows.md) contains utilities to deal with futures: 
-`flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
+The [flows module](https://github.com/Sage/streamlinejs/blob/master/lib/util/flows.md) contains utilities to deal with futures. For example `flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
 
+<a name="array-functions">
 # Asynchronous Array functions
 
 Streamline extends the Array prototype with asynchronous variants of the EcmaScript 5 `forEach`, `map`, `filter`, `reduce`, ... functions. These asynchronous variants are postfixed with an underscore and they take an extra `_` argument (their callback too), but they are otherwise similar to the standard ES5 functions. Here is an example with the `map_` function:
@@ -293,6 +305,7 @@ If you don't want to limit the level of parallelism, just pass `-1`.
 
 See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
 
+<a name="exception-handling">
 # Exception Handling
 
 Streamline lets you do your exception handling with the usual `try/catch` construct. The `finally` clause is also fully supported.
@@ -306,7 +319,7 @@ In _fibers_ mode there is a single stack trace.
 
 Note: you must install the companion [galaxy-stack](https://github.com/bjouhier/galaxy-stack) package to get _async_ stack traces in _generators_ mode.
 
-Exception handling also works with futures.
+Exception handling also works with futures and promises.
 If a future throws an exception before you try to read its result, the exception is memorized by the future and you get it at the point where your try to read the future's result. 
 For example:
 
@@ -321,6 +334,7 @@ try {
 }
 ```
 
+<a name="multiple-results">
 # Callbacks with multiple results
 
 Some APIs return several results through their callback. For example:
@@ -346,6 +360,7 @@ Note: if you only need the first result you can pass `_`:
 var response = request(options, _);
 ```
 
+<a name="fast-mode">
 # Fast mode
 
 Streamline has a _fast_ mode which produces leaner and faster code at the expense of a few more keystrokes and a bit of extra care when writing the code.
@@ -354,26 +369,31 @@ This mode only applies to _fibers_ and _generators_ modes. It has no impact in _
 
 For details see the [fast mode wiki page](https://github.com/Sage/streamlinejs/wiki/Fast-mode)
 
+<a name="stream-wrappers">
 # Stream Wrappers
 
-Streamline also provides _stream wrappers_ that simplify stream programming. These wrappers used to be included in the streamline npm package but they have now been moved to a separate [streamline-streams](https://github.com/Sage/streamline-streams) package.
+Streamline also provides _stream wrappers_ that simplify stream programming. These wrappers used to be included in the streamline npm package but they have now been moved to a separate [ez-streams](https://github.com/Sage/ez-streams) package.
 
+<a name="examples">
 # Examples
 
 The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) shows streamline.js in action on a simple _search aggregator_ application.
 
 The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples show an asynchronous directory traversal that computes disk usage.
 
+<a name="online-demo">
 # Online demo
 
 You can see how streamline transforms the code by playing with the [online demo](http://sage.github.com/streamlinejs/examples/streamlineMe/streamlineMe.html).
 
+<a name="troubleshooting">
 # Troubleshooting
 
 Read the [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md).
 
 If you don't find your answer in the FAQ, post to the [mailing list](http://groups.google.com/group/streamlinejs), or file an issue in [GitHub's issue tracking](https://github.com/Sage/streamlinejs/issues).
 
+<a name="related-packages">
 # Related Packages
 
 The following package contains a complete yet simple streaming API for streamline.js:
@@ -383,7 +403,7 @@ The following package contains a complete yet simple streaming API for streamlin
 The following packages contain API wrappers for streamline.js:
 
 * [streamline-fs](https://github.com/Sage/streamline-fs): wrapper for node's `fs` module. It fixes the `fs.exists` call and it wraps the entire API for streamline's fast mode.
-* [streamline-streams](https://github.com/Sage/streamline-streams): wraps node's stream APIs. Provides very simple read and write calls for node streams. This module is the original streaming module for streamline. It implements the low level bits of the `ez-steams` module (see above). If you want a rich streaming APIs you should use `ez-streams` rather than this lower level API. 
+* [streamline-streams](https://github.com/Sage/streamline-streams): historical streaming module for streamline. It implements the low level bits of the `ez-steams` module (see above). If you want a rich streaming APIs you should use `ez-streams` instead. 
 * [streamline-mongodb](https://github.com/Sage/streamline-mongodb): wrappers for [mongodb](https://github.com/mongodb/node-mongodb-native)'s native node.js driver. You only need this wrapper if you use the _fast_ mode.
 
 There are also some helper packages for [express](http://expressjs.com/):
@@ -399,6 +419,7 @@ The following packages use streamline.js:
 * [streamline-zip](https://github.com/Sage/streamline-zip): a fork of [node-native-zip](https://github.com/janjongboom/node-native-zip) with async deflate.
 
 
+<a name="resources">
 # Resources
 
 The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) and [FAQ](https://github.com/Sage/streamlinejs/blob/master/FAQ.md) are must-reads for starters.
@@ -407,12 +428,14 @@ The API is documented [here](https://github.com/Sage/streamlinejs/blob/master/AP
 
 For support and discussion, please join the [streamline.js mailing list](http://groups.google.com/group/streamlinejs).
 
+<a name="credits">
 # Credits
 
 See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
-Special thanks to Marcel Laverdet who contributed the _fibers_ implementation.
+Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed sourcemap support.
 
+<a name="license">
 # License
 
-This work is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License).
+Streamline.js is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License).
