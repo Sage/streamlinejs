@@ -61,7 +61,7 @@ NPM, of course:
 npm install streamline -g
 ```
 
-**Warning**: you may get errors when installing streamline 0.10.10 because fibers and galaxy are now installed as optional packages and they are not compatible with all versions of node.js. But these packages are optional and **streamline itself should install fine**. Just check these dependencies if you plan to use the _fibers_ or _generators_ modes. 
+**Warning**: you may get errors when installing streamline versions >= 0.10.11 because fibers and galaxy are now installed as optional packages and they are not compatible with all versions of node.js. But these packages are optional and **streamline itself should install fine**. Just check these dependencies if you plan to use the _fibers_ or _generators_ modes. 
 
 The `-g` option installs streamline _globally_.
 You can also install it _locally_, without `-g` but then the `_node` and `_coffee` 
