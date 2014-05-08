@@ -821,33 +821,35 @@ asyncTest("return undefined", 1, galaxy.unstar(function*(_) {var read_ = galaxy.
 	start();
 }, 0));
 
-var globals = require('streamline/lib/globals');
-var isFast = /-fast$/.test(globals.runtime);
+if (typeof require !== "undefined") { // skip this one in browser
+	var globals = require('streamline/lib/globals');
+	var isFast = /-fast$/.test(globals.runtime);
 
-if (globals.Promise) asyncTest("promises", isFast ? 3 : 7, galaxy.unstar(function*(_) {var test_ = galaxy.unstar(test, 1);
-	function* test(v, _) {
-		return (yield delay(_, v)); 
-	}
-	if (!isFast) {
-		var p1 = test_('a');
-		var p2 = test_('b', null);
-		strictEqual(p1 && typeof p1.then, "function");
-		strictEqual(p2 && typeof p2.then, "function");
-		strictEqual((yield galaxy.then.call(this,p1, "then", _ )), 'a');
-		strictEqual((yield galaxy.then.call(this,p2, "then", _ )), 'b');
-	}
-	var p3 = test_('c', null );
-	strictEqual(p3 && typeof p3.then, "function");
-	strictEqual((yield galaxy.then.call(this,p3, "then", _ )), 'c');
-	try {
-		var p4 = delayFail_(null , 'ERR d');
-		(yield galaxy.then.call(this,p4, "then", _ ));
-		ok(false);
-	} catch (ex) {
-		strictEqual(ex, "ERR d");
-	}
-	start();
-}, 0));
+	if (globals.Promise) asyncTest("promises", isFast ? 3 : 7, galaxy.unstar(function*(_) {var test_ = galaxy.unstar(test, 1);
+		function* test(v, _) {
+			return (yield delay(_, v)); 
+		}
+		if (!isFast) {
+			var p1 = test_('a');
+			var p2 = test_('b', null);
+			strictEqual(p1 && typeof p1.then, "function");
+			strictEqual(p2 && typeof p2.then, "function");
+			strictEqual((yield galaxy.then.call(this,p1, "then", _ )), 'a');
+			strictEqual((yield galaxy.then.call(this,p2, "then", _ )), 'b');
+		}
+		var p3 = test_('c', null );
+		strictEqual(p3 && typeof p3.then, "function");
+		strictEqual((yield galaxy.then.call(this,p3, "then", _ )), 'c');
+		try {
+			var p4 = delayFail_(null , 'ERR d');
+			(yield galaxy.then.call(this,p4, "then", _ ));
+			ok(false);
+		} catch (ex) {
+			strictEqual(ex, "ERR d");
+		}
+		start();
+	}, 0));
+}
 
 // enable later
 false && asyncTest("futures on non-streamline APIs", 1, galaxy.unstar(function*(_) {
