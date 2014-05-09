@@ -849,35 +849,38 @@ if (typeof require !== "undefined") { // skip this one in browser
 		}
 		start();
 	});
-}
 
-
-/* issue #218 - NIY
-asyncTest("coffeescript default values", 4, function(_) {
-	var got;
-	function fn(a, _) {
-		if (a == null) {
-			a = 2;
-		}
-		if (_ == null) {
-			_ = function(e, r) {
-				console.log("called back: " + r);
-				got = r;
+	// issue #218
+	if (globals.runtime ==="callbacks") asyncTest("coffeescript default values", 5, function(_) {
+		var got;
+		function fn(a, b, _, c) {
+			if (a == null) {
+				a = 2;
 			}
+			if (_ == null) {
+				_ = function(e, r) {
+					got = r;
+				}
+			}
+			if (c == null) {
+				c = 5;
+			}
+			return delay(_, "a=" + a + ", b=" + b + ", c=" + c);
 		}
-		return delay(_, "a=" + a);
-	}
-	var r = fn(3, _);
-	strictEqual(r, "a=3");
-	var f = fn();
-	// result should only be ready after a tick
-	strictEqual(f, undefined);
-	strictEqual(got, undefined);
-	delay(_);
-	strictEqual(got, "a=2");
-	start();
-});
-*/
+		var r = fn(3, 1, _);
+		strictEqual(r, "a=3, b=1, c=5");
+		var f = fn();
+		// result should only be ready after a tick
+		strictEqual(f, undefined);
+		strictEqual(got, undefined);
+		delay(_);
+		strictEqual(got, "a=2, b=undefined, c=5");
+		fn(8, 3);
+		delay(_);
+		strictEqual(got, "a=8, b=3, c=5");
+		start();
+	});
+}
 
 // enable later
 false && asyncTest("futures on non-streamline APIs", 1, function(_) {
