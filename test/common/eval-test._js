@@ -851,6 +851,34 @@ if (typeof require !== "undefined") { // skip this one in browser
 	});
 }
 
+
+/* issue #218 - NIY
+asyncTest("coffeescript default values", 4, function(_) {
+	var got;
+	function fn(a, _) {
+		if (a == null) {
+			a = 2;
+		}
+		if (_ == null) {
+			_ = function(e, r) {
+				console.log("called back: " + r);
+				got = r;
+			}
+		}
+		return delay(_, "a=" + a);
+	}
+	var r = fn(3, _);
+	strictEqual(r, "a=3");
+	var f = fn();
+	// result should only be ready after a tick
+	strictEqual(f, undefined);
+	strictEqual(got, undefined);
+	delay(_);
+	strictEqual(got, "a=2");
+	start();
+});
+*/
+
 // enable later
 false && asyncTest("futures on non-streamline APIs", 1, function(_) {
 	function nat(cb) {
