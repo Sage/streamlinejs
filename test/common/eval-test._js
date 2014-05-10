@@ -851,7 +851,7 @@ if (typeof require !== "undefined") { // skip this one in browser
 	});
 
 	// issue #218
-	if (globals.runtime ==="callbacks") asyncTest("coffeescript default values", 5, function(_) {
+	if (!isFast) asyncTest("coffeescript default values", 5, function(_) {
 		var got;
 		function fn(a, b, _, c) {
 			if (a == null) {
