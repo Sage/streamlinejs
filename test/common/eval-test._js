@@ -852,7 +852,6 @@ if (typeof require !== "undefined") { // skip this one in browser
 
 	// issue #218
 	if (!isFast) asyncTest("coffeescript default values", 8, function(_) {
-		console.log("TESTING IT");
 		var got;
 		var that = {};
 		function fn(a, b, _, c) {
