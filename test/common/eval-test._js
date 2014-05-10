@@ -851,8 +851,10 @@ if (typeof require !== "undefined") { // skip this one in browser
 	});
 
 	// issue #218
-	if (!isFast) asyncTest("coffeescript default values", 5, function(_) {
+	if (!isFast) asyncTest("coffeescript default values", 8, function(_) {
+		console.log("TESTING IT");
 		var got;
+		var that = {};
 		function fn(a, b, _, c) {
 			if (a == null) {
 				a = 2;
@@ -865,17 +867,18 @@ if (typeof require !== "undefined") { // skip this one in browser
 			if (c == null) {
 				c = 5;
 			}
+			strictEqual(this, that);
 			return delay(_, "a=" + a + ", b=" + b + ", c=" + c);
 		}
-		var r = fn(3, 1, _);
+		var r = fn.call(that, 3, 1, _);
 		strictEqual(r, "a=3, b=1, c=5");
-		var f = fn();
+		var f = fn.call(that);
 		// result should only be ready after a tick
 		strictEqual(f, undefined);
 		strictEqual(got, undefined);
 		delay(_);
 		strictEqual(got, "a=2, b=undefined, c=5");
-		fn(8, 3);
+		fn.call(that, 8, 3);
 		delay(_);
 		strictEqual(got, "a=8, b=3, c=5");
 		start();
