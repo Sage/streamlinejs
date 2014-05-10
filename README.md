@@ -356,6 +356,18 @@ Note: if you only need the first result you can pass `_`:
 var response = request(options, _);
 ```
 
+<a name="coffee-script">
+# CoffeeScript support
+
+CoffeeScript is fully supported. 
+
+You can even use language features which are not available in JavaScript. For example you can specify a default callback (see #218 for full details):
+
+```coffeescript
+fn = (p1, p2, _ = (e) -> throw e if e) ->
+  # do something
+```
+
 <a name="fast-mode">
 # Fast mode
 
