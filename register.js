@@ -1,1 +1,1 @@
-require('streamline').register();
+require('./').register();
