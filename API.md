@@ -16,3 +16,7 @@ Asynchronous Javascript for dummies
   Flow control utilities
 * [streamline/lib/globals](lib/globals.md)  
   Container for global context
+* [galaxy/lib/array](lib/array.md)  
+  Array functions  
+* [galaxy/lib/galaxy](lib/galaxy.md)  
+  Main galaxy module
