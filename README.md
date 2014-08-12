@@ -382,6 +382,25 @@ For details see the [fast mode wiki page](https://github.com/Sage/streamlinejs/w
 
 Streamline also provides _stream wrappers_ that simplify stream programming. These wrappers used to be included in the streamline npm package but they have now been moved to a separate [ez-streams](https://github.com/Sage/ez-streams) package.
 
+<a name="debugging">
+# Debugging with source maps
+
+You can seamlessly debug streamline code thanks to [JavaScript source maps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/). See [this video](https://www.youtube.com/watch?v=duC1Sqy66IE) for a quick demo.
+
+To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourcemap` option if you register via a loader.
+
+<a name="flamegraph">
+# Monitoring performance with flame graphs
+
+Streamline code can be instrumented to produce [flame graphs](http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html).
+
+Two cool things about these flame graphs:
+
+* The pyramids correspond to stacks of asynchronous calls, not to raw V8 stacks.
+* The tool generates two graphs: a pure CPU graph and a graph that combines CPU and I/O delays.
+
+See [streamline-flamegraph](https://github.com/Sage/streamline-flamegraph) for details.
+
 <a name="examples">
 # Examples
 
