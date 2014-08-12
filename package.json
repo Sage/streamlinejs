@@ -15,7 +15,7 @@
   },
   "optionalDependencies": {
     "fibers": "^1.0.1",
-    "galaxy": "^0.1.6"
+    "galaxy": "^0.1.8"
   },
   "author": "Bruno Jouhier",
   "directories": {
