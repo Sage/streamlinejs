@@ -17,3 +17,7 @@ be able to retrieve to format messages.
 
 Note: an empty context (`{}`) is automatically set by the server wrappers of the `streams` module,
 before they dispatch a request. So, with these wrappers, each request starts with a fresh empty context.
+
+* `fn = globals.withFreshContext(fn)`  
+  wraps a function so that it creates a new context on entry and restores the previous context on exit.
+  returns the wrapped function.
