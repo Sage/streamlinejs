@@ -744,7 +744,7 @@ test("try catch", 1, function() {
 						} else {
 							_(null, __result);
 						}
-					});
+					}, _);
 				});
 			})(function ___() {
 				__tryCatch(_, function __$f() {
