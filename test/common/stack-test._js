@@ -217,3 +217,19 @@ asyncTest("loop", 8, function(_) {
 	stackEqual(T(_, I, 7, failSync), rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101");
 	start();
 })
+
+function issue233(_, code) {
+  function customThrow() {
+    throw new Error("foo");
+  }
+  try {
+    throw new Error("bar");
+  } catch(e) {
+    customThrow();
+  }
+}
+
+asyncTest("issue233", 1, function(_) {
+	stackEqual(T(_, issue233, 0, failSync), "Error: foo/customThrow:223/issue233:228");
+	start();
+});
