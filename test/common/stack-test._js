@@ -102,6 +102,19 @@ function I(_, code){
 	return s;
 }
 
+function issue233(_, code) {
+  function customThrow() {
+    throw new Error("foo");
+  }
+  try {
+    throw new Error("bar");
+  } catch(e) {
+    customThrow();
+  }
+}
+
+// You can insert lines and/or comments after this point.
+
 function T(_, fn, code, failFn){
 	fail = failFn;
 	var s = "{"
@@ -110,7 +123,7 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 && l.indexOf('exports.invoke') < 0; }).map(function(l){
+		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 }).map(function(l){
 			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
@@ -131,8 +144,6 @@ var rawStack = new Error().stack ? function(raw) {
 } : function() {
 	return "raw stack unavailable";
 }
-
-
 
 asyncTest("stacks", 20, function(_) {
 	stackEqual(T(_, A, 1, failAsync), rawStack("Error: 1/failAsync:15") + "/A:28");
@@ -218,18 +229,7 @@ asyncTest("loop", 8, function(_) {
 	start();
 })
 
-function issue233(_, code) {
-  function customThrow() {
-    throw new Error("foo");
-  }
-  try {
-    throw new Error("bar");
-  } catch(e) {
-    customThrow();
-  }
-}
-
 asyncTest("issue233", 1, function(_) {
-	stackEqual(T(_, issue233, 0, failSync), "Error: foo/customThrow:223/issue233:228");
+	stackEqual(T(_, issue233, 0, failSync), "Error: foo/customThrow:107/issue233:112");
 	start();
 });
