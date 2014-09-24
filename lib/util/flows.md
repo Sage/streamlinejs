@@ -34,7 +34,7 @@ won't be called, and no other operation will enter the funnel.
   The returned handshake object has two methods:  
   `hs.wait(_)`: waits until `hs` is notified.  
   `hs.notify()`: notifies `hs`.  
-  Note: wait calls are not queued. An exception is thrown if wait is called while another wait is active.
+  Note: `wait` calls are not queued. An exception is thrown if wait is called while another `wait` is pending.
 * `q = flows.queue(options)`  
   allocates a queue which may be used to send data asynchronously between two tasks.  
   The returned queue has two methods:  
@@ -42,6 +42,7 @@ won't be called, and no other operation will enter the funnel.
   `ok = q.put(data)`: queues an item. Returns true if the queue accepted it, false otherwise.  
   The `max` option can be set to control the maximum queue length.  
   When `max` has been reached `q.put(data)` does nothing and returns false.
+
 ## Miscellaneous utilities
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
