@@ -27,6 +27,19 @@ If `max` is negative, the funnel does not limit the level of parallelism.
 The funnel can be closed with `fun.close()`.  
 When a funnel is closed, the operations that are still in the funnel will continue but their callbacks
 won't be called, and no other operation will enter the funnel.
+* `hs = flows.handshake()`  
+  allocates a simple semaphore that can be used to do simple handshakes between two tasks.  
+  The returned handshake object has two methods:  
+  `hs.wait(_)`: waits until `hs` is notified.  
+  `hs.notify()`: notifies `hs`.  
+  Note: wait calls are not queued. An exception is thrown if wait is called while another wait is active.
+* `q = flows.queue(options)`  
+  allocates a queue which may be used to send data asynchronously between two tasks.  
+  The returned queue has two methods:  
+  `data = q.get(_)`: dequeues an item from the queue. Waits if no element is available.  
+  `ok = q.put(data)`: queues an item. Returns true if the queue accepted it, false otherwise.
+  The `max` option can be set to control the maximum queue length.  
+  When `max` has been reached `q.put(data)` does nothing and returns false.
 
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
