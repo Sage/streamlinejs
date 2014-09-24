@@ -1,5 +1,5 @@
 
-# Flow control utilities
+# Control Flow utilities
  
 `var flows = require('streamline/lib/util/flows')`
 
