@@ -3,6 +3,7 @@
  
 `var flows = require('streamline/lib/util/flows')`
 
+## funnel
 * `fun = flows.funnel(max)`  
   limits the number of concurrent executions of a given code block.
 
@@ -27,6 +28,7 @@ If `max` is negative, the funnel does not limit the level of parallelism.
 The funnel can be closed with `fun.close()`.  
 When a funnel is closed, the operations that are still in the funnel will continue but their callbacks
 won't be called, and no other operation will enter the funnel.
+## handshake and queue
 * `hs = flows.handshake()`  
   allocates a simple semaphore that can be used to do simple handshakes between two tasks.  
   The returned handshake object has two methods:  
@@ -37,10 +39,10 @@ won't be called, and no other operation will enter the funnel.
   allocates a queue which may be used to send data asynchronously between two tasks.  
   The returned queue has two methods:  
   `data = q.get(_)`: dequeues an item from the queue. Waits if no element is available.  
-  `ok = q.put(data)`: queues an item. Returns true if the queue accepted it, false otherwise.
+  `ok = q.put(data)`: queues an item. Returns true if the queue accepted it, false otherwise.  
   The `max` option can be set to control the maximum queue length.  
   When `max` has been reached `q.put(data)` does nothing and returns false.
-
+## Miscellaneous utilities
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
 
