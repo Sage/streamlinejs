@@ -49,6 +49,19 @@ won't be called, and no other operation will enter the funnel.
 * `results = flows.collect(_, futures)`  
   collects the results of an array of futures
 
+* result = flows.trampoline(_, fn, thisObj)`  
+  Executes `fn(_)` through a trampoline.  
+  Waits for `fn`'s result and returns it.  
+  This is equivalent to calling `fn.call(thisObj, _)` but the current stack is unwound
+  before calling `fn`.
+
 * `flows.nextTick(_)`  
   `nextTick` function for both browser and server.  
   Aliased to `process.nextTick` on the server side.
+
+* `flows.sleep(_, millis)`  
+  Sleeps `millis` ms.  
+
+* `flows.callWithTimeout(_, fn, millis)`  
+  Calls `fn(_)` with a timeout guard.  
+  Throws a timeout exception if `fn` takes more than `millis` ms to complete.  
