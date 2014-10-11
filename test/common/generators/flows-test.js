@@ -437,6 +437,20 @@ asyncTest("futures multiplex", 3, galaxy.unstar(function*(_) {var doIt_ = galaxy
 	deepEqual(result3, 12);
 	start();
 }, 0));
+
+asyncTest("trampoline", 1, galaxy.unstar(function*(_) {var sums_ = galaxy.unstar(sums, 0);
+	function* sums(_, n) {
+		var fn = galaxy.unstar(function*(_) {
+			return n > 0 ? n + (yield sums(_, n - 1)) : 0;
+		}, 0);
+		if (n % 1000 === 0) return (yield galaxy.invoke(flows, "trampoline", [_, fn], 0));
+		else return (yield (fn.__starred__0 || 0)(_));
+	}
+	var t0 = Date.now();
+	equals((yield sums(_, 100000)), 50000 * 100001);
+	console.log(Date.now() - t0);
+	start();
+}, 0));
 }, 0).call(this, function(err) {
   if (err) throw err;
 }));

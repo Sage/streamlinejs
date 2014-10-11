@@ -436,3 +436,17 @@ asyncTest("futures multiplex", 3, function __15(_) { var result1, result2, resul
       deepEqual(result2, 12);
       deepEqual(result3, 12);
       start(); _(); }, true), [doIt(f1, false),doIt(f10, false),doIt(f1, false),]); });});
+
+
+asyncTest("trampoline", 1, function __16(_) { var t0;
+  function sums(_, n) { var fn; var __frame = { name: "sums", line: 442 }; return __func(_, this, arguments, sums, 0, __frame, function __$sums() {
+      fn = function fn__1(_) { var __frame = { name: "fn__1", line: 443 }; return __func(_, this, arguments, fn__1, 0, __frame, function __$fn__1() { return (function __$fn__1(_) {
+            var __1 = (n > 0); return (function __$fn__1(__then) { if (__1) { return sums(__cb(_, __frame, 1, 22, function ___(__0, __3) { var __2 = (n + __3); return _(null, __2); }, true), (n - 1)); } else { __then(); } ; })(function __$fn__1() { return _(null, 0); }); })(__cb(_, __frame, -442, 21, _, true)); }); }; return (function __$sums(__then) {
+
+        if (((n % 1000) === 0)) { return flows.trampoline(__cb(_, __frame, 4, 35, _, true), fn); } else {
+          return fn(__cb(_, __frame, 5, 14, _, true)); } ; })(_); }); }; var __frame = { name: "__16", line: 441 }; return __func(_, this, arguments, __16, 0, __frame, function __$__16() {
+
+    t0 = Date.now();
+    return sums(__cb(_, __frame, 9, 8, function ___(__0, __1) { equals(__1, (50000 * 100001));
+      console.log((Date.now() - t0));
+      start(); _(); }, true), 100000); });});

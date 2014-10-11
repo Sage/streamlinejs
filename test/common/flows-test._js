@@ -437,3 +437,15 @@ asyncTest("futures multiplex", 3, function(_) {
 	deepEqual(result3, 12);
 	start();
 })
+
+asyncTest("trampoline", 1, function(_) {
+	function sums(_, n) {
+		var fn = function(_) {
+			return n > 0 ? n + sums(_, n - 1) : 0;
+		};
+		if (n % 1000 === 0) return flows.trampoline(_, fn);
+		else return fn(_);
+	}
+	equals(sums(_, 100000), 50000 * 100001);
+	start();
+});
