@@ -449,3 +449,15 @@ asyncTest("trampoline", 1, function(_) {
 	equals(sums(_, 100000), 50000 * 100001);
 	start();
 });
+
+asyncTest("trampoline preserves context", 2, function(_) {
+	var globals = require('streamline/lib/globals');
+	var fn = function(_) {
+		return globals.context.val;
+	};
+	globals.context.val = "abc";
+	var result = flows.trampoline(_, fn);
+	strictEqual(result, "abc");
+	strictEqual(globals.context.val, "abc");
+	start();
+});
