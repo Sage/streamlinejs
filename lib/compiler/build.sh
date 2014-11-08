@@ -12,7 +12,7 @@ rm compile.js
 < flows.js      sed -e "s/\/\/\/ \!doc//" > ../fibers/flows.js
 rm builtins.js flows.js
 
-../../bin/_node -lp -v -f --internal --fibers --fast -c builtins._js flows._js
+../../bin/_node -lp -v -f --internal --fibers --fast --aggressive -c builtins._js flows._js
 < builtins.js   sed -e "s/\/\/\/ \!doc//" > ../fibers-fast/builtins.js
 < flows.js      sed -e "s/\/\/\/ \!doc//" > ../fibers-fast/flows.js
 rm builtins.js flows.js
