@@ -55,6 +55,9 @@ won't be called, and no other operation will enter the funnel.
   This is equivalent to calling `fn.call(thisObj, _)` but the current stack is unwound
   before calling `fn`.
 
+* `flows.setImmediate(fn)`  
+  portable `setImmediate` both browser and server.  
+
 * `flows.nextTick(_)`  
   `nextTick` function for both browser and server.  
   Aliased to `process.nextTick` on the server side.
