@@ -11,7 +11,7 @@
     "node": ">=0.6.0"
   },
   "dependencies": {
-    "source-map": "~0.1.27"
+    "source-map": "~0.1.43"
   },
   "optionalDependencies": {
     "fibers": "^1.0.1",
