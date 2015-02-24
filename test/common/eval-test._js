@@ -884,6 +884,20 @@ if (typeof require !== "undefined") { // skip this one in browser
 	});
 }
 
+asyncTest("IIFE bug in fibers mode", 1, function(_) {
+	var api = (function() {
+		function foo(_) {
+			return 1;
+		}
+		return {
+			foo: foo,
+		};
+	})();
+	strictEqual(api.foo(_), 1);
+	start();
+});
+
+
 // enable later
 false && asyncTest("futures on non-streamline APIs", 1, function(_) {
 	function nat(cb) {
