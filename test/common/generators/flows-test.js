@@ -336,6 +336,7 @@ asyncTest("collectAll", 4, galaxy.unstar(function*(_) {
 		return galaxy.unstar(function*(_) {
 			count++;
 			peak = Math.max(count, peak);
+			(yield galaxy.invoke(null, setTimeout, [_ , 10], 0));
 			total = (yield delay(_ , i)) + total;
 			count--;
 			return 2 * i;
@@ -358,6 +359,7 @@ asyncTest("collectOne", 4, galaxy.unstar(function*(_) {
 		return galaxy.unstar(function*(_) {
 			count++;
 			peak = Math.max(count, peak);
+			(yield galaxy.invoke(null, setTimeout, [_ , 10], 0));
 			total = (yield delay(_ , i)) + total;
 			count--;
 			return 2 * i;
@@ -380,6 +382,7 @@ asyncTest("collectAll with limit", 1, galaxy.unstar(function*(_) {
 		return galaxy.unstar(function*(_) {
 			count++;
 			peak = Math.max(count, peak);
+			(yield galaxy.invoke(null, setTimeout, [_ , 10], 0));
 			total = (yield delay(_ , i)) + total;
 			count--;
 			return 2 * i;

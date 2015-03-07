@@ -336,13 +336,14 @@
             return function __1(_) { var __frame = { name: '__1', line: 336 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                     count++; 
                     peak = Math.max(count, peak); 
-                    return delay(__cb(_, __frame, 3, 0, function ___(__0, __1) { total = __1 + total; 
-                        count--; 
-                        return _(null, 2 * i); }, true, false), i); }); }; } var __frame = { name: '__11', line: 330 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0; 
+                    return setTimeout(__cb(_, __frame, 3, 0, function __$__1() { 
+                        return delay(__cb(_, __frame, 4, 0, function ___(__0, __1) { total = __1 + total; 
+                            count--; 
+                            return _(null, 2 * i); }, true, false), i); }, true, false), 10); }); }; } var __frame = { name: '__11', line: 330 }; return __func(_, this, arguments, __11, 0, __frame, function __$__11() { total = 0; peak = 0; count = 0; 
             
             
             
-            return flows.spray([ doIt(1), doIt(2), doIt(3) ]).collectAll(__cb(_, __frame, 15, 0, function ___(__0, __1) { results = __1; 
+            return flows.spray([ doIt(1), doIt(2), doIt(3) ]).collectAll(__cb(_, __frame, 16, 0, function ___(__0, __1) { results = __1; 
                 equal(total, 6); 
                 ok(peak >= 2); 
                 equal(count, 0); 
@@ -355,16 +356,17 @@
         
         
         function doIt(i) { 
-            return function __1(_) { var __frame = { name: '__1', line: 358 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+            return function __1(_) { var __frame = { name: '__1', line: 359 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                     count++; 
                     peak = Math.max(count, peak); 
-                    return delay(__cb(_, __frame, 3, 0, function ___(__0, __1) { total = __1 + total; 
-                        count--; 
-                        return _(null, 2 * i); }, true, false), i); }); }; } var __frame = { name: '__12', line: 352 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0; 
+                    return setTimeout(__cb(_, __frame, 3, 0, function __$__1() { 
+                        return delay(__cb(_, __frame, 4, 0, function ___(__0, __1) { total = __1 + total; 
+                            count--; 
+                            return _(null, 2 * i); }, true, false), i); }, true, false), 10); }); }; } var __frame = { name: '__12', line: 353 }; return __func(_, this, arguments, __12, 0, __frame, function __$__12() { total = 0; peak = 0; count = 0; 
             
             
             
-            return flows.spray([ doIt(1), doIt(2), doIt(3) ]).collectOne(__cb(_, __frame, 15, 0, function ___(__0, __1) { result = __1; 
+            return flows.spray([ doIt(1), doIt(2), doIt(3) ]).collectOne(__cb(_, __frame, 16, 0, function ___(__0, __1) { result = __1; 
                 ok(total == 1 || total == 2); 
                 ok(peak >= 2); 
                 ok(count > 0); 
@@ -377,36 +379,37 @@
         
         
         function doIt(i) { 
-            return function __1(_) { var __frame = { name: '__1', line: 380 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+            return function __1(_) { var __frame = { name: '__1', line: 382 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                     count++; 
                     peak = Math.max(count, peak); 
-                    return delay(__cb(_, __frame, 3, 0, function ___(__0, __1) { total = __1 + total; 
-                        count--; 
-                        return _(null, 2 * i); }, true, false), i); }); }; } var __frame = { name: '__13', line: 374 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0; 
+                    return setTimeout(__cb(_, __frame, 3, 0, function __$__1() { 
+                        return delay(__cb(_, __frame, 4, 0, function ___(__0, __1) { total = __1 + total; 
+                            count--; 
+                            return _(null, 2 * i); }, true, false), i); }, true, false), 10); }); }; } var __frame = { name: '__13', line: 376 }; return __func(_, this, arguments, __13, 0, __frame, function __$__13() { total = 0; peak = 0; count = 0; 
             
             
             
-            return flows.spray([ doIt(1), doIt(2), doIt(3) ], 2).collectAll(__cb(_, __frame, 15, 0, function ___(__0, __1) { results = __1; 
+            return flows.spray([ doIt(1), doIt(2), doIt(3) ], 2).collectAll(__cb(_, __frame, 16, 0, function ___(__0, __1) { results = __1; 
                 deepEqual([ total, peak, count, results ], [ 6, 2, 0, [ 2, 4, 6 ] ]); 
                 start(); _(); }, true, false)); }); }); 
     
     asyncTest('contexts', 3, function __14(_) { var result; 
-        function testContext(_, x) { var y; var __frame = { name: 'testContext', line: 394 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() { 
+        function testContext(_, x) { var y; var __frame = { name: 'testContext', line: 397 }; return __func(_, this, arguments, testContext, 0, __frame, function __$testContext() { 
                 flows.setContext({ val: x }); 
                 
                 
                 return delay(__cb(_, __frame, 4, 0, function ___(__0, __1) { y = __1; 
                     strictEqual(y, 2 * flows.getContext().val); 
-                    return _(null, y + 1); }, true, false), 2 * x); }); } var __frame = { name: '__14', line: 393 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() { 
+                    return _(null, y + 1); }, true, false), 2 * x); }); } var __frame = { name: '__14', line: 396 }; return __func(_, this, arguments, __14, 0, __frame, function __$__14() { 
             
             
             return flows.spray([ function __1(_) { 
                     
-                    var __frame = { name: '__1', line: 405 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+                    var __frame = { name: '__1', line: 408 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                         return testContext(__cb(_, __frame, 1, 0, _, true, false), 3); }); }, function __2(_) { 
                     
                     
-                    var __frame = { name: '__2', line: 409 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { 
+                    var __frame = { name: '__2', line: 412 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { 
                         return testContext(__cb(_, __frame, 1, 0, _, true, false), 5); }); } ]).collectAll(__cb(_, __frame, 20, 0, function ___(__0, __3) { 
                 
                 
@@ -420,11 +423,11 @@
         
         
         
-        function doIt(future, _) { var __frame = { name: 'doIt', line: 423 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() { 
+        function doIt(future, _) { var __frame = { name: 'doIt', line: 426 }; return __func(_, this, arguments, doIt, 1, __frame, function __$doIt() { 
                 return future(__cb(_, __frame, 1, 0, function ___(__0, __1) { result1 = __1 + result1; 
                     return future(__cb(_, __frame, 2, 0, function ___(__0, __2) { result2 = __2 + result2; 
                         return delay(__cb(_, __frame, 3, 0, function __$doIt() { 
-                            return future(__cb(_, __frame, 4, 0, function ___(__0, __3) { result3 = __3 + result3; _(); }, true, false)); }, true, false)); }, true, false)); }, true, false)); }); } var __frame = { name: '__15', line: 418 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0; f1 = delay(false, 1); 
+                            return future(__cb(_, __frame, 4, 0, function ___(__0, __3) { result3 = __3 + result3; _(); }, true, false)); }, true, false)); }, true, false)); }, true, false)); }); } var __frame = { name: '__15', line: 421 }; return __func(_, this, arguments, __15, 0, __frame, function __$__15() { result1 = 0; result2 = 0; result3 = 0; f1 = delay(false, 1); 
             
             
             f10 = delay(false, 10); 
@@ -439,20 +442,20 @@
     
     
     asyncTest('trampoline', 1, function __16(_) { 
-        function sums(_, n) { var fn; var __frame = { name: 'sums', line: 442 }; return __func(_, this, arguments, sums, 0, __frame, function __$sums() { fn = function __1(_) { 
-                    var __frame = { name: '__1', line: 443 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+        function sums(_, n) { var fn; var __frame = { name: 'sums', line: 445 }; return __func(_, this, arguments, sums, 0, __frame, function __$sums() { fn = function __1(_) { 
+                    var __frame = { name: '__1', line: 446 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                         return function __$__1(_) { var __1 = n > 0; return function __$__1(__then) { if (__1) { return sums(__cb(_, __frame, 1, 0, function ___(__0, __3) { var __2 = n + __3; return _(null, __2); }, true, false), n - 1); } else { __then(); } }(function __$__1() { return _(null, 0); }); }(__cb(_, __frame, 0, 0, _, true, false)); }); }; 
                 
                 return function __$sums(__then) { if (n % 1000 === 0) { return flows.trampoline(__cb(_, __frame, 4, 0, _, true, false), fn); } else { 
-                        return fn(__cb(_, __frame, 5, 0, _, true, false)); } }(_); }); } var __frame = { name: '__16', line: 441 }; return __func(_, this, arguments, __16, 0, __frame, function __$__16() { 
+                        return fn(__cb(_, __frame, 5, 0, _, true, false)); } }(_); }); } var __frame = { name: '__16', line: 444 }; return __func(_, this, arguments, __16, 0, __frame, function __$__16() { 
             
             return sums(__cb(_, __frame, 8, 0, function ___(__0, __1) { equals(__1, 50000 * 100001); 
                 start(); _(); }, true, false), 100000); }); }); 
     
     
-    asyncTest('trampoline preserves context', 2, function __17(_) { var globals, fn, result; var __frame = { name: '__17', line: 453 }; return __func(_, this, arguments, __17, 0, __frame, function __$__17() { globals = require('streamline/lib/globals'); 
+    asyncTest('trampoline preserves context', 2, function __17(_) { var globals, fn, result; var __frame = { name: '__17', line: 456 }; return __func(_, this, arguments, __17, 0, __frame, function __$__17() { globals = require('streamline/lib/globals'); 
             fn = function __1(_) { 
-                var __frame = { name: '__1', line: 455 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+                var __frame = { name: '__1', line: 458 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
                     return _(null, globals.context.val); }); }; 
             
             globals.context.val = 'abc'; 

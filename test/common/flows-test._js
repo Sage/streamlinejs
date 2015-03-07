@@ -336,6 +336,7 @@ asyncTest("collectAll", 4, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
+			setTimeout(_, 10);
 			total = delay(_, i) + total;
 			count--;
 			return 2 * i;
@@ -358,6 +359,7 @@ asyncTest("collectOne", 4, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
+			setTimeout(_, 10);
 			total = delay(_, i) + total;
 			count--;
 			return 2 * i;
@@ -380,6 +382,7 @@ asyncTest("collectAll with limit", 1, function(_) {
 		return function(_) {
 			count++;
 			peak = Math.max(count, peak);
+			setTimeout(_, 10);
 			total = delay(_, i) + total;
 			count--;
 			return 2 * i;

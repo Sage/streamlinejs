@@ -32,8 +32,10 @@ rm builtins.js flows.js
 # compile test files for client too (standalone, except flows-test)
 cd ../..
 TEST=test/common
-bin/_node -lp -v -f --standalone -o $TEST/callbacks/ -c $TEST/{eval,stack,futures}-test._js
-bin/_node -lp -v -f -o $TEST/callbacks/ -c $TEST/flows-test._js
+# compile eval-test with --standalone to exercise this option
+bin/_node -lp -v -f --standalone -o $TEST/callbacks/ -c $TEST/eval-test._js
+# the other 3 test the runtime-all.js file.
+bin/_node -lp -v -f -o $TEST/callbacks/ -c $TEST/{flows,stack,futures}-test._js
 bin/_node --generators -v -f -o $TEST/generators/ -c $TEST/*._js
 
 cat lib/callbacks/require-stub.js \
@@ -42,20 +44,35 @@ cat lib/callbacks/require-stub.js \
 	lib/version.js \
 	lib/util/source-map.js \
 	lib/callbacks/transform.js \
+	lib/globals.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/transform-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/callbacks/transform-all.js
+	
+cat lib/callbacks/require-stub.js \
+	lib/globals.js \
+	lib/util/future.js \
+	lib/callbacks/runtime.js \
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/callbacks/runtime-all.js
 	
 cat lib/generators/require-stub.js \
 	node_modules/esprima/esprima.js \
-	node_modules/galaxy/lib/galaxy.js \
 	lib/callbacks/escodegen-browser.js \
 	lib/version.js \
 	lib/util/source-map.js \
 	lib/fibers/walker.js \
 	lib/generators/transform.js \
+	node_modules/galaxy/lib/galaxy.js \
+	lib/globals.js \
 	lib/util/future.js \
 	lib/generators/runtime.js \
-	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/transform-all-generators.js
+	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/generators/transform-all.js
+	
+cat lib/generators/require-stub.js \
+	node_modules/galaxy/lib/galaxy.js \
+	lib/globals.js \
+	lib/util/future.js \
+	lib/generators/runtime.js \
+	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/generators/runtime-all.js
 	
 popd > /dev/null
