@@ -46,4 +46,16 @@ cat lib/callbacks/require-stub.js \
 	lib/callbacks/runtime.js \
 	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/transform-all.js
 	
+cat lib/generators/require-stub.js \
+	node_modules/esprima/esprima.js \
+	node_modules/galaxy/lib/galaxy.js \
+	lib/callbacks/escodegen-browser.js \
+	lib/version.js \
+	lib/util/source-map.js \
+	lib/fibers/walker.js \
+	lib/generators/transform.js \
+	lib/util/future.js \
+	lib/generators/runtime.js \
+	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/transform-all-generators.js
+	
 popd > /dev/null
