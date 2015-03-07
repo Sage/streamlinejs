@@ -37,13 +37,10 @@ bin/_node -lp -v -f -o $TEST/callbacks/ -c $TEST/flows-test._js
 bin/_node --generators -v -f -o $TEST/generators/ -c $TEST/*._js
 
 cat lib/callbacks/require-stub.js \
-	deps/narcissus/lib/jsdefs.js \
-	deps/narcissus/lib/jslex.js \
-	deps/narcissus/lib/jsparse.js \
-	deps/narcissus/lib/jsdecomp.js \
+	node_modules/esprima/esprima.js \
+	lib/callbacks/escodegen-browser.js \
 	lib/version.js \
 	lib/util/source-map.js \
-	lib/callbacks/format.js \
 	lib/callbacks/transform.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
