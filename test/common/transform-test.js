@@ -26,14 +26,14 @@ test("basic", 1, function() {
 		f2();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			return f1(__cb(_, __frame, 1, 4, function __$f() {
 				f2();
 				_();
-			}, true));
+			}, true, false));
 		});
 	});
 });
@@ -45,7 +45,7 @@ test("var return", 1, function() {
 	}, function f(_) {
 		var x;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -53,7 +53,7 @@ test("var return", 1, function() {
 				x = __1;
 				f2();
 				return _(null, x);
-			}, true));
+			}, true, false));
 		});
 	});
 });
@@ -63,7 +63,7 @@ test("return", 1, function() {
 		return f2(_);
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -83,22 +83,22 @@ test("if", 1, function() {
 		f5();
 	}, function f(_, b) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__then) {
+			return function __$f(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}, true));
+					}, true, false));
 				} else {
 					__then();
 				}
-			})(function __$f() {
+			}(function __$f() {
 				f5();
 				_();
 			});
@@ -115,22 +115,22 @@ test("simplified if", 1, function() {
 		}
 	}, function f(_, b) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__then) {
+			return function __$f(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}, true));
+					}, true, false));
 				} else {
 					__then();
 				}
-			})(_);
+			}(_);
 		});
 	});
 });
@@ -149,26 +149,26 @@ test("if else", 1, function() {
 		f8();
 	}, function f(_, b) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__then) {
+			return function __$f(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						__then();
-					}, true));
+					}, true, false));
 				} else {
 					f5();
 					return f6(__cb(_, __frame, 8, 8, function __$f() {
 						f7();
 						__then();
-					}, true));
+					}, true, false));
 				}
-			})(function __$f() {
+			}(function __$f() {
 				f8();
 				_();
 			});
@@ -190,23 +190,23 @@ test("if else 2", 1, function() {
 		return 2;
 	}, function f(_, b) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__then) {
+			return function __$f(__then) {
 				if (b) {
 					f2();
 					return f3(__cb(_, __frame, 4, 8, function __$f() {
 						f4();
 						return _(null, 1);
-					}, true));
+					}, true, false));
 				} else {
 					f5();
 					__then();
 				}
-			})(function __$f() {
+			}(function __$f() {
 				f6();
 				return _(null, 2);
 			});
@@ -223,7 +223,7 @@ test("each", 1, function() {
 		f4();
 	}, function f(_, arr) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -231,16 +231,16 @@ test("each", 1, function() {
 			return each(__cb(_, __frame, 2, 4, function __$f() {
 				f4();
 				_();
-			}, true), arr, function __1(_, elt) {
+			}, true, false), arr, function __1(_, elt) {
 				var __frame = {
-					name: "__1",
+					name: '__1',
 					line: 3
 				};
 				return __func(_, this, arguments, __1, 0, __frame, function __$__1() {
 					return f2(__cb(_, __frame, 0, 36, function __$__1() {
 						f3();
 						_();
-					}, true), elt);
+					}, true, false), elt);
 				});
 			});
 		});
@@ -256,12 +256,12 @@ test("while", 1, function() {
 		f4();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
@@ -273,7 +273,7 @@ test("while", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}, true));
+						}, true, false));
 					} else {
 						__break();
 					}
@@ -283,7 +283,7 @@ test("while", 1, function() {
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -301,17 +301,17 @@ test("do while", 1, function() {
 		f4();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
 			var __1 = true;
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
-					var __2 = (__1 || cond);
+					var __2 = __1 || cond;
 					if (__2) {
 						__1 = false;
 						return f2(__cb(_, __frame, 3, 8, function __$f() {
@@ -320,7 +320,7 @@ test("do while", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}, true));
+						}, true, false));
 					} else {
 						__break();
 					}
@@ -330,7 +330,7 @@ test("do while", 1, function() {
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -348,14 +348,14 @@ test("for", 1, function() {
 	}, function f(_, arr) {
 		var i;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
 			i = 0;
 			var __2 = false;
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
@@ -364,7 +364,7 @@ test("for", 1, function() {
 					} else {
 						__2 = true;
 					}
-					var __1 = (i < arr.length);
+					var __1 = i < arr.length;
 					if (__1) {
 						return f2(__cb(_, __frame, 3, 8, function __$f() {
 							f3();
@@ -372,7 +372,7 @@ test("for", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}, true));
+						}, true, false));
 					} else {
 						__break();
 					}
@@ -382,7 +382,7 @@ test("for", 1, function() {
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -400,18 +400,18 @@ test("for in", 1, function() {
 	}, function f(_) {
 		var k;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
 			var __1 = __forIn(obj);
 			var __2 = 0;
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
-					var __3 = (__2 < __1.length);
+					var __3 = __2 < __1.length;
 					if (__3) {
 						k = __1[__2++];
 						return f2(__cb(_, __frame, 3, 8, function __$f() {
@@ -420,7 +420,7 @@ test("for in", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}, true), k);
+						}, true, false), k);
 					} else {
 						__break();
 					}
@@ -430,7 +430,7 @@ test("for in", 1, function() {
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -449,18 +449,18 @@ test("for in (without var)", 1, function() {
 	}, function f(_) {
 		var k;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
 			var __1 = __forIn(obj);
 			var __2 = 0;
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
-					var __3 = (__2 < __1.length);
+					var __3 = __2 < __1.length;
 					if (__3) {
 						k = __1[__2++];
 						return f2(__cb(_, __frame, 4, 8, function __$f() {
@@ -469,7 +469,7 @@ test("for in (without var)", 1, function() {
 								__loop();
 							}
 							__more = true;
-						}, true), k);
+						}, true, false), k);
 					} else {
 						__break();
 					}
@@ -479,7 +479,7 @@ test("for in (without var)", 1, function() {
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -506,27 +506,27 @@ test("switch", 1, function() {
 		f7();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__break) {
+			return function __$f(__break) {
 				switch (exp) {
-				case "a":
+				case 'a':
 					return f2(__cb(_, __frame, 4, 8, function __$f() {
 						f3();
 						return __break();
-					}, true));
-				case "b":
-				case "c":
+					}, true, false));
+				case 'b':
+				case 'c':
 					f4();
-					return f5(__cb(_, __frame, 10, 8, __break, true));
+					return f5(__cb(_, __frame, 10, 8, __break, true, false));
 				default:
 					f6();
 					return __break();
 				}
-			})(function __$f() {
+			}(function __$f() {
 				f7();
 				_();
 			});
@@ -546,24 +546,24 @@ test("nested switch", 1, function() {
 		}
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function __$f(__break) {
+			return function __$f(__break) {
 				switch (exp) {
-				case "a":
+				case 'a':
 					return f2(__cb(_, __frame, 3, 8, function __$f() {
 						switch (exp2) {
-						case "b":
+						case 'b':
 							break;
 						}
 						return __break();
-					}, true));
+					}, true, false));
 				default:
 					return __break();
 				}
-			})(_);
+			}(_);
 		});
 	});
 })
@@ -590,47 +590,47 @@ test("switch fall through", 1, function() {
 		f9();
 	}, function f(_) {
 		var__frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		}
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(__break) {
+			return function __$f(__break) {
 				switch (exp) {
-				case "a":
+				case 'a':
 					return f2(__cb(_, __frame, 0, 0, function __$f() {
 						f3();
 						return__break();
-					}, true));
-				case "b":
+					}, true, false));
+				case 'b':
 					var__1 = true;
-				case "c":
+				case 'c':
 					var__2 = true;
-				case "d":
-					return (function __$f(__then) {
+				case 'd':
+					return function __$f(__then) {
 						if (__2) {
-							return (function __$f(__then) {
+							return function __$f(__then) {
 								if (__1) {
-									return f4(__cb(_, __frame, 0, 0, __then, true));
+									return f4(__cb(_, __frame, 0, 0, __then, true, false));
 								} else {
 									__then();
 								}
-							})(function __$f() {
+							}(function __$f() {
 								f5();
 								__then();
 							});
 						} else {
 							__then();
 						}
-					})(function __$f() {
+					}(function __$f() {
 						f6();
-						return f7(__cb(_, __frame, 0, 0, __break, true));
+						return f7(__cb(_, __frame, 0, 0, __break, true, false));
 					});
 				default:
 					f8();
 					return __break();
 				}
-			})(function __$f() {
+			}(function __$f() {
 				f9();
 				_();
 			});
@@ -644,7 +644,7 @@ test("nested calls", 1, function() {
 		f7();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -655,10 +655,10 @@ test("nested calls", 1, function() {
 						return f2(__cb(_, __frame, 2, 4, function __$f() {
 							f7();
 							_();
-						}, true), __2, __3);
-					}, true), f6());
-				}, true), __1);
-			}, true));
+						}, true, false), __2, __3);
+					}, true, false), f6());
+				}, true, false), __1);
+			}, true, false));
 		});
 	});
 })
@@ -670,12 +670,12 @@ test("async while condition", 1, function() {
 		f4();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function ___(__break) {
+			return function ___(__break) {
 				var __more;
 				var __loop = __cb(_, __frame, 0, 0, function __$f() {
 					__more = false;
@@ -689,14 +689,14 @@ test("async while condition", 1, function() {
 						} else {
 							__break();
 						}
-					}, true));
+					}, true, false));
 				});
 				do {
 					__loop();
 				}
 				while (__more);
 				__more = true;
-			})(function __$f() {
+			}(function __$f() {
 				f4();
 				_();
 			});
@@ -718,35 +718,35 @@ test("try catch", 1, function() {
 		f8();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function ___(__then) {
+			return function ___(__then) {
 				(function ___(_) {
 					__tryCatch(_, function __$f() {
 						f2();
 						return f3(__cb(_, __frame, 4, 8, function __$f() {
 							f4();
 							__then();
-						}, true));
+						}, true, false));
 					});
 
-				})(function ___(ex, __result) {
+				}(function ___(ex, __result) {
 					__catch(function __$f() {
 						if (ex) {
 							f5();
 							return f6(__cb(_, __frame, 8, 8, function __$f() {
 								f7();
 								__then();
-							}, true));
+							}, true, false));
 						} else {
 							_(null, __result);
 						}
 					}, _);
-				});
-			})(function ___() {
+				}));
+			}(function ___() {
 				__tryCatch(_, function __$f() {
 					f8();
 					_();
@@ -770,40 +770,37 @@ test("try finally", 1, function() {
 		f8();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function ___(__then) {
+			return function ___(__then) {
 				(function ___(_) {
 					__tryCatch(_, function __$f() {
 						f2();
 						return f3(__cb(_, __frame, 4, 8, function __$f() {
 							f4();
 							_(null, null, true);
-						}, true));
+						}, true, false));
 					});
-				})(function ___(__e, __r, __cont) {
+				}(function ___(__e, __r, __cont) {
 					(function ___(__then) {
 						__tryCatch(_, function __$f() {
 							f5();
 							return f6(__cb(_, __frame, 8, 8, function __$f() {
 								f7();
 								__then();
-							}, true));
+							}, true, false));
 						});
-					})(function ___() {
+					}(function ___() {
 						__tryCatch(_, function ___() {
-							if (__cont) {
-								__then();
-							} else {
-								_(__e, __r);
-							}
+							if (__cont) __then();
+							else _(__e, __r);
 						});
-					});
-				});
-			})(function ___() {
+					}));
+				}));
+			}(function ___() {
 				__tryCatch(_, function __$f() {
 					f8();
 					_();
@@ -824,48 +821,43 @@ test("lazy and", 1, function() {
 		f7();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			f1();
-			return (function __$f(_) {
-				return f2(__cb(_, __frame, 2, 8, function ___(__0, __1) {
-					var __2 = !__1;
-					return (function __$f(__then) {
-						if (__2) {
-							var __3 = __1;
-							return _(null, __3);
-						} else {
-							__then();
-						}
-					})(function __$f() {
-						return f3(_);
-					});
-				}, true));
-			})(__cb(_, __frame, 0, 5, function ___(__0, __2) {
-				return (function __$f(__then) {
+			return function __$f(_) {
+				return f2(__cb(_, __frame, 2, 8, function ___(__0, __2) {
+					var __1 = __2;
+					if (!__1) {
+						return _(null, __1);
+					}
+					return f3(_);
+				}, true, false));
+			}(__cb(_, __frame, 0, 5, function ___(__0, __3) {
+				var __2 = __3;
+				return function __$f(__then) {
 					if (__2) {
 						f4();
 						return f5(__cb(_, __frame, 4, 8, function __$f() {
 							f6();
 							__then();
-						}, true));
+						}, true, false));
 					} else {
 						__then();
 					}
-				})(function __$f() {
+				}(function __$f() {
 					f7();
 					_();
 				});
-			}, true));
+			}, true, false));
 		});
 	})
 })
 test("empty body", 1, function() {
 	genTest(function f(_) {}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -878,7 +870,7 @@ test("only return in body", 1, function() {
 		return 4;
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -891,7 +883,7 @@ test("optim pass _", 1, function() {
 		return g(_, arg2);
 	}, function f(_, arg1) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -904,14 +896,14 @@ test("wrappers", 1, function() {
 		return g(__wrap1(_), arg2) + 5;
 	}, function f(_, arg1) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			return g(__wrap1(__cb(_, __frame, 1, 11, function ___(__0, __2) {
-				var __1 = (__2 + 5);
+				var __1 = __2 + 5;
 				return _(null, __1);
-			}, true)), arg2);
+			}, true, false)), arg2);
 		});
 	});
 })
@@ -936,7 +928,7 @@ test("scoping", 1, function() {
 	}, function f(_) {
 		var a1, a2, a3, b1, b2, b3, c1, c2;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
@@ -956,7 +948,7 @@ test("scoping", 1, function() {
 				b3++;
 				c2 = 2;
 				_();
-			}, true));
+			}, true, false));
 		});
 	});
 })
@@ -1006,14 +998,14 @@ test("function forward reference", 1, function() {
 	}, function f(_) {
 		function foo() {}
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
 			foo();
 			return g(__cb(_, __frame, 1, 1, function __$f() {
 				_();
-			}, true));
+			}, true, false));
 		});
 	});
 })
@@ -1024,13 +1016,13 @@ test("CoffeeScript closure ()", 1, function() {
 		})();
 	}, function f(_) {
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function ___closure(_) {
+			return function ___closure(_) {
 				return g(_);
-			})(_);
+			}(_);
 		});
 	});
 })
@@ -1042,13 +1034,13 @@ test("CoffeeScript closure (this)", 1, function() {
 	}, function f(_) {
 		var __this = this;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function ___closure(_) {
+			return function ___closure(_) {
 				return g(_, __this);
-			})(_);
+			}(_);
 		});
 	});
 })
@@ -1061,13 +1053,13 @@ test("CoffeeScript closure (this, arguments)", 1, function() {
 		var __this = this,
 			__arguments = arguments;
 		var __frame = {
-			name: "f",
+			name: 'f',
 			line: 1
 		};
 		return __func(_, this, arguments, f, 0, __frame, function __$f() {
-			return (function ___closure(_) {
+			return function ___closure(_) {
 				return g(_, __this, __arguments);
-			})(_);
+			}(_);
 		});
 	});
 })

@@ -1,4 +1,4 @@
-// WARNING: DO NOT INSERT COMMENTS OR ANYTHING
+// WARNING: DO NOT INSERT COMMENTS OR REFORMAT OR ANYTHING
 // Line numbers matter to this test!
 
 QUnit.module(module.id);
@@ -16,9 +16,9 @@ function failAsync(_, code){
 }
 
 function failSync(_, code){
-	(function fail(dummy){ // dummy to defeat CoffeeScript compat rule
-		throw new Error(code);
-	})(0);
+	 // dummy to defeat CoffeeScript compat rule
+	function fail(dummy){ throw new Error(code); }
+	fail(0);
 }
 
 var fail;

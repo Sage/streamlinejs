@@ -152,7 +152,7 @@ Compiling will give you the fastest startup time because node will directly load
 You have three options to use streamline in the browser:
 
 * The first one is to compile the source with `_node --standalone -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [eval unit test](https://github.com/Sage/streamlinejs/blob/master/test/common/eval-test.html) for an example.
-* You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/transform-all.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
+* You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/callbacks/transform-all.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 * A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 <a name="generation-options">
@@ -387,7 +387,7 @@ Streamline also provides _stream wrappers_ that simplify stream programming. The
 
 You can seamlessly debug streamline code thanks to [JavaScript source maps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/). See [this video](https://www.youtube.com/watch?v=duC1Sqy66IE) for a quick demo.
 
-To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourcemap` option if you register via a loader.
+To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourceMap` option if you register via a loader.
 
 <a name="flamegraph">
 # Monitoring performance with flame graphs
@@ -460,7 +460,7 @@ For support and discussion, please join the [streamline.js mailing list](http://
 
 See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
-Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed sourcemap support.
+Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed source map support.
 
 <a name="license">
 # License

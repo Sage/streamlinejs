@@ -135,12 +135,12 @@ var _samples = {
 	"\n// without _ (demo does not return future)" +
 	"\nfunction demo2(str, _) { return demo(str, _); }" +
 	"\n" +
-	"\nvar v1 = demo2('1');" +
-	"\nvar v2 = demo2('12');" +
-	"\nvar v3 = demo2('123');" +
-	"\nvar v4 = demo2('1234');" +
+	"\nvar v1 = demo2('1', !_);" +
+	"\nvar v2 = demo2('12', !_);" +
+	"\nvar v3 = demo2('123', !_);" +
+	"\nvar v4 = demo2('1234', !_);" +
 	"\n" +
-	"\ndemo2('fact(4) = ' +v1(_) * v2(_) * v3(_) * v4(_));" +
+	"\ndemo2('fact(4) = ' +v1(_) * v2(_) * v3(_) * v4(_), _);" +
 	"\n",
 }
 
@@ -191,7 +191,7 @@ function _execute() {
 
 function _beautify(str) {
 	try {
-		var str = Narcissus.decompiler.pp(Narcissus.parser.parse(str));
+		var str = escodegen.generate(esprima.parse(str));
 		str = str.replace(/}\s*;/g, "}")
 		$('#codeIn').val(str);
 		return true;
