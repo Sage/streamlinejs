@@ -19,6 +19,6 @@ Note: an empty context (`{}`) is automatically set by the server wrappers of the
 before they dispatch a request. So, with these wrappers, each request starts with a fresh empty context.
 
 * `fn = globals.withContext(fn, cx)`  
-  wraps a function so that it executes with context `cx` (or with a new empty context if `cx` is falsy).
+  wraps a function so that it executes with context `cx` (or a wrapper around current context if `cx` is falsy).
   The previous context will be restored when the function returns (or throws).  
   returns the wrapped function.
