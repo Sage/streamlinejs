@@ -387,7 +387,7 @@ Streamline also provides _stream wrappers_ that simplify stream programming. The
 
 You can seamlessly debug streamline code thanks to [JavaScript source maps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/). See [this video](https://www.youtube.com/watch?v=duC1Sqy66IE) for a quick demo.
 
-To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourcemap` option if you register via a loader.
+To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourceMap` option if you register via a loader.
 
 <a name="flamegraph">
 # Monitoring performance with flame graphs
@@ -460,7 +460,7 @@ For support and discussion, please join the [streamline.js mailing list](http://
 
 See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
-Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed sourcemap support.
+Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed source map support.
 
 <a name="license">
 # License
