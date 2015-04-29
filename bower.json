@@ -12,7 +12,10 @@
   "authors": [
     "Bruno Jouhier"
   ],
-  "main": "./lib/callbacks/transform-all.js",
+  "main": [
+    "lib/callbacks/transform-all.js",
+    "lib/callbacks/runtime-all.js"
+  ],
   "ignore": [
     ".gitignore",
     ".npmignore",
