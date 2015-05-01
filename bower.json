@@ -1,0 +1,33 @@
+{
+  "name": "streamline",
+  "description": "Asynchronous Javascript for dummies",
+  "version": "0.12.1",
+  "homepage": "http://github.com/Sage/streamlinejs",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Sage/streamlinejs.git"
+  },
+  "dependencies": {
+  },
+  "authors": [
+    "Bruno Jouhier"
+  ],
+  "main": [
+    "lib/callbacks/transform-all.js",
+    "lib/callbacks/runtime-all.js"
+  ],
+  "ignore": [
+    ".gitignore",
+    ".npmignore",
+    "bin",
+    "dev.html",
+    "examples",
+    "index.html",
+    "index.js",
+    "index.md",
+    "package.json",
+    "register.js",
+    "test",
+    "tutorial"
+  ]
+}
