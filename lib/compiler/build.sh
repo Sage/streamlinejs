@@ -47,13 +47,13 @@ cat lib/callbacks/require-stub.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/callbacks/transform-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/callbacks/transform-all.js
 	
 cat lib/callbacks/require-stub.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/callbacks/runtime-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/callbacks/runtime-all.js
 	
 cat lib/generators/require-stub.js \
 	node_modules/esprima/esprima.js \
@@ -66,13 +66,13 @@ cat lib/generators/require-stub.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/generators/runtime.js \
-	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/generators/transform-all.js
+	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/generators/transform-all.js
 	
 cat lib/generators/require-stub.js \
 	node_modules/galaxy/lib/galaxy.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/generators/runtime.js \
-	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" > lib/generators/runtime-all.js
+	lib/generators/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/generators/runtime-all.js
 	
 popd > /dev/null
