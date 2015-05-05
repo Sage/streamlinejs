@@ -1,3 +1,4 @@
+"use strict";
 var _demo = "\n" +
 "\nwindow.demo = function(message, callback) {" +
 "\n  if (typeof callback !== 'function')" +
@@ -142,7 +143,7 @@ var _samples = {
 	"\n" +
 	"\ndemo2('fact(4) = ' +v1(_) * v2(_) * v3(_) * v4(_), _);" +
 	"\n",
-}
+};
 
 var _complete = false;
 
@@ -158,8 +159,9 @@ Streamline.globals.context = {
 	errorHandler: function(err){
 		error(err.message || err.toString());
 	}
-}
+};
 
+/* eslint-disable no-eval */
 eval(_demo); // define demo if user does not execute intro
 
 function _transform() {
@@ -170,10 +172,10 @@ function _transform() {
 			lines: _complete ? "preserve" : "ignore"
 		});
 		$('#codeOut').val(codeOut);
-		info("ready")
+		info("ready");
 	} catch (ex) {
 		console.error(ex);
-		error(ex.message)
+		error(ex.message);
 	}
 }
 
@@ -191,8 +193,9 @@ function _execute() {
 
 function _beautify(str) {
 	try {
-		var str = escodegen.generate(esprima.parse(str));
-		str = str.replace(/}\s*;/g, "}")
+		/* global escodegen, esprima */
+		str = escodegen.generate(esprima.parse(str));
+		str = str.replace(/}\s*;/g, "}");
 		$('#codeIn').val(str);
 		return true;
 	} catch (ex) {
@@ -209,14 +212,14 @@ $( function() {
 	});
 	$('#beautify').click( function() {
 		_beautify($('#codeIn').val());
-	})
+	});
 	$('#complete').change( function() {
 		_complete = !_complete;
 		_transform();
-	})
+	});
 	$('#execute').click( function() {
 		_execute();
-	})
-	$('#codeIn').val(_samples["introSample"]);
+	});
+	$('#codeIn').val(_samples.introSample);
 	_transform();
-})
+});

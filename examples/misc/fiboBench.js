@@ -1,3 +1,4 @@
+"use strict";
 var fs = require('fs');
 
 function fib(n) {
@@ -24,8 +25,8 @@ function rawBench(n, loop, modulo, asyncFn, callback) {
 			fibo(nn - 2, function(err, v2) {
 				if (err) return cb(err);
 				cb(null, v1 + v2);
-			})
-		})
+			});
+		});
 	}
 
 	var expected = fib(n);
@@ -68,14 +69,15 @@ var syncBench = bench;
 function makeBench(mode) {
 	var fn;
 	var str = "(function() {" + require("streamline/lib/" + mode + "/transform").transform("fn=" + bench.toString()) + "return bench; })()";
+	/* eslint-disable no-eval */
 	eval(str);
 	//console.log(mode + ": " + fn);
 	return function(n, loop, modulo, asyncFn, cb) {
 		fn(mode, n, loop, modulo, asyncFn, cb);
-	}
+	};
 }
 
-var callbacksBench = makeBench('callbacks')
+var callbacksBench = makeBench('callbacks');
 var fibersBench = makeBench('fibers');
 var generatorsBench = makeBench('generators');
 
@@ -85,8 +87,9 @@ function fname(fn) {
 }
 
 function pass(n, loop, modulo, asyncFn, cb) {
-	console.log('STARTING PASS: n=' + n + ', loop=' + loop + ', modulo=' + modulo + ', fn=' + fname(asyncFn));;
+	console.log('STARTING PASS: n=' + n + ', loop=' + loop + ', modulo=' + modulo + ', fn=' + fname(asyncFn));
 	rawBench(n, loop, modulo, asyncFn, function(err, count) {
+		if (err) throw err;
 		callbacksBench(n, loop, modulo, asyncFn, function(err, c) {
 			if (err) throw err;
 			if (c !== count) throw new Error("count mismatch: expected " + count + ', got ' + c);
@@ -97,14 +100,14 @@ function pass(n, loop, modulo, asyncFn, cb) {
 					if (err) throw err;
 					if (c !== count) throw new Error("count mismatch: expected " + count + ', got ' + c);
 					cb();
-				})
-			})
-		})
-	})
+				});
+			});
+		});
+	});
 }
 
 function warmUp(cb) {
-	console.log("*** WARMING UP ***")
+	console.log("*** WARMING UP ***");
 	pass(25, 1, 3, setImmediate, function() {
 		pass(25, 1, 3, setImmediate, function() {
 			pass(25, 1, 3, setImmediate, function() {
@@ -115,7 +118,7 @@ function warmUp(cb) {
 }
 
 function test1(cb) {
-	console.log("\n*** setImmediate n=25, loop=1 ***")
+	console.log("\n*** setImmediate n=25, loop=1 ***");
 	pass(25, 1, 3, setImmediate, function() {
 		pass(25, 1, 10, setImmediate, function() {
 			pass(25, 1, 100, setImmediate, function() {
@@ -128,7 +131,7 @@ function test1(cb) {
 }
 
 function test2(cb) {
-	console.log("\n*** setImmediate n=1 loop=100000 ***")
+	console.log("\n*** setImmediate n=1 loop=100000 ***");
 	pass(1, 100000, 3, setImmediate, function() {
 		pass(1, 100000, 10, setImmediate, function() {
 			pass(1, 100000, 100, setImmediate, function() {
@@ -145,7 +148,7 @@ function readMe(cb) {
 }
 
 function test3(cb) {
-	console.log("\n*** readMe n=1 loop=10000 ***")
+	console.log("\n*** readMe n=1 loop=10000 ***");
 	pass(1, 10000, 3, readMe, function() {
 		pass(1, 10000, 10, readMe, function() {
 			pass(1, 10000, 100, readMe, function() {
@@ -159,7 +162,7 @@ warmUp(function() {
 	test1(function() {
 		test2(function() {
 			test3(function() {
-				console.log("BENCH COMPLETE!")
+				console.log("BENCH COMPLETE!");
 			});
 		});
 	});

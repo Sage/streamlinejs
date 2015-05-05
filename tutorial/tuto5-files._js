@@ -67,5 +67,5 @@ function fileSearch(_, q) {
 		});
 	}
 	doDir(_, __dirname);
-	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';
 }

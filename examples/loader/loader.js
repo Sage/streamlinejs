@@ -14,7 +14,7 @@ require('streamline').register({
 });
 /// Once the extensions have been registered, the loader can require a streamline
 /// module
-require('./hello')
+require('./hello');
 /// ## Running it
 /// 
 /// ``` sh

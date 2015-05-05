@@ -19,7 +19,7 @@ Once the extensions have been registered, the loader can require a streamline
 module
 
 ``` javascript
-require('./hello')
+require('./hello');
 ```
 
 ## Running it

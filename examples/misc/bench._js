@@ -54,7 +54,7 @@ function delay(_, val) {
 
 function recurse(_, depth) {
   if (depth > 0) recurse(_, depth - 1);
-  else process.nextTick(_)
+  else process.nextTick(_);
 }
 
 var benches = {
@@ -82,6 +82,7 @@ var benches = {
     } finally {}
   },
   "if\t": function(_) {
+    /* eslint-disable no-constant-condition */
     if (true) process.nextTick(_);
   },
   "recurse 2": function(_) {
@@ -114,11 +115,11 @@ var benches = {
       } catch (ex) {}
     }
   }
-}
+};
 
 function runAll(_, native) {
   for (var k in benches) {
-    bench(_, k, benches[k], native)
+    bench(_, k, benches[k], native);
   }
 }
 

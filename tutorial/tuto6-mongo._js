@@ -70,7 +70,7 @@ function fileSearch(_, q) {
 		});
 	}
 	doDir(_, __dirname);
-	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';
 }
 
 
@@ -106,7 +106,7 @@ function mongoSearch(_, q) {
 			}]
 		}, _).toArray(_).map(function(movie) {
 			return movie.title + ': ' + movie.director;
-		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';
 	} finally {
 		db.close();
 	}

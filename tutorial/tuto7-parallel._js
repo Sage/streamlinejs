@@ -81,11 +81,11 @@ function fileSearch(_, q) {
 		});
 	}
 	doDir(_, __dirname);
-	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+	return results + '<br/>completed in ' + (new Date() - t0) + ' ms';
 }
 
-var mongodb = require('mongodb'),
-	mongoFunnel = flows.funnel(1);
+var mongodb = require('mongodb');
+var	mongoFunnel = flows.funnel(1);
 
 function mongoSearch(_, q) {
 	var t0 = new Date();
@@ -105,7 +105,7 @@ function mongoSearch(_, q) {
 			}]
 		}, _).toArray(_).map(function(movie) {
 			return movie.title + ': ' + movie.director;
-		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';;
+		}).join('<br/>') + '<br/>completed in ' + (new Date() - t0) + ' ms';
 	} finally {
 		db.close();
 	}
