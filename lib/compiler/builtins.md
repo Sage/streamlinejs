@@ -24,15 +24,15 @@ The `par` values are interpreted as follows:
 Functions:
 
 * `array.forEach_(_[, options], fn[, thisObj])`  
-  `fn` is called as `fn(_, elt, i)`.
+  `fn` is called as `fn(_, elt, i, array)`.
 * `result = array.map_(_[, options], fn[, thisObj])`  
-  `fn` is called as `fn(_, elt, i)`.
+  `fn` is called as `fn(_, elt, i, array)`.
 * `result = array.filter_(_[, options], fn[, thisObj])`  
-  `fn` is called as `fn(_, elt)`.
+  `fn` is called as `fn(_, elt, i, array)`.
 * `bool = array.every_(_[, options], fn[, thisObj])`  
-  `fn` is called as `fn(_, elt)`.
+  `fn` is called as `fn(_, elt, i, array)`.
 * `bool = array.some_(_[, options], fn[, thisObj])`  
-  `fn` is called as `fn(_, elt)`.
+  `fn` is called as `fn(_, elt, i, array)`.
 * `result = array.reduce_(_, fn, val[, thisObj])`  
   `fn` is called as `val = fn(_, val, elt, i, array)`.
 * `result = array.reduceRight_(_, fn, val[, thisObj])`  

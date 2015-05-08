@@ -13,9 +13,9 @@ function* delayFail(_, err) {
 
 function sparse() {
 	var a = [];
-	a[3] = 33;
-	a[4] = 44;
-	a[9] = 99;
+	a[2] = 33;
+	a[5] = 44;
+	a[7] = 99;
 	return a;
 }
 
@@ -62,13 +62,13 @@ asyncTest("each", 7, galaxy.unstar(function*(_) {
 		var v = (yield delay(_ , val));
 		result = result + '/' + i + ':' + v;
 	}, 0)], 0));
-	strictEqual(result, '/3:33/4:44/9:99');
+	strictEqual(result, '/2:33/5:44/7:99');
 	result = '';
 	(yield galaxy.invoke(sparse(), "forEach_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
 		var v = (yield delay(_ , val));
 		result = result + '/' + i + ':' + v;
 	}, 0)], 0));
-	strictEqual(result, '/3:33/4:44/9:99');
+	strictEqual(result, '/2:33/5:44/7:99');
 	start();
 }, 0));
 asyncTest("map", 9, galaxy.unstar(function*(_) {
@@ -98,14 +98,14 @@ asyncTest("map", 9, galaxy.unstar(function*(_) {
 		var v = (yield delay(_ , val));
 		return i + ':' + v;
 	}, 0)], 0));
-	strictEqual(result.length, 10);
-	strictEqual(dump(result), '/3:33/4:44/9:99');
+	strictEqual(result.length, 8);
+	strictEqual(dump(result), '/2:33/5:44/7:99');
 	result = (yield galaxy.invoke(sparse(), "map_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
 		var v = (yield delay(_ , val));
 		return i + ':' + v;
 	}, 0)], 0));
-	strictEqual(result.length, 10);
-	strictEqual(dump(result), '/3:33/4:44/9:99');
+	strictEqual(result.length, 8);
+	strictEqual(dump(result), '/2:33/5:44/7:99');
 	start();
 }, 0));
 asyncTest("filter", 9, galaxy.unstar(function*(_) {
@@ -143,7 +143,7 @@ asyncTest("filter", 9, galaxy.unstar(function*(_) {
 	deepEqual(result, [33, 99]);
 	start();
 }, 0));
-asyncTest("every true", 7, galaxy.unstar(function*(_) {
+asyncTest("every true", 9, galaxy.unstar(function*(_) {
 	var result = (yield galaxy.invoke(flows, "every", [_ , [1, 2, 3, 4] , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) < 5;
 	}, 0)], 0));
@@ -174,9 +174,17 @@ asyncTest("every true", 7, galaxy.unstar(function*(_) {
 		return (yield delay(_ , val)) > 30;
 	}, 0)], 0));
 	strictEqual(result, true);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "every_", [_ , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) < 4;
+	}, 0)], 0));
+	strictEqual(result, true);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "every_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) < 4;
+	}, 0)], 0));
+	strictEqual(result, true);
 	start();
 }, 0));
-asyncTest("every false", 7, galaxy.unstar(function*(_) {
+asyncTest("every false", 9, galaxy.unstar(function*(_) {
 	var result = (yield galaxy.invoke(flows, "every", [_ , [1, 2, 3, 4] , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) < 3;
 	}, 0)], 0));
@@ -199,17 +207,25 @@ asyncTest("every false", 7, galaxy.unstar(function*(_) {
 		return (yield delay(_ , val)) < 3;
 	}, 0)], 0));
 	strictEqual(result, false);
-	result = (yield galaxy.invoke(sparse(), "every_", [_ , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "every_", [_ , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) > 40;
 	}, 0)], 0));
 	strictEqual(result, false);
-	result = (yield galaxy.invoke(sparse(), "every_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "every_", [_ , -1 , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) > 40;
+	}, 0)], 0));
+	strictEqual(result, false);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "every_", [_ , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) < 3;
+	}, 0)], 0));
+	strictEqual(result, false);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "every_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) < 3;
 	}, 0)], 0));
 	strictEqual(result, false);
 	start();
 }, 0));
-asyncTest("some true", 7, galaxy.unstar(function*(_) {
+asyncTest("some true", 9, galaxy.unstar(function*(_) {
 	var result = (yield galaxy.invoke(flows, "some", [_ , [1, 2, 3, 4] , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) < 3;
 	}, 0)], 0));
@@ -232,17 +248,25 @@ asyncTest("some true", 7, galaxy.unstar(function*(_) {
 		return (yield delay(_ , val)) < 3;
 	}, 0)], 0));
 	strictEqual(result, true);
-	result = (yield galaxy.invoke(sparse(), "some_", [_ , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "some_", [_ , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) > 30;
 	}, 0)], 0));
 	strictEqual(result, true);
-	result = (yield galaxy.invoke(sparse(), "some_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "some_", [_ , -1 , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) > 30;
+	}, 0)], 0));
+	strictEqual(result, true);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "some_", [_ , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) === 2;
+	}, 0)], 0));
+	strictEqual(result, true);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "some_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) === 2;
 	}, 0)], 0));
 	strictEqual(result, true);
 	start();
 }, 0));
-asyncTest("some false", 7, galaxy.unstar(function*(_) {
+asyncTest("some false", 9, galaxy.unstar(function*(_) {
 	var result = (yield galaxy.invoke(flows, "some", [_ , [1, 2, 3, 4] , galaxy.unstar(function*(_, val) {
 		return (yield delay(_ , val)) < 0;
 	}, 0)], 0));
@@ -265,12 +289,20 @@ asyncTest("some false", 7, galaxy.unstar(function*(_) {
 		return (yield delay(_ , val)) < 0;
 	}, 0)], 0));
 	strictEqual(result, false);
-	result = (yield galaxy.invoke(sparse(), "some_", [_ , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "some_", [_ , galaxy.unstar(function*(_, val) {
 		return !((yield delay(_ , val)) > 20);
 	}, 0)], 0));
 	strictEqual(result, false);
-	result = (yield galaxy.invoke(sparse(), "some_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+	result = (yield galaxy.invoke(sparse(), "some_", [_ , -1 , galaxy.unstar(function*(_, val) {
 		return !((yield delay(_ , val)) > 20);
+	}, 0)], 0));
+	strictEqual(result, false);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "some_", [_ , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) === 9;
+	}, 0)], 0));
+	strictEqual(result, false);
+	var result = (yield galaxy.invoke([1, 4, 9, 16], "some_", [_ , -1 , galaxy.unstar(function*(_, val, i) {
+		return (yield delay(_ , i)) === 9;
 	}, 0)], 0));
 	strictEqual(result, false);
 	start();
@@ -284,10 +316,10 @@ asyncTest("reduce", 3, galaxy.unstar(function*(_) {
 		return v * (yield delay(_ , val));
 	}, 0) , 1], 0));
 	strictEqual(result, 24);
-	var result = (yield galaxy.invoke(sparse(), "reduce_", [_ , galaxy.unstar(function*(_, v, val) {
-		return v + '/' + (yield delay(_ , val));
+	var result = (yield galaxy.invoke(sparse(), "reduce_", [_ , galaxy.unstar(function*(_, v, val, i) {
+		return v + '/' + (yield delay(_ , val)) + i;
 	}, 0) , ''], 0));
-	strictEqual(result, '/33/44/99');
+	strictEqual(result, '/332/445/997');
 	start();
 }, 0));
 asyncTest("reduceRight", 3, galaxy.unstar(function*(_) {
@@ -299,10 +331,10 @@ asyncTest("reduceRight", 3, galaxy.unstar(function*(_) {
 		return v * (yield delay(_ , val));
 	}, 0) , 1], 0));
 	strictEqual(result, 24);
-	var result = (yield galaxy.invoke(sparse(), "reduceRight_", [_ , galaxy.unstar(function*(_, v, val) {
-		return v + '/' + (yield delay(_ , val));
+	var result = (yield galaxy.invoke(sparse(), "reduceRight_", [_ , galaxy.unstar(function*(_, v, val, i) {
+		return v + '/' + (yield delay(_ , val)) + i;
 	}, 0) , ''], 0));
-	strictEqual(result, '/99/44/33');
+	strictEqual(result, '/997/445/332');
 	start();
 }, 0));
 asyncTest("sort", 4, galaxy.unstar(function*(_) {
