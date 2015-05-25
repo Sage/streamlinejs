@@ -2,6 +2,7 @@
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
   "version": "0.12.1",
+  "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "repository": {
     "type": "git",
