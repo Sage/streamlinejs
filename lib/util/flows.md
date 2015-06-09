@@ -37,13 +37,17 @@ won't be called, and no other operation will enter the funnel.
   Note: `wait` calls are not queued. An exception is thrown if wait is called while another `wait` is pending.
 * `q = flows.queue(options)`  
   allocates a queue which may be used to send data asynchronously between two tasks.  
+  The `max` option can be set to control the maximum queue length.  
+  When `max` has been reached `q.put(data)` discards data and returns false.
   The returned queue has the following methods:  
   `data = q.read(_)`: dequeues an item from the queue. Waits if no element is available.  
   `q.write(_, data)`:  queues an item. Waits if the queue is full.  
   `ok = q.put(data)`: queues an item synchronously. Returns true if the queue accepted it, false otherwise. 
   `q.end()`: ends the queue. This is the synchronous equivalent of `q.write(_, undefined)`  
-  The `max` option can be set to control the maximum queue length.  
-  When `max` has been reached `q.put(data)` discards data and returns false.
+  `data = q.peek()`: returns the first item, without dequeuing it. Returns `undefined` if the queue is empty.  
+  `array = q.contents()`: returns a copy of the queue's contents.  
+  `q.adjust(fn[, thisObj])`: adjusts the contents of the queue by calling `newContents = fn(oldContents)`.  
+  `q.length`: number of items currently in the queue.  
 
 ## Miscellaneous utilities
 * `results = flows.collect(_, futures)`  

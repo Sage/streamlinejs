@@ -485,9 +485,50 @@ asyncTest('trampoline', 1, function __16(_) {
             start(); _(); }, true, false), 100000); }); }); 
 
 
-asyncTest('trampoline preserves context', 2, function __17(_) { var globals, fn, result; var __frame = { name: '__17', line: 488 }; return __func(_, this, arguments, __17, 0, __frame, function __$__17() { globals = require('streamline/lib/globals'); 
+asyncTest('queue overflow', 5, function __17(_) { var queue, produce, consume; var __frame = { name: '__17', line: 488 }; return __func(_, this, arguments, __17, 0, __frame, function __$__17() { queue = flows.queue(2); 
+        produce = function __1(_) { 
+            
+            var __frame = { name: '__1', line: 491 }; return __func(_, this, arguments, __1, 0, __frame, function __$__1() { 
+                return queue.write(__cb(_, __frame, 1, 0, function __$__1() { 
+                    return queue.write(__cb(_, __frame, 2, 0, function __$__1() { 
+                        return queue.write(__cb(_, __frame, 3, 0, function __$__1() { 
+                            return queue.write(__cb(_, __frame, 4, 0, function __$__1() { _(); }, true, false), 25); }, true, false), 16); }, true, false), 9); }, true, false), 4); }); }(false); 
+        consume = function __2(_) { 
+            var __frame = { name: '__2', line: 497 }; return __func(_, this, arguments, __2, 0, __frame, function __$__2() { 
+                return queue.read(__cb(_, __frame, 1, 0, function ___(__0, __1) { strictEqual(__1, 4); 
+                    return queue.read(__cb(_, __frame, 2, 0, function ___(__0, __2) { strictEqual(__2, 9); 
+                        return queue.read(__cb(_, __frame, 3, 0, function ___(__0, __3) { strictEqual(__3, 16); 
+                            return queue.read(__cb(_, __frame, 4, 0, function ___(__0, __4) { strictEqual(__4, 25); _(); }, true, false)); }, true, false)); }, true, false)); }, true, false)); }); }(false); 
+        
+        return produce(__cb(_, __frame, 15, 0, function __$__17() { 
+            return consume(__cb(_, __frame, 16, 0, function __$__17() { 
+                strictEqual(queue.peek(), undefined); 
+                start(); _(); }, true, false)); }, true, false)); }); }); 
+
+
+asyncTest('queue length, contents, alter', 8, function __18(_) { var queue; var __frame = { name: '__18', line: 509 }; return __func(_, this, arguments, __18, 0, __frame, function __$__18() { queue = flows.queue(); 
+        
+        return queue.write(__cb(_, __frame, 2, 0, function __$__18() { 
+            return queue.write(__cb(_, __frame, 3, 0, function __$__18() { 
+                return queue.write(__cb(_, __frame, 4, 0, function __$__18() { 
+                    return queue.write(__cb(_, __frame, 5, 0, function __$__18() { 
+                        strictEqual(queue.length, 4); 
+                        strictEqual(queue.peek(), 4); 
+                        deepEqual(queue.contents(), [ 4, 9, 16, 25 ]); 
+                        queue.adjust(function (arr) { 
+                            return [ arr[3], arr[1] ]; }); 
+                        
+                        strictEqual(queue.peek(), 25); 
+                        return queue.read(__cb(_, __frame, 13, 0, function ___(__0, __1) { strictEqual(__1, 25); 
+                            strictEqual(queue.peek(), 9); 
+                            return queue.read(__cb(_, __frame, 15, 0, function ___(__0, __2) { strictEqual(__2, 9); 
+                                strictEqual(queue.peek(), undefined); 
+                                start(); _(); }, true, false)); }, true, false)); }, true, false), 25); }, true, false), 16); }, true, false), 9); }, true, false), 4); }); }); 
+
+
+asyncTest('trampoline preserves context', 2, function __19(_) { var globals, fn, result; var __frame = { name: '__19', line: 529 }; return __func(_, this, arguments, __19, 0, __frame, function __$__19() { globals = require('streamline/lib/globals'); 
         fn = function fn__1(_) { 
-            var __frame = { name: 'fn__1', line: 490 }; return __func(_, this, arguments, fn__1, 0, __frame, function __$fn__1() { 
+            var __frame = { name: 'fn__1', line: 531 }; return __func(_, this, arguments, fn__1, 0, __frame, function __$fn__1() { 
                 return _(null, globals.context.val); }); }; 
         
         globals.context.val = 'abc'; 

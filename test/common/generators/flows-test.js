@@ -485,6 +485,47 @@ asyncTest("trampoline", 1, galaxy.unstar(function*(_) {var sums_ = galaxy.unstar
 	start();
 }, 0));
 
+asyncTest("queue overflow", 5, galaxy.unstar(function*(_) {
+	var queue = flows.queue(2);
+	// must produce and consume in parallel to avoid deadlock
+	var produce = galaxy.unstar(function*(_) {
+		(yield galaxy.invoke(queue, "write", [_ , 4], 0));
+		(yield galaxy.invoke(queue, "write", [_ , 9], 0));
+		(yield galaxy.invoke(queue, "write", [_ , 16], 0));
+		(yield galaxy.invoke(queue, "write", [_ , 25], 0));		
+	}, 0)(false);
+	var consume = galaxy.unstar(function*(_) {
+		strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 4);
+		strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 9);
+		strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 16);
+		strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 25);
+	}, 0)(false);
+	(yield galaxy.invoke(null, produce, [_], 0));
+	(yield galaxy.invoke(null, consume, [_], 0));
+	strictEqual(queue.peek(), undefined);
+	start();
+}, 0));
+
+asyncTest("queue length, contents, alter", 8, galaxy.unstar(function*(_) {
+	var queue = flows.queue();
+	(yield galaxy.invoke(queue, "write", [_ , 4], 0));
+	(yield galaxy.invoke(queue, "write", [_ , 9], 0));
+	(yield galaxy.invoke(queue, "write", [_ , 16], 0));
+	(yield galaxy.invoke(queue, "write", [_ , 25], 0));
+	strictEqual(queue.length, 4);
+	strictEqual(queue.peek(), 4);
+	deepEqual(queue.contents(), [4, 9, 16, 25]);
+	queue.adjust(function(arr) {
+		return [arr[3], arr[1]];
+	});
+	strictEqual(queue.peek(), 25);
+	strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 25);
+	strictEqual(queue.peek(), 9);
+	strictEqual((yield galaxy.invoke(queue, "read", [_], 0)), 9);
+	strictEqual(queue.peek(), undefined);
+	start();
+}, 0));
+
 asyncTest("trampoline preserves context", 2, galaxy.unstar(function*(_) {
 	var globals = require('streamline/lib/globals');
 	var fn = galaxy.unstar(function*(_) {

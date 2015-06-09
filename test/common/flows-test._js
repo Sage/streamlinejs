@@ -485,6 +485,47 @@ asyncTest("trampoline", 1, function(_) {
 	start();
 });
 
+asyncTest("queue overflow", 5, function(_) {
+	var queue = flows.queue(2);
+	// must produce and consume in parallel to avoid deadlock
+	var produce = function(_) {
+		queue.write(_, 4);
+		queue.write(_, 9);
+		queue.write(_, 16);
+		queue.write(_, 25);		
+	}(!_);
+	var consume = function(_) {
+		strictEqual(queue.read(_), 4);
+		strictEqual(queue.read(_), 9);
+		strictEqual(queue.read(_), 16);
+		strictEqual(queue.read(_), 25);
+	}(!_);
+	produce(_);
+	consume(_);
+	strictEqual(queue.peek(), undefined);
+	start();
+});
+
+asyncTest("queue length, contents, alter", 8, function(_) {
+	var queue = flows.queue();
+	queue.write(_, 4);
+	queue.write(_, 9);
+	queue.write(_, 16);
+	queue.write(_, 25);
+	strictEqual(queue.length, 4);
+	strictEqual(queue.peek(), 4);
+	deepEqual(queue.contents(), [4, 9, 16, 25]);
+	queue.adjust(function(arr) {
+		return [arr[3], arr[1]];
+	});
+	strictEqual(queue.peek(), 25);
+	strictEqual(queue.read(_), 25);
+	strictEqual(queue.peek(), 9);
+	strictEqual(queue.read(_), 9);
+	strictEqual(queue.peek(), undefined);
+	start();
+});
+
 asyncTest("trampoline preserves context", 2, function(_) {
 	var globals = require('streamline/lib/globals');
 	var fn = function(_) {
