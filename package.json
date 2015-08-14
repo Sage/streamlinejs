@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "0.12.1",
+  "version": "1.0.0",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "repository": {
@@ -12,9 +12,9 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "esprima": "^2.0.0",
-    "escodegen": "^1.6.1",
-    "source-map": "~0.1.43"
+  },
+  "peerDependencies": {
+    "babel-core": ">=5.7.0"
   },
   "optionalDependencies": {
     "fibers": "^1.0.1",
