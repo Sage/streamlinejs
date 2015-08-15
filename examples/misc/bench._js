@@ -1,6 +1,6 @@
 "use strict";
 
-var mode = typeof fstreamline__ !== 'undefined' ? "fibers" : "callback";
+var mode = require('streamline/lib/globals').runtime;
 
 function bench(_, name, fn, native) {
   function tryNative(cb, count) {

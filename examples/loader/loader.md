@@ -9,7 +9,6 @@ The loader module must register the streamline file extensions:
 
 ``` javascript
 require('streamline').register({
-	fibers: false,
 	cache: true,
 	verbose: true,
 });
