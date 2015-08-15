@@ -12,6 +12,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
+    "colors": "~1.1.2"
   },
   "peerDependencies": {
     "babel-core": ">=5.7.0"
