@@ -823,36 +823,31 @@ asyncTest("return undefined", 1, function(_) {
 	start();
 });
 
-if (typeof require !== "undefined") { // skip this one in browser
-	var globals = require('streamline/lib/globals');
-	var isFast = /-fast$/.test(globals.runtime);
-
-	if (globals.Promise) asyncTest("promises", isFast ? 3 : 7, function(_) {
-		function test(v, _) {
-			return delay(_, v); 
-		}
-		if (!isFast) {
-			var p1 = test('a');
-			var p2 = test('b', null);
-			strictEqual(p1 && typeof p1.then, "function");
-			strictEqual(p2 && typeof p2.then, "function");
-			strictEqual(p1.then(_, _), 'a');
-			strictEqual(p2.then(_, _), 'b');
-		}
-		var p3 = test('c', void _);
-		strictEqual(p3 && typeof p3.then, "function");
-		strictEqual(p3.then(_, _), 'c');
-		try {
-			var p4 = delayFail(void _, 'ERR d');
-			p4.then(_, _);
-			ok(false);
-		} catch (ex) {
-			strictEqual(ex, "ERR d");
-		}
-		start();
-	});
+asyncTest("promises", 7, function(_) {
+	function test(v, _) {
+		return delay(_, v); 
+	}
+	var p1 = test('a');
+	var p2 = test('b', null);
+	strictEqual(p1 && typeof p1.then, "function");
+	strictEqual(p2 && typeof p2.then, "function");
+	strictEqual(p1.then(_, _), 'a');
+	strictEqual(p2.then(_, _), 'b');
+	var p3 = test('c', void _);
+	strictEqual(p3 && typeof p3.then, "function");
+	strictEqual(p3.then(_, _), 'c');
+	try {
+		var p4 = delayFail(void _, 'ERR d');
+		p4.then(_, _);
+		ok(false);
+	} catch (ex) {
+		strictEqual(ex, "ERR d");
+	}
+	start();
+});
 
 	// issue #218
+	/* - not supported any more
 	if (!isFast) asyncTest("coffeescript default values", 8, function(_) {
 		var got;
 		var that = {};
@@ -884,7 +879,7 @@ if (typeof require !== "undefined") { // skip this one in browser
 		strictEqual(got, "a=8, b=3, c=5");
 		start();
 	});
-}
+	*/
 
 asyncTest("IIFE bug in fibers mode", 1, function(_) {
 	var api = (function() {
