@@ -703,11 +703,13 @@ asyncTest("labelled break", 1, function(_) {
 	}, '!15-!16-!/!25-!26-!/!35-!36-!!38-!39-/!45-!46-!!55-!56-!');
 })
 
+/* this one raises a compile error in babel (normal) - we don't need it any more so nuke it
 asyncTest("octal literal", 1, function(_) {
 	evalTest(function f(_) {
 		return 010;
 	}, 8);
 })
+*/
 
 asyncTest("typeof rewriting bug (fibers)", 1, function(_) {
 	evalTest(function f(_) {
