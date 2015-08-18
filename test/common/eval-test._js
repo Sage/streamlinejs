@@ -827,8 +827,8 @@ asyncTest("promises", 7, function(_) {
 	function test(v, _) {
 		return delay(_, v); 
 	}
-	var p1 = test('a');
-	var p2 = test('b', null);
+	var p1 = test('a', void _);
+	var p2 = test('b', !_).promise;
 	strictEqual(p1 && typeof p1.then, "function");
 	strictEqual(p2 && typeof p2.then, "function");
 	strictEqual(p1.then(_, _), 'a');
@@ -895,14 +895,14 @@ asyncTest("IIFE bug in fibers mode", 1, function(_) {
 });
 
 
-// enable later
-false && asyncTest("futures on non-streamline APIs", 1, function(_) {
+asyncTest("futures on non-streamline APIs", 2, function(_) {
 	function nat(cb) {
-		setImmediate(function() {
+		setTimeout(function() {
 			cb(null, "abc");
 		});
 	}
 	var fut = nat(!_);
+	strictEqual(typeof fut, "function");
 	strictEqual(fut(_), "abc");
 	start();
 });
