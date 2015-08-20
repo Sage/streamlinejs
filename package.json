@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
+  "author": "Bruno Jouhier",
   "repository": {
     "type": "git",
     "url": "git://github.com/Sage/streamlinejs.git"
@@ -21,7 +22,6 @@
     "fibers": "^1.0.1",
     "galaxy": "^0.1.12"
   },
-  "author": "Bruno Jouhier",
   "directories": {
     "lib": "./lib",
     "bin": "./bin"
