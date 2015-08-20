@@ -129,7 +129,7 @@ function T(_, fn, code, failFn){
 				return m[1] + ":" + m[2];
 			return l;
 		}).join('/');
-		var end = s.indexOf('/T:');
+		var end = s.indexOf('/_T:');
 		return end < 0 ? s + "-- end frame missing" : s.substring(0, end);
 	}
 }
