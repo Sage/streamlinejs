@@ -9,12 +9,12 @@ function evalTest(f, val) {
 }
 
 function delay(_, val) {
-	setTimeout(~_, 0);
+	setTimeout(_, 0);
 	return val;
 }
 
 function delayFail(_, err) {
-	setTimeout(~_, 0);
+	setTimeout(_, 0);
 	throw err;
 }
 
@@ -739,9 +739,9 @@ function twoResultsSync(a, b, cb) {
 	cb(null, a, b);
 }
 
-asyncTest("multiple results ~_", 1, function(_) {
+asyncTest("multiple results _", 1, function(_) {
 	evalTest(function f(_) {
-		var results = twoResults('abc', 'def', ~_);
+		var results = twoResults('abc', 'def', _);
 		return results;
 	}, "abc");
 });

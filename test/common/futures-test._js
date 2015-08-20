@@ -1,7 +1,7 @@
 QUnit.module(module.id);
 
 function delay(millis, val, _) {
-	setTimeout(~_, millis);
+	setTimeout(_, millis);
 	return val;
 }
 
