@@ -3,11 +3,11 @@
 
 QUnit.module(module.id);
 
-var nextTick = _(function(cb) {
+var nextTick = function(cb) {
 	setTimeout(function(){
 		cb();
 	}, 0);
-}, 0);
+};
 
 
 
