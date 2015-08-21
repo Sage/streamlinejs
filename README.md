@@ -429,9 +429,7 @@ The following package contains a complete yet simple streaming API for streamlin
 
 The following packages contain API wrappers for streamline.js:
 
-* [streamline-fs](https://github.com/Sage/streamline-fs): wrapper for node's `fs` module. It fixes the `fs.exists` call and it wraps the entire API for streamline's fast mode.
 * [streamline-streams](https://github.com/Sage/streamline-streams): historical streaming module for streamline. It implements the low level bits of the `ez-steams` module (see above). If you want a rich streaming APIs you should use `ez-streams` instead. 
-* [streamline-mongodb](https://github.com/Sage/streamline-mongodb): wrappers for [mongodb](https://github.com/mongodb/node-mongodb-native)'s native node.js driver. You only need this wrapper if you use the _fast_ mode.
 
 There are also some helper packages for [express](http://expressjs.com/):
 
