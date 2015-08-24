@@ -117,7 +117,7 @@ function issue233(_, code) {
 
 function T(_, fn, code, failFn){
 	fail = failFn;
-	var s = "{"
+	var s = "{";
 	try {
 		return fn(_, code);
 	} 
@@ -129,16 +129,16 @@ function T(_, fn, code, failFn){
 				return m[1] + ":" + m[2];
 			return l;
 		}).join('/');
-		var end = s.indexOf('/_T:');
+		var end = s.indexOf('/_T');
 		return end < 0 ? s + "-- end frame missing" : s.substring(0, end);
 	}
 }
 
-console.error("*** WARNING: TEST IGNORES DIFFERENCES ON LINE NUMBERS ***");
+console.error("*** WARNING: TEST IGNORES DIFFERENCES ON FUNCTION NAMES ***");
 function stackEqual(got, expect) {
-	// for now ignore differences in line numbers and leading _ in function names
+	// for now ignore differences in function names (we only test first letter)
 	function simplify(s) {
-		return s.replace(/:\d+/g, '').replace(/_/g, ''); 
+		return s.replace(/\/_*(\w)\w*:/g, function(all, x) { return '/' + x + ':'; });
 	}
 	strictEqual(simplify(got), simplify(expect), simplify(expect));
 }
