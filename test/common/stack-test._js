@@ -21,23 +21,23 @@ function failSync(_, code){
 	fail(0);
 }
 
-var fail;
+var _fail;
 
 function A(_, code){
 	if (code == 1) 
-		fail(_, code);
+		_fail(_, code);
 	if (code == 2) 
-		fail(_, code);
+		_fail(_, code);
 	nextTick(_);
 	if (code == 3) 
-		fail(_, code);
+		_fail(_, code);
 	for (var i = 0; i < 6; i++) {
 		if (code == i) 
-			fail(_, code);
+			_fail(_, code);
 		nextTick(_);
 	}
 	if (code == 6) 
-		fail(_, code);
+		_fail(_, code);
 	nextTick(_);
 	B(_, code);
 	nextTick(_);
@@ -46,7 +46,7 @@ function A(_, code){
 
 function B(_, code){
 	if (code == 7) 
-		fail(_, code);
+		_fail(_, code);
 	C(_, code);
 	nextTick(_);
 	C(_, code);
@@ -55,21 +55,21 @@ function B(_, code){
 
 function C(_, code){
 	if (code == 8) 
-		fail(_, code);
+		_fail(_, code);
 }
 
 function D(_, code){
 	if (code == 9) 
-		fail(_, code);
+		_fail(_, code);
 }
 
 function E(_, code){
 	try {
-		fail(_, code);
+		_fail(_, code);
 	} 
 	catch (ex) {
 		if (code % 3 == 1) 
-			fail(_, code);
+			_fail(_, code);
 		else if (code % 3 == 2) 
 			A(_, code);
 		else 
@@ -85,7 +85,7 @@ function F(_, code){
 
 function G(_, code){
 	if (code == 5) 
-		fail(_, code);
+		_fail(_, code);
 	return "" + code;
 }
 
@@ -116,31 +116,27 @@ function issue233(_, code) {
 // You can insert lines and/or comments after this point.
 
 function T(_, fn, code, failFn){
-	fail = failFn;
+	_fail = failFn;
 	var s = "{";
 	try {
 		return fn(_, code);
 	} 
 	catch (ex) {
 		var s = ex.stack;
+		console.error(s);
 		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 }).map(function(l){
 			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
 		}).join('/');
-		var end = s.indexOf('/_T');
+		var end = s.indexOf('/T:');
 		return end < 0 ? s + "-- end frame missing" : s.substring(0, end);
 	}
 }
 
-console.error("*** WARNING: TEST IGNORES DIFFERENCES ON FUNCTION NAMES ***");
 function stackEqual(got, expect) {
-	// for now ignore differences in function names (we only test first letter)
-	function simplify(s) {
-		return s.replace(/\/_*(\w)\w*:/g, function(all, x) { return '/' + x + ':'; });
-	}
-	strictEqual(simplify(got), simplify(expect), simplify(expect));
+	strictEqual(got, expect, expect);
 }
 // safari hack
 var rawStack = new Error().stack ? function(raw) {
