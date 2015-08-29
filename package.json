@@ -13,7 +13,8 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "colors": "~1.1.2"
+    "commander": "^2.8.1",
+    "colors": "^1.1.2"
   },
   "peerDependencies": {
     "babel-core": ">=5.7.0"
