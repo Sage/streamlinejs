@@ -124,8 +124,10 @@ function T(_, fn, code, failFn){
 	catch (ex) {
 		var s = ex.stack;
 		console.error(s);
-		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 }).map(function(l){
-			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
+		s = s.split('\n').filter(function(l) {
+			return l.indexOf('<<<') < 0;
+		}).map(function(l){
+			var m = /^\s+at (\w+)[^:]*:(\d+)/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
