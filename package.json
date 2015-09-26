@@ -20,8 +20,7 @@
     "babel": ">=5.8.0"
   },
   "optionalDependencies": {
-    "fibers": "^1.0.1",
-    "galaxy": "^0.1.12"
+    "fibers": "^1.0.6"
   },
   "directories": {
     "lib": "./lib",

@@ -61,7 +61,7 @@ NPM, of course:
 npm install streamline -g
 ```
 
-**Warning**: you may get errors when installing streamline versions >= 0.10.11 because fibers and galaxy are now installed as optional packages and they are not compatible with all versions of node.js. But these packages are optional and **streamline itself should install fine**. Just check these dependencies if you plan to use the _fibers_ or _generators_ modes. 
+**Warning**: you may get errors when installing streamline versions >= 0.10.11 because fibers is now installed as an optional package and it is not compatible with all versions of node.js. But this packages is optional and **streamline itself should install fine**. Just check these dependencies if you plan to use the _fibers_  mode. 
 
 The `-g` option installs streamline _globally_.
 You can also install it _locally_, without `-g` but then the `_node` and `_coffee` 
@@ -172,7 +172,7 @@ you can step with the debugger through asynchronous calls without having to go t
 The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by setting the `fibers` option when registering streamline 
 (see the `streamline.register(options)` function.
 
-The _generators_ option produces code for harmony generators. It uses the [galaxy](https://github.com/bjouhier/galaxy) module as runtime. It requires node.js version >= 0.11.4 or an experimental browser (latest Chrome Canary). This options produces code which is similar to what you get with the fibers option, just a bit heavier because of the `yield` keywords.
+The _generators_ option produces code for harmony generators. It requires node.js version >= 0.11.4 or an recent browser. This options produces code which is similar to what you get with the fibers option, just a bit heavier because of the `yield` keywords.
 
 The _generators_ option can be activated by passing the `--generators` option to the `_node` command or by setting the `ganerators` option when registering streamline. If you run it with a loader you have to pass the `--harmony` option to `node`.
 
@@ -312,8 +312,6 @@ Streamline overrides the `ex.stack` getter to give you complete comprehensive st
 * the _async_ stack trace of the asynchronous calls that caused the exception.
 
 In _fibers_ mode there is a single stack trace.
-
-Note: you must install the companion [galaxy-stack](https://github.com/bjouhier/galaxy-stack) package to get _async_ stack traces in _generators_ mode.
 
 Exception handling also works with futures and promises.
 If a future throws an exception before you try to read its result, the exception is memorized by the future and you get it at the point where your try to read the future's result. 
