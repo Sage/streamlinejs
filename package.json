@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "commander": "^2.8.1",
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "babel-plugin-streamline": "^1.0.0",
+    "regenerator": "^0.8.40",
+    "streamline-runtime": "^1.0.0"
   },
   "peerDependencies": {
     "babel": ">=5.8.0"

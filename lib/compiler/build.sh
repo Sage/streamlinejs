@@ -1,7 +1,18 @@
 pushd `dirname $0` > /dev/null
+cd ../..
+
+# compile built-ins
+RUNTIME=node_modules/streamline-runtime/lib
+bin/_node -f --runtime await -c $RUNTIME/builtins._js
+mv $RUNTIME/builtins.js $RUNTIME/builtins-await.js
+cp $RUNTIME/builtins-await.js $RUNTIME/builtins-fibers.js
+cp $RUNTIME/builtins-await.js $RUNTIME/builtins-generators.js
+bin/_node -f --runtime fibers -c $RUNTIME/builtins._js
+mv $RUNTIME/builtins.js $RUNTIME/builtins-fibers.js
+bin/_node -f --runtime generators -c $RUNTIME/builtins._js
+mv $RUNTIME/builtins.js $RUNTIME/builtins-generators.js
 
 # compile test files for client too (standalone, except flows-test)
-cd ../..
 TEST=test/common
 # compile eval-test with --standalone to exercise this option
 bin/_node -lp -v -f --standalone -o $TEST/callbacks/ -c $TEST/eval-test._js
