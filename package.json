@@ -25,6 +25,10 @@
   "optionalDependencies": {
     "fibers": "^1.0.6"
   },
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "babelify": "^6.3.0"
+  },
   "directories": {
     "lib": "./lib",
     "bin": "./bin"
