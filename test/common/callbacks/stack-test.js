@@ -2215,6 +2215,7 @@ var util = module.exports;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":1}],7:[function(require,module,exports){
+(function (process){
 "use strict";
 
 var regeneratorRuntime = require("regenerator/runtime");
@@ -2626,7 +2627,6 @@ var T = _streamline.async(regeneratorRuntime.mark(function _$$T$$(_, fn, code, f
 				context$1$0.t0 = context$1$0["catch"](2);
 				s = context$1$0.t0.stack;
 
-				console.error(s);
 				s = s.split('\n').filter(function (l) {
 					return l.indexOf('<<<') < 0;
 				}).map(function (l) {
@@ -2638,7 +2638,7 @@ var T = _streamline.async(regeneratorRuntime.mark(function _$$T$$(_, fn, code, f
 				end = s.indexOf('/T:');
 				return context$1$0.abrupt("return", end < 0 ? s + "-- end frame missing" : s.substring(0, end));
 
-			case 15:
+			case 14:
 			case "end":
 				return context$1$0.stop();
 		}
@@ -2646,6 +2646,10 @@ var T = _streamline.async(regeneratorRuntime.mark(function _$$T$$(_, fn, code, f
 }), 0, 4);
 
 var stackEqual = function stackEqual(got, expect) {
+	if (browser) {
+			got = got.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+			expect = expect.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+		}
 	strictEqual(got, expect, expect);
 };
 
@@ -2662,6 +2666,8 @@ var nextTick = function nextTick(cb) {
 
 var _fail;
 
+var browser = typeof process === 'undefined' || process.browser;
+
 // safari hack
 var rawStack = new Error().stack ? function (raw) {
 	return raw;
@@ -2674,139 +2680,139 @@ asyncTest("stacks", 20, _streamline.async(regeneratorRuntime.mark(function _$$$$
 		while (1) switch (context$1$0.prev = context$1$0.next) {
 			case 0:
 				context$1$0.next = 2;
-				return _streamline.await(_filename, 152, null, T, 0, null, false)(true, A, 1, failAsync);
+				return _streamline.await(_filename, 157, null, T, 0, null, false)(true, A, 1, failAsync);
 
 			case 2:
 				context$1$0.t0 = context$1$0.sent;
 				context$1$0.t1 = rawStack("Error: 1/failAsync:15") + "/A:28";
 				stackEqual(context$1$0.t0, context$1$0.t1);
 				context$1$0.next = 7;
-				return _streamline.await(_filename, 153, null, T, 0, null, false)(true, A, 1, failSync);
+				return _streamline.await(_filename, 158, null, T, 0, null, false)(true, A, 1, failSync);
 
 			case 7:
 				context$1$0.t2 = context$1$0.sent;
 				context$1$0.t3 = rawStack("Error: 1/fail:20/failSync:21") + "/A:28";
 				stackEqual(context$1$0.t2, context$1$0.t3);
 				context$1$0.next = 12;
-				return _streamline.await(_filename, 154, null, T, 0, null, false)(true, A, 2, failAsync);
+				return _streamline.await(_filename, 159, null, T, 0, null, false)(true, A, 2, failAsync);
 
 			case 12:
 				context$1$0.t4 = context$1$0.sent;
 				context$1$0.t5 = rawStack("Error: 2/failAsync:15") + "/A:30";
 				stackEqual(context$1$0.t4, context$1$0.t5);
 				context$1$0.next = 17;
-				return _streamline.await(_filename, 155, null, T, 0, null, false)(true, A, 2, failSync);
+				return _streamline.await(_filename, 160, null, T, 0, null, false)(true, A, 2, failSync);
 
 			case 17:
 				context$1$0.t6 = context$1$0.sent;
 				context$1$0.t7 = rawStack("Error: 2/fail:20/failSync:21") + "/A:30";
 				stackEqual(context$1$0.t6, context$1$0.t7);
 				context$1$0.next = 22;
-				return _streamline.await(_filename, 156, null, T, 0, null, false)(true, A, 3, failAsync);
+				return _streamline.await(_filename, 161, null, T, 0, null, false)(true, A, 3, failAsync);
 
 			case 22:
 				context$1$0.t8 = context$1$0.sent;
 				context$1$0.t9 = rawStack("Error: 3/failAsync:15") + "/A:33";
 				stackEqual(context$1$0.t8, context$1$0.t9);
 				context$1$0.next = 27;
-				return _streamline.await(_filename, 157, null, T, 0, null, false)(true, A, 3, failSync);
+				return _streamline.await(_filename, 162, null, T, 0, null, false)(true, A, 3, failSync);
 
 			case 27:
 				context$1$0.t10 = context$1$0.sent;
 				context$1$0.t11 = rawStack("Error: 3/fail:20/failSync:21") + "/A:33";
 				stackEqual(context$1$0.t10, context$1$0.t11);
 				context$1$0.next = 32;
-				return _streamline.await(_filename, 158, null, T, 0, null, false)(true, A, 4, failAsync);
+				return _streamline.await(_filename, 163, null, T, 0, null, false)(true, A, 4, failAsync);
 
 			case 32:
 				context$1$0.t12 = context$1$0.sent;
 				context$1$0.t13 = rawStack("Error: 4/failAsync:15") + "/A:36";
 				stackEqual(context$1$0.t12, context$1$0.t13);
 				context$1$0.next = 37;
-				return _streamline.await(_filename, 159, null, T, 0, null, false)(true, A, 4, failSync);
+				return _streamline.await(_filename, 164, null, T, 0, null, false)(true, A, 4, failSync);
 
 			case 37:
 				context$1$0.t14 = context$1$0.sent;
 				context$1$0.t15 = rawStack("Error: 4/fail:20/failSync:21") + "/A:36";
 				stackEqual(context$1$0.t14, context$1$0.t15);
 				context$1$0.next = 42;
-				return _streamline.await(_filename, 160, null, T, 0, null, false)(true, A, 5, failAsync);
+				return _streamline.await(_filename, 165, null, T, 0, null, false)(true, A, 5, failAsync);
 
 			case 42:
 				context$1$0.t16 = context$1$0.sent;
 				context$1$0.t17 = rawStack("Error: 5/failAsync:15") + "/A:36";
 				stackEqual(context$1$0.t16, context$1$0.t17);
 				context$1$0.next = 47;
-				return _streamline.await(_filename, 161, null, T, 0, null, false)(true, A, 5, failSync);
+				return _streamline.await(_filename, 166, null, T, 0, null, false)(true, A, 5, failSync);
 
 			case 47:
 				context$1$0.t18 = context$1$0.sent;
 				context$1$0.t19 = rawStack("Error: 5/fail:20/failSync:21") + "/A:36";
 				stackEqual(context$1$0.t18, context$1$0.t19);
 				context$1$0.next = 52;
-				return _streamline.await(_filename, 162, null, T, 0, null, false)(true, A, 6, failAsync);
+				return _streamline.await(_filename, 167, null, T, 0, null, false)(true, A, 6, failAsync);
 
 			case 52:
 				context$1$0.t20 = context$1$0.sent;
 				context$1$0.t21 = rawStack("Error: 6/failAsync:15") + "/A:40";
 				stackEqual(context$1$0.t20, context$1$0.t21);
 				context$1$0.next = 57;
-				return _streamline.await(_filename, 163, null, T, 0, null, false)(true, A, 6, failSync);
+				return _streamline.await(_filename, 168, null, T, 0, null, false)(true, A, 6, failSync);
 
 			case 57:
 				context$1$0.t22 = context$1$0.sent;
 				context$1$0.t23 = rawStack("Error: 6/fail:20/failSync:21") + "/A:40";
 				stackEqual(context$1$0.t22, context$1$0.t23);
 				context$1$0.next = 62;
-				return _streamline.await(_filename, 164, null, T, 0, null, false)(true, A, 7, failAsync);
+				return _streamline.await(_filename, 169, null, T, 0, null, false)(true, A, 7, failAsync);
 
 			case 62:
 				context$1$0.t24 = context$1$0.sent;
 				context$1$0.t25 = rawStack("Error: 7/failAsync:15") + "/B:49/A:42";
 				stackEqual(context$1$0.t24, context$1$0.t25);
 				context$1$0.next = 67;
-				return _streamline.await(_filename, 165, null, T, 0, null, false)(true, A, 7, failSync);
+				return _streamline.await(_filename, 170, null, T, 0, null, false)(true, A, 7, failSync);
 
 			case 67:
 				context$1$0.t26 = context$1$0.sent;
 				context$1$0.t27 = rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42";
 				stackEqual(context$1$0.t26, context$1$0.t27);
 				context$1$0.next = 72;
-				return _streamline.await(_filename, 166, null, T, 0, null, false)(true, A, 8, failAsync);
+				return _streamline.await(_filename, 171, null, T, 0, null, false)(true, A, 8, failAsync);
 
 			case 72:
 				context$1$0.t28 = context$1$0.sent;
 				context$1$0.t29 = rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42";
 				stackEqual(context$1$0.t28, context$1$0.t29);
 				context$1$0.next = 77;
-				return _streamline.await(_filename, 167, null, T, 0, null, false)(true, A, 8, failSync);
+				return _streamline.await(_filename, 172, null, T, 0, null, false)(true, A, 8, failSync);
 
 			case 77:
 				context$1$0.t30 = context$1$0.sent;
 				context$1$0.t31 = rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42";
 				stackEqual(context$1$0.t30, context$1$0.t31);
 				context$1$0.next = 82;
-				return _streamline.await(_filename, 168, null, T, 0, null, false)(true, A, 9, failAsync);
+				return _streamline.await(_filename, 173, null, T, 0, null, false)(true, A, 9, failAsync);
 
 			case 82:
 				context$1$0.t32 = context$1$0.sent;
 				context$1$0.t33 = rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42";
 				stackEqual(context$1$0.t32, context$1$0.t33);
 				context$1$0.next = 87;
-				return _streamline.await(_filename, 169, null, T, 0, null, false)(true, A, 9, failSync);
+				return _streamline.await(_filename, 174, null, T, 0, null, false)(true, A, 9, failSync);
 
 			case 87:
 				context$1$0.t34 = context$1$0.sent;
 				context$1$0.t35 = rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42";
 				stackEqual(context$1$0.t34, context$1$0.t35);
 				context$1$0.next = 92;
-				return _streamline.await(_filename, 170, null, T, 0, null, false)(true, A, 10, failAsync);
+				return _streamline.await(_filename, 175, null, T, 0, null, false)(true, A, 10, failAsync);
 
 			case 92:
 				context$1$0.t36 = context$1$0.sent;
 				stackEqual(context$1$0.t36, "END");
 				context$1$0.next = 96;
-				return _streamline.await(_filename, 171, null, T, 0, null, false)(true, A, 10, failSync);
+				return _streamline.await(_filename, 176, null, T, 0, null, false)(true, A, 10, failSync);
 
 			case 96:
 				context$1$0.t37 = context$1$0.sent;
@@ -2826,134 +2832,134 @@ asyncTest("catch", 20, _streamline.async(regeneratorRuntime.mark(function _$$$$2
 		while (1) switch (context$1$0.prev = context$1$0.next) {
 			case 0:
 				context$1$0.next = 2;
-				return _streamline.await(_filename, 176, null, T, 0, null, false)(true, E, 1, failAsync);
+				return _streamline.await(_filename, 181, null, T, 0, null, false)(true, E, 1, failAsync);
 
 			case 2:
 				context$1$0.t0 = context$1$0.sent;
 				context$1$0.t1 = rawStack("Error: 1/failAsync:15") + "/E:72";
 				stackEqual(context$1$0.t0, context$1$0.t1);
 				context$1$0.next = 7;
-				return _streamline.await(_filename, 177, null, T, 0, null, false)(true, E, 1, failSync);
+				return _streamline.await(_filename, 182, null, T, 0, null, false)(true, E, 1, failSync);
 
 			case 7:
 				context$1$0.t2 = context$1$0.sent;
 				context$1$0.t3 = rawStack("Error: 1/fail:20/failSync:21") + "/E:72";
 				stackEqual(context$1$0.t2, context$1$0.t3);
 				context$1$0.next = 12;
-				return _streamline.await(_filename, 178, null, T, 0, null, false)(true, E, 2, failAsync);
+				return _streamline.await(_filename, 183, null, T, 0, null, false)(true, E, 2, failAsync);
 
 			case 12:
 				context$1$0.t4 = context$1$0.sent;
 				context$1$0.t5 = rawStack("Error: 2/failAsync:15") + "/A:30/E:74";
 				stackEqual(context$1$0.t4, context$1$0.t5);
 				context$1$0.next = 17;
-				return _streamline.await(_filename, 179, null, T, 0, null, false)(true, E, 2, failSync);
+				return _streamline.await(_filename, 184, null, T, 0, null, false)(true, E, 2, failSync);
 
 			case 17:
 				context$1$0.t6 = context$1$0.sent;
 				context$1$0.t7 = rawStack("Error: 2/fail:20/failSync:21") + "/A:30/E:74";
 				stackEqual(context$1$0.t6, context$1$0.t7);
 				context$1$0.next = 22;
-				return _streamline.await(_filename, 180, null, T, 0, null, false)(true, E, 3, failAsync);
+				return _streamline.await(_filename, 185, null, T, 0, null, false)(true, E, 3, failAsync);
 
 			case 22:
 				context$1$0.t8 = context$1$0.sent;
 				stackEqual(context$1$0.t8, "OK 3");
 				context$1$0.next = 26;
-				return _streamline.await(_filename, 181, null, T, 0, null, false)(true, E, 3, failSync);
+				return _streamline.await(_filename, 186, null, T, 0, null, false)(true, E, 3, failSync);
 
 			case 26:
 				context$1$0.t9 = context$1$0.sent;
 				stackEqual(context$1$0.t9, "OK 3");
 				context$1$0.next = 30;
-				return _streamline.await(_filename, 182, null, T, 0, null, false)(true, E, 4, failAsync);
+				return _streamline.await(_filename, 187, null, T, 0, null, false)(true, E, 4, failAsync);
 
 			case 30:
 				context$1$0.t10 = context$1$0.sent;
 				context$1$0.t11 = rawStack("Error: 4/failAsync:15") + "/E:72";
 				stackEqual(context$1$0.t10, context$1$0.t11);
 				context$1$0.next = 35;
-				return _streamline.await(_filename, 183, null, T, 0, null, false)(true, E, 4, failSync);
+				return _streamline.await(_filename, 188, null, T, 0, null, false)(true, E, 4, failSync);
 
 			case 35:
 				context$1$0.t12 = context$1$0.sent;
 				context$1$0.t13 = rawStack("Error: 4/fail:20/failSync:21") + "/E:72";
 				stackEqual(context$1$0.t12, context$1$0.t13);
 				context$1$0.next = 40;
-				return _streamline.await(_filename, 184, null, T, 0, null, false)(true, E, 5, failAsync);
+				return _streamline.await(_filename, 189, null, T, 0, null, false)(true, E, 5, failAsync);
 
 			case 40:
 				context$1$0.t14 = context$1$0.sent;
 				context$1$0.t15 = rawStack("Error: 5/failAsync:15") + "/A:36/E:74";
 				stackEqual(context$1$0.t14, context$1$0.t15);
 				context$1$0.next = 45;
-				return _streamline.await(_filename, 185, null, T, 0, null, false)(true, E, 5, failSync);
+				return _streamline.await(_filename, 190, null, T, 0, null, false)(true, E, 5, failSync);
 
 			case 45:
 				context$1$0.t16 = context$1$0.sent;
 				context$1$0.t17 = rawStack("Error: 5/fail:20/failSync:21") + "/A:36/E:74";
 				stackEqual(context$1$0.t16, context$1$0.t17);
 				context$1$0.next = 50;
-				return _streamline.await(_filename, 186, null, T, 0, null, false)(true, E, 6, failAsync);
+				return _streamline.await(_filename, 191, null, T, 0, null, false)(true, E, 6, failAsync);
 
 			case 50:
 				context$1$0.t18 = context$1$0.sent;
 				stackEqual(context$1$0.t18, "OK 6");
 				context$1$0.next = 54;
-				return _streamline.await(_filename, 187, null, T, 0, null, false)(true, E, 6, failSync);
+				return _streamline.await(_filename, 192, null, T, 0, null, false)(true, E, 6, failSync);
 
 			case 54:
 				context$1$0.t19 = context$1$0.sent;
 				stackEqual(context$1$0.t19, "OK 6");
 				context$1$0.next = 58;
-				return _streamline.await(_filename, 188, null, T, 0, null, false)(true, E, 7, failAsync);
+				return _streamline.await(_filename, 193, null, T, 0, null, false)(true, E, 7, failAsync);
 
 			case 58:
 				context$1$0.t20 = context$1$0.sent;
 				context$1$0.t21 = rawStack("Error: 7/failAsync:15") + "/E:72";
 				stackEqual(context$1$0.t20, context$1$0.t21);
 				context$1$0.next = 63;
-				return _streamline.await(_filename, 189, null, T, 0, null, false)(true, E, 7, failSync);
+				return _streamline.await(_filename, 194, null, T, 0, null, false)(true, E, 7, failSync);
 
 			case 63:
 				context$1$0.t22 = context$1$0.sent;
 				context$1$0.t23 = rawStack("Error: 7/fail:20/failSync:21") + "/E:72";
 				stackEqual(context$1$0.t22, context$1$0.t23);
 				context$1$0.next = 68;
-				return _streamline.await(_filename, 190, null, T, 0, null, false)(true, E, 8, failAsync);
+				return _streamline.await(_filename, 195, null, T, 0, null, false)(true, E, 8, failAsync);
 
 			case 68:
 				context$1$0.t24 = context$1$0.sent;
 				context$1$0.t25 = rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/E:74";
 				stackEqual(context$1$0.t24, context$1$0.t25);
 				context$1$0.next = 73;
-				return _streamline.await(_filename, 191, null, T, 0, null, false)(true, E, 8, failSync);
+				return _streamline.await(_filename, 196, null, T, 0, null, false)(true, E, 8, failSync);
 
 			case 73:
 				context$1$0.t26 = context$1$0.sent;
 				context$1$0.t27 = rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/E:74";
 				stackEqual(context$1$0.t26, context$1$0.t27);
 				context$1$0.next = 78;
-				return _streamline.await(_filename, 192, null, T, 0, null, false)(true, E, 9, failAsync);
+				return _streamline.await(_filename, 197, null, T, 0, null, false)(true, E, 9, failAsync);
 
 			case 78:
 				context$1$0.t28 = context$1$0.sent;
 				stackEqual(context$1$0.t28, "OK 9");
 				context$1$0.next = 82;
-				return _streamline.await(_filename, 193, null, T, 0, null, false)(true, E, 9, failSync);
+				return _streamline.await(_filename, 198, null, T, 0, null, false)(true, E, 9, failSync);
 
 			case 82:
 				context$1$0.t29 = context$1$0.sent;
 				stackEqual(context$1$0.t29, "OK 9");
 				context$1$0.next = 86;
-				return _streamline.await(_filename, 194, null, T, 0, null, false)(true, E, 10, failAsync);
+				return _streamline.await(_filename, 199, null, T, 0, null, false)(true, E, 10, failAsync);
 
 			case 86:
 				context$1$0.t30 = context$1$0.sent;
 				context$1$0.t31 = rawStack("Error: 10/failAsync:15") + "/E:72";
 				stackEqual(context$1$0.t30, context$1$0.t31);
 				context$1$0.next = 91;
-				return _streamline.await(_filename, 195, null, T, 0, null, false)(true, E, 10, failSync);
+				return _streamline.await(_filename, 200, null, T, 0, null, false)(true, E, 10, failSync);
 
 			case 91:
 				context$1$0.t32 = context$1$0.sent;
@@ -2974,139 +2980,139 @@ asyncTest("futures", 20, _streamline.async(regeneratorRuntime.mark(function _$$$
 		while (1) switch (context$1$0.prev = context$1$0.next) {
 			case 0:
 				context$1$0.next = 2;
-				return _streamline.await(_filename, 200, null, T, 0, null, false)(true, F, 1, failAsync);
+				return _streamline.await(_filename, 205, null, T, 0, null, false)(true, F, 1, failAsync);
 
 			case 2:
 				context$1$0.t0 = context$1$0.sent;
 				context$1$0.t1 = rawStack("Error: 1/failAsync:15") + "/A:28/F:83";
 				stackEqual(context$1$0.t0, context$1$0.t1);
 				context$1$0.next = 7;
-				return _streamline.await(_filename, 201, null, T, 0, null, false)(true, F, 1, failSync);
+				return _streamline.await(_filename, 206, null, T, 0, null, false)(true, F, 1, failSync);
 
 			case 7:
 				context$1$0.t2 = context$1$0.sent;
 				context$1$0.t3 = rawStack("Error: 1/fail:20/failSync:21") + "/A:28/F:83";
 				stackEqual(context$1$0.t2, context$1$0.t3);
 				context$1$0.next = 12;
-				return _streamline.await(_filename, 202, null, T, 0, null, false)(true, F, 2, failAsync);
+				return _streamline.await(_filename, 207, null, T, 0, null, false)(true, F, 2, failAsync);
 
 			case 12:
 				context$1$0.t4 = context$1$0.sent;
 				context$1$0.t5 = rawStack("Error: 2/failAsync:15") + "/A:30/F:83";
 				stackEqual(context$1$0.t4, context$1$0.t5);
 				context$1$0.next = 17;
-				return _streamline.await(_filename, 203, null, T, 0, null, false)(true, F, 2, failSync);
+				return _streamline.await(_filename, 208, null, T, 0, null, false)(true, F, 2, failSync);
 
 			case 17:
 				context$1$0.t6 = context$1$0.sent;
 				context$1$0.t7 = rawStack("Error: 2/fail:20/failSync:21") + "/A:30/F:83";
 				stackEqual(context$1$0.t6, context$1$0.t7);
 				context$1$0.next = 22;
-				return _streamline.await(_filename, 204, null, T, 0, null, false)(true, F, 3, failAsync);
+				return _streamline.await(_filename, 209, null, T, 0, null, false)(true, F, 3, failAsync);
 
 			case 22:
 				context$1$0.t8 = context$1$0.sent;
 				context$1$0.t9 = rawStack("Error: 3/failAsync:15") + "/A:33/F:83";
 				stackEqual(context$1$0.t8, context$1$0.t9);
 				context$1$0.next = 27;
-				return _streamline.await(_filename, 205, null, T, 0, null, false)(true, F, 3, failSync);
+				return _streamline.await(_filename, 210, null, T, 0, null, false)(true, F, 3, failSync);
 
 			case 27:
 				context$1$0.t10 = context$1$0.sent;
 				context$1$0.t11 = rawStack("Error: 3/fail:20/failSync:21") + "/A:33/F:83";
 				stackEqual(context$1$0.t10, context$1$0.t11);
 				context$1$0.next = 32;
-				return _streamline.await(_filename, 206, null, T, 0, null, false)(true, F, 4, failAsync);
+				return _streamline.await(_filename, 211, null, T, 0, null, false)(true, F, 4, failAsync);
 
 			case 32:
 				context$1$0.t12 = context$1$0.sent;
 				context$1$0.t13 = rawStack("Error: 4/failAsync:15") + "/A:36/F:83";
 				stackEqual(context$1$0.t12, context$1$0.t13);
 				context$1$0.next = 37;
-				return _streamline.await(_filename, 207, null, T, 0, null, false)(true, F, 4, failSync);
+				return _streamline.await(_filename, 212, null, T, 0, null, false)(true, F, 4, failSync);
 
 			case 37:
 				context$1$0.t14 = context$1$0.sent;
 				context$1$0.t15 = rawStack("Error: 4/fail:20/failSync:21") + "/A:36/F:83";
 				stackEqual(context$1$0.t14, context$1$0.t15);
 				context$1$0.next = 42;
-				return _streamline.await(_filename, 208, null, T, 0, null, false)(true, F, 5, failAsync);
+				return _streamline.await(_filename, 213, null, T, 0, null, false)(true, F, 5, failAsync);
 
 			case 42:
 				context$1$0.t16 = context$1$0.sent;
 				context$1$0.t17 = rawStack("Error: 5/failAsync:15") + "/A:36/F:83";
 				stackEqual(context$1$0.t16, context$1$0.t17);
 				context$1$0.next = 47;
-				return _streamline.await(_filename, 209, null, T, 0, null, false)(true, F, 5, failSync);
+				return _streamline.await(_filename, 214, null, T, 0, null, false)(true, F, 5, failSync);
 
 			case 47:
 				context$1$0.t18 = context$1$0.sent;
 				context$1$0.t19 = rawStack("Error: 5/fail:20/failSync:21") + "/A:36/F:83";
 				stackEqual(context$1$0.t18, context$1$0.t19);
 				context$1$0.next = 52;
-				return _streamline.await(_filename, 210, null, T, 0, null, false)(true, F, 6, failAsync);
+				return _streamline.await(_filename, 215, null, T, 0, null, false)(true, F, 6, failAsync);
 
 			case 52:
 				context$1$0.t20 = context$1$0.sent;
 				context$1$0.t21 = rawStack("Error: 6/failAsync:15") + "/A:40/F:83";
 				stackEqual(context$1$0.t20, context$1$0.t21);
 				context$1$0.next = 57;
-				return _streamline.await(_filename, 211, null, T, 0, null, false)(true, F, 6, failSync);
+				return _streamline.await(_filename, 216, null, T, 0, null, false)(true, F, 6, failSync);
 
 			case 57:
 				context$1$0.t22 = context$1$0.sent;
 				context$1$0.t23 = rawStack("Error: 6/fail:20/failSync:21") + "/A:40/F:83";
 				stackEqual(context$1$0.t22, context$1$0.t23);
 				context$1$0.next = 62;
-				return _streamline.await(_filename, 212, null, T, 0, null, false)(true, F, 7, failAsync);
+				return _streamline.await(_filename, 217, null, T, 0, null, false)(true, F, 7, failAsync);
 
 			case 62:
 				context$1$0.t24 = context$1$0.sent;
 				context$1$0.t25 = rawStack("Error: 7/failAsync:15") + "/B:49/A:42/F:83";
 				stackEqual(context$1$0.t24, context$1$0.t25);
 				context$1$0.next = 67;
-				return _streamline.await(_filename, 213, null, T, 0, null, false)(true, F, 7, failSync);
+				return _streamline.await(_filename, 218, null, T, 0, null, false)(true, F, 7, failSync);
 
 			case 67:
 				context$1$0.t26 = context$1$0.sent;
 				context$1$0.t27 = rawStack("Error: 7/fail:20/failSync:21") + "/B:49/A:42/F:83";
 				stackEqual(context$1$0.t26, context$1$0.t27);
 				context$1$0.next = 72;
-				return _streamline.await(_filename, 214, null, T, 0, null, false)(true, F, 8, failAsync);
+				return _streamline.await(_filename, 219, null, T, 0, null, false)(true, F, 8, failAsync);
 
 			case 72:
 				context$1$0.t28 = context$1$0.sent;
 				context$1$0.t29 = rawStack("Error: 8/failAsync:15") + "/C:58/B:50/A:42/F:83";
 				stackEqual(context$1$0.t28, context$1$0.t29);
 				context$1$0.next = 77;
-				return _streamline.await(_filename, 215, null, T, 0, null, false)(true, F, 8, failSync);
+				return _streamline.await(_filename, 220, null, T, 0, null, false)(true, F, 8, failSync);
 
 			case 77:
 				context$1$0.t30 = context$1$0.sent;
 				context$1$0.t31 = rawStack("Error: 8/fail:20/failSync:21") + "/C:58/B:50/A:42/F:83";
 				stackEqual(context$1$0.t30, context$1$0.t31);
 				context$1$0.next = 82;
-				return _streamline.await(_filename, 216, null, T, 0, null, false)(true, F, 9, failAsync);
+				return _streamline.await(_filename, 221, null, T, 0, null, false)(true, F, 9, failAsync);
 
 			case 82:
 				context$1$0.t32 = context$1$0.sent;
 				context$1$0.t33 = rawStack("Error: 9/failAsync:15") + "/D:63/B:53/A:42/F:83";
 				stackEqual(context$1$0.t32, context$1$0.t33);
 				context$1$0.next = 87;
-				return _streamline.await(_filename, 217, null, T, 0, null, false)(true, F, 9, failSync);
+				return _streamline.await(_filename, 222, null, T, 0, null, false)(true, F, 9, failSync);
 
 			case 87:
 				context$1$0.t34 = context$1$0.sent;
 				context$1$0.t35 = rawStack("Error: 9/fail:20/failSync:21") + "/D:63/B:53/A:42/F:83";
 				stackEqual(context$1$0.t34, context$1$0.t35);
 				context$1$0.next = 92;
-				return _streamline.await(_filename, 218, null, T, 0, null, false)(true, F, 10, failAsync);
+				return _streamline.await(_filename, 223, null, T, 0, null, false)(true, F, 10, failAsync);
 
 			case 92:
 				context$1$0.t36 = context$1$0.sent;
 				stackEqual(context$1$0.t36, "END & END");
 				context$1$0.next = 96;
-				return _streamline.await(_filename, 219, null, T, 0, null, false)(true, F, 10, failSync);
+				return _streamline.await(_filename, 224, null, T, 0, null, false)(true, F, 10, failSync);
 
 			case 96:
 				context$1$0.t37 = context$1$0.sent;
@@ -3126,52 +3132,52 @@ asyncTest("loop", 8, _streamline.async(regeneratorRuntime.mark(function _$$$$4(_
 		while (1) switch (context$1$0.prev = context$1$0.next) {
 			case 0:
 				context$1$0.next = 2;
-				return _streamline.await(_filename, 224, null, T, 0, null, false)(true, I, 4, failAsync);
+				return _streamline.await(_filename, 229, null, T, 0, null, false)(true, I, 4, failAsync);
 
 			case 2:
 				context$1$0.t0 = context$1$0.sent;
 				stackEqual(context$1$0.t0, "0123");
 				context$1$0.next = 6;
-				return _streamline.await(_filename, 225, null, T, 0, null, false)(true, I, 4, failSync);
+				return _streamline.await(_filename, 230, null, T, 0, null, false)(true, I, 4, failSync);
 
 			case 6:
 				context$1$0.t1 = context$1$0.sent;
 				stackEqual(context$1$0.t1, "0123");
 				context$1$0.next = 10;
-				return _streamline.await(_filename, 226, null, T, 0, null, false)(true, I, 5, failAsync);
+				return _streamline.await(_filename, 231, null, T, 0, null, false)(true, I, 5, failAsync);
 
 			case 10:
 				context$1$0.t2 = context$1$0.sent;
 				stackEqual(context$1$0.t2, "01234");
 				context$1$0.next = 14;
-				return _streamline.await(_filename, 227, null, T, 0, null, false)(true, I, 5, failSync);
+				return _streamline.await(_filename, 232, null, T, 0, null, false)(true, I, 5, failSync);
 
 			case 14:
 				context$1$0.t3 = context$1$0.sent;
 				stackEqual(context$1$0.t3, "01234");
 				context$1$0.next = 18;
-				return _streamline.await(_filename, 228, null, T, 0, null, false)(true, I, 6, failAsync);
+				return _streamline.await(_filename, 233, null, T, 0, null, false)(true, I, 6, failAsync);
 
 			case 18:
 				context$1$0.t4 = context$1$0.sent;
 				context$1$0.t5 = rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101";
 				stackEqual(context$1$0.t4, context$1$0.t5);
 				context$1$0.next = 23;
-				return _streamline.await(_filename, 229, null, T, 0, null, false)(true, I, 6, failSync);
+				return _streamline.await(_filename, 234, null, T, 0, null, false)(true, I, 6, failSync);
 
 			case 23:
 				context$1$0.t6 = context$1$0.sent;
 				context$1$0.t7 = rawStack("Error: 5/fail:20/failSync:21") + "/G:88/H:95/I:101";
 				stackEqual(context$1$0.t6, context$1$0.t7);
 				context$1$0.next = 28;
-				return _streamline.await(_filename, 230, null, T, 0, null, false)(true, I, 7, failAsync);
+				return _streamline.await(_filename, 235, null, T, 0, null, false)(true, I, 7, failAsync);
 
 			case 28:
 				context$1$0.t8 = context$1$0.sent;
 				context$1$0.t9 = rawStack("Error: 5/failAsync:15") + "/G:88/H:95/I:101";
 				stackEqual(context$1$0.t8, context$1$0.t9);
 				context$1$0.next = 33;
-				return _streamline.await(_filename, 231, null, T, 0, null, false)(true, I, 7, failSync);
+				return _streamline.await(_filename, 236, null, T, 0, null, false)(true, I, 7, failSync);
 
 			case 33:
 				context$1$0.t10 = context$1$0.sent;
@@ -3187,12 +3193,12 @@ asyncTest("loop", 8, _streamline.async(regeneratorRuntime.mark(function _$$$$4(_
 	}, _$$$$4, this);
 }), 0, 1));
 
-asyncTest("issue233", 1, _streamline.async(regeneratorRuntime.mark(function _$$$$5(_) {
+if (!browser) asyncTest("issue233", 1, _streamline.async(regeneratorRuntime.mark(function _$$$$5(_) {
 	return regeneratorRuntime.wrap(function _$$$$5$(context$1$0) {
 		while (1) switch (context$1$0.prev = context$1$0.next) {
 			case 0:
 				context$1$0.next = 2;
-				return _streamline.await(_filename, 236, null, T, 0, null, false)(true, issue233, 0, failSync);
+				return _streamline.await(_filename, 241, null, T, 0, null, false)(true, issue233, 0, failSync);
 
 			case 2:
 				context$1$0.t0 = context$1$0.sent;
@@ -3211,4 +3217,5 @@ asyncTest("issue233", 1, _streamline.async(regeneratorRuntime.mark(function _$$$
 
 // You can insert lines and/or comments after this point.
 
-},{"regenerator/runtime":2,"streamline-runtime/lib/builtins-callbacks":3,"streamline-runtime/lib/runtime-callbacks":5}]},{},[7]);
+}).call(this,require('_process'))
+},{"_process":1,"regenerator/runtime":2,"streamline-runtime/lib/builtins-callbacks":3,"streamline-runtime/lib/runtime-callbacks":5}]},{},[7]);

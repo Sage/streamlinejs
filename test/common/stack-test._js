@@ -123,7 +123,6 @@ function T(_, fn, code, failFn){
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		console.error(s);
 		s = s.split('\n').filter(function(l) {
 			return l.indexOf('<<<') < 0;
 		}).map(function(l){
@@ -138,7 +137,13 @@ function T(_, fn, code, failFn){
 	}
 }
 
+var browser = typeof process === 'undefined' || process.browser;
+
 function stackEqual(got, expect) {
+	if (browser) {
+		got = got.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+		expect = expect.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+	}
 	strictEqual(got, expect, expect);
 }
 // safari hack
@@ -232,7 +237,7 @@ asyncTest("loop", 8, function(_) {
 	start();
 })
 
-asyncTest("issue233", 1, function(_) {
+if (!browser) asyncTest("issue233", 1, function(_) {
 	stackEqual(T(_, issue233, 0, failSync), "Error: foo/customThrow:107/issue233:112");
 	start();
 });
