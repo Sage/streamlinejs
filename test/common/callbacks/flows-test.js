@@ -3340,7 +3340,7 @@ exports.async = function (fn, index, arity) {
 exports.new = function (file, line, constructor, index) {
 	if (typeof constructor !== "function") throw util.typeError("cannot instantiate", "function", constructor);
 	var starred = star(constructor, index);
-	var key = '__new__' + idx;
+	var key = '__new__' + index;
 	if (starred[key]) return starred[key];
 
 	var F = regeneratorRuntime.mark(function callee$1$0() {
@@ -3349,7 +3349,7 @@ exports.new = function (file, line, constructor, index) {
 		return regeneratorRuntime.wrap(function callee$1$0$(context$2$0) {
 			while (1) switch (context$2$0.prev = context$2$0.next) {
 				case 0:
-					that = Object.create((idx != null ? starred['__unstarred__' + idx] : starred).prototype);
+					that = Object.create((index != null ? starred['__unstarred__' + index] : starred).prototype);
 					context$2$0.next = 3;
 					return starred.apply(that, args$2$0);
 
