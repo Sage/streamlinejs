@@ -2146,7 +2146,7 @@ exports.future = require('./future');
 "use strict";
 // colors package does not work in browser - fails on reference to node's `process` global
 var idem = function(x) { return x; };
-var colors = typeof(process) === 'undefined' || process.browser ? 
+var colors = (typeof(process) === 'undefined' || process.browser) ? 
 	['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'gray'].reduce(function(r, c) {
 		r[c] = idem;
 		return r;
