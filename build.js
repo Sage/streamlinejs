@@ -16,9 +16,16 @@ function build(from, to, opts) {
 		extensions: ['.js', '._js'],
 	}).transform(babelify.configure(opts)).bundle().on("error", function(err) {
 		console.log("Error : " + err.message);
-	}).pipe(fs.createWriteStream(dst)).on('finish', function() {
-		finish(to);
+	}).pipe(fs.createWriteStream(dst)).on('finish', function(){
+		finish(dst);
 	});
+}
+
+// temporary hack to eliminate regexp error in babel source
+function finish(dst) {
+	if (!/transform\.js$/.test(dst)) return;
+	fs.writeFileSync(dst, fs.readFileSync(dst, 'utf8')
+		.replace(/(nonASCIIidentifier(?:Start)?Chars) = .*/g, "$1 = '';"), 'utf8');
 }
 
 var streamlineOpts = {
@@ -32,19 +39,10 @@ var streamlineOpts = {
 	}
 };
 
-/*build("node_modules/streamline-runtime/lib/runtime-callbacks.js", "lib/callbacks/runtime-all.js");
-build("test/common/stack-test._js", "test/common/callbacks/stack-test.js", streamlineOpts);
+build("lib/browser/runtime-callbacks-source.js", "lib/browser/runtime-callbacks.js");
+build("lib/browser/runtime-generators-source.js", "lib/browser/runtime-generators.js");
+build("lib/browser/transform-source.js", "lib/browser/transform.js");
 build("test/common/eval-test._js", "test/common/callbacks/eval-test.js", streamlineOpts);
-bu*ild("test/common/flows-test._js", "test/common/callbacks/flows-test.js", streamlineOpts);
+build("test/common/flows-test._js", "test/common/callbacks/flows-test.js", streamlineOpts);
 build("test/common/futures-test._js", "test/common/callbacks/futures-test.js", streamlineOpts);
 build("test/common/stack-test._js", "test/common/callbacks/stack-test.js", streamlineOpts);
-*/
-build("lib/callbacks/browser-transform.js", "lib/callbacks/transform-all.js");
-
-function finish(name) {
-	if (!/transform-all/.test(name)) return;
-	var tall = fsp.join(__dirname, "lib/callbacks/transform-all.js");
-	var s = fs.readFileSync(tall, "utf8");
-	s = s.replace(/(nonASCIIidentifier(?:Start)?Chars) = .*/g, "$1 = ''")
-	fs.writeFileSync(tall, s, "utf8");
-}

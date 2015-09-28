@@ -6,7 +6,7 @@
         </script>
         <link rel="stylesheet" href="streamlineMe.css" type="text/css" media="screen" />
         <script src="../../node_modules/babel/node_modules/babel-core/browser.js"></script>
-        <script src="../../lib/callbacks/transform-all.js" type="application/javascript"></script>
+        <script src="../../lib/browser/transform.js" type="application/javascript"></script>
     	<script src="./streamlineMe.js" type="application/javascript"></script>
     </head>
     <body>
@@ -27,13 +27,13 @@
 						<input id="tryCatchSample" class="sample" type="button" value="try/catch"></input>
 						<input id="lazySample" class="sample" type="button" value="lazy"></input>
 						<input id="futuresSample" class="sample" type="button" value="futures"></input>
-						<input id="beautify" type="button" align="right" value="beautify"></input>
+                        <input id="beautify" type="button" align="right" value="beautify"></input>
 						<br>
                         <textarea id="codeIn" align="left" width="100%" rows="30"></textarea>
                     </td>
                     <td class="botRight" width="50%">
                         <h2><a href="https://github.com/Sage/streamlinejs">streamlined</a> code:</h2>
-						<input id="complete" type="checkbox">show complete code</input>
+						<input id="generators" type="checkbox">use native generators</input>
 						<br>
 						<input id="execute" type="button" value="execute"></input>
 						<br>

@@ -13,8 +13,8 @@
     "Bruno Jouhier"
   ],
   "main": [
-    "lib/callbacks/transform-all.js",
-    "lib/callbacks/runtime-all.js"
+    "lib/browser/transform.js",
+    "lib/browser/runtime-callbacks.js"
   ],
   "ignore": [
     ".gitignore",

@@ -29,12 +29,12 @@ cat lib/callbacks/require-stub.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/callbacks/transform-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/browser/transform.js
 	
 cat lib/callbacks/require-stub.js \
 	lib/globals.js \
 	lib/util/future.js \
 	lib/callbacks/runtime.js \
-	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/callbacks/runtime-all.js
+	lib/callbacks/builtins.js | sed -e "s/\/\/\/ \!doc//" | sed -e "s/require\([^ dR]\)/require_\1/g" > lib/browser/runtime-callbacks.js
 	
 popd > /dev/null

@@ -2217,13 +2217,12 @@ var util = module.exports;
 },{"_process":1}],7:[function(require,module,exports){
 'use strict';
 
-var regeneratorRuntime = require('regenerator/runtime');
+var regeneratorRuntime = typeof require === 'function' ? require('regenerator/runtime') : Streamline.require('regenerator/runtime');
 
-var _streamline = require('streamline-runtime/lib/runtime-callbacks');
+var _streamline = typeof require === 'function' ? require('streamline-runtime/lib/runtime-callbacks') : Streamline.require('streamline-runtime/lib/runtime-callbacks');
 
 var _filename = '/Users/bruno/dev/dummy/node_modules/streamline/test/common/futures-test._js';
-
-require('streamline-runtime/lib/builtins-callbacks');
+typeof require === 'function' ? require('streamline-runtime/lib/builtins-callbacks') : Streamline.require('streamline-runtime/lib/builtins-callbacks')
 
 var delay = _streamline.async(regeneratorRuntime.mark(function _$$delay$$(millis, val, _) {
 	return regeneratorRuntime.wrap(function _$$delay$$$(context$1$0) {

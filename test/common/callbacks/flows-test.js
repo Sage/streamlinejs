@@ -64,14 +64,12 @@
 (function (process){
 'use strict';
 
-var regeneratorRuntime = require('regenerator/runtime');
+var regeneratorRuntime = typeof require === 'function' ? require('regenerator/runtime') : Streamline.require('regenerator/runtime');
 
-var _streamline = require('streamline-runtime/lib/runtime-callbacks');
+var _streamline = typeof require === 'function' ? require('streamline-runtime/lib/runtime-callbacks') : Streamline.require('streamline-runtime/lib/runtime-callbacks');
 
 var _filename = '/Users/bruno/dev/dummy/node_modules/streamline/lib/util/flows._js';
-
-require('streamline-runtime/lib/builtins-callbacks');
-
+typeof require === 'function' ? require('streamline-runtime/lib/builtins-callbacks') : Streamline.require('streamline-runtime/lib/builtins-callbacks')
 /**
  * Copyright (c) 2011 Bruno Jouhier <bruno.jouhier@sage.com>
  *
@@ -3443,13 +3441,12 @@ var util = module.exports;
 },{"_process":3}],10:[function(require,module,exports){
 'use strict';
 
-var regeneratorRuntime = require('regenerator/runtime');
+var regeneratorRuntime = typeof require === 'function' ? require('regenerator/runtime') : Streamline.require('regenerator/runtime');
 
-var _streamline = require('streamline-runtime/lib/runtime-callbacks');
+var _streamline = typeof require === 'function' ? require('streamline-runtime/lib/runtime-callbacks') : Streamline.require('streamline-runtime/lib/runtime-callbacks');
 
 var _filename = '/Users/bruno/dev/dummy/node_modules/streamline/test/common/flows-test._js';
-
-require('streamline-runtime/lib/builtins-callbacks');
+typeof require === 'function' ? require('streamline-runtime/lib/builtins-callbacks') : Streamline.require('streamline-runtime/lib/builtins-callbacks')
 
 var delay = _streamline.async(regeneratorRuntime.mark(function _$$delay$$(_, val) {
 	return regeneratorRuntime.wrap(function _$$delay$$$(context$1$0) {
