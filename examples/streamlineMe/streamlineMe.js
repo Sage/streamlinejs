@@ -168,8 +168,7 @@ function _transform() {
 	var codeIn = $('#codeIn').val();
 	try {
 		var codeOut = Streamline.transform(codeIn, {
-			noHelpers: !_complete,
-			lines: _complete ? "preserve" : "ignore"
+			runtime: "generators",
 		});
 		$('#codeOut').val(codeOut);
 		info("ready");
@@ -183,7 +182,7 @@ function _execute() {
 	var codeIn = $('#codeIn').val();
 	try {
 		var codeOut = Streamline.transform(codeIn, {
-			lines: "preserve"
+			runtime: "generators",
 		});
 		eval(codeOut);
 	} catch (ex) {
