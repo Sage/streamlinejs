@@ -33,5 +33,8 @@
     "lib": "./lib",
     "bin": "./bin"
   },
+  "scripts": {
+    "install": "node build.js || nodejs build.js"    
+  },
   "main": "index.js"
 }

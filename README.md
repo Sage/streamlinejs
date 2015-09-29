@@ -64,11 +64,11 @@ Streamline 1.0 is a major evolution. The transforms have been repackaged as a [b
 * More robust sourcemap support.
 * Better compilation errors.
 
-1.0 is designed to be backwards compatible with 0.x versions, with a few exceptions. The known incompatibilities are:
+1.0 is designed to be backwards compatible with 0.x versions, with a few exceptions. The main changes are the following:
 
-* fast mode is deprecated. _Fast_ code will still compile and run but you will get warnings.
-* the browser runtime is packaged differently. The runtime and transform files have been moved to the `lib/browser` directory (the `lib/callbacks` and `lib/generators` directories are gone).
-* several CLI options are not supported any more: `--standalone`, `--cb`, `--lines-*`, `--old-style-futures`, `--promise`. You are encouraged to switch to the babel CLI, and to `browserify` (see [browser section](#browser) below).
+* the `--fast` option is deprecated. _Fast_ code will still compile and run but you will get warnings when the source is transformed.
+* the `--standalone` option is not supported any more and the browser runtime is packaged differently. The runtime and transform files have been moved to the `lib/browser` directory. You are encouraged to switch to `browserify` to bundle your source files. See the [browser section](#browser) below).
+* several less important CLI options are not supported any more: `--cb`, `--lines-*`, `--old-style-futures`, and `--promise` (promise interop still works but you don't need the option).
 
 <a name="installation">
 ## Installation
@@ -79,22 +79,21 @@ NPM, of course:
 npm install streamline -g
 ```
 
-**Warning**: you may get errors because fibers is now installed as an optional package and it is not compatible with all versions of node.js. But this packages is optional and **streamline itself should install fine**. 
-
 The `-g` option installs streamline _globally_.
 
-You can also install it _locally_, without `-g` but then the `_node` and `_coffee` 
+You can also install it _locally_ (without `-g`) but then the `_node` and `_coffee` 
 commands will not be in your default PATH.
 
 Note: If you encounter a permission error when installing on UNIX systems, you should retry with `sudo`. 
 
+**Warning**: you may get errors during install because fibers is now installed as an optional package and it may fail to build. But this package is optional and **streamline itself should install fine**. 
+
 <a name="hello-world">
 ## Hello World
 
-Streamline modules have `._js` or `._coffee` extensions and you run them with the `_node` or `_coffee` 
-loader.
+Streamline modules have `._js` or `._coffee` extensions and you run them with `_node` or `_coffee`.
 
-Javascripters:
+Example:
 
 ``` sh
 $ cat > hello._js
@@ -105,29 +104,7 @@ console.log('... world');
 $ _node hello
 ```
 
-Coffeescripters:
-
-``` sh
-$ cat > hello._coffee
-console.log 'hello ...'
-setTimeout _, 1000
-console.log '... world'
-^D
-$ _coffee hello
-```
-
-You can also create standalone shell utilities:
-
-``` sh
-$ cat > hello._js
-#!/usr/bin/env _node
-console.log('hello ...');
-setTimeout(_, 1000);
-console.log('... world');
-^D
-$ chmod +x hello._js
-$ ./hello._js
-```
+You can also create standalone shell utilities. See [this example](examples/misc/shebang.sh).
 
 <a name="compiling-and-loaders">
 ## Compiling and writing loaders
@@ -135,18 +112,18 @@ $ ./hello._js
 You can also set up your code so that it can be run directly with `node` or `coffee`.
 You have two options here:
 
-The first one is to compile your source. The recommanded way is with babel's CLI (see [babel-plugin-streamline](https://github.com/Sage/babel-plugin-streamline)). But you can still use streamline's CLI: `_node -c` or `_coffee -c`:
+The first one is to compile your source. The recommanded way is with babel's CLI (see [babel-plugin-streamline](https://github.com/Sage/babel-plugin-streamline)). But you can still use streamline's CLI (`_node -c myfile._js` or `_coffee -c myfile._coffee`)
 
-The second one is to create a loader which will register `require` hooks for the `._js` and `._coffee` extensions. See the [loader example](examples/loader/loader.md) for details.
+The second one is to create a loader which will register `require` hooks for the `._js` and `._coffee` extensions. See [this example](examples/loader/loader.md).
 
-Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the [registration API](lib/compiler/register.md) has a `cache` option which comes close and the loader saves you a compilation pass.
+Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the [registration API](lib/compiler/register.md) has a `cache` option which comes close.
 
 <a name="browser">
 ## Browser-side use
 
-You have three options to use streamline in the browser:
+You have several options to use streamline in the browser:
 
-* The first one is to compile the source with `_node --standalone -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [eval unit test](https://github.com/Sage/streamlinejs/blob/master/test/common/eval-test.html) for an example.
+* You can transform and bundle your files with browserify. The first one is to compile the source with `_node --standalone -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [eval unit test](https://github.com/Sage/streamlinejs/blob/master/test/common/eval-test.html) for an example.
 * You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/browser/transform.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 * A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
