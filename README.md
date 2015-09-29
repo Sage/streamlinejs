@@ -2,6 +2,8 @@
 
 `streamline.js` is a language tool to simplify asynchronous Javascript programming.
 
+tldr; See [Cheat Sheet](CHEAT-SHEET.md)
+
 Instead of writing hairy code like:
 
 ```javascript
@@ -121,55 +123,51 @@ Compiling will give you the fastest startup time because node will directly load
 <a name="browser">
 ## Browser-side use
 
-You have several options to use streamline in the browser:
+You have two options to use streamline in the browser:
 
-* You can transform and bundle your files with browserify. The first one is to compile the source with `_node --standalone -c`. The compiler generates vanilla Javascript code that you can load with `<script>` directives in an HTML page. See the [eval unit test](https://github.com/Sage/streamlinejs/blob/master/test/common/eval-test.html) for an example.
+* You can transform and bundle your files with browserify. See how the [build.js](build.js) script builds the test/common/callbacks/*-test.js files for an example.
 * You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/browser/transform.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
-* A third option is to use the [streamline-require](https://github.com/Sage/streamline-require) infrastructure. This is a very efficient browser-side implementation of `require` that lets you load streamlined modules as well as vanilla Javascript modules in the browser. 
 
 <a name="generation-options">
 ## Generation options
 
-Streamline gives you the choice between generating regular callback-based asynchronous code, 
-generating code that takes advantage of the [fibers library](https://github.com/laverdet/node-fibers), 
-or generating code for [JavaScript generators](https://developer.mozilla.org/en/New_in_JavaScript_1.7#Generators).
+Streamline can transform the code for several target runtimes:
 
-The _callback_ option produces code that does not have any special runtime dependencies. 
+* _callbacks_. The transformed code will be pure ES5 code. It should be compatible with all JavaScript engines.
+* _fibers_. The transformed code will take advantage of the [fibers library](https://github.com/laverdet/node-fibers). This option is only available server-side.
+* _generators_. The transformed code will take advantage of JavaScript generators. It will run in node.js 0.12 (with the `--harmony` flag), in node.js 4.0 (without any special flag) and in latest browsers.
+* _await_. The transformed code will take advantage of ES7 async/await. 
 
-The _fibers_ option produces simpler code but requires that you install 
-the fibers library (easy: `npm install fibers`). 
-This option gives superior development experience: line numbers and comments are preserved in the transformed code; 
-you can step with the debugger through asynchronous calls without having to go through complex callbacks, etc.
+The choice of a target runtime should be driven by benchmarks:
 
-The _fibers_ option can be activated by passing the `--fibers` option to the `_node` command or by setting the `fibers` option when registering streamline 
-(see the `streamline.register(options)` function.
+* The _fibers_ mode gives superior development experience (because it uses real stacks for each fiber so you can step over async calls). It is also very efficient in production if your code traverses many layers of asynchronous calls. 
+* The _callbacks_ transform is obtained by chaining the _generators_ transform and the [regenerator transform](https://github.com/facebook/regenerator). It is less efficent than the _generators_ transform and we recommend that you use _generators_ if generators are supported by your target JavaScript engine and that you only use _callbacks_ if you target a legacy JavaScript engine.
+* The _await_ mode is experimental at this stage. It relies on an emulation as async/await is not yet available natively in JavaScript engines.
 
-The _generators_ option produces code for harmony generators. It requires node.js version >= 0.11.4 or an recent browser. This options produces code which is similar to what you get with the fibers option, just a bit heavier because of the `yield` keywords.
-
-The _generators_ option can be activated by passing the `--generators` option to the `_node` command or by setting the `ganerators` option when registering streamline. If you run it with a loader you have to pass the `--harmony` option to `node`.
-
-There are also _fast_ variants of the _fibers_ and _generators_ options. See below.
+You can control the target runtime with the `--runtime (callbacks|fibers|generators|await)` CLI option, or with the `runtime` API option.
  
 <a name="node-compat">
 ## Interoperability with standard node.js code
 
 You can call standard node functions from streamline code. For example the `fs.readFile` function:
 
-```javascript
+``` javascript
 function lineCount(path, _) {
   return fs.readFile(path, "utf8", _).split('\n').length;
 }
 ```
-You can also call streamline functions as if they were standard node functions. For example, the `lineCount` function defined above can be called as follows from non-streamlined modules:
 
-```javascript
+You can also call streamline functions as if they were standard node functions. For example, the `lineCount` function that we just defined above can be called as follows in standard node.js style:
+
+``` javascript
 lineCount("README.md", function(err, result) {
   if (err) return console.error("ERROR: " + err.message);
   console.log("README has " + result + " lines.");
 });
 ```
 
-And you can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
+You can mix streamline functions, classical callback based code and synchrononous functions in the same file. 
+
 Streamline only transforms the functions that have the special `_` parameter. 
 
 Note: this works with all transformation options. 
@@ -177,7 +175,7 @@ Even if you use the _fibers_ option, you can seamlessly call standard callback b
 and the asynchronous functions that you create with streamline have the standard node callback signature.
 
 <a name="promises">
-## Interoperability with Promises
+## Interoperability with promises
 
 Streamline also provides seamless interoperability with Promise libraries, in both directions.
 
@@ -192,11 +190,12 @@ function myStreamlineFunction(p1, p2, _) {
 
 Note: if the promise fails the error will be propagated as an exception and you can catch it with `try/catch`.
 
-And you can also consume libraries implemented with streamline as if they had been implemented with promises. All you have to do is omit the `_` parameter when calling streamlined functions and you will get a promise in return.
+In the other direction you can get a promise from any callback-based asynchronous function by passing `void _` instead of `_`. For example:
 
-```
-function callingStreamlineAsPromise(p1, p2) {
-  var p = myStreamlineFunction(p1, p2);
+``` javascript
+function readFileWithPromise(path) {
+  var p = fs.readFile(path, 'utf8', void _);
+  // p is a promise.
   p.then(function(result) {
     // do something with result
   }, function(err) {
@@ -205,21 +204,10 @@ function callingStreamlineAsPromise(p1, p2) {
 }
 ```
 
-Note: you can also pass `null` or `undefined` as callback. This is useful when `_` is not the last parameter.
-
-Promise interoperability is **not** enabled by default but you can enable it easily:
-
-* If you start your program with `_node` or `_coffee`, just pass the `--promise` option.
-* If you start it with a loader (see above), just set the `promise` option to `true` in your `streamline.register(options)` call.
-
-Streamline will use the JavaScript built-in `Promise` class by default if available (node v11.13 and up). If this built-in class is not available it will try to load the `es6-promise` module instead (you should install it with `npm install es6-promise`).
-
-Note: the loader also gives you the option to pick a promise library of your choice (but reasonably compliant with ES6 specs). To do this, set the `promise` option to the name of your promise library, instead of `true`.
-
 <a name="futures">
 ## Futures
 
-Streamline also provides _futures_. Futures are like promises, without all the bells and whistles. They let you parallelize I/O operations in a very simple manner. They are always bundled with streamline and they have a very simple API.
+Streamline also provides _futures_. Futures are like promises, without all the bells and whistles. They let you parallelize I/O operations in a very simple manner. 
 
 If you pass `!_` instead of `_` when calling a streamline function, the function returns a _future_. The _future_ is just a regular node.js asynchronous function that you can call later to obtain the result. Here is an example:
 
@@ -238,8 +226,6 @@ function compareLineCounts(path1, path2, _) {
 ```
 
 In this example, `countLines` is called twice with `!_`. These calls start the `fs.readFile` asynchronous operations and return immediately two _futures_ (`n1` and `n2`). The `return` statement retrieves the results with `n1(_)` and `n2(_)` calls and computes their difference. 
-
-Futures are very flexible. In the example above, the results are retrieved from the same function, but you can also pass futures to other functions, store them in objects, call them to get the results from a different module, etc. You can also have several readers on the same future. 
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
@@ -300,8 +286,9 @@ try {
 }
 ```
 
+## Special callbacks
 <a name="multiple-results">
-## Callbacks with multiple results
+### multiple results
 
 Some APIs return several results through their callback. For example:
 
@@ -326,31 +313,32 @@ Note: if you only need the first result you can pass `_`:
 var response = request(options, _);
 ```
 
+<a name="callback-errback">
+### callback + errback
+
+Some APIs don't follow the standard _error first_ callback convention of node.js. Instead, the accept a pair of callback and errback arguments. Streamline lets you call them by passing two `_` arguments. For example:
+
+``` javascript
+function nodeStyleFn(arg, _) {
+  return callbackErrbackStyleFn(arg, _, _);
+}
+```
+
+As seen above, this feature is used in the promise interop: `result = promise.then(_, _)` is just a special case.
+
+It can also be used to handle the special _error-less_ callback of `fs.exists`:
+
+``` javascript
+function fileExists(path, _) {
+  // the second _ is ignored by fs.exists!
+  return fs.exists(path, _, _);
+}
+```
+
 <a name="coffee-script">
 ## CoffeeScript support
 
 CoffeeScript is fully supported. 
-
-You can even use language features which are not available in JavaScript. For example you can specify a default callback (see [#218](https://github.com/Sage/streamlinejs/issues/218) for full details):
-
-```coffeescript
-fn = (p1, p2, _ = (e) -> throw e if e) ->
-  # do something
-```
-
-<a name="fast-mode">
-## Fast mode
-
-Streamline has a _fast_ mode which produces leaner and faster code at the expense of a few more keystrokes and a bit of extra care when writing the code.
-
-This mode only applies to _fibers_ and _generators_ modes. It has no impact in _callbacks_ mode.
-
-For details see the [fast mode wiki page](https://github.com/Sage/streamlinejs/wiki/Fast-mode)
-
-<a name="stream-wrappers">
-## Stream Wrappers
-
-Streamline also provides _stream wrappers_ that simplify stream programming. These wrappers used to be included in the streamline npm package but they have now been moved to a separate [ez-streams](https://github.com/Sage/ez-streams) package.
 
 <a name="debugging">
 ## Debugging with source maps
@@ -359,24 +347,14 @@ You can seamlessly debug streamline code thanks to [JavaScript source maps](http
 
 To activate this feature, pass the `--source-map` options to `_node` or `_coffee`, or set the `sourceMap` option if you register via a loader.
 
-<a name="flamegraph">
-## Monitoring performance with flame graphs
-
-Streamline code can be instrumented to produce [flame graphs](http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html).
-
-Two cool things about these flame graphs:
-
-* The pyramids correspond to stacks of asynchronous calls, not to raw V8 stacks.
-* The tool generates two graphs: a pure CPU graph and a graph that combines CPU and I/O delays.
-
-See [streamline-flamegraph](https://github.com/Sage/streamline-flamegraph) for details.
-
 <a name="examples">
 ## Examples
 
 The [tutorial](https://github.com/Sage/streamlinejs/blob/master/tutorial/tutorial.md) shows streamline.js in action on a simple _search aggregator_ application.
 
 The [diskUsage](https://github.com/Sage/streamlinejs/blob/master/examples/diskUsage) examples show an asynchronous directory traversal that computes disk usage.
+
+The [loader](https://github.com/Sage/streamlinejs/blob/master/examples/loader) examples demonstrate how you can enable the `._js` and `._coffee` require hooks.
 
 <a name="online-demo">
 # Online demo
@@ -393,26 +371,12 @@ If you don't find your answer in the FAQ, post to the [mailing list](http://grou
 <a name="related-packages">
 ## Related Packages
 
-The following package contains a complete yet simple streaming API for streamline.js:
+The following packages extend the power of streamline:
 
-* [ez-streams](https://github.com/Sage/ez-streams): easy streams, with array-like API (filter, map, reduce, foreach, some, every), transforms (json, csv and xml streaming parsers and formatters), parallelization, buffering, etc.
-
-The following packages contain API wrappers for streamline.js:
-
-* [streamline-streams](https://github.com/Sage/streamline-streams): historical streaming module for streamline. It implements the low level bits of the `ez-steams` module (see above). If you want a rich streaming APIs you should use `ez-streams` instead. 
-
-There are also some helper packages for [express](http://expressjs.com/):
-
-* [express-streamline](https://github.com/aseemk/express-streamline)
-* [streamline-express](https://github.com/sethyuan/streamline-express)
-
-
-The following packages use streamline.js:
-
-* [streamline-require](https://github.com/Sage/streamline-require): a light and efficient _require_ infrastructure for modules in the browser.
-* [streamline-pdfkit](https://github.com/Sage/streamline-pdfkit): a fork of [pdfkit](https://github.com/devongovett/pdfkit) in which all the sync calls have been eliminated.
-* [streamline-zip](https://github.com/Sage/streamline-zip): a fork of [node-native-zip](https://github.com/janjongboom/node-native-zip) with async deflate.
-
+* [express-streamline](https://github.com/aseemk/express-streamline): interop with express
+* [streamline-express](https://github.com/sethyuan/streamline-express): interop with express
+* [ez-streams](https://github.com/Sage/ez-streams): streams and transforms for streamline.
+* [streamline-flamegraph](https://github.com/Sage/streamline-flamegraph): flamegraph monitoring.
 
 <a name="resources">
 ## Resources
@@ -428,7 +392,7 @@ For support and discussion, please join the [streamline.js mailing list](http://
 
 See the [AUTHORS](https://github.com/Sage/streamlinejs/blob/master/AUTHORS) file.
 
-Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed source map support.
+Special thanks to Marcel Laverdet who contributed the _fibers_ implementation and to Geoffry Song who contributed source map support (in 0.x versions).
 
 <a name="license">
 ## License
