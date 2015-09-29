@@ -12,10 +12,10 @@ _coffee [options] file
 Compiling script:
 
 ```sh
-_node [options] file._js
-_node [options] dir
+_node -c [options] file._js
+_node -c [options] dir
 
-_coffee -c [options] file._js
+_coffee -c [options] file._coffee
 _coffee -c [options] dir
 ```
 
