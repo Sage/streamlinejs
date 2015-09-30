@@ -78,40 +78,57 @@ require('streamline').register({
 
 ### Syntax
 
+Function declarations:
+
 ``` javascript
 // async function
-function myAsyncFn(arg1, arg2, _) {
-	// foo(_) calls allowed here
+function foo(arg1, arg2, _) {
+	// bar(_) calls allowed here
 }
 
 // sync function
-function mySyncFn(arg1, arg2) {
-	// foo(_) calls forbidden here
+function fooSync(arg1, arg2) {
+	// bar(_) calls forbidden here
 }
+```
 
+Function calls:
+
+``` javascript
 // async call
-result = myAsyncFn("hello", 3, _);
+result = foo("hello", 3, _);
 
-// future call
-future = myAsyncFn("hello", 3, !_);
+// starting a future (don't wait)
+future = foo("hello", 3, !_);
+// waiting on the future's result
 result = future(_);
 
-// promise call
-promise = myAsyncFn("hello", 3, void _);
-result = promise.then(_, _);
+// fire and forget (don't wait)
+foo("hello", 3, !!_); // throw on error (recommended)
+foo("hello", 3, !_); // ignore error silently
+```
 
-// callback call
-myAsyncFn("hello", 3, function(err, result) {
+
+Interop:
+
+``` javascript
+// with node.js callbacks
+foo("hello", 3, function(err, result) {
 	// do something with result
-	// foo(_) forbidden here
+	// bar(_) forbidden here
 });
 
-// interfacing with events:
+// with promises
+// starting it
+promise = foo("hello", 3, void _);
+// waiting on the promise's result
+result = promise.then(_, _);
+
+// with node.js events
 emitter.on('data', function(data) {
 	(function(_) {
 	    // do something with data
-		// foo(_) allowed here
-	})();
+		// bar(_) allowed here
+	})(!!_); // fire and forget
 })
-
-
+```
