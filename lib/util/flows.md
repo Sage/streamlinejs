@@ -1,7 +1,7 @@
 
-# Control Flow utilities
+# Streamline utilities
  
-`var flows = require('streamline/lib/util/flows')`
+`var flows = require('streamline-runtime').flows;`
 
 ## funnel
 * `fun = flows.funnel(max)`  

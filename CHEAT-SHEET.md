@@ -104,8 +104,9 @@ future = foo("hello", 3, !_);
 result = future(_);
 
 // fire and forget (don't wait)
-foo("hello", 3, !!_); // throw on error (recommended)
-foo("hello", 3, !_); // ignore error silently
+var flows = require('streamline-runtime').flows;
+foo("hello", 3, flows.check); // throw on error (recommended)
+foo("hello", 3, flows.ignore); // ignore error silently
 ```
 
 
@@ -125,10 +126,11 @@ promise = foo("hello", 3, void _);
 result = promise.then(_, _);
 
 // with node.js events
+var flows = require('streamline-runtime').flows;
 emitter.on('data', function(data) {
 	(function(_) {
 	    // do something with data
 		// bar(_) allowed here
-	})(!!_); // fire and forget
+	})(flows.check);
 })
 ```
