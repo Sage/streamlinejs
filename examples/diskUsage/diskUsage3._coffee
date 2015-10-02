@@ -8,7 +8,7 @@
 # Javascript code.  
 #
 
-fs = require 'streamline-fs'
+fs = require 'fs'
 
 du = (_, path) ->
 	total = 0

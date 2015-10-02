@@ -1,1 +1,1 @@
-require('./').register();
+require("./compiler/register").register();

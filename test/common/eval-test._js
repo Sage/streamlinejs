@@ -1,7 +1,7 @@
 QUnit.module(module.id);
 
 function evalTest(f, val) {
-	f(_ >> function(err, result) {
+	f(function(err, result) {
 		var str = err ? "ERR: " + err : result;
 		strictEqual(str, val, val);
 		start();
@@ -9,12 +9,12 @@ function evalTest(f, val) {
 }
 
 function delay(_, val) {
-	setTimeout(~_, 0);
+	setTimeout(_, 0);
 	return val;
 }
 
 function delayFail(_, err) {
-	setTimeout(~_, 0);
+	setTimeout(_, 0);
 	throw err;
 }
 
@@ -703,11 +703,13 @@ asyncTest("labelled break", 1, function(_) {
 	}, '!15-!16-!/!25-!26-!/!35-!36-!!38-!39-/!45-!46-!!55-!56-!');
 })
 
+/* this one raises a compile error in babel (normal) - we don't need it any more so nuke it
 asyncTest("octal literal", 1, function(_) {
 	evalTest(function f(_) {
 		return 010;
 	}, 8);
 })
+*/
 
 asyncTest("typeof rewriting bug (fibers)", 1, function(_) {
 	evalTest(function f(_) {
@@ -737,9 +739,9 @@ function twoResultsSync(a, b, cb) {
 	cb(null, a, b);
 }
 
-asyncTest("multiple results ~_", 1, function(_) {
+asyncTest("multiple results _", 1, function(_) {
 	evalTest(function f(_) {
-		var results = twoResults('abc', 'def', ~_);
+		var results = twoResults('abc', 'def', _);
 		return results;
 	}, "abc");
 });
@@ -785,12 +787,12 @@ asyncTest("arity of async functions", 3, function(_) {
 	start();
 });
 
-asyncTest("futures on _(fn, idx)", 1, function(_) {
-	var f = _(function(i, cb) {
+asyncTest("futures on function(i, cb)", 1, function(_) {
+	var f = function(i, cb) {
 		setTimeout(function() {
 			cb(null, i + 1);
 		}, 0);
-	}, 1);
+	};
 	var fut = f(5, !_);
 	strictEqual(fut(_), 6, "fut(_) === 6");
 	start();
@@ -821,36 +823,31 @@ asyncTest("return undefined", 1, function(_) {
 	start();
 });
 
-if (typeof require !== "undefined") { // skip this one in browser
-	var globals = require('streamline/lib/globals');
-	var isFast = /-fast$/.test(globals.runtime);
-
-	if (globals.Promise) asyncTest("promises", isFast ? 3 : 7, function(_) {
-		function test(v, _) {
-			return delay(_, v); 
-		}
-		if (!isFast) {
-			var p1 = test('a');
-			var p2 = test('b', null);
-			strictEqual(p1 && typeof p1.then, "function");
-			strictEqual(p2 && typeof p2.then, "function");
-			strictEqual(p1.then(_, _), 'a');
-			strictEqual(p2.then(_, _), 'b');
-		}
-		var p3 = test('c', void _);
-		strictEqual(p3 && typeof p3.then, "function");
-		strictEqual(p3.then(_, _), 'c');
-		try {
-			var p4 = delayFail(void _, 'ERR d');
-			p4.then(_, _);
-			ok(false);
-		} catch (ex) {
-			strictEqual(ex, "ERR d");
-		}
-		start();
-	});
+asyncTest("promises", 7, function(_) {
+	function test(v, _) {
+		return delay(_, v); 
+	}
+	var p1 = test('a', void _);
+	var p2 = test('b', !_).promise;
+	strictEqual(p1 && typeof p1.then, "function");
+	strictEqual(p2 && typeof p2.then, "function");
+	strictEqual(p1.then(_, _), 'a');
+	strictEqual(p2.then(_, _), 'b');
+	var p3 = test('c', void _);
+	strictEqual(p3 && typeof p3.then, "function");
+	strictEqual(p3.then(_, _), 'c');
+	try {
+		var p4 = delayFail(void _, 'ERR d');
+		p4.then(_, _);
+		ok(false);
+	} catch (ex) {
+		strictEqual(ex, "ERR d");
+	}
+	start();
+});
 
 	// issue #218
+	/* - not supported any more
 	if (!isFast) asyncTest("coffeescript default values", 8, function(_) {
 		var got;
 		var that = {};
@@ -882,7 +879,7 @@ if (typeof require !== "undefined") { // skip this one in browser
 		strictEqual(got, "a=8, b=3, c=5");
 		start();
 	});
-}
+	*/
 
 asyncTest("IIFE bug in fibers mode", 1, function(_) {
 	var api = (function() {
@@ -898,14 +895,14 @@ asyncTest("IIFE bug in fibers mode", 1, function(_) {
 });
 
 
-// enable later
-false && asyncTest("futures on non-streamline APIs", 1, function(_) {
+asyncTest("futures on non-streamline APIs", 2, function(_) {
 	function nat(cb) {
-		setImmediate(function() {
+		setTimeout(function() {
 			cb(null, "abc");
 		});
 	}
 	var fut = nat(!_);
+	strictEqual(typeof fut, "function");
 	strictEqual(fut(_), "abc");
 	start();
 });

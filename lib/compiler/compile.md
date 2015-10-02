@@ -4,7 +4,6 @@
 `var compiler = require('streamline/lib/compiler/compile')`
 
 Transform streamline source
-Decide which compiler to use for the file type
 Compile streamline or coffee src and return the transformed
 content.
 * `compiler.compile(_, paths, options)`

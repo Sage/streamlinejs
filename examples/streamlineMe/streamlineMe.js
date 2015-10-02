@@ -23,9 +23,6 @@ var _samples = {
 	"\n//" +
 	"\n// Look at the transformed code and run it with the 'execute' button." +
 	"\n//" +
-	"\n// The transformation generates some one-liner auxiliary functions." +
-	"\n// Select the 'show complete code' option to see the whole code." +
-	"\n//" +
 	"\n// The 'beautify' button can help you tidy your code." +
 	_demo +
 	"\ndemo('Straight to the answer: fact(4) = 24', _);" +
@@ -145,7 +142,7 @@ var _samples = {
 	"\n",
 };
 
-var _complete = false;
+var _generators = false;
 
 function error(message) {
 	$('#result').removeClass('info').addClass('error').text(message);
@@ -168,8 +165,7 @@ function _transform() {
 	var codeIn = $('#codeIn').val();
 	try {
 		var codeOut = Streamline.transform(codeIn, {
-			noHelpers: !_complete,
-			lines: _complete ? "preserve" : "ignore"
+			runtime: _generators ? "generators" : "callbacks",
 		});
 		$('#codeOut').val(codeOut);
 		info("ready");
@@ -183,7 +179,7 @@ function _execute() {
 	var codeIn = $('#codeIn').val();
 	try {
 		var codeOut = Streamline.transform(codeIn, {
-			lines: "preserve"
+			runtime: _generators ? "generators" : "callbacks",
 		});
 		eval(codeOut);
 	} catch (ex) {
@@ -213,8 +209,8 @@ $( function() {
 	$('#beautify').click( function() {
 		_beautify($('#codeIn').val());
 	});
-	$('#complete').change( function() {
-		_complete = !_complete;
+	$('#generators').change( function() {
+		_generators = !_generators;
 		_transform();
 	});
 	$('#execute').click( function() {

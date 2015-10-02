@@ -7,7 +7,7 @@
 //
 // Streamline should find the local CoffeeScript instance for this module.
 
-require('coffee-script');
-require('../..').register();
+require('coffee-script').register();
+require('streamline').register();
 
 require('./hello2');

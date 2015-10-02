@@ -3,11 +3,11 @@
 
 QUnit.module(module.id);
 
-var nextTick = _(function(cb) {
+var nextTick = function(cb) {
 	setTimeout(function(){
 		cb();
 	}, 0);
-}, 0);
+};
 
 
 
@@ -21,23 +21,23 @@ function failSync(_, code){
 	fail(0);
 }
 
-var fail;
+var _fail;
 
 function A(_, code){
 	if (code == 1) 
-		fail(_, code);
+		_fail(_, code);
 	if (code == 2) 
-		fail(_, code);
+		_fail(_, code);
 	nextTick(_);
 	if (code == 3) 
-		fail(_, code);
+		_fail(_, code);
 	for (var i = 0; i < 6; i++) {
 		if (code == i) 
-			fail(_, code);
+			_fail(_, code);
 		nextTick(_);
 	}
 	if (code == 6) 
-		fail(_, code);
+		_fail(_, code);
 	nextTick(_);
 	B(_, code);
 	nextTick(_);
@@ -46,7 +46,7 @@ function A(_, code){
 
 function B(_, code){
 	if (code == 7) 
-		fail(_, code);
+		_fail(_, code);
 	C(_, code);
 	nextTick(_);
 	C(_, code);
@@ -55,21 +55,21 @@ function B(_, code){
 
 function C(_, code){
 	if (code == 8) 
-		fail(_, code);
+		_fail(_, code);
 }
 
 function D(_, code){
 	if (code == 9) 
-		fail(_, code);
+		_fail(_, code);
 }
 
 function E(_, code){
 	try {
-		fail(_, code);
+		_fail(_, code);
 	} 
 	catch (ex) {
 		if (code % 3 == 1) 
-			fail(_, code);
+			_fail(_, code);
 		else if (code % 3 == 2) 
 			A(_, code);
 		else 
@@ -85,7 +85,7 @@ function F(_, code){
 
 function G(_, code){
 	if (code == 5) 
-		fail(_, code);
+		_fail(_, code);
 	return "" + code;
 }
 
@@ -116,15 +116,18 @@ function issue233(_, code) {
 // You can insert lines and/or comments after this point.
 
 function T(_, fn, code, failFn){
-	fail = failFn;
-	var s = "{"
+	_fail = failFn;
+	var s = "{";
 	try {
 		return fn(_, code);
 	} 
 	catch (ex) {
 		var s = ex.stack;
-		s = s.split('\n').filter(function(l) { return l.indexOf('<<<') < 0 }).map(function(l){
-			var m = /^\s+at (\w+).*:(\d+)\:[^:]+$/.exec(l);
+		s = s.split('\n').filter(function(l) {
+			return l.indexOf('<<<') < 0;
+		}).map(function(l){
+			// We get Object.A in futures test because of a bind call. Ignore this difference.
+			var m = /^\s+at (?:Object\.)?(\w+)[^:]*:(\d+)/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
@@ -134,8 +137,13 @@ function T(_, fn, code, failFn){
 	}
 }
 
+var browser = typeof process === 'undefined' || process.browser;
+
 function stackEqual(got, expect) {
-	if (typeof T_ === 'function' && T_.gstreamlineFunction) { got = got.substring(0, 25); expect = expect.substring(0, 25); }
+	if (browser) {
+		got = got.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+		expect = expect.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
+	}
 	strictEqual(got, expect, expect);
 }
 // safari hack
@@ -229,7 +237,7 @@ asyncTest("loop", 8, function(_) {
 	start();
 })
 
-asyncTest("issue233", 1, function(_) {
+if (!browser) asyncTest("issue233", 1, function(_) {
 	stackEqual(T(_, issue233, 0, failSync), "Error: foo/customThrow:107/issue233:112");
 	start();
 });

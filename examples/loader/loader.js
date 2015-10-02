@@ -8,7 +8,6 @@
 /// 
 /// The loader module must register the streamline file extensions:
 require('streamline').register({
-	fibers: false,
 	cache: true,
 	verbose: true,
 });
