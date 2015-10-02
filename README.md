@@ -57,6 +57,8 @@ Streamline also provides _futures_, and asynchronous variants of the EcmaScript 
 <a name="1.0">
 ## 1.0
 
+*** Work in Progress -- streamline 1.0 not yet published to NPM ***
+
 Streamline 1.0 is a major evolution. The transforms have been repackaged as a [babel](https://babeljs.io/) plugin. This brings several benefits:
 
 * ES6 support (classes, destructuring, ...)
