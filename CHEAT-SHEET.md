@@ -5,8 +5,8 @@
 Running script:
 
 ```sh
-_node [options] file
-_coffee [options] file
+_node [options] file    # or file._js
+_coffee [options] file  # or file._coffee
 ```
 
 Compiling script:
@@ -54,7 +54,7 @@ Transforming:
 var babel = require('babel');
 require('babel-plugin-streamline');
 
-[code, map] = babel.transform(code, {
+{code, map} = babel.transform(code, {
 	plugins: [streamline],
 	// more babel options
 	extra: {
