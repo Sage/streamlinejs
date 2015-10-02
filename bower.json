@@ -14,7 +14,7 @@
   ],
   "main": [
     "lib/browser/transform.js",
-    "lib/browser/runtime-callbacks.js"
+    "lib/browser/callbacks/runtime.js"
   ],
   "ignore": [
     ".gitignore",

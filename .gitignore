@@ -1,8 +1,12 @@
-# ignore those pesky files that Mac generates
 .DS_Store
-
 npm-debug.log
-
-# ignore the node inclusion directory
 node_modules/
 *.testlog
+# files that we generate at install time
+lib/browser/callbacks/runtime.js
+lib/browser/generators/runtime.js
+lib/browser/transform.js
+test/common/callbacks/eval-test.js
+test/common/callbacks/flows-test.js
+test/common/callbacks/futures-test.js
+test/common/callbacks/stack-test.js
