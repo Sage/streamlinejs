@@ -12,7 +12,7 @@
 "use strict";
 
 var fs = require('fs');
-var flows = require('streamline/lib/util/flows');
+var flows = require('streamline-runtime').flows;
 
 var fileFunnel = flows.funnel(20);
 

@@ -298,7 +298,7 @@ We could pass -1 instead of 4 to execute all iterations in parallel. But then we
 
 ```javascript
 var fs = require('fs'),
-	flows = require('streamline/lib/util/flows');
+	flows = require('streamline-runtime').flows;
 
 function fileSearch(_, q) {
 	var t0 = new Date();
@@ -332,7 +332,7 @@ With this implementation, each call to `fileSearch` opens 20 files at most but w
 
 ```javascript
 var fs = require('fs'),
-	flows = require('streamline/lib/util/flows');
+	flows = require('streamline-runtime').flows;
 // allocate a funnel for 100 concurrent open files
 var filesFunnel = flows.funnel(100);
 

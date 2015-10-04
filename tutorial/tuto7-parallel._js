@@ -56,7 +56,7 @@ function googleSearch(_, q) {
 }
 
 var fs = require('fs'),
-	flows = require('streamline/lib/util/flows');
+	flows = require('streamline-runtime').flows;
 // allocate a funnel for 100 concurrent open files
 var filesFunnel = flows.funnel(100);
 
