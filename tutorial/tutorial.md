@@ -85,25 +85,23 @@ Nothing difficult here. We are using node's `url` and `querystring` helper modul
 
 We are going to implement the `search` function next. For now we are just returning a `NIY` message. Note that we pass `_` as first parameter to our `search` function. We need this parameter because `search` will be an asynchronous function.
 
-## [Calling Google](tuto3-google._js)
+## [Calling Wikipedia](tuto3-web._js)
 
-Now we are going to implement the `search` function by passing our search string to Google. Here is the code:
+Now we are going to implement the `search` function by passing our search string to Wikipedia. Here is the code:
 
 ```javascript
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
-	// pass it to Google
+	// pass it to Wikipedia (was Google before but Google removed its simple API)
 	var json = ez.devices.http.client({
-		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
+		url: 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + q,
 		proxy: process.env.http_proxy
-	}).end().response(_).checkStatus(200).readAll(_);
+	}).proxyConnect(_).end().response(_).checkStatus(200).readAll(_);
 	// parse JSON response
 	var parsed = JSON.parse(json);
-	// Google may refuse our request. Return the message then.
-	if (!parsed.responseData) return "GOOGLE ERROR: " + parsed.responseDetails;
 	// format result in HTML
-	return '<ul>' + parsed.responseData.results.map(function(entry) {
-		return '<li><a href="' + entry.url + '">' + entry.titleNoFormatting + '</a></li>';
+	return '<ul>' + parsed[1].map(function(entry, i) {
+		return '<li><a href="' + parsed[3][i] + '"><b>' + entry + '</b></a>: ' + parsed[2][i] + '</li>';
 	}).join('') + '</ul>';
 }
 ```
@@ -121,19 +119,17 @@ This is probably a bit rude to our users. But we can do a better job by trapping
 ```javascript
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
-	// pass it to Google
+	// pass it to Wikipedia
 	try {
 		var json = ez.devices.http.client({
-			url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
+			url: 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + q,
 			proxy: process.env.http_proxy
-		}).end().response(_).checkStatus(200).readAll(_);
+		}).proxyConnect(_).end().response(_).checkStatus(200).readAll(_);
 		// parse JSON response
 		var parsed = JSON.parse(json);
-		// Google may refuse our request. Return the message then.
-		if (!parsed.responseData) return "GOOGLE ERROR: " + parsed.responseDetails;
 		// format result in HTML
-		return '<ul>' + parsed.responseData.results.map(function(entry) {
-			return '<li><a href="' + entry.url + '">' + entry.titleNoFormatting + '</a></li>';
+		return '<ul>' + parsed[1].map(function(entry, i) {
+			return '<li><a href="' + parsed[3][i] + '"><b>' + entry + '</b></a>: ' + parsed[2][i] + '</li>';
 		}).join('') + '</ul>';
 	} catch (ex) {
 		return 'an error occured. Retry or contact the site admin: ' + ex.message;
@@ -149,13 +145,13 @@ Now, we are going to extend our search to also search the text in local files. O
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
-		return '<h2>Web</h2>' + googleSearch(_, q) + '<hr/><h2>Files</h2>' + fileSearch(_, q);
+		return '<h2>Web</h2>' + webSearch(_, q) + '<hr/><h2>Files</h2>' + fileSearch(_, q);
 	} catch (ex) {
 		return 'an error occured. Retry or contact the site admin: ' + ex.stack;
 	}
 }
 
-function googleSearch(_, q) {
+function webSearch(_, q) {
 	var json = ez.devices.http.client(...
 	...
 	return '<ul>' + ...
@@ -164,6 +160,7 @@ function googleSearch(_, q) {
 function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
+	var re = new RegExp("\\b" + q + "\\b", "i");
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, function(_, file) {
@@ -171,7 +168,7 @@ function fileSearch(_, q) {
 			var stat = fs.stat(f, _);
 			if (stat.isFile()) {
 				fs.readFile(f, 'utf8', _).split('\n').forEach(function(line, i) {
-					if (line.indexOf(q) >= 0) results += '<br/>' + f + ':' + i + ':' + line;
+					if (re.test(line)) results += '<br/>' + f + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
 				doDir(_, f);
@@ -202,9 +199,8 @@ We have to modify our `search` function again:
 ```javascript
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
-	// pass it to Google
 	try {
-		return '<h2>Web</h2>' + googleSearch(_, q) //
+		return '<h2>Web</h2>' + webSearch(_, q) //
 		+ '<hr/><h2>Files</h2>' + fileSearch(_, q) //
 		+ '<hr/><h2>Mongo</h2>' + mongoSearch(_, q);
 	} catch (ex) {
@@ -225,7 +221,7 @@ function mongoSearch(_, q) {
 	try {
 		var coln = db.collection('movies', _);
 		if (coln.count(_) === 0) coln.insert(MOVIES, _);
-		var re = new RegExp(".*" + q + ".*");
+		var re = new RegExp(".*\\b" + q + "\\b.*", "i");
 		return coln.find({
 			$or: [{
 				title: re
@@ -259,7 +255,7 @@ The `mongoSearch` function is rather straightforwards once you know the mongodb 
 
 ## [Parallelizing](tuto7-parallel._js)
 
-So far so good. But the code that we have written executes completely sequentially. So we only start the directory search after having obtained the response from Google and we only start the Mongo search after having completed the directory search. This is very inefficient. We should run these 3 independent search operations in parallel.
+So far so good. But the code that we have written executes completely sequentially. So we only start the directory search after having obtained the response from Wikipedia and we only start the Mongo search after having completed the directory search. This is very inefficient. We should run these 3 independent search operations in parallel.
 
 This is where _futures_ come into play. The principle is simple: if you call an asynchronous function with `!_` instead of `_`, the function returns a _future_ `f` that you can call later as `f(_)` to obtain the result.
 
@@ -270,11 +266,11 @@ function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
 		// start the 3 futures
-		var googleFuture = googleSearch(!_, q);
+		var webFuture = webSearch(!_, q);
 		var fileFuture = fileSearch(!_, q);
 		var mongoFuture = mongoSearch(!_, q);
 		// join the results
-		return '<h2>Web</h2>' + googleFuture(_) //
+		return '<h2>Web</h2>' + webFuture(_) //
 		+ '<hr/><h2>Files</h2>' + fileFuture(_) //
 		+ '<hr/><h2>Mongo</h2>' + mongoFuture(_);
 	} catch (ex) {
@@ -367,7 +363,7 @@ function mongoSearch(_, q) {
 		mongoFunnel(_, function(_) {
 			if (coln.count(_) === 0) coln.insert(MOVIES, _);
 		});
-		var re = new RegExp(".*" + q + ".*");
+		var re = new RegExp(".*\\b" + q + "\\b.*", "i");
 		return ...
 	} finally {
 		db.close();
@@ -381,13 +377,10 @@ In this tutorial we have done the following:
 
 * [Create a simple web server](tuto1-hello._js)
 * [Set up a little search form](tuto2-form._js)
-* [Call a Google API to handle the search](tuto3-google._js) 
+* [Call a Wikipedia API to handle the search](tuto3-web._js) 
 * [Handle errors](tuto4-catch._js) 
 * [Search a tree of files](tuto5-files._js) 
 * [Search inside MongoDB](tuto6-mongo._js) 
 * [Parallelize and fix race conditions](tuto7-parallel._js)
 
 This should give you a flavor of what _streamline.js_ programming looks like. Don't forget to read the [README](../README.md) and the [FAQ](../FAQ.md).
-
-
-

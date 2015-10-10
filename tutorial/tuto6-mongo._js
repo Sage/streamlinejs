@@ -26,7 +26,7 @@ console.log('Server running at http://127.0.0.1:1337/');
 function search(_, q) {
 	if (!q || /^\s*$/.test(q)) return "Please enter a text to search";
 	try {
-		return '<h2>Web</h2>' + googleSearch(_, q) //
+		return '<h2>Web</h2>' + webSearch(_, q) //
 		+ '<hr/><h2>Files</h2>' + fileSearch(_, q) //
 		+ '<hr/><h2>Mongo</h2>' + mongoSearch(_, q);
 	} catch (ex) {
@@ -34,19 +34,17 @@ function search(_, q) {
 	}
 }
 
-function googleSearch(_, q) {
+function webSearch(_, q) {
 	var t0 = new Date();
 	var json = ez.devices.http.client({
-		url: 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=' + q,
+		url: 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + q,
 		proxy: process.env.http_proxy
-	}).end().response(_).checkStatus(200).readAll(_);
+	}).proxyConnect(_).end().response(_).checkStatus(200).readAll(_);
 	// parse JSON response
 	var parsed = JSON.parse(json);
-	// Google may refuse our request. Return the message then.
-	if (!parsed.responseData) return "GOOGLE ERROR: " + parsed.responseDetails;
 	// format result in HTML
-	return '<ul>' + parsed.responseData.results.map(function(entry) {
-		return '<li><a href="' + entry.url + '">' + entry.titleNoFormatting + '</a></li>';
+	return '<ul>' + parsed[1].map(function(entry, i) {
+		return '<li><a href="' + parsed[3][i] + '"><b>' + entry + '</b></a>: ' + parsed[2][i] + '</li>';
 	}).join('') + '</ul>' + '<br/>completed in ' + (new Date() - t0) + ' ms';
 }
 
@@ -55,6 +53,7 @@ var fs = require('fs');
 function fileSearch(_, q) {
 	var t0 = new Date();
 	var results = '';
+	var re = new RegExp("\\b" + q + "\\b", "i");
 
 	function doDir(_, dir) {
 		fs.readdir(dir, _).forEach_(_, function(_, file) {
@@ -62,7 +61,7 @@ function fileSearch(_, q) {
 			var stat = fs.stat(f, _);
 			if (stat.isFile()) {
 				fs.readFile(f, 'utf8', _).split('\n').forEach(function(line, i) {
-					if (line.indexOf(q) >= 0) results += '<br/>' + f + ':' + i + ':' + line;
+					if (re.test(line)) results += '<br/>' + f + ':' + i + ':' + line;
 				});
 			} else if (stat.isDirectory()) {
 				doDir(_, f);
@@ -97,7 +96,7 @@ function mongoSearch(_, q) {
 	try {
 		var coln = db.collection('movies', _);
 		if (coln.count(_) === 0) coln.insert(MOVIES, _);
-		var re = new RegExp(".*" + q + ".*");
+		var re = new RegExp(".*\\b" + q + "\\b.*", "i");
 		return coln.find({
 			$or: [{
 				title: re

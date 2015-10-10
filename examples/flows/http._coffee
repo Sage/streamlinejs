@@ -1,7 +1,13 @@
 # a minimal example of using funneling to limit the concurrency of an operation.
 # in this case, the operation to parallelize is making HTTP requests
 
-request = require 'request'
+try
+	request = require 'request'
+catch error
+	console.error error.message
+	console.error "Please `npm install request` before running this example"
+	process.exit 1
+
 flows = require 'streamline/lib/util/flows'
 
 # get a page via HTTP
@@ -15,7 +21,7 @@ get_page = (_, page_number) ->
 httpFunnel = flows.funnel 15  # allow max 15 to run in parallel
 
 # add 50 pages to request
-futures = (get_page null, page_number for page_number in [0..49])
+futures = (get_page !_, page_number for page_number in [0..49])
 
 console.log 'pages declared'
 

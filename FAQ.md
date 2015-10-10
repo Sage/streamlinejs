@@ -139,41 +139,16 @@ console.log(__filename + ': ' + exists(__filename, _)); // works
 console.log(__filename + ': ' + fs.exists(__filename, _)); // does not work
 ```
 
-You can also use the `streamline-fs` package (install it with `npm install streamline-fs`):
+You can also leverage interop with callback + errback API style:
 
 ```
-var fs = require('streamline-fs');
-
-var ok = fs.exists(__filename, _); // works
+var ok = fs.exists(__filename, _, _); // works
 ```
 
 
 ### I'm calling an async function with `!_` and I'm not getting a future back. What's wrong?
 
-You're calling a function which was not written with streamline, for example one of node's `fs` function. The workaround is easy: just wrap it with a streamline function:
-
-``` javascript
-// the wrappers
-function readTextFile(path, enc, _) { return fs.readFile(path, enc, _); }
-function readBinaryFile(path, _) { return fs.readFile(path, _); }
-
-// testing futures
-var f1 = readTextFile(path1, "utf8"); // ok
-var f2 = fs.readFile(path2, "utf8"); // does not fail but f2 is undefined
-var data1 = f1(_); // ok: f1 is a future
-var data2 = f2(_); // fails!
-```
-
-Wrapping functions with optional arguments might be a bit tricky. The following wrapper will work though:
-
-``` javascript
-function readFile(path, enc, _) {
-	if (typeof enc === 'string') return fs.readFile(path, enc, _);
-	else return fs.readFile(path, _);
-}
-```
-
-You can also use the `streamline-fs` package (see previous answer). It wraps all the `fs` functions.
+This used to be a problem with streamline 0.x. It is fixed in streamline 1.0.
 
 ### My control flow is completely broken. I am completely lost. Help!
 
