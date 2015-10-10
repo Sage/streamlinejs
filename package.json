@@ -35,7 +35,7 @@
     "bin": "./bin"
   },
   "scripts": {
-    "install": "node build.js || nodejs build.js"    
+    "prepublish": "node build.js || nodejs build.js"
   },
   "main": "index.js"
 }
