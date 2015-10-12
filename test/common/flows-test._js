@@ -481,7 +481,7 @@ asyncTest("trampoline", 1, function(_) {
 		if (n % 1000 === 0) return flows.trampoline(_, fn);
 		else return fn(_);
 	}
-	equals(sums(_, 100000), 50000 * 100001);
+	equal(sums(_, 100000), 50000 * 100001);
 	start();
 });
 

@@ -44,5 +44,4 @@ build("lib/browser/generators/runtime-source.js", "lib/browser/generators/runtim
 build("lib/browser/transform-source.js", "lib/browser/transform.js");
 build("test/common/eval-test._js", "test/common/callbacks/eval-test.js", streamlineOpts);
 build("test/common/flows-test._js", "test/common/callbacks/flows-test.js", streamlineOpts);
-build("test/common/futures-test._js", "test/common/callbacks/futures-test.js", streamlineOpts);
 build("test/common/stack-test._js", "test/common/callbacks/stack-test.js", streamlineOpts);

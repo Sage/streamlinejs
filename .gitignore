@@ -8,5 +8,4 @@ lib/browser/generators/runtime.js
 lib/browser/transform.js
 test/common/callbacks/eval-test.js
 test/common/callbacks/flows-test.js
-test/common/callbacks/futures-test.js
 test/common/callbacks/stack-test.js
