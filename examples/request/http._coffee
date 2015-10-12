@@ -8,7 +8,7 @@ catch error
 	console.error "Please `npm install request` before running this example"
 	process.exit 1
 
-flows = require 'streamline/lib/util/flows'
+flows = require('streamline-runtime').flows
 
 # get a page via HTTP
 get_page = (_, page_number) ->

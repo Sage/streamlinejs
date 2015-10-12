@@ -1,5 +1,5 @@
 QUnit.module(module.id);
-var flows = require("streamline/lib/util/flows");
+var flows = require("streamline-runtime").flows;
 
 function delay(_, val) {
 	flows.nextTick(_);

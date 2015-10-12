@@ -20,7 +20,7 @@
 #
 
 fs = require 'fs'
-flows = require 'streamline/lib/util/flows'
+flows = require('streamline-runtime').flows
 
 fileFunnel = flows.funnel 20
 
