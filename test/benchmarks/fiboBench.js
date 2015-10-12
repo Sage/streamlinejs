@@ -1,6 +1,13 @@
 "use strict";
 var fs = require('fs');
 
+try {
+	eval("(function*() {})");
+} catch (ex) {
+	console.error("cannot run generators bench. Please pass --harmony flag to node");
+	process.exit(1);
+}
+
 function fib(n) {
 	return n <= 1 ? 1 : fib(n - 1) + fib(n - 2);
 }
@@ -66,14 +73,18 @@ function bench(prefix, n, loop, modulo, asyncFn, _) {
 
 var syncBench = bench;
 
-function makeBench(mode) {
+function makeBench(runtime) {
 	var fn;
-	var str = "(function() {" + require("streamline/lib/" + mode + "/transform").transform("fn=" + bench.toString()) + "return bench; })()";
+	var str = "(function() {" + //
+		require('streamline').transform("fn=" + bench.toString(), {
+			runtime: runtime,
+		}).code + //
+		"return bench; })()";
 	/* eslint-disable no-eval */
 	eval(str);
 	//console.log(mode + ": " + fn);
 	return function(n, loop, modulo, asyncFn, cb) {
-		fn(mode, n, loop, modulo, asyncFn, cb);
+		fn(runtime, n, loop, modulo, asyncFn, cb);
 	};
 }
 

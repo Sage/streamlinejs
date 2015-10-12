@@ -1,6 +1,0 @@
-return if not require('streamline/module')(module)
-
-task 'greet', (options, _) ->
-	console.log 'Hello...'
-	setTimeout _, 1000
-	console.log '...world!'
