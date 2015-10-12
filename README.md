@@ -120,7 +120,7 @@ The first one is to compile your source. The recommanded way is with babel's CLI
 
 The second one is to create a loader which will register `require` hooks for the `._js` and `._coffee` extensions. See [this example](examples/loader/loader.md).
 
-Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the [registration API](lib/compiler/register.md) has a `cache` option which comes close.
+Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the [registration API](lib/index.md) has a `cache` option which comes close.
 
 <a name="browser">
 ## Browser-side use
@@ -259,7 +259,7 @@ function dirLines(dir, _) {
 
 If you don't want to limit the level of parallelism, just pass `-1`.
 
-See the documentation of the [builtins module](https://github.com/Sage/streamlinejs/blob/master/lib/compiler/builtins.md) for details.
+See the documentation of the [builtins module](https://github.com/Sage/streamline-runtime/blob/master/lib/builtins-source.md) for details.
 
 <a name="exception-handling">
 ## Exception Handling

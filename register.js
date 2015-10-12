@@ -1,1 +1,3 @@
-require("./compiler/register").register();
+"use strict"
+require(".").register();
+require('lib/util').deprecate(module, "use require('streamline').register()";
