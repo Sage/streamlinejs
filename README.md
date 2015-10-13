@@ -127,7 +127,7 @@ Compiling will give you the fastest startup time because node will directly load
 
 You have two options to use streamline in the browser:
 
-* You can transform and bundle your files with browserify. See how the [build.js](build.js) script builds the test/common/callbacks/*-test.js files for an example.
+* You can transform and bundle your files with browserify. See how the [build.js](build.js) script builds the test/browser/*-test.js files for an example.
 * You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/browser/transform.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 
 <a name="generation-options">

@@ -6,6 +6,6 @@ node_modules/
 lib/browser/callbacks/runtime.js
 lib/browser/generators/runtime.js
 lib/browser/transform.js
-test/common/callbacks/eval-test.js
-test/common/callbacks/flows-test.js
-test/common/callbacks/stack-test.js
+test/browser/eval-test.js
+test/browser/flows-test.js
+test/browser/stack-test.js
