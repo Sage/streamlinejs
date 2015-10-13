@@ -196,7 +196,7 @@ outStream.write(_, result);
 This module also contains wrappers around node's `Http` and `Net` objects, both client and server.
 See the [ez-streams](https://github.com/Sage/ez-streams) documentation for details.
 
-If you are not dealing with stream events, you can take a look at the implementation of the streamline-streams module (ez-streams' low level implementation module) for ideas. Any event API can be turned into a callback API (with a `getEvent(_)` call that you would call in a loop) but this can be totally counterprodutive (events will be serialized). 
+If you are not dealing with stream events, you can take a look at the implementation of the ez-streams module for ideas. Any event API can be turned into a callback API (with a `getEvent(_)` call that you would call in a loop) but this can be totally counterprodutive (events will be serialized). 
 
 If the events are loosely correlated, it is better to let them be dispatched as events. But in this case, you may want to use streamline to handle the logic of each event you subscribed to. This is not too difficult: just put a small anonymous function wrapper inside your event handlers:
 
