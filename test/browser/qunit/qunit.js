@@ -124,7 +124,7 @@ var QUnit = {
 			}
 
 			try {
-				callback.call(testEnvironment, false);
+				callback.call(testEnvironment, function(err) { if (err) throw err; });
 			} catch(e) {
 				fail("Test " + name + " died, exception and test follows", e, callback);
 				QUnit.ok( false, "Died on test #" + (config.assertions.length + 1) + ": " + e.message );
