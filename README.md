@@ -373,6 +373,11 @@ If you don't find your answer in the FAQ, post to the [mailing list](http://grou
 <a name="related-packages">
 ## Related Packages
 
+The following packages are installed together with streamline:
+
+* [babel-plugin-streamline](https://github.com/Sage/babel-plugin-streamline): babel plug-in which transforms streamline code.
+* [streamline-runtime](https://github.com/Sage/babel-plugin-streamline): runtime that you should distribute with compiled modules.
+
 The following packages extend the power of streamline:
 
 * [express-streamline](https://github.com/aseemk/express-streamline): interop with express

@@ -28,7 +28,7 @@ function(_) { bar(_); }
 function foo(_) { return bar(); }
 ```
 
-Nothing bad will happen. But you have to call `foo` as `foo(_)`. If you call it as `foo()` you'll get an error (a _future_ in versions <= 0.8).
+Nothing bad will happen. But you have to call `foo` as `foo(_)`. If you call it as `foo()` you'll get an error.
 
 There will be a bit of overhead so you should avoid declaring sync functions with an `_`.  
 
@@ -60,12 +60,11 @@ var __ = require('underscore');
 ```
 
 <a name="no-callback-given-error">
-### I'm getting a "callback missing" error. What does that mean?
+### I'm getting a "cannot call F, expecting a function got ..." error. What does that mean?
 
-It means that you are calling a function written with streamline.js and that you either forgot to pass a callback or to
-enable streamline's _promise_ option. 
+It means that you are calling a function written with streamline.js and that you forgot to pass a callback.
 
-If you're calling this function from Streamline code as well and you didn't want promise support, you probably just forgot to add a `_` parameter to your call.
+If you're calling this function from Streamline code, you probably just forgot to add a `_` parameter to your call.
 
 ``` javascript
 function func(foo, bar, _) {
@@ -103,20 +102,29 @@ var result2 = f2(_);
 
 ### It does not work and I'm not even getting an exception. What's going on?
 
-You may run into this problem with versions <= 0.8. The _futures_ syntax has changed in 0.10 and the new syntax avoids this problem. You will now get an error if you forgot to pass `_` or `!_`.
-
-If you are running version <= 0.8 you get this problem if you called a buggy asynchronous function and you did not pass `_`. For example:
+First possibility is that you declared a function without `_` and called it with `_`:
 
 ``` javascript
-function buggy(_) { undefined.toString(); }
-buggy();
+function bad() { ... }
+
+bad(_);
+// execution will never reach this point
 ```
 
-The problem is that when you call `buggy()` without `_` it returns a _future_. The future memorizes the exception but does not throw it. Try the following:
+Streamline cannot find out because `bad` could as well be a regular node.js API with a callback (which could even be extracted from `arguments` and thus absent from the parameter list).
+
+Another possiblity is that you called a buggy function as a future and that you never tried to resolve the future. For example:
 
 ``` javascript
 function buggy(_) { undefined.toString(); }
-var f = buggy();
+buggy(!_);
+```
+
+The future memorizes the exception but does not throw it. Try the following instead:
+
+``` javascript
+function buggy(_) { undefined.toString(); }
+var f = buggy(!_);
 console.log("after buggy()"); // you'll see this one
 f(_); // throws the exception
 console.log("after f(_)"); // you won't see this one
@@ -177,7 +185,7 @@ And read just below about dealing with events!
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 
-If you are dealing with stream events, you should try the ez-streams package. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you (`pause/resume` on readable streams, `drain` on writable streams). For example:
+If you are dealing with stream events, you should try the ez-streams package. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you. For example:
 
 ``` javascript
 var ez = require('ez-streams');
@@ -196,7 +204,7 @@ outStream.write(_, result);
 This module also contains wrappers around node's `Http` and `Net` objects, both client and server.
 See the [ez-streams](https://github.com/Sage/ez-streams) documentation for details.
 
-If you are not dealing with stream events, you can take a look at the implementation of the ez-streams module for ideas. Any event API can be turned into a callback API (with a `getEvent(_)` call that you would call in a loop) but this can be totally counterprodutive (events will be serialized). 
+If you are not dealing with stream events, you can take a look at the implementation of the ez-streams module for ideas. 
 
 If the events are loosely correlated, it is better to let them be dispatched as events. But in this case, you may want to use streamline to handle the logic of each event you subscribed to. This is not too difficult: just put a small anonymous function wrapper inside your event handlers:
 
@@ -218,41 +226,33 @@ server.on('eventB', function(arg) {
 });
 ```
 
+The `flows` helper module contain two functions that you can pass instead of writing your own `handleError`:
+
+* `flows.check`: throws if there is an error.
+* `flows.ignore`: ignores errors.
+
 ### How can I deal with node.js streams
 
 The easiest way is to use the [ez-streams](https://github.com/Sage/ez-streams) companion package.
 
 ### Are there limitations? Am I limited to a subset of Javascript?
 
-Hardly any. 
-
-There were some limitations in 0.8 (labelled `break` and switch `case` that falls into another `case` without `break`) but these limitations have been lifted in 0.10.
-
-So you can do all sorts of crazy things, like calling async functions from object or array literals, or even writing async constructors. The following will work:
-
-``` javascript
-var foo = [f1(_), f2(_), f3(_)].filter_(_, function(_, elt) { return elt.g1(_) || elt.g2(_); });
-
-function Bar(_, name) { this.name = name; baz(_); }
-var bar = new Bar(_, "zoo");
-```
+No. Thanks to babel you can even use language features which are not yet supported by your JavaScript engine. 
 
 ### Will I always get the same semantics as in normal (sync) Javascript?
 
-The streamline compiler works by applying transformation patterns. These patterns have been carefully crafted to preserve semantics. The only known case where streamline may diverge is the order of evaluation of subexpressions inside a given statement. 
+Yes. 
 
-In callbacks mode, streamline evaluates the asynchronous subexpressions before the synchronous ones. So if you have `foo() + bar(_)`, it will evaluate `bar(_)` before `foo()`.  
-
-In fibers mode, streamline preserves the order and evaluates `foo()` first. So you should not write _fragile_ code that relies on precise order of evaluation of subexpressions.
-
-But streamline guarantees the ordering in the cases where it really matters: logical operators (`&&` and `||`), ternary operator (`cond ? a : b`) and comma operator (`a, b, c`). If you write `foo() && bar(_)`, `foo()` will be evaluated first and `bar(_)` will only be evaluated if `foo()` is true.
+There were some subtle issues with the evaluation order of subexpressions in streamline 0.x but they have all been ironed out in streamline 1.0. The new transform uses `regenerator` which should guarantee a perfect translation.
 
 ### What about performance? Am I taking a hit?
 
-In callback mode, streamline generates callbacks that are very similar to the ones you would be writing by hand. So you are only paying a small overhead. Usually, the overhead will be small in comparison to the time spent in the async functions that you are calling. For example, you incur a 50% overhead when calling `process.nextTick(_)`, which is the fastest async call in node.js. If you call `setTimeout(_, 0)` the overhead drops to 18%. And on a real (but simple) I/O call like `fs.stat` it goes down to 3 or 4%.
+In `callbacks` mode, streamline chains the `generators` transform with `regenerator`. The result code is slower than hand-crafted callbacks and is likely to be slower than the callbacks code generated by streamline 0.x (which did not use `regenerator`).
 
-The fibers mode has more overhead on I/O calls but it eliminates all the callback overhead in the layers that call low level I/O services. So depending on the thickness of the logic that sits on top of the I/O layers you may get an increase or decrease of performance. The nice thing is that you don't need to choose between callbacks and fibers upfront. You can write your code, compare performance and then choose the best mode for deployment.
+But generators are now supported by most JavaScript engines (node 0.12 with --harmony flag, node 4.0 without any flag). You should get better performance with the `generators` option. 
+
+And try the `fibers` mode if you are on node.js. It has a bit more overhead on I/O calls but it eliminates all the callback overhead in the layers that call low level I/O services. So depending on the thickness of the logic that sits on top of the I/O layers you may get an increase or decrease of performance. The nice thing is that you don't need to choose between callbacks and fibers upfront. You can write your code, compare performance and then choose the best mode for deployment.
 
 Some patterns like caching can give surprising results (see https://gist.github.com/2362015). 
 
-There is also room for improvement. In callback mode the small overhead comes from the additional comfort and security that streamline gives you: sync stack traces, global context, trampoline, rigorous exception handling. This could be improved with options that disable these _comfort_ features but it would make the tool more complex.
+Some benchmark programs are included in the [test/benchmarks](test/benchmarks) directory. They do not pretend to be _true_ benchmark suites but they will give your some indication of the relative performance of the various runtime options.
