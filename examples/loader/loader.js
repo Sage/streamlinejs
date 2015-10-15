@@ -7,10 +7,7 @@
 /// it gets loaded before the extensions have been registered.
 /// 
 /// The loader module must register the streamline file extensions:
-require('streamline').register({
-	cache: true,
-	verbose: true,
-});
+require('streamline').register();
 /// Once the extensions have been registered, the loader can require a streamline
 /// module
 require('./hello');

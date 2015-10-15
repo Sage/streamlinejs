@@ -34,7 +34,6 @@ var streamlineOpts = {
 	extra: {
 		streamline: {
 			runtime: 'callbacks',
-			verbose: 'true',
 		}
 	}
 };
