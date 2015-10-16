@@ -127,7 +127,7 @@ function T(_, fn, code, failFn){
 			return l.indexOf('<<<') < 0;
 		}).map(function(l){
 			// We get Object.A in futures test because of a bind call. Ignore this difference.
-			var m = /^\s+at (?:Object\.)?(\w+)[^:]*:(\d+)/.exec(l);
+			var m = /^\s+at (?:Object\.)?(\w+)[^(]+\((?:[A-Z]:)?[^:]*:(\d+)/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
