@@ -62,17 +62,21 @@ Streamline also provides _futures_, and asynchronous variants of the EcmaScript 
 Streamline 1.0 is a major evolution. The transforms have been repackaged as a [babel](https://babeljs.io/) plugin. This brings several benefits:
 
 * ES6 support (classes, destructuring, ...)
-* Browserify support (thanks to [babelify](https://github.com/babel/babelify)).
-* Experimental JS features (ES7, Facebook flow).
+* Browserify support (through [babelify](https://github.com/babel/babelify)).
+* Experimental JS features (ES7, [Facebook flow](http://flowtype.org)).
 * Rich CLI (streamline is just a regular plugin).
 * More robust sourcemap support.
 * Better compilation errors.
 
-1.0 is designed to be backwards compatible with 0.x versions, with a few exceptions. The main changes are the following:
+The CLI and API options have changed and are now aligned on babel. Only a subset of babel's options are supported directly by streamline - to get more you should use babel directly. There is a compatibility layer that translates from old to new options but you should adapt your code. 
+
+Several options/features have been dropped in 1.0:
 
 * the `--fast` option is deprecated. _Fast_ code will still compile and run but you will get warnings when the source is transformed.
 * the `--standalone` option is not supported any more and the browser runtime is packaged differently. The runtime and transform files have been moved to the `lib/browser` directory. You are encouraged to switch to `browserify` to bundle your source files. See the [browser section](#browser) below).
-* several less important CLI options are not supported any more: `--cb`, `--lines-*`, `--old-style-futures`, and `--promise` (promise interop still works but you don't need the option).
+* several less important CLI options are not supported any more: `--cb`, `--lines-*`, `--old-style-futures`, and `--promise` (promise interop has been simplified and you don't need the option - see [promise section](#promises) below).
+
+Otherwise, at the language level, 1.0 should be backwards compatible with 0.x versions.
 
 <a name="installation">
 ## Installation
