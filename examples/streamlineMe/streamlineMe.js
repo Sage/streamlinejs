@@ -22,8 +22,8 @@ var _samples = {
 	"\n// The samples compute factorial(4) by different methods." +
 	"\n//" +
 	"\n// Look at the transformed code and run it with the 'execute' button." +
-	"\n//" +
-	"\n// The 'beautify' button can help you tidy your code." +
+	//"\n//" +
+	//"\n// The 'beautify' button can help you tidy your code." +
 	_demo +
 	"\ndemo('Straight to the answer: fact(4) = 24', _);" +
 	"\n" +
