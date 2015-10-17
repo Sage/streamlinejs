@@ -110,7 +110,7 @@ console.log('... world');
 $ _node hello
 ```
 
-You can also create standalone shell utilities. See [this example](examples/misc/shebang.sh).
+You can also create standalone shell utilities. See [this example](examples/shebang/shebang.sh).
 
 <a name="compiling-and-loaders">
 ## Compiling and writing loaders
@@ -233,7 +233,7 @@ In this example, `countLines` is called twice with `!_`. These calls start the `
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
-The [flows module](https://github.com/Sage/streamlinejs/blob/master/lib/util/flows.md) contains utilities to deal with futures. For example `flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
+The [flows module](https://github.com/Sage/streamline-runtime/blob/master/lib/flows-source.md) contains utilities to deal with futures. For example `flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
 
 <a name="array-functions">
 ## Asynchronous Array functions
@@ -406,4 +406,4 @@ Special thanks to Marcel Laverdet who contributed the _fibers_ implementation an
 <a name="license">
 ## License
 
-[MIT](http://en.wikipedia.org/wiki/MIT_License).
+[MIT](LICENSE)
