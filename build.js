@@ -38,9 +38,9 @@ var streamlineOpts = {
 	}
 };
 
-build("lib/browser/callbacks/runtime-source.js", "lib/browser/callbacks/runtime.js");
-build("lib/browser/generators/runtime-source.js", "lib/browser/generators/runtime.js");
-build("lib/browser/transform-source.js", "lib/browser/transform.js");
+build("src/browser/callbacks/runtime.js", "lib/browser/callbacks/runtime.js");
+build("src/browser/generators/runtime.js", "lib/browser/generators/runtime.js");
+build("src/browser/transform.js", "lib/browser/transform.js");
 build("test/common/eval-test._js", "test/browser/eval-test.js", streamlineOpts);
 build("test/common/flows-test._js", "test/browser/flows-test.js", streamlineOpts);
 build("test/common/stack-test._js", "test/browser/stack-test.js", streamlineOpts);

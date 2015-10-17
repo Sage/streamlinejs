@@ -129,7 +129,7 @@ Compiling will give you the fastest startup time because node will directly load
 
 You have two options to use streamline in the browser:
 
-* You can transform and bundle your files with browserify. See how the [build.js](build.js) script builds the test/browser/*-test.js files for an example.
+* You can transform and bundle your files with browserify. See how the [build.js](build.js) script builds the `test/browser/*-test.js files for an example.
 * You can also transform the code in the browser with the `transform` API. All the necessary JS code is available as a single `lib/browser/transform.js` file. See the [streamlineMe example](https://github.com/Sage/streamlinejs/blob/master/examples/streamlineMe).
 
 <a name="generation-options">
@@ -233,7 +233,7 @@ In this example, `countLines` is called twice with `!_`. These calls start the `
 
 See the [futures](https://github.com/Sage/streamlinejs/wiki/Futures) wiki page for details.
 
-The [flows module](https://github.com/Sage/streamline-runtime/blob/master/lib/flows-source.md) contains utilities to deal with futures. For example `flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
+The [flows module](https://github.com/Sage/streamline-runtime/blob/master/src/flows.md) contains utilities to deal with futures. For example `flows.collect` to wait on an array of futures and `flows.funnel` to limit the number of concurrent operations.
 
 <a name="array-functions">
 ## Asynchronous Array functions
@@ -261,7 +261,7 @@ function dirLines(dir, _) {
 
 If you don't want to limit the level of parallelism, just pass `-1`.
 
-See the documentation of the [builtins module](https://github.com/Sage/streamline-runtime/blob/master/lib/builtins-source.md) for details.
+See the documentation of the [builtins module](https://github.com/Sage/streamline-runtime/blob/master/src/builtins.md) for details.
 
 <a name="exception-handling">
 ## Exception Handling
