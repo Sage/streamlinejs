@@ -408,4 +408,4 @@ Special thanks to Marcel Laverdet who contributed the _fibers_ implementation an
 <a name="license">
 ## License
 
-Streamline.js is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License).
+[MIT](http://en.wikipedia.org/wiki/MIT_License).
