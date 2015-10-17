@@ -170,8 +170,6 @@ and your code will go wild: callbacks will be executed multiple times, etc.
 This won't hurt. Streamline only transforms functions that have the special `_` parameter. 
 So, files that don't contain async code won't be impacted by the transformation.
 
-The only drawback is a slower application startup because more files get transformed but you can avoid that with the `--cache` option.
-
 ### Can I use streamline.js with the _express_ middleware
 
 Yes! 
@@ -185,7 +183,7 @@ And read just below about dealing with events!
 
 ### The underscore trick is designed for callbacks but not events. How do I deal with events?
 
-If you are dealing with stream events, you should try the ez-streams package. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you. For example:
+If you are dealing with stream events, you should try the [ez-streams](https://github.com/Sage/ez-streams)  package. It wraps node streams with a simple callback oriented API and it takes care of the low level event handling for you. For example:
 
 ``` javascript
 var ez = require('ez-streams');
@@ -210,18 +208,18 @@ If the events are loosely correlated, it is better to let them be dispatched as 
 
 ``` javascript
 function handleError(err) {
-	// log it somewhere
+    // log it somewhere
 }
 
 server.on('error', handleError);
 server.on('eventA', function(arg) {
     (function(_) {
-		// function has an _ parameter, you can use streamline
+        // function has an _ parameter, you can use streamline
     })(handleError);
 });
 server.on('eventB', function(arg) {
     (function(_) {
-		// streamline code...
+        // streamline code...
     })(handleError);	
 });
 ```
@@ -252,6 +250,8 @@ In `callbacks` mode, streamline chains the `generators` transform with `regenera
 But generators are now supported by most JavaScript engines (node 0.12 with `--harmony` flag, node 4.0 without any flag). You should get better performance with the `generators` mode. 
 
 And try the `fibers` mode if you are on node.js. It has a bit more overhead on I/O calls but it eliminates all the callback overhead in the layers that call low level I/O services. So depending on the thickness of the logic that sits on top of the I/O layers you may get an increase or decrease of performance. The nice thing is that you don't need to choose between callbacks and fibers upfront. You can write your code, compare performance and then choose the best mode for deployment.
+
+If you do not specifiy the `runtime` option streamline will use `fibers` if available, then try `generators` and will default to `callbacks` if none of the other options work.
 
 Some patterns like caching can give surprising results (see https://gist.github.com/2362015). 
 

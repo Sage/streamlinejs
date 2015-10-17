@@ -2,14 +2,14 @@
 
 ### CLI
 
-Running script:
+*Running script:*
 
 ```sh
 _node [options] file    # or file._js
 _coffee [options] file  # or file._coffee
 ```
 
-Compiling script:
+*Compiling script:*
 
 ```sh
 _node -c [options] file._js
@@ -29,56 +29,9 @@ Advanced CLI:
 
 See [babel CLI](https://babeljs.io/docs/usage/cli/) and [babel config file](https://babeljs.io/docs/usage/babelrc/)
 
-### API
-
-Registering require hooks:
-
-``` javascript
-require("babel-plugin-streamline");
-require('babel/register')({
-	plugins: ['streamline'],
-	extensions: [".js", "._js"],
-	// more babel options
-	extra: {
-		streamline: {
-			runtime: "fibers",
-		}
-	}
-});
-```
-See [babel require hook doc](https://babeljs.io/docs/usage/require/) for more.
-
-Transforming:
-
-``` javascript
-var babel = require('babel');
-require('babel-plugin-streamline');
-
-{code, map} = babel.transform(code, {
-	plugins: [streamline],
-	// more babel options
-	extra: {
-		streamline: {
-			runtime: 'fibers',
-			// more streamline options
-		}
-	}
-});
-```
-See [babel API](https://babeljs.io/docs/usage/api/) for more
-
-Legacy API:
-
-``` javascript
-require('streamline').register({
-	runtime: 'fibers',
-	// more options
-});
-```
-
 ### Syntax
 
-Function declarations:
+*Function declarations:*
 
 ``` javascript
 // async function
@@ -92,7 +45,7 @@ function fooSync(arg1, arg2) {
 }
 ```
 
-Function calls:
+*Function calls:*
 
 ``` javascript
 // async call
@@ -109,8 +62,7 @@ foo("hello", 3, flows.check); // throw on error (recommended)
 foo("hello", 3, flows.ignore); // ignore error silently
 ```
 
-
-Interop:
+*Interop:*
 
 ``` javascript
 // with node.js callbacks
@@ -134,3 +86,51 @@ emitter.on('data', function(data) {
 	})(flows.check);
 })
 ```
+
+### API
+
+*Registering require hooks:*
+
+``` javascript
+require("babel-plugin-streamline");
+require('babel/register')({
+	plugins: ['streamline'],
+	extensions: [".js", "._js"],
+	// more babel options
+	extra: {
+		streamline: {
+			runtime: "fibers",
+		}
+	}
+});
+```
+See [babel require hook doc](https://babeljs.io/docs/usage/require/) for more.
+
+*Transforming:*
+
+``` javascript
+var babel = require('babel');
+require('babel-plugin-streamline');
+
+{code, map} = babel.transform(code, {
+	plugins: [streamline],
+	// more babel options
+	extra: {
+		streamline: {
+			runtime: 'fibers',
+			// more streamline options
+		}
+	}
+});
+```
+See [babel API](https://babeljs.io/docs/usage/api/) for more
+
+*Legacy API:*
+
+``` javascript
+require('streamline').register({
+	runtime: 'fibers',
+	// more options
+});
+```
+
