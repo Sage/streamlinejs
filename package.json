@@ -31,10 +31,11 @@
     "babelify": "^6.3.0",
     "qunit": "^0.7.7"
   },
-  "directories": {
-    "lib": "./lib",
-    "bin": "./bin"
+  "bin": {
+    "_node": "./bin/_node",
+    "_coffee": "./bin/_coffee"
   },
+  "preferGlobal": true,
   "scripts": {
     "prepublish": "node build.js || nodejs build.js",
     "test": "node test"
