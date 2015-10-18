@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "author": "Bruno Jouhier",
