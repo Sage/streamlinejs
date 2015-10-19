@@ -124,6 +124,17 @@ The second one is to create a loader which will register `require` hooks for the
 
 Compiling will give you the fastest startup time because node will directly load the compiled `*.js` files but the [registration API](lib/index.md) has a `cache` option which comes close.
 
+The recommandation is to use the loader during development but deploy precompiled files.
+
+<a name="dependencies">
+# Runtime dependencies
+
+The runtime library is provided as a separate [`streamline-runtime`](https://www.npmjs.com/package/streamline-runtime) package.
+
+If you deploy precompiled files you only need `streamline-runtime`.
+
+If your application/library uses a loader you will need to deploy both `streamline-runtime` and `streamline` with it.
+
 <a name="browser">
 ## Browser-side use
 
