@@ -68,8 +68,9 @@ Streamline 1.0 is a major evolution. The transforms have been repackaged as a [b
 
 The CLI and API options have changed and are now aligned on babel. Only a subset of babel's options are supported directly by streamline - to get more you should use babel directly. There is a compatibility layer that translates from old to new options but you should adapt your code. 
 
-Several options/features have been dropped in 1.0:
+Several options/features have been changed or dropped in 1.0:
 
+* the `--cache` option is turned on by default. Use `--no-cache` to turn it off.
 * the `--fast` option is deprecated. _Fast_ code will still compile and run but you will get warnings when the source is transformed.
 * the `--standalone` option is not supported any more and the browser runtime is packaged differently. The runtime and transform files have been moved to the `lib/browser` directory. You are encouraged to switch to `browserify` to bundle your source files. See the [browser section](#browser) below).
 * several less important CLI options are not supported any more: `--cb`, `--lines-*`, `--old-style-futures`, and `--promise` (promise interop has been simplified and you don't need the option - see [promise section](#promises) below).
