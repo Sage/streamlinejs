@@ -527,7 +527,7 @@ asyncTest("queue length, contents, alter", 8, function(_) {
 });
 
 asyncTest("trampoline preserves context", 2, function(_) {
-	var globals = require('streamline/lib/globals');
+	var globals = require('streamline-runtime').globals;
 	var fn = function(_) {
 		return globals.context.val;
 	};

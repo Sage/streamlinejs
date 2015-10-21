@@ -1,6 +1,6 @@
 "use strict";
 
-var mode = require('streamline/lib/globals').runtime;
+var mode = require('streamline-runtime').globals.runtime;
 
 function bench(_, name, fn, native) {
   function tryNative(cb, count) {
