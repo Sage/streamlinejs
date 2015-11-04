@@ -21,7 +21,7 @@
     "streamline-runtime": "^1.0.13"
   },
   "peerDependencies": {
-    "babel": ">=5.8.0"
+    "babel": "^5.8.0"
   },
   "optionalDependencies": {
     "fibers": "^1.0.6"
