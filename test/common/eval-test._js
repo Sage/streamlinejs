@@ -656,11 +656,29 @@ asyncTest("coffeescript wrapper 2", 1, function(_) {
 	}, "cs2");
 })
 
+asyncTest("coffeescript wrapper 2b", 1, function(_) {
+	evalTest(function f(_) {
+		var _this = this;
+		return (function() {
+			return delay(_, "cs2");
+		}).call(_this);
+	}, "cs2");
+})
+
 asyncTest("coffeescript wrapper 3", 1, function(_) {
 	evalTest(function f(_) {
 		return (function() {
 			return delay(_, "cs3");
 		}).apply(this, arguments);
+	}, "cs3");
+})
+
+asyncTest("coffeescript wrapper 3b", 1, function(_) {
+	evalTest(function f(_) {
+		var _this = this;
+		return (function() {
+			return delay(_, "cs3");
+		}).apply(_this, arguments);
 	}, "cs3");
 })
 
