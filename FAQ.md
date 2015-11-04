@@ -153,6 +153,18 @@ You can also leverage interop with callback + errback API style:
 var ok = fs.exists(__filename, _, _); // works
 ```
 
+### Why is `this === undefined` at the top level of my module?
+
+This is an incompatibility with streamline 0.x. It is due to the fact that babel enforces ES `strict` mode by default. You can get around it by blacklisting the `strict` plugin. This can be specified via `.streamline.json`. For example:
+
+```json
+{
+    "runtime": "callbacks",
+    "babel": {
+        "blacklist": ["strict"]
+    }
+}
+```
 
 ### I'm calling an async function with `!_` and I'm not getting a future back. What's wrong?
 
