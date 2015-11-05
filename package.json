@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "author": "Bruno Jouhier",
@@ -15,10 +15,9 @@
   "dependencies": {
     "commander": "^2.8.1",
     "colors": "^1.1.2",
-    "babel-plugin-streamline": "^1.0.8",
-    "regenerator": "^0.8.40",
+    "babel-plugin-streamline": "^1.0.9",
     "source-map-support": "^0.3.2",
-    "streamline-runtime": "^1.0.13"
+    "streamline-runtime": "^1.0.14"
   },
   "peerDependencies": {
     "babel": "^5.8.0"

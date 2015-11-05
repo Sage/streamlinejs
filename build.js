@@ -8,9 +8,15 @@ var browserify = require("browserify");
 var babelify = require("babelify");
 require('babel-plugin-streamline');
 
+function mkdirs(path) {
+	if (fs.existsSync(path)) return;
+	mkdirs(fsp.join(path, '..'));
+	fs.mkdirSync(path);
+}
 function build(from, to, opts) {
 	var src = fsp.join(__dirname, from);
 	var dst = fsp.join(__dirname, to);
+	mkdirs(fsp.dirname(dst));
 	browserify(src, {
 		//debug: true,
 		extensions: ['.js', '._js'],

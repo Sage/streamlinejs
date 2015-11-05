@@ -14,7 +14,6 @@ window.Streamline = {
 		}).code;
 	},
 	modules: {
-		'regenerator/runtime': require('regenerator/runtime'),
 		'streamline-runtime/lib/callbacks/runtime': require('streamline-runtime/lib/callbacks/runtime'),
 		'streamline-runtime/lib/callbacks/builtins': require('streamline-runtime/lib/callbacks/builtins'),
 		'streamline-runtime/lib/generators/runtime': require('streamline-runtime/lib/generators/runtime'),
