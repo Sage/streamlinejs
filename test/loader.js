@@ -1,6 +1,6 @@
 "use strict";
 // install streamline hooks
-require('streamline').register();
+require('..').register();
 
 // patch asyncTest because streamline test function needs a callback.
 var original = global.asyncTest;

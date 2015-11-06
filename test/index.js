@@ -10,7 +10,7 @@ var tests = fs.readdirSync(root).filter(function(file) {
 	return fsp.join(root, file);
 });
 
-require('streamline').register();
+require('..').register();
 
 var testrunner = require("qunit");
 
