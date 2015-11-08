@@ -109,7 +109,7 @@ See [babel require hook doc](https://babeljs.io/docs/usage/require/) for more.
 **Transforming:**
 
 ``` javascript
-var babel = require('babel');
+var babel = require('babel-core');
 require('babel-plugin-streamline');
 
 {code, map} = babel.transform(code, {
