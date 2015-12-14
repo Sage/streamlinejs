@@ -912,7 +912,6 @@ asyncTest("IIFE bug in fibers mode", 1, function(_) {
 	start();
 });
 
-
 asyncTest("futures on non-streamline APIs", 2, function(_) {
 	function nat(cb) {
 		setTimeout(function() {
@@ -922,6 +921,12 @@ asyncTest("futures on non-streamline APIs", 2, function(_) {
 	var fut = nat(!_);
 	strictEqual(typeof fut, "function");
 	strictEqual(fut(_), "abc");
+	start();
+});
+
+asyncTest("async arrow function", 1, function(_) {
+	var arrow = (_, x) => delay(_, 2 * x);
+	strictEqual(arrow(_, 3), 6);
 	start();
 });
 
