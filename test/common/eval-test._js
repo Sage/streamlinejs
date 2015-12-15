@@ -924,9 +924,17 @@ asyncTest("futures on non-streamline APIs", 2, function(_) {
 	start();
 });
 
-asyncTest("async arrow function", 1, function(_) {
-	var arrow = (_, x) => delay(_, 2 * x);
+asyncTest("async arrow function", 4, function(_) {
+	var arrow;
+	arrow = (_, x) => delay(_, 2 * x);
 	strictEqual(arrow(_, 3), 6);
+	arrow = (_, x) => { delay(_, 2 * x) };
+	strictEqual(arrow(_, 3), undefined);
+	arrow = (_, x) => { return delay(_, 2 * x) };
+	strictEqual(arrow(_, 3), 6);
+	(function(_) {
+		arrow = (_, x) => delay(_, 2 * x) + this;
+		strictEqual(arrow(_, 3), 16);
+	}).call(10, _)
 	start();
 });
-
