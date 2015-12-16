@@ -6,7 +6,7 @@ var fs = require("fs");
 var fsp = require("path");
 var browserify = require("browserify");
 var babelify = require("babelify");
-require('babel-plugin-streamline');
+var streamlinePlugin = require('babel-plugin-streamline');
 
 function mkdirs(path) {
 	if (fs.existsSync(path)) return;
@@ -35,13 +35,11 @@ function finish(dst) {
 }
 
 var streamlineOpts = {
-	plugins: ['streamline'],
+	presets: ['es2015'],
+	plugins: [[streamlinePlugin, {
+		runtime: 'callbacks',
+	}]],
 	extensions: [".js", "._js"],
-	extra: {
-		streamline: {
-			runtime: 'callbacks',
-		}
-	}
 };
 
 build("src/browser/callbacks/runtime.js", "lib/browser/callbacks/runtime.js");
