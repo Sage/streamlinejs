@@ -16,6 +16,7 @@ function mkdirs(path) {
 function build(from, to, opts) {
 	var src = fsp.join(__dirname, from);
 	var dst = fsp.join(__dirname, to);
+	console.log("building " + dst);
 	mkdirs(fsp.dirname(dst));
 	browserify(src, {
 		//debug: true,
