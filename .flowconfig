@@ -6,5 +6,4 @@
 interfaces/
 
 [options]
-module.file_ext=.js
-module.file_ext=.json
+suppress_comment=\\(.\\|\n\\)*\\$Flow\\(Issue\\|Ignore\\)
