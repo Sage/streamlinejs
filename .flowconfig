@@ -1,0 +1,9 @@
+[ignore]
+
+[include]
+
+[libs]
+interfaces/
+
+[options]
+suppress_comment=\\(.\\|\n\\)*\\$Flow\\(Issue\\|Ignore\\)
