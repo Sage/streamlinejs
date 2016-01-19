@@ -17,7 +17,7 @@ var testrunner = require("qunit");
 testrunner.run({
 	code: fsp.join(__dirname, 'loader.js'),
     tests: tests,
-    maxBlockDuration: 10 * 1000,
+    maxBlockDuration: 30 * 1000,
 }, function(err) {
 	if (err) throw err;
 });
