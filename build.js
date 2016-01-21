@@ -13,6 +13,20 @@ function mkdirs(path) {
 	mkdirs(fsp.join(path, '..'));
 	fs.mkdirSync(path);
 }
+
+function noParseList() {
+	var list = [];
+	function scan(dir) {
+		fs.readdirSync(dir).forEach(function(name) {
+			var sub = fsp.join(dir, name);
+			if (name === 'babylon') list.push(fsp.join(sub, 'index.js'));
+			else if (fs.lstatSync(sub).isDirectory()) scan(sub);
+		});
+	}
+	scan(__dirname);
+	return list;
+}
+
 function build(from, to, opts) {
 	var src = fsp.join(__dirname, from);
 	var dst = fsp.join(__dirname, to);
@@ -21,6 +35,7 @@ function build(from, to, opts) {
 	browserify(src, {
 		//debug: true,
 		extensions: ['.js', '._js'],
+		noParse: noParseList(),
 	}).transform(babelify.configure(opts)).bundle().on("error", function(err) {
 		console.log("Error : " + err.message);
 	}).pipe(fs.createWriteStream(dst)).on('finish', function(){
