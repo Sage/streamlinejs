@@ -126,6 +126,7 @@ function T(_, fn, code, failFn){
 		s = s.split('\n').filter(function(l) {
 			return l.indexOf('<<<') < 0;
 		}).map(function(l){
+			l = l.replace(/\bFunction\.(\w+) \[as fiberized-\d+\]/, '$1');
 			// We get Object.A in futures test because of a bind call. Ignore this difference.
 			var m = /^\s+at (?:Object\.)?(\w+)[^(]+\((?:[A-Z]:)?[^:]*:(\d+)/.exec(l);
 			if (m) 
