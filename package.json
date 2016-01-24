@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "author": "Bruno Jouhier",
@@ -16,10 +16,10 @@
     "commander": "^2.8.1",
     "colors": "^1.1.2",
     "babel-core": "^6.3.26",
-    "babel-plugin-streamline": "^2.0.1",
+    "babel-plugin-streamline": "^2.0.4",
     "babel-preset-es2015": "^6.3.13",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support#catch-missing-sourcemap-element",
-    "streamline-runtime": "^1.0.15"
+    "streamline-runtime": "^1.0.17"
   },
   "optionalDependencies": {
     "fibers": "^1.0.6"

@@ -124,7 +124,7 @@ function T(_, fn, code, failFn){
 	catch (ex) {
 		var s = ex.stack;
 		s = s.split('\n').filter(function(l) {
-			return l.indexOf('<<<') < 0;
+			return l.indexOf('<<<') < 0 && !/\bstreamline-runtime.lib/.test(l);
 		}).map(function(l){
 			l = l.replace(/\bFunction\.(\w+) \[as fiberized-\d+\]/, '$1');
 			// We get Object.A in futures test because of a bind call. Ignore this difference.
