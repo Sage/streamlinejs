@@ -938,3 +938,51 @@ asyncTest("async arrow function", 4, function(_) {
 	}).call(10, _)
 	start();
 });
+
+asyncTest("optimized array built-ins", 22, function(_) {
+	[5].forEach_(_, function(_, elt) {
+		strictEqual(this, "that", "forEach_ this");
+		strictEqual(elt, 5, "forEach_ elt");
+	}, "that");
+	[5].map_(_, function(_, elt) {
+		strictEqual(this, "that", "map_ this");
+		strictEqual(elt, 5, "map_ elt");
+	}, "that");
+	[5].filter_(_, function(_, elt) {
+		strictEqual(this, "that", "filter_ this");
+		strictEqual(elt, 5, "filter_ elt");
+	}, "that");
+	[5].every_(_, function(_, elt) {
+		strictEqual(this, "that", "every_ this");
+		strictEqual(elt, 5, "every_ elt");
+	}, "that");
+	[5].some_(_, function(_, elt) {
+		strictEqual(this, "that", "some_ this");
+		strictEqual(elt, 5, "some_ elt");
+	}, "that");
+	[5].reduce_(_, function(_, r, elt) {
+		strictEqual(this, undefined, "reduce_ this");
+		strictEqual(elt, 5, "reduce_ elt");
+	}, "result");
+	[5].reduce_(_, function(_, r, elt) {
+		strictEqual(this, "that", "reduce_ this");
+		strictEqual(elt, 5, "reduce_ elt");
+	}, "result", "that");
+	[5].reduceRight_(_, function(_, r, elt) {
+		strictEqual(this, undefined, "reduceRight_ this");
+		strictEqual(elt, 5, "reduceRight_ elt");
+	}, "result");
+	[5].reduceRight_(_, function(_, r, elt) {
+		strictEqual(this, "that", "reduceRight_ this");
+		strictEqual(elt, 5, "reduceRight_ elt");
+	}, "result", "that");
+	[9, 8].sort_(_, function(_, v1, v2) {
+		strictEqual(v1, 9, "sort_ v1");
+		strictEqual(v2, 8, "sort_ v2");
+	});
+	[9, 8, 7, 6, 5].sort_(_, function(_, v1, v2) {
+		strictEqual(v1, 7, "sort_ v1");
+		strictEqual(v2, 6, "sort_ v2");
+	}, 2, 3);
+	start();
+});
