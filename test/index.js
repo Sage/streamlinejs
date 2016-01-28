@@ -18,6 +18,11 @@ testrunner.run({
 	code: fsp.join(__dirname, 'loader.js'),
     tests: tests,
     maxBlockDuration: 30 * 1000,
-}, function(err) {
+    log: {
+		errors: true,
+		globalSummary: true,
+    }
+}, function(err, stats) {
 	if (err) throw err;
+	if (stats.failed) process.exit(1);
 });
