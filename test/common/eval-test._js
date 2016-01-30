@@ -940,44 +940,45 @@ asyncTest("async arrow function", 4, function(_) {
 });
 
 asyncTest("optimized array built-ins", 18, function(_) {
+	var that = {};
 	[5].forEach_(_, function(_, elt) {
-		strictEqual(this, "that", "forEach_ this");
+		strictEqual(this, that, "forEach_ this");
 		strictEqual(elt, 5, "forEach_ elt");
-	}, "that");
+	}, that);
 	[5].map_(_, function(_, elt) {
-		strictEqual(this, "that", "map_ this");
+		strictEqual(this, that, "map_ this");
 		strictEqual(elt, 5, "map_ elt");
-	}, "that");
+	}, that);
 	[5].filter_(_, function(_, elt) {
-		strictEqual(this, "that", "filter_ this");
+		strictEqual(this, that, "filter_ this");
 		strictEqual(elt, 5, "filter_ elt");
-	}, "that");
+	}, that);
 	[5].every_(_, function(_, elt) {
-		strictEqual(this, "that", "every_ this");
+		strictEqual(this, that, "every_ this");
 		strictEqual(elt, 5, "every_ elt");
-	}, "that");
+	}, that);
 	[5].some_(_, function(_, elt) {
-		strictEqual(this, "that", "some_ this");
+		strictEqual(this, that, "some_ this");
 		strictEqual(elt, 5, "some_ elt");
-	}, "that");
+	}, that);
 	/* disabled until #324 is resolved
 	[5].reduce_(_, function(_, r, elt) {
 		strictEqual(this, undefined, "reduce_ this");
 		strictEqual(elt, 5, "reduce_ elt");
 	}, "result");*/
 	[5].reduce_(_, function(_, r, elt) {
-		strictEqual(this, "that", "reduce_ this");
+		strictEqual(this, that, "reduce_ this");
 		strictEqual(elt, 5, "reduce_ elt");
-	}, "result", "that");
+	}, "result", that);
 	/* disabled until #324 is resolved
 	[5].reduceRight_(_, function(_, r, elt) {
 		strictEqual(this, undefined, "reduceRight_ this");
 		strictEqual(elt, 5, "reduceRight_ elt");
 	}, "result");*/
 	[5].reduceRight_(_, function(_, r, elt) {
-		strictEqual(this, "that", "reduceRight_ this");
+		strictEqual(this, that, "reduceRight_ this");
 		strictEqual(elt, 5, "reduceRight_ elt");
-	}, "result", "that");
+	}, "result", that);
 	[9, 8].sort_(_, function(_, v1, v2) {
 		strictEqual(v1, 9, "sort_ v1");
 		strictEqual(v2, 8, "sort_ v2");
