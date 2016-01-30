@@ -939,7 +939,7 @@ asyncTest("async arrow function", 4, function(_) {
 	start();
 });
 
-asyncTest("optimized array built-ins", 22, function(_) {
+asyncTest("optimized array built-ins", 18, function(_) {
 	[5].forEach_(_, function(_, elt) {
 		strictEqual(this, "that", "forEach_ this");
 		strictEqual(elt, 5, "forEach_ elt");
