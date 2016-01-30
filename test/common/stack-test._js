@@ -128,7 +128,7 @@ function T(_, fn, code, failFn){
 		}).map(function(l){
 			l = l.replace(/\bFunction\.(\w+) \[as fiberized-\d+\]/, '$1');
 			// We get Object.A in futures test because of a bind call. Ignore this difference.
-			var m = /^\s+at (?:Object\.)?(\w+)[^(]+\((?:[A-Z]:)?[^:]*:(\d+)/.exec(l);
+			var m = /^\s+at (?:(?:Function|Object)\.)?(\w+)[^(]+\((?:[A-Z]:)?[^:]*:(\d+)/.exec(l);
 			if (m) 
 				return m[1] + ":" + m[2];
 			return l;
