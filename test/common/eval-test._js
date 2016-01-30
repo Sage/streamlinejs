@@ -841,7 +841,7 @@ asyncTest("return undefined", 1, function(_) {
 	start();
 });
 
-asyncTest("promises", 7, function(_) {
+if (typeof Promise !== 'undefined') asyncTest("promises", 7, function(_) {
 	function test(v, _) {
 		return delay(_, v); 
 	}
