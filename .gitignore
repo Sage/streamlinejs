@@ -9,3 +9,4 @@ lib/browser/transform.js
 test/browser/eval-test.js
 test/browser/flows-test.js
 test/browser/stack-test.js
+/coverage/

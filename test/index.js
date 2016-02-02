@@ -21,7 +21,15 @@ testrunner.run({
     log: {
 		errors: true,
 		globalSummary: true,
-    }
+		globalCoverage: true,
+    },
+    coverage: {
+    	files: [
+    		fsp.join(__dirname, '../lib'), 
+    		fsp.join(__dirname, '../node_modules/babel-plugin-streamline/lib'), 
+    		fsp.join(__dirname, '../node_modules/streamline-runtime/lib')
+    	],
+    },
 }, function(err, stats) {
 	if (err) throw err;
 	if (stats.failed) process.exit(1);

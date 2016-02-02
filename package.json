@@ -27,7 +27,7 @@
   "devDependencies": {
     "browserify": "^12.0.1",
     "babelify": "^7.2.0",
-    "qunit": "^0.7.7"
+    "qunit": "git+https://github.com/Sage/node-qunit.git#sage"
   },
   "bin": {
     "_node": "./bin/_node",

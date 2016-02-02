@@ -1,6 +1,8 @@
 "use strict";
 // install streamline hooks
-require('..').register();
+require('..').register({
+	cache: false, // to get coverage on babel-plugin-streamline
+});
 
 // patch asyncTest because streamline test function needs a callback.
 var original = global.asyncTest;
