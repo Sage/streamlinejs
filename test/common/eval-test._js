@@ -989,3 +989,11 @@ asyncTest("optimized array built-ins", 18, function(_) {
 	}, 2, 3);
 	start();
 });
+
+asyncTest("async object method", 2, function(_) {
+	var obj = {
+		method(_, x) { strictEqual(this, obj); return delay(_, 2 * x); }
+	}
+	strictEqual(obj.method(_, 7), 14);
+	start();
+});
