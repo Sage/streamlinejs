@@ -26,17 +26,6 @@ var _samples = {
 	//"\n// The 'beautify' button can help you tidy your code." +
 	_demo +
 	"\ndemo('Straight to the answer: fact(4) = 24', _);" +
-	"\n" +
-	"\n// A few pointers to understand the generated code:" +
-	"\n//" +
-	"\n// * the '_' parameter is the callback. This is where execution will" +
-	"\n//   continue on a return or throw statement." +
-	"\n// * the '__then' variable is a 'then' callback. This is where execution will" +
-	"\n//   resume at the end of the construct if it didn't encounter a return " +
-	"\n//   or throw." +
-	"\n// * the '__cb' function is just a little callback wrapper that deals with " +
-	"\n//   error handling and other small matters in a generic way." +
-	"\n// * the '__trap' function handles errors if the callback is missing." +
 	"\n",
 
 	sequenceSample: "" +
