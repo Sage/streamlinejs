@@ -140,6 +140,8 @@ function T(_, fn, code, failFn){
 
 var browser = typeof process === 'undefined' || process.browser;
 
+Error.stackTraceLimit = 20;
+
 function stackEqual(got, expect) {
 	if (browser) {
 		got = got.replace(/(Error: \d+)\/.*?\/([A-Z]:)/, "$1/**ignored**/$2");
