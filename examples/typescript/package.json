@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "streamline-runtime": "^1.0.30"
+  },
+  "devDependencies": {
+    "streamline-node": "^1.0.4",
+    "streamline-runtime": "^1.0.30"
+  }
+}

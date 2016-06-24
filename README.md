@@ -54,27 +54,12 @@ loops, `try/catch/finally` blocks, anonymous functions, chaining, `this`, etc.
 
 Streamline also provides _futures_, and asynchronous variants of the EcmaScript 5 array functions (`forEach`, `map`, etc.).
 
-## 1.0
+## News
 
-Streamline 1.0 is a major evolution. The transforms have been repackaged as a [babel](https://babeljs.io/) plugin. This brings several benefits:
+The latest cool feature is **TypeScript** support. See https://github.com/Sage/streamlinejs/wiki/TypeScript-support for details.
 
-* ES6 support (classes, destructuring, ...)
-* Browserify support (through [babelify](https://github.com/babel/babelify)).
-* Experimental JS features (ES7, [Facebook flow](http://flowtype.org)).
-* Rich CLI (streamline is just a regular plugin).
-* More robust sourcemap support.
-* Better compilation errors.
-
-The CLI and API options have changed and are now aligned on babel. Only a subset of babel's options are supported directly by streamline - to get more you should use babel directly. There is a compatibility layer that translates from old to new options but you should adapt your code. 
-
-Several options/features have been changed or dropped in 1.0:
-
-* the `--cache` option is turned on by default. Use `--no-cache` to turn it off.
-* the `--fast` option is deprecated. _Fast_ code will still compile and run but you will get warnings when the source is transformed.
-* the `--standalone` option is not supported any more and the browser runtime is packaged differently. The runtime and transform files have been moved to the `lib/browser` directory. You are encouraged to switch to `browserify` to bundle your source files. See the [browser section](#browser--side-use) below).
-* several less important CLI options are not supported any more: `--cb`, `--lines-*`, `--old-style-futures`, and `--promise` (promise interop has been simplified and you don't need the option - see [promise section](#interoperability-with-promises) below).
-
-Otherwise, at the language level, 1.0 should be backwards compatible with 0.x versions.
+Streamline 1.0 was a major revamp as a Babel Plugin. Streamline 2.0 was a smaller step from Babel 5 to Babel 6. 
+See https://github.com/Sage/streamlinejs/wiki/Babel-upgrade for details.
 
 ## Installation
 
