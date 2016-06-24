@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es2015",
+        "outDir": "out",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "rootDir": "."
+    },
+    "filesGlob": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
