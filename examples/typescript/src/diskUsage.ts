@@ -32,4 +32,4 @@ var t0 = Date.now();
 _.run(_ => du(_, p), err => {
     if (err) throw err;
     console.log("completed in " + (Date.now() - t0) + " ms");
-}
+});
