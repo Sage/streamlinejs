@@ -20,7 +20,7 @@
     "commander": "^2.8.1",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support#catch-missing-sourcemap-element",
     "streamline-runtime": "^1.0.17",
-    "typescript": "^1.8.10"
+    "typescript": "^2.0.0"
   },
   "optionalDependencies": {
     "fibers": "^1.0.6"
