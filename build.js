@@ -27,16 +27,22 @@ function noParseList() {
 	return list;
 }
 
-function build(from, to, opts) {
+function build(from, to, opts, minify) {
 	var src = fsp.join(__dirname, from);
 	var dst = fsp.join(__dirname, to);
 	console.log("building " + dst);
 	mkdirs(fsp.dirname(dst));
-	browserify(src, {
+	var bundler = browserify(src, {
 		//debug: true,
 		extensions: ['.js', '._js'],
 		noParse: noParseList(),
-	}).transform(babelify.configure(opts)).bundle().on("error", function(err) {
+	});
+	if (minify) bundler = bundler.transform({
+		global: true,
+		ignore: ['**/lib/callbacks/*'],
+	}, 'uglifyify');
+	bundler = bundler.transform(babelify.configure(opts));
+	bundler.bundle().on("error", function(err) {
 		console.log("Error : " + err.message);
 	}).pipe(fs.createWriteStream(dst)).on('finish', function(){
 		finish(dst);
@@ -44,10 +50,11 @@ function build(from, to, opts) {
 }
 
 // temporary hack to eliminate regexp error in babel source
+function unicodeEscape(ch) { return '\\u' + ('0000' + ch.charCodeAt(0).toString(16)).slice(-4); }
 function finish(dst) {
-	if (!/transform\.js$/.test(dst)) return;
+	if (!/transform.*\.js$/.test(dst)) return;
 	fs.writeFileSync(dst, fs.readFileSync(dst, 'utf8')
-		.replace(/(nonASCIIidentifier(?:Start)?Chars) = .*/g, "$1 = '';"), 'utf8');
+		.replace(/[\u0080-\uffff]/g, unicodeEscape), 'utf8');
 }
 
 var streamlineOpts = {
@@ -61,6 +68,7 @@ var streamlineOpts = {
 build("src/browser/callbacks/runtime.js", "lib/browser/callbacks/runtime.js");
 build("src/browser/generators/runtime.js", "lib/browser/generators/runtime.js");
 build("src/browser/transform.js", "lib/browser/transform.js");
+build("src/browser/transform.min.js", "lib/browser/transform.min.js", undefined, true);
 build("test/common/eval-test._js", "test/browser/eval-test.js", streamlineOpts);
 build("test/common/flows-test._js", "test/browser/flows-test.js", streamlineOpts);
 build("test/common/stack-test._js", "test/browser/stack-test.js", streamlineOpts);

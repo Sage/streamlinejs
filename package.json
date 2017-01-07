@@ -26,9 +26,10 @@
     "fibers": "^1.0.6"
   },
   "devDependencies": {
-    "browserify": "^12.0.1",
     "babelify": "^7.2.0",
-    "qunit": "git+https://github.com/Sage/node-qunit.git#sage"
+    "browserify": "^12.0.1",
+    "qunit": "git+https://github.com/Sage/node-qunit.git#sage",
+    "uglifyify": "^3.0.4"
   },
   "bin": {
     "_node": "./bin/_node",
