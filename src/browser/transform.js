@@ -2,6 +2,7 @@
 var babel = require('babel-core');
 var streamline = require('babel-plugin-streamline');
 var es2015 = require('babel-preset-es2015');
+var es2015Plugins = es2015.plugins;
 
 window.Streamline = {
 	transform: function(code, streamlineOptions) {
@@ -9,6 +10,7 @@ window.Streamline = {
 		streamlineOptions.runtime = streamlineOptions.runtime || "callbacks";
 		var plugins = [[streamline, streamlineOptions]];
 		// remove regenerator plugin (last one in es2015 preset) if generators mode
+		es2015.plugins = es2015Plugins.slice(); // restore original plugins list
 		if (streamlineOptions.runtime === 'generators') es2015.plugins.pop();
 		return babel.transform(code, {
 			plugins: plugins,
