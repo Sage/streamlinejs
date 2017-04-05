@@ -537,25 +537,3 @@ asyncTest("trampoline preserves context", 2, function(_) {
 	strictEqual(globals.context.val, "abc");
 	start();
 });
-
-asyncTest("funnel reentry", 3, function(_) {
-	var funnel;
-	function fact(_, n) {
-		return funnel(_, function(_) {
-			return n > 1 ? n * fact(_, n - 1) : 1;
-		});
-	}
-	funnel = flows.funnel(1);
-	try {
-		fact(_, 5);
-		ok(false);
-	} catch (err) {
-		strictEqual(err.message, 'funnel is not reentrant', 'reentrancy is correctly rejected');
-	}
-	funnel = flows.funnel(1, { reentrant: true });
-	strictEqual(fact(_, 5, 'reentrant funnel works'), 120);
-
-	funnel = flows.funnel(5);
-	strictEqual(fact(_, 5), 120, 'size 5 funnel works');
-	start();
-});
