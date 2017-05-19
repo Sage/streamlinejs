@@ -10,7 +10,7 @@
     "url": "git://github.com/Sage/streamlinejs.git"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.0.0"
   },
   "dependencies": {
     "babel-core": "^6.3.26",
