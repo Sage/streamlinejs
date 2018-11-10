@@ -16,10 +16,10 @@
     "babel-core": "^6.3.26",
     "babel-plugin-streamline": "^2.0.19",
     "babel-preset-es2015": "^6.3.13",
-    "colors": "^1.3.0",
-    "commander": "^2.16.0",
+    "colors": "^1.3.2",
+    "commander": "^2.19.0",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support.git#catch-missing-sourcemap-element",
-    "streamline-runtime": "^1.1.10",
+    "streamline-runtime": "^1.2.0",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
