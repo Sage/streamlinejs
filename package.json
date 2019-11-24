@@ -10,23 +10,23 @@
     "url": "git://github.com/Sage/streamlinejs.git"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=10.0.0"
   },
   "dependencies": {
-    "babel-core": "^6.3.26",
-    "babel-plugin-streamline": "^2.0.19",
-    "babel-preset-es2015": "^6.3.13",
-    "colors": "^1.3.3",
-    "commander": "^2.19.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-streamline": "^2.0.26",
+    "babel-preset-es2015": "^6.24.1",
+    "colors": "^1.4.0",
+    "commander": "^4.0.1",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support.git#catch-missing-sourcemap-element",
-    "streamline-runtime": "^1.2.0",
-    "typescript": "^3.3.3"
+    "streamline-runtime": "^2.0.0",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "babelify": "^8.0.0",
-    "browserify": "^16.2.3",
+    "browserify": "^16.5.0",
     "qunit": "git+https://github.com/Sage/node-qunit.git#sage",
-    "uglifyify": "^5.0.1"
+    "uglifyify": "^5.0.2"
   },
   "bin": {
     "_node": "./bin/_node",
