@@ -939,7 +939,7 @@ asyncTest("async arrow function", 4, function(_) {
 	start();
 });
 
-asyncTest("optimized array built-ins", 18, function(_) {
+asyncTest("optimized array built-ins", 15, function(_) {
 	var that = {};
 	[5].forEach_(_, function(_, elt) {
 		strictEqual(this, that, "forEach_ this");
@@ -979,14 +979,7 @@ asyncTest("optimized array built-ins", 18, function(_) {
 		strictEqual(this, that, "reduceRight_ this");
 		strictEqual(elt, 5, "reduceRight_ elt");
 	}, "result", that);
-	[9, 8].sort_(_, function(_, v1, v2) {
-		strictEqual(v1, 9, "sort_ v1");
-		strictEqual(v2, 8, "sort_ v2");
-	});
-	[9, 8, 7, 6, 5].sort_(_, function(_, v1, v2) {
-		strictEqual(v1, 7, "sort_ v1");
-		strictEqual(v2, 6, "sort_ v2");
-	}, 2, 3);
+	deepEqual([6, 9, 7, 5, 8].sort_(_, (_, v1, v2) => v1 - v2), [5, 6, 7, 8, 9]);
 	start();
 });
 
