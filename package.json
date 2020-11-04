@@ -1,7 +1,7 @@
 {
   "name": "streamline",
   "description": "Asynchronous Javascript for dummies",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "license": "MIT",
   "homepage": "http://github.com/Sage/streamlinejs",
   "author": "Bruno Jouhier",
@@ -19,7 +19,7 @@
     "colors": "^1.4.0",
     "commander": "^4.0.1",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support.git#catch-missing-sourcemap-element",
-    "streamline-runtime": "^2.0.0",
+    "streamline-runtime": "git+https://github.com/RivalIQ/streamline-runtime#fibers-5.0.0",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
