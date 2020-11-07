@@ -19,7 +19,7 @@
     "colors": "^1.4.0",
     "commander": "^4.0.1",
     "source-map-support": "git+https://github.com/Sage/node-source-map-support.git#catch-missing-sourcemap-element",
-    "streamline-runtime": "git+https://github.com/RivalIQ/streamline-runtime#fibers-5.0.0",
+    "streamline-runtime": "^3.0.0",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
